@@ -1,0 +1,207 @@
+{
+  "id": "live-hayw-1785636378282",
+  "mode": "live",
+  "generatedAt": "2026-08-02T02:06:18.282Z",
+  "tagline": "Live public-company interdependency dossier",
+  "company": {
+    "id": "co-hayw",
+    "name": "Hayward Holdings, Inc.",
+    "ticker": "HAYW",
+    "cik": "0001834622",
+    "industry": "Specialty water management / manufacturing",
+    "domains": [
+      "hayward.com"
+    ],
+    "lat": 35.2271,
+    "lng": -80.8431,
+    "summary": "Public-data TPRM dossier for Hayward Holdings, Inc. (HAYW). Dependencies extracted from EDGAR text + passive OSINT; never treat silence as safety."
+  },
+  "sources": [
+    {
+      "id": "src-filing-0",
+      "type": "10-K",
+      "title": "10-K sample-HAYW",
+      "url": "https://www.sec.gov/edgar/searchedgar/companysearch",
+      "retrievedAt": "2026-08-02T02:06:18.281Z",
+      "excerpt": "Hayward Holdings, Inc. (NYSE: HAYW) — excerpted risk-factor / cybersecurity language from public Form 10-K disclosures (educational cache used when live SEC fetch is unavailable). Source: Hayward Holdings Form 10-K risk factors regarding information technology, ERP implementation, and third-party vendors.\n\nWe rely upon information technology systems and networks in connection with a variety of bus"
+    },
+    {
+      "id": "src-dep-erp-generic-0",
+      "type": "10-K",
+      "title": "gazetteer evidence for Enterprise ERP platform",
+      "excerpt": "as we implement new technologies to facilitate our operations, such as our new ERP system and new human resources information system, which are in the process of being implemented. As a result, our ability to"
+    },
+    {
+      "id": "src-inc-inc-sap-reccos-2021-erp-generic",
+      "type": "incident-kb",
+      "title": "SAP RECON / critical ERP exposure patterns",
+      "url": "https://www.onapsis.com/research/recon",
+      "excerpt": "Critical SAP vulnerabilities (including RECON-class issues in prior years and ongoing ERP internet exposure research) illustrate how ERP platforms concentrate operational and data risk when internet-facing or poorly segmented."
+    },
+    {
+      "id": "src-inc-inc-oracle-cloud-2020-erp-generic",
+      "type": "incident-kb",
+      "title": "Oracle Cloud / EBS historical exposure research",
+      "url": "https://www.oracle.com/security-alerts/",
+      "excerpt": "Public research and CVE history around Oracle E-Business Suite and related stacks highlight ERP as a high-impact dependency class when authentication or patching lags."
+    },
+    {
+      "id": "src-osint-ct",
+      "type": "osint",
+      "title": "Passive OSINT (domain + Certificate Transparency)",
+      "excerpt": "hayward.com, www.hayward.com",
+      "retrievedAt": "2026-08-02T02:06:18.282Z"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "erp-generic",
+      "name": "Enterprise ERP platform",
+      "class": "erp",
+      "confidence": "low",
+      "sources": [
+        "src-dep-erp-generic-0"
+      ],
+      "lat": 40.7128,
+      "lng": -74.006,
+      "notes": "Gazetteer match in filing text."
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-live-erp-generic-0",
+      "fromCompanyId": "co-hayw",
+      "toNodeId": "erp-generic",
+      "relationship": "erp dependency (public evidence)",
+      "criticalityHint": "critical",
+      "sources": [
+        "src-dep-erp-generic-0"
+      ]
+    }
+  ],
+  "incidents": [
+    {
+      "id": "il-inc-sap-reccos-2021-erp-generic",
+      "nodeId": "erp-generic",
+      "incidentId": "inc-sap-reccos-2021",
+      "title": "SAP RECON / critical ERP exposure patterns",
+      "year": 2021,
+      "summary": "Enterprise ERP platform (erp) — Critical SAP vulnerabilities (including RECON-class issues in prior years and ongoing ERP internet exposure research) illustrate how ERP platforms concentrate operational and data risk when internet-facing or poorly segmented.",
+      "relevance": "industry-common",
+      "sources": [
+        "src-inc-inc-sap-reccos-2021-erp-generic"
+      ]
+    },
+    {
+      "id": "il-inc-oracle-cloud-2020-erp-generic",
+      "nodeId": "erp-generic",
+      "incidentId": "inc-oracle-cloud-2020",
+      "title": "Oracle Cloud / EBS historical exposure research",
+      "year": 2020,
+      "summary": "Enterprise ERP platform (erp) — Public research and CVE history around Oracle E-Business Suite and related stacks highlight ERP as a high-impact dependency class when authentication or patching lags.",
+      "relevance": "industry-common",
+      "sources": [
+        "src-inc-inc-oracle-cloud-2020-erp-generic"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "sc-cloud-saas",
+      "name": "Cloud/SaaS or ERP data exposure via named dependency",
+      "threat": "Compromise or prolonged outage of Enterprise ERP platform",
+      "asset": "Customer data / financial system of record",
+      "lef": {
+        "low": 0.04,
+        "mode": 0.11,
+        "high": 0.28,
+        "unit": "events/year"
+      },
+      "lossMag": {
+        "low": 3000000,
+        "mode": 25000000,
+        "high": 180000000,
+        "unit": "USD"
+      },
+      "assumptions": [
+        {
+          "id": "a-cloud-1",
+          "label": "Sensitive records in platform",
+          "value": 250000,
+          "unit": "records",
+          "editable": true
+        }
+      ],
+      "drivers": [
+        "Shared responsibility gaps",
+        "Identity federation",
+        "Backup/restore lag"
+      ]
+    },
+    {
+      "id": "sc-concentration",
+      "name": "Single-supplier / platform concentration",
+      "threat": "Simultaneous failure of a high-criticality dependency class",
+      "asset": "Business continuity for core processes",
+      "lef": {
+        "low": 0.04,
+        "mode": 0.1,
+        "high": 0.22,
+        "unit": "events/year"
+      },
+      "lossMag": {
+        "low": 2000000,
+        "mode": 18000000,
+        "high": 120000000,
+        "unit": "USD"
+      },
+      "assumptions": [
+        {
+          "id": "a-conc-1",
+          "label": "Critical dependencies without alternate",
+          "value": 1,
+          "unit": "vendors",
+          "editable": true
+        }
+      ],
+      "drivers": [
+        "Disclosure-limited visibility",
+        "Switching costs",
+        "Contractual lock-in"
+      ],
+      "residualNotes": "When 10-K language cites supplier concentration, raise loss magnitude assumptions."
+    }
+  ],
+  "tier": "T2",
+  "tierRationale": "Elevated coupling via cloud/ERP/software dependencies with partial evidence strength.",
+  "filings": [
+    {
+      "form": "10-K",
+      "accessionNumber": "sample-HAYW",
+      "section": "Sample corpus (SEC live fetch unavailable)",
+      "excerpt": "Hayward Holdings, Inc. (NYSE: HAYW) — excerpted risk-factor / cybersecurity language from public Form 10-K disclosures (educational cache used when live SEC fetch is unavailable). Source: Hayward Holdings Form 10-K risk factors regarding information technology, ERP implementation, and third-party vendors.\n\nWe rely upon information technology systems and networks in connection with a variety of business activities, some of which are managed by third parties, whose products, services and systems are beyond our control. We expect our reliance on information technology systems to increase as we implement new technologies to facilitate our operations, such as our new ERP system and new human resources information system, which are in the process of being implemented. As a result, our ability to operate effectively on a day-to-day basis and accurately report our results depends on a reliable technological infrastructure, which is inherently susceptible to internal and external threats, including malicious code embedded in open-source software, or misconfigurations, bugs or other vulnerabilities in commercial software that is integrated into our (or our suppliers’ or service providers’) information technology systems and networks, products or services.\n\nWe are subject to vulnerabilities in our software and systems and those of third parties. We and certain of our third-party service providers have in the past experienced, and we expect in the future will continue to experience, cybersecurity attacks and other incidents that threaten the confidentiality, integrity and availability of information technology systems and networks and confidential information, including personal information, that we or third parties collect, maintain and/or process. We periodically evaluate and test the adequacy of our systems, measures, controls and procedures and perform third-party risk assessments.\n\nA significant disturbance or breach of our technological infrastructure, or those of our vendors or others with which we do business, could adversely affect our financial condition and results of operations. Additionally, failure to maintain the security of confidential information could damage our reputation and expose us to litigation.\n\nWe may encounter difficulties in operating or implementing a new ERP system and human resources information system, which may adversely affect our operations and financial reporting. We are in the process of implementing a new ERP system for most of o",
+      "url": "https://www.sec.gov/edgar/searchedgar/companysearch"
+    }
+  ],
+  "osintHosts": [
+    {
+      "hostname": "hayward.com",
+      "source": "domain-guess"
+    },
+    {
+      "hostname": "www.hayward.com",
+      "source": "domain-guess"
+    }
+  ],
+  "limitations": [
+    "Educational freeware — not a substitute for due diligence, questionnaires, or contractual assurance.",
+    "Public filings under-disclose technology stacks; absence of evidence is not evidence of absence.",
+    "Inferred dependencies are labeled; do not treat inferred claims as facts.",
+    "FAIR-shaped ranges use transparent assumptions and are not FAIR Institute–certified analyses.",
+    "Outside-in coverage is passive only (no port scanning, darknet, or inside-out telemetry).",
+    "Not affiliated with Safe Security or any commercial TPRM platform.",
+    "Live SEC fetch was unavailable in this environment; analysis used a cached public 10-K excerpt bundle. Re-run where EDGAR is reachable for full accession coverage.",
+    "Dependency list is incomplete by design; filings omit most of the real vendor inventory.",
+    "Named ERP vendor is often undisclosed; ERP-class hits may link industry-common ERP incident patterns (labeled accordingly)."
+  ]
+}

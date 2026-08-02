@@ -1,0 +1,110 @@
+{
+  "generatedAt": "2026-08-02T02:07:35.743Z",
+  "dossiers": [
+    {
+      "ticker": "HAYW",
+      "name": "Hayward Holdings, Inc.",
+      "tier": "T2",
+      "nodes": 1,
+      "generatedAt": "2026-08-02T02:06:18.282Z"
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:19.786Z"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "MICROSOFT CORP",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:28.633Z"
+    },
+    {
+      "ticker": "AMZN",
+      "name": "AMAZON COM INC",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:37.519Z"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:44.394Z"
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:45.797Z"
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA CORP",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:46.874Z"
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMORGAN CHASE & CO",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:47.804Z"
+    },
+    {
+      "ticker": "XOM",
+      "name": "EXXON MOBIL CORP",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:49.506Z"
+    },
+    {
+      "ticker": "UNH",
+      "name": "UNITEDHEALTH GROUP INC",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:50.429Z"
+    },
+    {
+      "ticker": "CLX",
+      "name": "CLOROX CO /DE/",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:06:59.260Z"
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings, Inc.",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:07:08.285Z"
+    },
+    {
+      "ticker": "IBM",
+      "name": "International Business Machines Corp",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:07:17.179Z"
+    },
+    {
+      "ticker": "ORCL",
+      "name": "ORACLE CORP",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:07:26.038Z"
+    },
+    {
+      "ticker": "CRM",
+      "name": "Salesforce, Inc.",
+      "tier": "T4",
+      "nodes": 0,
+      "generatedAt": "2026-08-02T02:07:34.942Z"
+    }
+  ]
+}
