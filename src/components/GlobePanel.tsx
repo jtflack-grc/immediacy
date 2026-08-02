@@ -11,10 +11,10 @@ import RegionTrajectoryModal from './RegionTrajectoryModal'
 interface GlobePanelProps {
   regionValues: Record<string, number>
   state?: State
-  mapMode?: 'welfareStandards' | 'welfareDebt' | 'enforcement'
+  mapMode?: 'disclosurePosture' | 'disclosureDebt' | 'regulatoryExposure'
 }
 
-export default function GlobePanel({ regionValues, state, mapMode = 'welfareStandards' }: GlobePanelProps) {
+export default function GlobePanel({ regionValues, state, mapMode = 'disclosurePosture' }: GlobePanelProps) {
   console.log('GlobePanel rendering with regionValues:', regionValues)
   const globeEl = useRef<any>()
   const [worldData, setWorldData] = useState<any>(null)
@@ -186,7 +186,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
       {/* @ts-ignore - react-globe.gl type definitions don't match actual props */}
       <Globe
         ref={globeEl}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        globeImageUrl={`${import.meta.env.BASE_URL}textures/earth-night.jpg`}
         // Remove static background - using dynamic starfield instead
         // @ts-ignore
         backgroundImageUrl=""
@@ -329,7 +329,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
           const value = regionValues[iso3] ?? 0
           
           // Different color schemes based on map mode
-          if (mapMode === 'welfareDebt') {
+          if (mapMode === 'disclosureDebt') {
             // Disclosure debt mode: purple/red scale
             if (value < 0.33) {
               const t = value / 0.33
@@ -341,7 +341,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
               const t = (value - 0.66) / 0.34
               return `rgb(${Math.floor(255 - t * 50)}, ${Math.floor(120 - t * 120)}, ${Math.floor(155 - t * 155)})`
             }
-          } else if (mapMode === 'enforcement') {
+          } else if (mapMode === 'regulatoryExposure') {
             // Enforcement mode: green/yellow scale
             if (value < 0.33) {
               const t = value / 0.33
@@ -544,17 +544,17 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
         border: '1px solid rgba(255, 255, 255, 0.08)'
       }}>
         <div style={{ fontWeight: 600, marginBottom: '8px' }}>
-          {mapMode === 'welfareStandards' ? 'Disclosure Posture' :
-           mapMode === 'welfareDebt' ? 'Disclosure Debt' : 'Regulatory Pressure'}
+          {mapMode === 'disclosurePosture' ? 'Disclosure Posture' :
+           mapMode === 'disclosureDebt' ? 'Disclosure Debt' : 'Regulatory Pressure'}
         </div>
         <div style={{ fontSize: '11px', color: '#aaa', lineHeight: '1.6' }}>
-          {mapMode === 'welfareStandards' ? (
+          {mapMode === 'disclosurePosture' ? (
             <>
               <div style={{ color: '#ef4444' }}>🔴 Low (0-33%)</div>
               <div style={{ color: '#fbbf24' }}>🟡 Medium (34-66%)</div>
               <div style={{ color: '#4ade80' }}>🟢 High (67-100%)</div>
             </>
-          ) : mapMode === 'welfareDebt' ? (
+          ) : mapMode === 'disclosureDebt' ? (
             <>
               <div style={{ color: '#4ade80' }}>🟢 Low (0-33%)</div>
               <div style={{ color: '#fbbf24' }}>🟡 Medium (34-66%)</div>

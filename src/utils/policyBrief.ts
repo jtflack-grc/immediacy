@@ -15,16 +15,16 @@ export interface PolicyBrief {
   }>
   outcomes: {
     measured: {
-      welfareStandardAdoption: number
-      productionEfficiency: number
-      costPerUnit: number
-      welfareIncidentRate: number
+      disclosurePosture: number
+      operationalControl: number
+      financialBurn: number
+      serviceDisruption: number
     }
     unmeasured: {
-      welfareDebt: number
-      enforcementGap: number
-      regulatoryCapture: number
-      systemIrreversibility: number
+      disclosureDebt: number
+      regulatoryExposure: number
+      narrativeIntegrity: number
+      commitmentLock: number
     }
   }
   recommendations: string[]
@@ -111,19 +111,19 @@ function generateRecommendations(state: State, successIndex: number, debtIndex: 
     recommendations.push('Review early choices that may have locked burn or facts gap too high.')
   }
 
-  if (state.metrics.unmeasured.systemIrreversibility > 0.7) {
+  if (state.metrics.unmeasured.commitmentLock > 0.7) {
     recommendations.push('Commitment lock is high. Avoid new irreversible payments or denials until facts stabilize.')
   }
 
-  if (state.metrics.unmeasured.enforcementGap > 0.6) {
+  if (state.metrics.unmeasured.regulatoryExposure > 0.6) {
     recommendations.push('Address regulatory clock lag — document awareness and hit notice deadlines.')
   }
 
-  if (state.metrics.unmeasured.regulatoryCapture > 0.6) {
+  if (state.metrics.unmeasured.narrativeIntegrity < 0.4) {
     recommendations.push('Align messaging with ops truth to reduce narrative capture before regulators or customers force it.')
   }
 
-  if (state.metrics.unmeasured.welfareDebt > 0.6) {
+  if (state.metrics.unmeasured.disclosureDebt > 0.6) {
     recommendations.push('Address accumulated disclosure debt with clearer, earlier statements even if imperfect.')
   }
 
@@ -145,23 +145,23 @@ function identifyRisks(state: State, debtIndex: number): string[] {
     risks.push('High disclosure debt may force adversary- or regulator-driven narrative before you are ready.')
   }
 
-  if (state.metrics.unmeasured.systemIrreversibility > 0.8) {
+  if (state.metrics.unmeasured.commitmentLock > 0.8) {
     risks.push('Very high commitment lock makes course corrections difficult. Payments and denials will fight new facts.')
   }
 
-  if (state.metrics.unmeasured.enforcementGap > 0.7) {
+  if (state.metrics.unmeasured.regulatoryExposure > 0.7) {
     risks.push('Large regulatory clock lag invites fines, orders, and loss of customer trust.')
   }
 
-  if (state.metrics.unmeasured.regulatoryCapture > 0.7) {
+  if (state.metrics.unmeasured.narrativeIntegrity < 0.3) {
     risks.push('High narrative capture risks undermining credibility when screenshots surface.')
   }
 
-  if (state.metrics.measured.welfareIncidentRate > 0.6) {
+  if (state.metrics.measured.serviceDisruption > 0.6) {
     risks.push('High exposure severity indicates ongoing blast-radius and leak-site pressure.')
   }
 
-  if (state.metrics.measured.costPerUnit > 0.7) {
+  if (state.metrics.measured.financialBurn > 0.7) {
     risks.push('High response burn may strain the room — watch that spend still cuts secondary loss.')
   }
 
@@ -186,16 +186,16 @@ export function formatPolicyBriefAsMarkdown(brief: PolicyBrief): string {
 
   markdown += `## Outcomes\n\n`
   markdown += `### Measured Metrics\n\n`
-  markdown += `- Disclosure Posture: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
-  markdown += `- Operational Control: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
-  markdown += `- Response Burn: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
-  markdown += `- Exposure Severity: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
+  markdown += `- Disclosure Posture: ${(brief.outcomes.measured.disclosurePosture * 100).toFixed(1)}%\n`
+  markdown += `- Operational Control: ${(brief.outcomes.measured.operationalControl * 100).toFixed(1)}%\n`
+  markdown += `- Response Burn: ${(brief.outcomes.measured.financialBurn * 100).toFixed(1)}%\n`
+  markdown += `- Exposure Severity: ${(brief.outcomes.measured.serviceDisruption * 100).toFixed(1)}%\n\n`
 
   markdown += `### Disclosure Debt Metrics\n\n`
-  markdown += `- Disclosure Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
-  markdown += `- Regulatory Clock Lag: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
-  markdown += `- Narrative Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
-  markdown += `- Commitment Lock: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
+  markdown += `- Disclosure Debt: ${(brief.outcomes.unmeasured.disclosureDebt * 100).toFixed(1)}%\n`
+  markdown += `- Regulatory Clock Lag: ${(brief.outcomes.unmeasured.regulatoryExposure * 100).toFixed(1)}%\n`
+  markdown += `- Narrative Capture: ${((1 - brief.outcomes.unmeasured.narrativeIntegrity) * 100).toFixed(1)}%\n`
+  markdown += `- Commitment Lock: ${(brief.outcomes.unmeasured.commitmentLock * 100).toFixed(1)}%\n\n`
 
   markdown += `## Recommendations\n\n`
   brief.recommendations.forEach(rec => {
@@ -238,15 +238,15 @@ export function formatPolicyBriefAsText(brief: PolicyBrief): string {
   text += `\n\nOUTCOMES\n`
   text += `${'-'.repeat(20)}\n`
   text += `Measured Metrics:\n`
-  text += `  - Disclosure Posture: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
-  text += `  - Operational Control: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
-  text += `  - Response Burn: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
-  text += `  - Exposure Severity: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
+  text += `  - Disclosure Posture: ${(brief.outcomes.measured.disclosurePosture * 100).toFixed(1)}%\n`
+  text += `  - Operational Control: ${(brief.outcomes.measured.operationalControl * 100).toFixed(1)}%\n`
+  text += `  - Response Burn: ${(brief.outcomes.measured.financialBurn * 100).toFixed(1)}%\n`
+  text += `  - Exposure Severity: ${(brief.outcomes.measured.serviceDisruption * 100).toFixed(1)}%\n\n`
   text += `Disclosure Debt Metrics:\n`
-  text += `  - Disclosure Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
-  text += `  - Regulatory Clock Lag: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
-  text += `  - Narrative Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
-  text += `  - Commitment Lock: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
+  text += `  - Disclosure Debt: ${(brief.outcomes.unmeasured.disclosureDebt * 100).toFixed(1)}%\n`
+  text += `  - Regulatory Clock Lag: ${(brief.outcomes.unmeasured.regulatoryExposure * 100).toFixed(1)}%\n`
+  text += `  - Narrative Capture: ${((1 - brief.outcomes.unmeasured.narrativeIntegrity) * 100).toFixed(1)}%\n`
+  text += `  - Commitment Lock: ${(brief.outcomes.unmeasured.commitmentLock * 100).toFixed(1)}%\n\n`
 
   text += `RECOMMENDATIONS\n`
   text += `${'-'.repeat(20)}\n`

@@ -15,7 +15,7 @@ function scaleDeltaByContext(
   // Normalize current value to 0-1 range
   const normalizedCurrent = Math.max(0, Math.min(1, currentValue / maxValue))
   
-  // For metrics where higher is better (productionEfficiency, welfareStandardAdoption)
+  // For metrics where higher is better (operationalControl, disclosurePosture)
   if (isHigherBetter) {
     if (deltaValue > 0) {
       // Positive change: diminishing returns when already high
@@ -29,7 +29,7 @@ function scaleDeltaByContext(
       return deltaValue * scaleFactor
     }
   } 
-  // For metrics where lower is better (costPerUnit, welfareIncidentRate, all unmeasured)
+  // For metrics where lower is better (financialBurn, serviceDisruption, all unmeasured)
   else {
     if (deltaValue < 0) {
       // Negative change (improvement): larger impact when current is high (bad)
@@ -59,41 +59,41 @@ export function applyDelta(state: State, delta: Delta): State {
       const scaledMeasured: Partial<typeof state.metrics.measured> = {}
       
       // Production Efficiency: higher is better
-      if (delta.metrics.measured.productionEfficiency !== undefined) {
-        scaledMeasured.productionEfficiency = state.metrics.measured.productionEfficiency + 
+      if (delta.metrics.measured.operationalControl !== undefined) {
+        scaledMeasured.operationalControl = state.metrics.measured.operationalControl + 
           scaleDeltaByContext(
-            delta.metrics.measured.productionEfficiency,
-            state.metrics.measured.productionEfficiency,
+            delta.metrics.measured.operationalControl,
+            state.metrics.measured.operationalControl,
             true
           )
       }
       
       // Cost Per Unit: lower is better
-      if (delta.metrics.measured.costPerUnit !== undefined) {
-        scaledMeasured.costPerUnit = state.metrics.measured.costPerUnit + 
+      if (delta.metrics.measured.financialBurn !== undefined) {
+        scaledMeasured.financialBurn = state.metrics.measured.financialBurn + 
           scaleDeltaByContext(
-            delta.metrics.measured.costPerUnit,
-            state.metrics.measured.costPerUnit,
+            delta.metrics.measured.financialBurn,
+            state.metrics.measured.financialBurn,
             false
           )
       }
       
       // Welfare Incident Rate: lower is better
-      if (delta.metrics.measured.welfareIncidentRate !== undefined) {
-        scaledMeasured.welfareIncidentRate = state.metrics.measured.welfareIncidentRate + 
+      if (delta.metrics.measured.serviceDisruption !== undefined) {
+        scaledMeasured.serviceDisruption = state.metrics.measured.serviceDisruption + 
           scaleDeltaByContext(
-            delta.metrics.measured.welfareIncidentRate,
-            state.metrics.measured.welfareIncidentRate,
+            delta.metrics.measured.serviceDisruption,
+            state.metrics.measured.serviceDisruption,
             false
           )
       }
       
       // Welfare Standard Adoption: higher is better (can exceed 1)
-      if (delta.metrics.measured.welfareStandardAdoption !== undefined) {
-        scaledMeasured.welfareStandardAdoption = state.metrics.measured.welfareStandardAdoption + 
+      if (delta.metrics.measured.disclosurePosture !== undefined) {
+        scaledMeasured.disclosurePosture = state.metrics.measured.disclosurePosture + 
           scaleDeltaByContext(
-            delta.metrics.measured.welfareStandardAdoption,
-            Math.min(1, state.metrics.measured.welfareStandardAdoption / 3), // Normalize to 0-1 for scaling
+            delta.metrics.measured.disclosurePosture,
+            Math.min(1, state.metrics.measured.disclosurePosture / 3), // Normalize to 0-1 for scaling
             true,
             3 // Max value is 3
           )
@@ -105,20 +105,26 @@ export function applyDelta(state: State, delta: Delta): State {
       }
       
       // Clamp values to valid ranges
-      newState.metrics.measured.productionEfficiency = Math.max(0, Math.min(1, newState.metrics.measured.productionEfficiency))
-      newState.metrics.measured.costPerUnit = Math.max(0, Math.min(1, newState.metrics.measured.costPerUnit))
-      newState.metrics.measured.welfareIncidentRate = Math.max(0, Math.min(1, newState.metrics.measured.welfareIncidentRate))
-      newState.metrics.measured.welfareStandardAdoption = Math.max(0, newState.metrics.measured.welfareStandardAdoption) // Can exceed 1
+      newState.metrics.measured.operationalControl = Math.max(0, Math.min(1, newState.metrics.measured.operationalControl))
+      newState.metrics.measured.financialBurn = Math.max(0, Math.min(1, newState.metrics.measured.financialBurn))
+      newState.metrics.measured.serviceDisruption = Math.max(0, Math.min(1, newState.metrics.measured.serviceDisruption))
+      newState.metrics.measured.disclosurePosture = Math.max(0, newState.metrics.measured.disclosurePosture) // Can exceed 1
+      if (typeof newState.metrics.measured.evidenceIntegrity === 'number') {
+        newState.metrics.measured.evidenceIntegrity = Math.max(0, Math.min(1, newState.metrics.measured.evidenceIntegrity))
+      }
+      if (typeof newState.metrics.measured.stakeholderTrust === 'number') {
+        newState.metrics.measured.stakeholderTrust = Math.max(0, Math.min(1, newState.metrics.measured.stakeholderTrust))
+      }
     }
 
     if (delta.metrics.unmeasured) {
       const scaledUnmeasured: Partial<typeof state.metrics.unmeasured> = {}
+      const higherBetter = new Set(['narrativeIntegrity', 'factsConfidence'])
       
-      // All unmeasured metrics: lower is better
       Object.entries(delta.metrics.unmeasured).forEach(([key, deltaValue]) => {
         const currentValue = state.metrics.unmeasured[key as keyof typeof state.metrics.unmeasured]
         scaledUnmeasured[key as keyof typeof scaledUnmeasured] = currentValue + 
-          scaleDeltaByContext(deltaValue, currentValue, false)
+          scaleDeltaByContext(deltaValue, currentValue, higherBetter.has(key))
       })
       
       newState.metrics.unmeasured = {
@@ -126,7 +132,6 @@ export function applyDelta(state: State, delta: Delta): State {
         ...scaledUnmeasured,
       }
       
-      // Clamp values to valid ranges
       Object.keys(newState.metrics.unmeasured).forEach(key => {
         const value = newState.metrics.unmeasured[key as keyof typeof newState.metrics.unmeasured]
         newState.metrics.unmeasured[key as keyof typeof newState.metrics.unmeasured] = Math.max(0, Math.min(1, value))
@@ -281,18 +286,20 @@ export function applyDelta(state: State, delta: Delta): State {
     }
   }
 
-  // Update system irreversibility based on welfare debt and enforcement gap.
-  // Instead of a one-way ratchet, we move gradually toward a target value so that
-  // irreversibility can also recover (slowly) when debt/enforcement gap are reduced.
-  const currentIrreversibility = newState.metrics.unmeasured.systemIrreversibility
+  // Apply explicit flag sets from choice deltas
+  if (delta.setFlags) {
+    newState.flags = { ...newState.flags, ...delta.setFlags }
+  }
+
+  // Update commitment lock toward a debt/exposure-driven target
+  const currentIrreversibility = newState.metrics.unmeasured.commitmentLock
   const targetIrreversibility = Math.min(
     1,
-    newState.metrics.unmeasured.welfareDebt * 0.7 +
-      newState.metrics.unmeasured.enforcementGap * 0.5
+    newState.metrics.unmeasured.disclosureDebt * 0.7 +
+      newState.metrics.unmeasured.regulatoryExposure * 0.5
   )
-  // Move a fraction of the way toward the target each turn
   const adjustment = (targetIrreversibility - currentIrreversibility) * 0.25
-  newState.metrics.unmeasured.systemIrreversibility = Math.max(
+  newState.metrics.unmeasured.commitmentLock = Math.max(
     0,
     Math.min(1, currentIrreversibility + adjustment)
   )

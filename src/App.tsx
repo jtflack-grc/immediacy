@@ -1,5 +1,8 @@
-import { useState, useEffect, useReducer, useCallback, useRef } from 'react'
+import { useState, useEffect, useReducer, useCallback, useRef, useMemo } from 'react'
 import GlobePanel from './components/GlobePanel'
+import GlobeErrorBoundary from './components/GlobeErrorBoundary'
+import JurisdictionFallbackMap from './components/JurisdictionFallbackMap'
+import { isWebGLAvailable } from './utils/webgl'
 import DecisionPanel from './components/DecisionPanel'
 import TurnUCollection from './components/TurnUCollection'
 import HeaderBar from './components/HeaderBar'
@@ -7,15 +10,11 @@ import MetricsPanel from './components/MetricsPanel'
 import PostMortemModal from './components/PostMortemModal'
 import TutorialModal from './components/TutorialModal'
 import SaveLoadModal from './components/SaveLoadModal'
-import ScenarioVariationModal from './components/ScenarioVariationModal'
 import PhaseSummaryModal from './components/PhaseSummaryModal'
 import DecisionImpactModal from './components/DecisionImpactModal'
 import ValidationDisclaimer from './components/ValidationDisclaimer'
 import CreditsModal from './components/CreditsModal'
 import ResearchBibliography from './components/ResearchBibliography'
-import GreatPersonModal from './components/GreatPersonModal'
-import GreatPersonPanel from './components/GreatPersonPanel'
-import WonderPanel from './components/WonderPanel'
 import StartingConditionSelector from './components/StartingConditionSelector'
 import NotificationBanner from './components/NotificationBanner'
 import WelcomeModal from './components/WelcomeModal'
@@ -28,18 +27,37 @@ import AssumptionTimeline from './components/AssumptionTimeline'
 import DecisionTreeView from './components/DecisionTreeView'
 import ToolsMenu from './components/ToolsMenu'
 import TitleCard from './components/TitleCard'
-import { applyDifficulty, applyStartingCondition } from './utils/scenarioVariations'
+import WarRoomStatusBar from './components/WarRoomStatusBar'
+import EvidenceBoard from './components/EvidenceBoard'
+import DecisionLogPanel from './components/DecisionLogPanel'
+import DispatchFeed from './components/DispatchFeed'
+import { DEFAULT_INCIDENT_CONDITIONS } from './utils/scenarioVariations'
 import { getMetricChangeReason } from './utils/feedbackReasons'
-import { checkGreatPersonUnlocks, applyGreatPersonEffect, GreatPerson as GreatPersonData } from './utils/greatPeople'
 import { checkAchievements } from './utils/achievements'
-import { checkWonderCompletions, applyWonderEffect, getWonder, Wonder as WonderData } from './utils/wonders'
-import { DifficultyLevel, StartingCondition } from './utils/scenarioVariations'
 import './index.css'
 import { reducer, Action } from './engine/reducer'
 import { State } from './engine/scenarioTypes'
 import { loadScenario, createInitialState, getNodeById, getPhaseByNodeId } from './engine/scenarioLoader'
 import { reaffirmAssumption } from './engine/memoryDecay'
 import { loadFromShareableURL } from './utils/exportUtils'
+import { inferFlagsFromChoice } from './engine/dispatches'
+import { advanceIncidentTime, getTimeCost } from './engine/incidentClock'
+import { resolveNextNodeId } from './engine/resolveNext'
+
+function getSavedScenarioConditions(): string[] {
+  try {
+    const saved = localStorage.getItem('scenarioConditions')
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed
+      }
+    }
+  } catch {
+    // fall through to default
+  }
+  return DEFAULT_INCIDENT_CONDITIONS
+}
 
 function App() {
   const [scenario, setScenario] = useState<any>(null)
@@ -49,20 +67,10 @@ function App() {
   const [showPostMortem, setShowPostMortem] = useState(false)
   const [showTutorial, setShowTutorial] = useState(false)
   const [showSaveLoad, setShowSaveLoad] = useState(false)
-  const [showVariationModal, setShowVariationModal] = useState(false)
-  const [showTitleCard, setShowTitleCard] = useState(() => {
-    // Temporarily force show for testing - change back to: !localStorage.getItem('hasSeenTitleCard')
-    const shouldShow = true
-    console.log('showTitleCard initial value:', shouldShow)
-    // If showing title card for first time, clear tutorial seen flag so tutorial shows after
-    if (shouldShow && !localStorage.getItem('hasSeenTitleCard')) {
-      sessionStorage.removeItem('tutorialSeen')
-    }
-    return shouldShow
-  })
-  const [showWelcome, setShowWelcome] = useState(() => {
-    return !localStorage.getItem('hasSeenWelcome')
-  })
+  // Cold open: title card only shows the first time this browser has ever seen it.
+  const [showTitleCard, setShowTitleCard] = useState(() => !localStorage.getItem('hasSeenTitleCard'))
+  // Welcome/tutorial are opt-in from the Help button — not shown on the default cold-open path.
+  const [showWelcome, setShowWelcome] = useState(false)
   const [showComparison, setShowComparison] = useState(false)
   const [showPolicyComparison, setShowPolicyComparison] = useState(false)
   const [showDebtTimeline, setShowDebtTimeline] = useState(false)
@@ -81,15 +89,11 @@ function App() {
   const [showImpactModal, setShowImpactModal] = useState(false)
   const [showCredits, setShowCredits] = useState(false)
   const [showResearchBibliography, setShowResearchBibliography] = useState(false)
-  const [showGreatPersonModal, setShowGreatPersonModal] = useState(false)
-  const [unlockedGreatPerson, setUnlockedGreatPerson] = useState<GreatPersonData | null>(null)
-  const [showWonderModal, setShowWonderModal] = useState(false)
-  const [completedWonder, setCompletedWonder] = useState<WonderData | null>(null)
-  const [showStartingSelector, setShowStartingSelector] = useState(false)
-  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyLevel>('medium')
-  const [selectedStartingCondition, setSelectedStartingCondition] = useState<StartingCondition>('default')
+  // Scenario conditions selector — accessible from the header menu, never blocks cold open.
+  const [showScenarioConditions, setShowScenarioConditions] = useState(false)
+  const [scenarioConditions, setScenarioConditions] = useState<string[]>(() => getSavedScenarioConditions())
   const [notification, setNotification] = useState<{
-    type: 'great_person' | 'wonder' | 'phase_transition'
+    type: 'phase_transition'
     title: string
     description: string
   } | null>(null)
@@ -116,6 +120,9 @@ function App() {
     }
     return false
   })
+  // WebGL support doesn't change during a session — detect once up front so we can
+  // fall back to a plain jurisdiction list instead of a blank/broken globe.
+  const hasWebGL = useMemo(() => isWebGLAvailable(), [])
 
   // Keep layout flags in sync with viewport size (handles rotation / resize)
   useEffect(() => {
@@ -130,201 +137,96 @@ function App() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-  
-  const handleTutorialClose = () => {
-    setShowTutorial(false)
-    // Mark tutorial as seen for this session
-    sessionStorage.setItem('tutorialSeen', 'true')
-    // After tutorial, show starting selector if no saved state
-    if (!state || state.auditTrail.length === 0) {
-      setShowStartingSelector(true)
-    }
-  }
-  
-  // Show tutorial only on first visit (not on every refresh or phase change)
-  useEffect(() => {
-    // Only check once when component first mounts
-    // Don't show if we're in the middle of a game (have audit trail) or if already seen
-    const tutorialSeen = sessionStorage.getItem('tutorialSeen')
-    if (!tutorialSeen) {
-      // Wait a bit for state to load, then check
-      const timer = setTimeout(() => {
-        if (state && state.auditTrail.length === 0 && !state.flags.isComplete) {
-          // Only show on truly fresh start - no decisions made yet
-          setShowTutorial(true)
-        }
-      }, 100)
-      return () => clearTimeout(timer)
-    }
-  }, []) // Empty array - only run once on mount, not on state changes
 
-  // Load scenario and initialize state
+  // Load scenario and initialize state — cold open goes straight to the game:
+  // no forced Welcome modal, no forced Tutorial, no forced starting-condition gate.
   useEffect(() => {
     async function init() {
       try {
-        console.log('App: Starting initialization...')
-        // Force reload scenario to get latest version with new nodes
         const loadedScenario = await loadScenario(true)
-        console.log('App: Scenario loaded', loadedScenario)
         setScenario(loadedScenario)
-        
-        // Try to load from shareable URL first
+
+        // Cold open skips Welcome by default; mark it seen so Help-triggered
+        // Welcome/Tutorial don't loop back into the gating flow.
+        if (!localStorage.getItem('hasSeenWelcome')) {
+          localStorage.setItem('hasSeenWelcome', 'true')
+        }
+
+        // Try to load from a shareable URL first
         const sharedState = loadFromShareableURL()
         if (sharedState) {
           dispatch({ type: 'INIT', payload: { initialState: sharedState } })
           setIsLoading(false)
           return
         }
-        
-        // Try to load from localStorage
+
+        // Try to resume from localStorage
         const saved = localStorage.getItem('scenarioState')
         const savedVersion = localStorage.getItem('scenarioStateVersion')
-        const currentVersion = loadedScenario.version || '1.0.0'
-        
-        let initialState: State
-        
+        const currentVersion = loadedScenario.version || '2.0.0'
+
         if (saved && savedVersion === currentVersion) {
           try {
             const parsed = JSON.parse(saved)
-            // Validate it has the right structure
-            if (parsed.turn !== undefined && parsed.metrics && parsed.map) {
-              // Additional validation: check for required fields
-              if (parsed.metrics.measured && parsed.metrics.unmeasured && parsed.map.regionValues) {
-                // Validate that the currentNodeId exists in the scenario
-                const nodeExists = getNodeById(loadedScenario, parsed.currentNodeId)
-                if (nodeExists) {
-                  initialState = parsed as State
-                } else {
-                  throw new Error('Current node ID not found in scenario')
-                }
-              } else {
-                throw new Error('Invalid state structure - missing required fields')
-              }
-            } else {
-              throw new Error('Invalid state structure')
-            }
-          } catch (e) {
-            console.error('Failed to parse localStorage state (version mismatch or invalid):', e)
-            // Reset to initial state due to incompatibility
-            // Clear incompatible state
-            localStorage.removeItem('scenarioState')
-            localStorage.removeItem('scenarioStateVersion')
-            const baseState = createInitialState(loadedScenario)
-            // Apply any saved variation settings
-            const savedVariation = localStorage.getItem('scenarioVariation')
-            if (savedVariation) {
-              try {
-                const variation = JSON.parse(savedVariation)
-                if (variation.difficulty && variation.startingCondition) {
-                  const adjustedMetrics = applyStartingCondition(
-                    applyDifficulty(baseState.metrics, variation.difficulty),
-                    variation.startingCondition
-                  )
-                  initialState = {
-                    ...baseState,
-                    metrics: adjustedMetrics,
-                    initialMetrics: JSON.parse(JSON.stringify(adjustedMetrics))
-                  }
-                } else {
-                  initialState = baseState
-                }
-              } catch {
-                initialState = baseState
-              }
-            } else {
-              // New game - don't show selector yet, let welcome/tutorial show first
-              // Only show selector if welcome has been seen
-              const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-              if (hasSeenWelcome) {
-                setShowStartingSelector(true)
-              }
+            if (
+              parsed.turn !== undefined &&
+              parsed.metrics &&
+              parsed.map &&
+              parsed.metrics.measured &&
+              parsed.metrics.unmeasured &&
+              parsed.map.regionValues &&
+              getNodeById(loadedScenario, parsed.currentNodeId)
+            ) {
+              dispatch({ type: 'INIT', payload: { initialState: parsed as State } })
               setIsLoading(false)
               return
             }
+          } catch (e) {
+            console.error('Failed to parse saved state, starting fresh:', e)
           }
-        } else {
-          // Version mismatch or no saved state
-          if (saved && savedVersion !== currentVersion) {
-            // Version mismatch - resetting state
-            localStorage.removeItem('scenarioState')
-            localStorage.removeItem('scenarioStateVersion')
-          }
-          // Only show selector if welcome has been seen
-          const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-          if (hasSeenWelcome) {
-            setShowStartingSelector(true)
-          }
-          setIsLoading(false)
-          return
+          // Saved state was invalid/incompatible — clear it and fall through to a fresh start
+          localStorage.removeItem('scenarioState')
+          localStorage.removeItem('scenarioStateVersion')
+        } else if (saved && savedVersion !== currentVersion) {
+          localStorage.removeItem('scenarioState')
+          localStorage.removeItem('scenarioStateVersion')
         }
-        
-        // Check if welcome has been seen
-        const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-        
-        // Don't auto-load saved state - always show welcome/selector flow first
-        // User can choose to continue saved game or start fresh
-        if (!hasSeenWelcome) {
-          // Welcome hasn't been seen - show it first
-          setIsLoading(false)
-          // Welcome will be shown (already set in useState)
-          // Don't load state yet - will be handled after welcome closes
-        } else {
-          // Welcome seen - show selector to let them choose
-          setShowStartingSelector(true)
-          setIsLoading(false)
-          // Don't auto-load saved state - let them choose via selector
-        }
+
+        // Fresh start — auto-init with the current incident condition flags
+        // (default ['standard']) and go straight into the game.
+        const conditions = getSavedScenarioConditions()
+        setScenarioConditions(conditions)
+        const initialState = createInitialState(loadedScenario, conditions)
+        dispatch({ type: 'INIT', payload: { initialState } })
+        setIsLoading(false)
       } catch (error) {
         console.error('Initialization error:', error)
         alert(`Failed to initialize: ${error instanceof Error ? error.message : 'Unknown error'}`)
         setIsLoading(false)
       }
     }
-    
+
     init()
   }, [])
-  
-  // Handle starting condition selection
-  const handleStartingConditionSelect = (difficulty: DifficultyLevel, startingCondition: StartingCondition) => {
-    setSelectedDifficulty(difficulty)
-    setSelectedStartingCondition(startingCondition)
-    
-    if (scenario) {
-      try {
-        const initialState = createInitialState(scenario, difficulty, startingCondition)
-        dispatch({ type: 'INIT', payload: { initialState } })
-        setIsLoading(false)
-        // Don't hide selector immediately - useEffect will hide it when state is available
-        
-        // Save variation settings
-        localStorage.setItem('scenarioVariation', JSON.stringify({ difficulty, startingCondition }))
-      } catch (error) {
-        console.error('Error creating initial state:', error)
-        alert(`Failed to start scenario: ${error instanceof Error ? error.message : 'Unknown error'}`)
-        setShowStartingSelector(true) // Show selector again on error
-      }
-    } else {
-      console.error('Scenario not loaded when trying to start')
-      alert('Scenario not loaded. Please refresh the page.')
-      setShowStartingSelector(true) // Show selector again
-    }
-  }
 
-  // Hide starting selector once state is confirmed available (after user selects difficulty)
-  // This ensures state is actually set before hiding selector
-  useEffect(() => {
-    if (state && state.currentNodeId && showStartingSelector && !isLoading) {
-      // State is confirmed available - safe to hide selector
-      console.log('State confirmed available, hiding selector')
-      setShowStartingSelector(false)
-    }
-  }, [state?.currentNodeId, showStartingSelector, isLoading])
-  
+  // Apply new scenario conditions from the menu-accessible selector — restarts the run.
+  const handleApplyScenarioConditions = useCallback((conditions: string[]) => {
+    setScenarioConditions(conditions)
+    localStorage.setItem('scenarioConditions', JSON.stringify(conditions))
+    setShowScenarioConditions(false)
+
+    if (!scenario) return
+    const initialState = createInitialState(scenario, conditions)
+    dispatch({ type: 'RESET', payload: { initialState } })
+    localStorage.removeItem('scenarioState')
+    localStorage.removeItem('scenarioStateVersion')
+  }, [scenario])
+
   // Save to localStorage on state change
   useEffect(() => {
     if (state && scenario) {
       localStorage.setItem('scenarioState', JSON.stringify(state))
-      localStorage.setItem('scenarioStateVersion', scenario.version || '1.0.0')
+      localStorage.setItem('scenarioStateVersion', scenario.version || '2.0.0')
     }
   }, [state, scenario])
 
@@ -333,8 +235,6 @@ function App() {
     
     // Force close all modals before processing choice to prevent black screen
     setShowImpactModal(false)
-    setShowGreatPersonModal(false)
-    setShowWonderModal(false)
     setShowPhaseSummary(false)
     
     const currentNode = getNodeById(scenario, state.currentNodeId)
@@ -347,15 +247,23 @@ function App() {
     const unmeasuredParts: string[] = []
     if (choice.delta.metrics?.unmeasured) {
       const um = choice.delta.metrics.unmeasured
-      if (um.welfareDebt) unmeasuredParts.push(um.welfareDebt > 0 ? 'increased disclosure debt' : 'reduced disclosure debt')
-      if (um.enforcementGap) unmeasuredParts.push(um.enforcementGap > 0 ? 'increased regulatory clock lag' : 'reduced regulatory clock lag')
-      if (um.regulatoryCapture) unmeasuredParts.push(um.regulatoryCapture > 0 ? 'increased narrative capture' : 'reduced narrative capture')
-      if (um.sentienceKnowledgeGap) unmeasuredParts.push(um.sentienceKnowledgeGap > 0 ? 'widened the facts gap' : 'narrowed the facts gap')
-      if (um.systemIrreversibility) unmeasuredParts.push(um.systemIrreversibility > 0 ? 'increased commitment lock' : 'reduced commitment lock')
+      if (um.disclosureDebt) unmeasuredParts.push(um.disclosureDebt > 0 ? 'increased disclosure debt' : 'reduced disclosure debt')
+      if (um.regulatoryExposure) unmeasuredParts.push(um.regulatoryExposure > 0 ? 'increased regulatory exposure' : 'reduced regulatory exposure')
+      if (um.narrativeIntegrity) unmeasuredParts.push(um.narrativeIntegrity < 0 ? 'hurt narrative integrity' : 'improved narrative integrity')
+      if (um.factsConfidence) unmeasuredParts.push(um.factsConfidence < 0 ? 'reduced facts confidence' : 'improved facts confidence')
+      if (um.commitmentLock) unmeasuredParts.push(um.commitmentLock > 0 ? 'increased commitment lock' : 'reduced commitment lock')
     }
     const unmeasuredImpact = unmeasuredParts.length > 0 
       ? `This decision ${unmeasuredParts.join(', ')}.`
       : 'No significant unmeasured disclosure impacts detected.'
+
+    // Other options on this node, for the decision log's "what else was considered" trail
+    const alternativesConsidered = currentNode.choices
+      .filter((_, idx) => idx !== choiceIndex)
+      .map(c => c.label)
+
+    // Evidence known at the moment this decision was made
+    const factsAvailable = (state.evidence || []).map(f => f.text)
 
     // Apply the choice action
     const action: Action = {
@@ -370,6 +278,8 @@ function App() {
         chosenLabel: choice.label,
         phaseId,
         unmeasuredImpact,
+        alternativesConsidered,
+        factsAvailable,
       },
     }
     
@@ -385,15 +295,38 @@ function App() {
         newState = reaffirmAssumption(newState, assumption.text, newState.turn)
       })
     }
+
+    // Infer incident flags from the choice text
+    const inferred = inferFlagsFromChoice(choice.label, rationale)
+    newState = {
+      ...newState,
+      flags: { ...newState.flags, ...inferred },
+    }
+
+    // Advance incident clock and deliver dispatches
+    const timeCost = getTimeCost(choice)
+    newState = advanceIncidentTime(newState, timeCost)
+
+    // Now that the clock has advanced, stamp the just-created audit record with the
+    // incident time it actually landed at (rather than the pre-advance time).
+    if (newState.auditTrail.length > 0) {
+      const lastIdx = newState.auditTrail.length - 1
+      const auditTrail = [...newState.auditTrail]
+      auditTrail[lastIdx] = { ...auditTrail[lastIdx], incidentTime: newState.incidentTime }
+      newState = { ...newState, auditTrail }
+    }
+
+    // Resolve next node (may diverge based on flags)
+    const nextId = resolveNextNodeId(newState, choice, currentNode)
     
     // Update to next node
     const finalState: State = {
       ...newState,
-      currentNodeId: choice.nextNodeId,
-      phaseId: getPhaseByNodeId(scenario, choice.nextNodeId) || phaseId,
+      currentNodeId: nextId,
+      phaseId: getPhaseByNodeId(scenario, nextId) || phaseId,
       flags: {
         ...newState.flags,
-        isComplete: choice.nextNodeId === 'N16_COMPLETE',
+        isComplete: nextId === 'N16_COMPLETE' || nextId.includes('COMPLETE'),
       },
     }
     
@@ -403,80 +336,12 @@ function App() {
       dispatch({ type: 'UNLOCK_ACHIEVEMENT', payload: { achievementId } })
     })
     
-    // Check for wonder completions
-    const newWonders = checkWonderCompletions(finalState)
-    let stateWithWonders = finalState
-    if (newWonders.length > 0) {
-      // Apply first wonder effect (others will be checked next turn)
-      const firstWonderId = newWonders[0]
-      const wonder = getWonder(firstWonderId)
-      if (wonder) {
-        stateWithWonders = applyWonderEffect(finalState, wonder)
-        dispatch({ type: 'COMPLETE_WONDER', payload: { wonderId: firstWonderId } })
-        setCompletedWonder(wonder)
-        // Show Wonder notification banner
-        setNotification({
-          type: 'wonder',
-          title: wonder.name,
-          description: wonder.description
-        })
-      }
-    }
-    
-    // Update finalState with achievements and wonders
     const finalStateWithAchievements = {
-      ...stateWithWonders,
+      ...finalState,
       achievements: [...(finalState.achievements || []), ...newAchievements],
-      completedWonders: [...(finalState.completedWonders || []), ...newWonders]
     }
-    
-    // Check for Great Person unlocks
-    const unlockedPerson = checkGreatPersonUnlocks(finalStateWithAchievements)
-    if (unlockedPerson) {
-      // Apply Great Person effect
-      const stateWithEffect = applyGreatPersonEffect(finalState, unlockedPerson)
-      
-      // Add to state
-      dispatch({ 
-        type: 'UNLOCK_GREAT_PERSON', 
-        payload: { 
-          person: {
-            id: unlockedPerson.id,
-            title: unlockedPerson.title,
-            description: unlockedPerson.description,
-            quote: unlockedPerson.quote,
-            unlockedTurn: finalState.turn
-          }
-        } 
-      })
-      
-      // Apply effect to metrics
-      const updatedState = {
-        ...stateWithEffect,
-        greatPeople: [...(finalStateWithAchievements.greatPeople || []), {
-          id: unlockedPerson.id,
-          title: unlockedPerson.title,
-          description: unlockedPerson.description,
-          quote: unlockedPerson.quote,
-          unlockedTurn: finalState.turn
-        }],
-        achievements: finalStateWithAchievements.achievements
-      }
-      
-      dispatch({ type: 'INIT', payload: { initialState: updatedState } })
-      
-      // Show Great Person notification banner
-      setNotification({
-        type: 'great_person',
-        title: unlockedPerson.title,
-        description: unlockedPerson.description
-      })
-      // Great Person modal disabled to prevent black screen issues
-      // setUnlockedGreatPerson(unlockedPerson)
-      // setShowGreatPersonModal(true)
-    } else {
-      dispatch({ type: 'INIT', payload: { initialState: finalStateWithAchievements } })
-    }
+
+    dispatch({ type: 'INIT', payload: { initialState: finalStateWithAchievements } })
     
     // Scroll decision panel to top after choice is made and new turn starts
     // Use setTimeout to ensure state update and DOM render have completed
@@ -526,7 +391,7 @@ function App() {
     }
     
     // Show impact modal (re-enabled)
-    const newPhaseId = getPhaseByNodeId(scenario, choice.nextNodeId) || phaseId
+    const newPhaseId = getPhaseByNodeId(scenario, finalState.currentNodeId) || phaseId
     const phaseChanged = phaseId !== newPhaseId
     
     // Show impact modal only if phase didn't change
@@ -536,7 +401,7 @@ function App() {
         nodeTitle: currentNode.title,
         delta: choice.delta,
         previousState: previousStateSnapshot,
-        currentState: unlockedPerson ? applyGreatPersonEffect(finalState, unlockedPerson) : finalState
+        currentState: finalState
       })
       setShowImpactModal(true)
     } else {
@@ -557,19 +422,21 @@ function App() {
     // Close all modals first
     setShowPhaseSummary(false)
     setShowImpactModal(false)
-    setShowGreatPersonModal(false)
-    setShowWonderModal(false)
     setCompletedPhaseId(null)
     setPreviousPhaseId(null)
     
-    const initialState = createInitialState(scenario)
+    const initialState = createInitialState(scenario, scenarioConditions)
     dispatch({ type: 'RESET', payload: { initialState } })
     localStorage.removeItem('scenarioState')
     localStorage.removeItem('scenarioStateVersion')
-  }, [scenario])
+  }, [scenario, scenarioConditions])
 
   const handleToggleDebug = useCallback(() => {
     dispatch({ type: 'TOGGLE_DEBUG' })
+  }, [])
+
+  const handleSetTimeMode = useCallback((mode: State['timeMode']) => {
+    dispatch({ type: 'SET_TIME_MODE', payload: { mode } })
   }, [])
 
   const handleLoadScenario = useCallback((loadedState: State) => {
@@ -600,8 +467,6 @@ function App() {
     if (previousPhaseId !== currentPhaseId && state && state.turn > 0) {
       // Force close all modals immediately to prevent black screen
       setShowImpactModal(false)
-      setShowGreatPersonModal(false)
-      setShowWonderModal(false)
       setShowPhaseSummary(false)
       setCompletedPhaseId(previousPhaseId)
       
@@ -662,25 +527,12 @@ function App() {
     }
   }, [state?.turn, state?.currentNodeId]) // Scroll when turn or node changes
 
-  // Show starting condition selector if needed (but only after welcome/tutorial)
-  // Note: selector needs scenario to be loaded
-  // Check localStorage/sessionStorage directly to avoid race conditions with state updates
-  const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-  const tutorialSeen = sessionStorage.getItem('tutorialSeen')
-  if (showStartingSelector && scenario && !showWelcome && !showTutorial && !showTitleCard && hasSeenWelcome && tutorialSeen) {
-    return <StartingConditionSelector onSelect={handleStartingConditionSelect} />
-  }
-  
-  // Show title card first if needed
+  // Show title card first if needed (only ever once per browser)
   if (showTitleCard) {
     // Continue rendering - title card will be shown below
   }
-  // Show welcome modal if not seen - this can show even while scenario is loading
-  else if (showWelcome) {
-    // Continue rendering - welcome modal will be shown below
-  }
-  // Show loading only if we're actually loading and not showing welcome/tutorial/selector
-  else if (isLoading && !showWelcome && !showStartingSelector && !showTitleCard) {
+  // Loading only shows while the scenario/state are actually being fetched/created
+  else if (isLoading) {
     return (
       <div style={{ 
         display: 'flex', 
@@ -703,17 +555,9 @@ function App() {
       </div>
     )
   }
-  
-  // If no state and selector is closed, something went wrong - re-show selector
-  // This prevents black screen if state didn't initialize properly
-  if (!state && !showWelcome && !showStartingSelector && !showTitleCard && scenario && !isLoading) {
-    console.warn('State not available after selector closed, re-showing selector')
-    // Re-show selector to allow retry
-    return <StartingConditionSelector onSelect={handleStartingConditionSelect} />
-  }
-  
-  // If we don't have state yet and we're still loading, show loading screen (but not if title card is showing)
-  if (!state && (isLoading || !scenario) && !showTitleCard) {
+
+  // If we still don't have state after loading finished, something went wrong — retry a fresh init
+  if (!state && !showTitleCard && scenario && !isLoading) {
     return (
       <div style={{ 
         display: 'flex', 
@@ -729,15 +573,26 @@ function App() {
         zIndex: 9999
       }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '18px', marginBottom: '12px' }}>Loading...</div>
-          {!scenario && <div style={{ fontSize: '12px', color: '#888' }}>Loading scenario data...</div>}
-          {!state && scenario && <div style={{ fontSize: '12px', color: '#888' }}>Initializing game state...</div>}
+          <div style={{ fontSize: '18px', marginBottom: '12px' }}>Something went wrong.</div>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              marginTop: '12px',
+              padding: '10px 20px',
+              backgroundColor: '#60a5fa',
+              color: '#000',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: 600
+            }}
+          >
+            Reload
+          </button>
         </div>
       </div>
     )
   }
-
-  // Debug logging removed for performance
 
   return (
     <div style={{ 
@@ -754,8 +609,9 @@ function App() {
       <HeaderBar 
         state={state} 
         onToggleDebug={handleToggleDebug}
-        onShowTutorial={() => setShowTutorial(true)}
+        onShowHelp={() => setShowWelcome(true)}
         onShowCredits={() => setShowCredits(true)}
+        onShowScenarioConditions={() => setShowScenarioConditions(true)}
       />
       
       {/* Main Content Area */}
@@ -807,6 +663,9 @@ function App() {
             overflowY: 'auto',
             backgroundColor: '#000000'
           }}>
+            {/* War-room status strip — incident clock, facts, deadlines, dispatches, debt/control */}
+            {state && <WarRoomStatusBar state={state} onSetTimeMode={handleSetTimeMode} />}
+
             {/* Map Mode Selector - matches app button highlighting */}
             {state && (
               <div style={{ marginBottom: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -823,9 +682,9 @@ function App() {
                   Map View
                 </div>
                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  {(['welfareStandards', 'welfareDebt', 'enforcement'] as const).map(mode => {
+                  {(['disclosurePosture', 'disclosureDebt', 'regulatoryExposure'] as const).map(mode => {
                     const isActive = state?.map?.mode === mode
-                    const label = mode === 'welfareStandards' ? 'Posture' : mode === 'welfareDebt' ? 'Debt' : 'Enforcement'
+                    const label = mode === 'disclosurePosture' ? 'Posture' : mode === 'disclosureDebt' ? 'Debt' : 'Enforcement'
                     return (
                       <button
                         key={mode}
@@ -864,13 +723,14 @@ function App() {
                 </div>
               </div>
             )}
-            
-            {/* Tools Menu - disabled for stability (was causing rare black-screen issues) */}
 
-            {/* Money / FAIR first — above pressure & wonders */}
+            {/* Money / FAIR first — above map view */}
             {state && <MetricsPanel state={state} />}
-            {state && <GreatPersonPanel state={state} />}
-            {state && <WonderPanel state={state} />}
+
+            {/* Evidence, decision log, and dispatch feed — war-room context below core metrics */}
+            {state && <EvidenceBoard state={state} />}
+            {state && <DecisionLogPanel state={state} />}
+            {state && <DispatchFeed state={state} />}
           </div>
         )}
 
@@ -887,7 +747,15 @@ function App() {
           justifyContent: 'center'
         }}>
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-            {state && <GlobePanel regionValues={state.map.regionValues} state={state} mapMode={state.map.mode} />}
+            {state && (
+              hasWebGL ? (
+                <GlobeErrorBoundary regionValues={state.map.regionValues} state={state} mapMode={state.map.mode}>
+                  <GlobePanel regionValues={state.map.regionValues} state={state} mapMode={state.map.mode} />
+                </GlobeErrorBoundary>
+              ) : (
+                <JurisdictionFallbackMap regionValues={state.map.regionValues} state={state} mapMode={state.map.mode} />
+              )
+            )}
           </div>
         </div>
       </div>
@@ -901,7 +769,11 @@ function App() {
           overflowY: 'auto',
           maxHeight: '40vh'
         }}>
+          {state && <WarRoomStatusBar state={state} onSetTimeMode={handleSetTimeMode} />}
           {state && <MetricsPanel state={state} />}
+          {state && <EvidenceBoard state={state} />}
+          {state && <DecisionLogPanel state={state} />}
+          {state && <DispatchFeed state={state} />}
         </div>
       )}
 
@@ -929,17 +801,12 @@ function App() {
         />
       )}
 
-      {/* Tutorial Modal - Only show if no other modals are active */}
+      {/* Tutorial Modal - opt-in via Help, never shown on the cold-open path */}
       {showTutorial && !showPhaseSummary && !showImpactModal && !showPostMortem && (
         <TutorialModal 
           onClose={() => {
             setShowTutorial(false)
-            // Mark tutorial as seen for this session
             sessionStorage.setItem('tutorialSeen', 'true')
-            // After tutorial, show starting selector if no saved state
-            if (!state || state.auditTrail.length === 0) {
-              setShowStartingSelector(true)
-            }
           }}
         />
       )}
@@ -948,43 +815,18 @@ function App() {
       {showSaveLoad && scenario && (
         <SaveLoadModal
           currentState={state}
-          scenarioVersion={scenario.version || '1.0.0'}
+          scenarioVersion={scenario.version || '2.0.0'}
           onLoad={handleLoadScenario}
           onClose={() => setShowSaveLoad(false)}
         />
       )}
 
-      {/* Scenario Variation Modal */}
-      {showVariationModal && (
-        <ScenarioVariationModal
-          onStart={(variation) => {
-            // Save variation settings
-            localStorage.setItem('scenarioVariation', JSON.stringify(variation))
-            
-            // Reset state with new variation
-            if (scenario) {
-              const baseState = createInitialState(scenario)
-              const adjustedMetrics = applyStartingCondition(
-                applyDifficulty(baseState.metrics, variation.difficulty),
-                variation.startingCondition
-              )
-              const newState = {
-                ...baseState,
-                metrics: adjustedMetrics,
-                initialMetrics: JSON.parse(JSON.stringify(adjustedMetrics))
-              }
-              dispatch({ type: 'INIT', payload: { initialState: newState } })
-              
-              // Set time limit if enabled
-              if (variation.timeLimit) {
-                setTimeLimit(variation.timeLimit)
-                setTimeRemaining(variation.timeLimit * 60) // Convert to seconds
-              }
-            }
-            
-            setShowVariationModal(false)
-          }}
-          onClose={() => setShowVariationModal(false)}
+      {/* Scenario Conditions Selector - menu-accessible only, never blocks cold open */}
+      {showScenarioConditions && (
+        <StartingConditionSelector
+          initialConditions={scenarioConditions}
+          onApply={handleApplyScenarioConditions}
+          onClose={() => setShowScenarioConditions(false)}
         />
       )}
 
@@ -1016,18 +858,6 @@ function App() {
         />
       )}
 
-      {/* Great Person Modal - Disabled to prevent black screen issues */}
-      {/* {showGreatPersonModal && unlockedGreatPerson && state && (
-        <GreatPersonModal 
-          person={unlockedGreatPerson} 
-          state={state}
-          onClose={() => {
-            setShowGreatPersonModal(false)
-            setUnlockedGreatPerson(null)
-          }} 
-        />
-      )} */}
-
       {/* Notification Banner */}
       {notification && (
         <NotificationBanner
@@ -1035,7 +865,7 @@ function App() {
           title={notification.title}
           description={notification.description}
           onClose={() => setNotification(null)}
-          autoCloseDelay={notification.type === 'phase_transition' ? 3000 : 5000}
+          autoCloseDelay={3000}
         />
       )}
 
@@ -1049,55 +879,23 @@ function App() {
         />
       )}
 
-      {/* Title Card - Shows first on initial load */}
+      {/* Title Card - shows once per browser on cold open, never blocks return visits */}
       {showTitleCard && (
         <TitleCard
           onClose={() => {
-            console.log('TitleCard onClose called')
-            // Check if this is the first time seeing the title card BEFORE setting the flag
-            const isFirstTime = !localStorage.getItem('hasSeenTitleCard')
             setShowTitleCard(false)
             localStorage.setItem('hasSeenTitleCard', 'true')
-            
-            // After title card, check what to show next
-            // Use setTimeout to ensure state updates happen after title card closes
-            setTimeout(() => {
-              const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-              
-              console.log('TitleCard onClose - hasSeenWelcome:', hasSeenWelcome, 'isFirstTime:', isFirstTime)
-              
-              if (!hasSeenWelcome) {
-                // Show welcome modal first
-                console.log('TitleCard: Showing welcome modal')
-                setShowWelcome(true)
-              } else {
-                // Welcome already seen - always show tutorial after title card
-                // This ensures users get help/tutorial after seeing the title card
-                sessionStorage.removeItem('tutorialSeen')
-                console.log('TitleCard: Showing tutorial after title card')
-                setShowTutorial(true)
-              }
-            }, 100)
           }}
         />
       )}
 
-      {/* Welcome Modal */}
+      {/* Welcome Modal - opt-in via Help button only; chains into the Tutorial on close */}
       {showWelcome && !showTitleCard && (
         <WelcomeModal
           onClose={() => {
             setShowWelcome(false)
             localStorage.setItem('hasSeenWelcome', 'true')
-            
-            // After welcome closes, show tutorial if not seen, otherwise show selector
-            // Don't auto-load saved state - let user choose via selector
-            const tutorialSeen = sessionStorage.getItem('tutorialSeen')
-            if (!tutorialSeen) {
-              setShowTutorial(true)
-            } else {
-              // Tutorial seen, show starting selector
-              setShowStartingSelector(true)
-            }
+            setShowTutorial(true)
           }}
         />
       )}

@@ -122,7 +122,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
         const { item: choice, originalIndex } = shuffledChoices[shuffledIndex]
         
         // Check if choice is locked
-        const isLocked = state.metrics.unmeasured.systemIrreversibility > 0.8 && 
+        const isLocked = state.metrics.unmeasured.commitmentLock > 0.8 && 
                         choice.delta.locks && choice.delta.locks.length > 0
         const choiceId = `C${originalIndex + 1}`
         const isThisChoiceLocked = isLocked && choice.delta.locks?.includes(choiceId)
@@ -135,7 +135,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [node?.id, shuffledChoices, state?.metrics.unmeasured.systemIrreversibility, handleChoiceClick])
+  }, [node?.id, shuffledChoices, state?.metrics.unmeasured.commitmentLock, handleChoiceClick])
 
   if (!node) {
     return (
@@ -459,8 +459,8 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
             SELECT DECISION: <span style={{ fontSize: '10px', color: '#666', fontWeight: 400 }}>(Press 1-{shuffledChoices.length})</span>
           </div>
         {shuffledChoices.map(({ item: choice, originalIndex }, shuffledIdx) => {
-        // Check if choice is locked (systemIrreversibility too high)
-        const isLocked = state && state.metrics.unmeasured.systemIrreversibility > 0.8 && 
+        // Check if choice is locked (commitmentLock too high)
+        const isLocked = state && state.metrics.unmeasured.commitmentLock > 0.8 && 
                         choice.delta.locks && choice.delta.locks.length > 0
         const choiceId = `C${originalIndex + 1}`
         const isThisChoiceLocked = isLocked && choice.delta.locks?.includes(choiceId)
@@ -538,8 +538,8 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
                 fontWeight: 500
               }}>
                 Locked: <ContextualTooltip
-                  term={glossary.systemIrreversibility.term}
-                  definition={glossary.systemIrreversibility.definition}
+                  term={glossary.commitmentLock.term}
+                  definition={glossary.commitmentLock.definition}
                   position="top"
                 >
                   <span>Irreversibility</span>

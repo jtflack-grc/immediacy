@@ -77,15 +77,15 @@ function RangeRow({
 
 export default function FairLossPanel({ state }: FairLossPanelProps) {
   const estimate = useMemo(() => estimateFairLoss(state.metrics), [
-    state.metrics.measured.productionEfficiency,
-    state.metrics.measured.costPerUnit,
-    state.metrics.measured.welfareIncidentRate,
-    state.metrics.measured.welfareStandardAdoption,
-    state.metrics.unmeasured.welfareDebt,
-    state.metrics.unmeasured.enforcementGap,
-    state.metrics.unmeasured.regulatoryCapture,
-    state.metrics.unmeasured.sentienceKnowledgeGap,
-    state.metrics.unmeasured.systemIrreversibility,
+    state.metrics.measured.operationalControl,
+    state.metrics.measured.financialBurn,
+    state.metrics.measured.serviceDisruption,
+    state.metrics.measured.disclosurePosture,
+    state.metrics.unmeasured.disclosureDebt,
+    state.metrics.unmeasured.regulatoryExposure,
+    state.metrics.unmeasured.narrativeIntegrity,
+    state.metrics.unmeasured.factsConfidence,
+    state.metrics.unmeasured.commitmentLock,
     state.turn,
   ])
 

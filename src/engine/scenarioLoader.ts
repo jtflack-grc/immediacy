@@ -1,5 +1,5 @@
 import { Scenario, Node, State } from './scenarioTypes'
-import { DifficultyLevel, StartingCondition, applyDifficulty, applyStartingCondition } from '../utils/scenarioVariations'
+import { applyIncidentConditions, DEFAULT_INCIDENT_CONDITIONS } from '../utils/scenarioVariations'
 
 // Export function to clear cache (useful for development)
 export function clearScenarioCache(): void {
@@ -32,7 +32,7 @@ export async function loadScenario(forceReload: boolean = false): Promise<Scenar
     console.error('Error loading scenario:', error)
     // Return a minimal fallback scenario
     return {
-      version: '1.0.0',
+      version: '2.0.0',
       phases: [],
     }
   }
@@ -76,38 +76,35 @@ export function getPhaseByNodeId(scenario: Scenario, nodeId: string): string | n
 /**
  * Create initial state from scenario
  * @param scenario The scenario definition
- * @param difficulty Optional difficulty level (defaults to 'medium')
- * @param startingCondition Optional starting condition (defaults to 'default')
+ * @param conditions Optional incident condition flags (defaults to ['standard'])
  */
 export function createInitialState(
   scenario: Scenario,
-  difficulty: DifficultyLevel = 'medium',
-  startingCondition: StartingCondition = 'default'
+  conditions: string[] = DEFAULT_INCIDENT_CONDITIONS
 ): State {
   const firstPhase = scenario.phases[0]
   const firstNode = firstPhase?.nodes[0]
 
   let initialMetrics = {
     measured: {
-      productionEfficiency: 0.45,
-      costPerUnit: 0.25,
-      welfareIncidentRate: 0.22,
-      welfareStandardAdoption: 0.6,
+      operationalControl: 0.45,
+      financialBurn: 0.25,
+      serviceDisruption: 0.22,
+      disclosurePosture: 0.6,
+      evidenceIntegrity: 0.7,
+      stakeholderTrust: 0.6,
     },
     unmeasured: {
-      welfareDebt: 0.15,
-      enforcementGap: 0.18,
-      regulatoryCapture: 0.2,
-      sentienceKnowledgeGap: 0.35,
-      systemIrreversibility: 0.12,
+      disclosureDebt: 0.15,
+      regulatoryExposure: 0.18,
+      narrativeIntegrity: 0.8,
+      factsConfidence: 0.65,
+      commitmentLock: 0.12,
     },
   }
 
-  // Apply difficulty level
-  initialMetrics = applyDifficulty(initialMetrics, difficulty)
-  
-  // Apply starting condition
-  initialMetrics = applyStartingCondition(initialMetrics, startingCondition)
+  // Apply incident condition flags (staffing, telemetry, jurisdiction, pressure, etc.)
+  initialMetrics = applyIncidentConditions(initialMetrics, conditions)
 
   // Initial jurisdiction pressure / disclosure posture by country
   const regionValues = {
@@ -159,7 +156,7 @@ export function createInitialState(
     metrics: JSON.parse(JSON.stringify(initialMetrics)), // Deep copy
     initialMetrics: JSON.parse(JSON.stringify(initialMetrics)), // Store initial for history
     map: {
-      mode: 'welfareStandards',
+      mode: 'disclosurePosture',
       regionValues,
       activeArcs: [],
       activeHubs: [],
@@ -171,16 +168,40 @@ export function createInitialState(
     },
     flags: {
       isComplete: false,
-      showDebug: false,
+      showCredits: false,
     },
-    greatPeople: [],
     achievements: [],
-    completedWonders: [],
     researchedTechs: [],
-    activeEvents: [],
     victoryType: null,
     lossWarnings: [],
     lossConditionsMet: [],
     playerName: undefined,  // Will be set during Turn U
+    incidentTime: 0,
+    timeMode: 'simulated',
+    evidence: [
+      {
+        id: 'fact_seed_detection',
+        text: 'SOC flagged anomalous exfil-pattern traffic at T+0 — awareness time not yet certified.',
+        kind: 'preliminary',
+        source: 'SOC',
+        timestamp: 0,
+        confidence: 0.35,
+        verificationStatus: 'unverified',
+      },
+      {
+        id: 'fact_seed_scope',
+        text: 'Initial triage suggests a single tenant affected — scope not yet confirmed by forensics.',
+        kind: 'assumption',
+        source: 'Incident Commander',
+        timestamp: 0,
+        confidence: 0.25,
+        verificationStatus: 'unverified',
+      },
+    ],
+    deadlines: [],
+    dispatches: [],
+    dispatchLog: [],
+    scenarioConditions: conditions,
+    schemaVersion: '2.0.0',
   }
 }

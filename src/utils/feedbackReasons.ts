@@ -3,55 +3,55 @@
 export function getMetricChangeReason(metricKey: string, change: number, choiceContext?: string): string {
   const isIncrease = change > 0
   
-  if (metricKey === 'productionEfficiency') {
+  if (metricKey === 'operationalControl') {
     return isIncrease
       ? 'Containment or restore actions strengthened operational control of the incident.'
       : 'Scope expanded, restore stalled, or isolation tradeoffs cut operational control.'
   }
   
-  if (metricKey === 'welfareStandardAdoption') {
+  if (metricKey === 'disclosurePosture') {
     return isIncrease
       ? 'Disclosure process tightened — notices, trust-center updates, or counsel checkpoints aligned.'
       : 'Disclosure posture slipped: delayed notices, inconsistent messaging, or ad-hoc war-room thrash.'
   }
   
-  if (metricKey === 'costPerUnit') {
+  if (metricKey === 'financialBurn') {
     return isIncrease
       ? 'IR, counsel, overtime, or vendor spend raised response burn.'
       : 'Burn eased as the room stabilized or expensive paths were deferred.'
   }
   
-  if (metricKey === 'welfareIncidentRate') {
+  if (metricKey === 'serviceDisruption') {
     return isIncrease
       ? 'Exposure severity rose — more sensitive data, encryption progress, or leak-site pressure.'
       : 'Exposure severity eased as containment held or blast radius clarified downward.'
   }
   
-  if (metricKey === 'welfareDebt') {
+  if (metricKey === 'disclosureDebt') {
     return isIncrease
       ? 'Silence, drip truth, or spin added disclosure debt that will compound until forced.'
       : 'Harder, earlier statements paid down disclosure debt.'
   }
   
-  if (metricKey === 'enforcementGap') {
+  if (metricKey === 'regulatoryExposure') {
     return isIncrease
       ? 'Notice clocks slipped relative to awareness — regulatory clock lag widened.'
       : 'Timed disclosure checkpoints or counsel discipline closed regulatory clock lag.'
   }
   
-  if (metricKey === 'regulatoryCapture') {
+  if (metricKey === 'narrativeIntegrity') {
     return isIncrease
-      ? 'Messaging drifted from operational truth — narrative capture increased.'
-      : 'Facts-first updates reduced narrative capture.'
+      ? 'Facts-first updates realigned messaging with operational truth.'
+      : 'Messaging drifted from operational truth — narrative integrity fell.'
   }
   
-  if (metricKey === 'sentienceKnowledgeGap') {
+  if (metricKey === 'factsConfidence') {
     return isIncrease
-      ? 'Blast radius, data types, or attacker capability stayed unclear — facts gap widened.'
-      : 'Forensics or scoping narrowed the facts gap.'
+      ? 'Forensics or scoping narrowed the facts gap — confidence rose.'
+      : 'Blast radius, data types, or attacker capability stayed unclear — facts confidence fell.'
   }
   
-  if (metricKey === 'systemIrreversibility') {
+  if (metricKey === 'commitmentLock') {
     return isIncrease
       ? 'Payments, denials, or attributions locked in — commitment lock rose.'
       : 'You preserved optionality; commitment lock eased.'

@@ -55,15 +55,15 @@ function rangeFromMode(mode: number, down: number, up: number): FairRange {
 export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
   const m = metrics.measured
   const u = metrics.unmeasured
-  const control = clamp(m.productionEfficiency, 0, 1)
-  const burn = clamp(m.costPerUnit, 0, 1)
-  const exposure = clamp(m.welfareIncidentRate, 0, 1)
-  const posture = clamp(m.welfareStandardAdoption / 3, 0, 1)
-  const debt = clamp(u.welfareDebt, 0, 1)
-  const clock = clamp(u.enforcementGap, 0, 1)
-  const narrative = clamp(u.regulatoryCapture, 0, 1)
-  const facts = clamp(u.sentienceKnowledgeGap, 0, 1)
-  const lock = clamp(u.systemIrreversibility, 0, 1)
+  const control = clamp(m.operationalControl, 0, 1)
+  const burn = clamp(m.financialBurn, 0, 1)
+  const exposure = clamp(m.serviceDisruption, 0, 1)
+  const posture = clamp(m.disclosurePosture / 3, 0, 1)
+  const debt = clamp(u.disclosureDebt, 0, 1)
+  const clock = clamp(u.regulatoryExposure, 0, 1)
+  const narrative = clamp(1 - u.narrativeIntegrity, 0, 1)
+  const facts = clamp(1 - u.factsConfidence, 0, 1)
+  const lock = clamp(u.commitmentLock, 0, 1)
 
   const primaryDrivers: FairDriver[] = [
     { id: 'burn', label: 'Response burn (IR, counsel, overtime)', dollars: burn * 8_000_000, kind: 'primary' },

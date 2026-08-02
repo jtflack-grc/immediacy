@@ -31,10 +31,10 @@ export const ACHIEVEMENTS: Achievement[] = [
     name: 'War-Room Balancer',
     description: 'Held measured control while keeping disclosure debt in check',
     checkCondition: (state) => {
-      const successIndex = state.metrics.measured.productionEfficiency * 0.3 +
-                          Math.min(1, state.metrics.measured.welfareStandardAdoption / 3) * 0.3 +
-                          (1 - state.metrics.measured.costPerUnit) * 0.2 +
-                          (1 - state.metrics.measured.welfareIncidentRate) * 0.2
+      const successIndex = state.metrics.measured.operationalControl * 0.3 +
+                          Math.min(1, state.metrics.measured.disclosurePosture / 3) * 0.3 +
+                          (1 - state.metrics.measured.financialBurn) * 0.2 +
+                          (1 - state.metrics.measured.serviceDisruption) * 0.2
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
       
       return successIndex > 0.6 && debtIndex < 0.4 && state.auditTrail.length >= 8
@@ -53,7 +53,7 @@ export const ACHIEVEMENTS: Achievement[] = [
           record.chosenLabel.toLowerCase().includes(keyword)
         )
       )
-      return researchDecisions.length >= 4 && state.metrics.unmeasured.sentienceKnowledgeGap < 0.25
+      return researchDecisions.length >= 4 && state.metrics.unmeasured.factsConfidence > 0.75
     },
     icon: 'https://randomuser.me/api/portraits/women/82.jpg'
   },
@@ -63,7 +63,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     description: 'Kept disclosure debt low across the incident',
     checkCondition: (state) => {
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
-      return debtIndex < 0.2 && state.metrics.unmeasured.welfareDebt < 0.15
+      return debtIndex < 0.2 && state.metrics.unmeasured.disclosureDebt < 0.15
     },
     icon: 'https://randomuser.me/api/portraits/men/46.jpg'
   },
@@ -72,8 +72,8 @@ export const ACHIEVEMENTS: Achievement[] = [
     name: 'Clock Keeper',
     description: 'Held regulatory clock lag and narrative capture down',
     checkCondition: (state) => {
-      return state.metrics.unmeasured.enforcementGap < 0.15 &&
-             state.metrics.unmeasured.regulatoryCapture < 0.2
+      return state.metrics.unmeasured.regulatoryExposure < 0.15 &&
+             state.metrics.unmeasured.narrativeIntegrity > 0.8
     },
     icon: 'https://randomuser.me/api/portraits/women/37.jpg'
   },
@@ -82,8 +82,8 @@ export const ACHIEVEMENTS: Achievement[] = [
     name: 'Containment Ace',
     description: 'Maintained high operational control with contained burn',
     checkCondition: (state) => {
-      return state.metrics.measured.productionEfficiency > 0.75 &&
-             state.metrics.measured.costPerUnit < 0.3
+      return state.metrics.measured.operationalControl > 0.75 &&
+             state.metrics.measured.financialBurn < 0.3
     },
     icon: 'https://randomuser.me/api/portraits/men/58.jpg'
   },
@@ -102,19 +102,19 @@ export const ACHIEVEMENTS: Achievement[] = [
     name: 'Every Second Counts',
     description: 'Balance victory — control, clocks, and debt all in good ranges',
     checkCondition: (state) => {
-      const successIndex = state.metrics.measured.productionEfficiency * 0.3 +
-                          Math.min(1, state.metrics.measured.welfareStandardAdoption / 3) * 0.3 +
-                          (1 - state.metrics.measured.costPerUnit) * 0.2 +
-                          (1 - state.metrics.measured.welfareIncidentRate) * 0.2
+      const successIndex = state.metrics.measured.operationalControl * 0.3 +
+                          Math.min(1, state.metrics.measured.disclosurePosture / 3) * 0.3 +
+                          (1 - state.metrics.measured.financialBurn) * 0.2 +
+                          (1 - state.metrics.measured.serviceDisruption) * 0.2
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
       const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
       return successIndex > 0.65 && 
              debtIndex < 0.35 && 
-             state.metrics.unmeasured.enforcementGap < 0.25 && 
+             state.metrics.unmeasured.regulatoryExposure < 0.25 && 
              avgPosture > 0.55 &&
-             state.metrics.unmeasured.regulatoryCapture < 0.3 &&
-             state.metrics.unmeasured.sentienceKnowledgeGap < 0.3
+             state.metrics.unmeasured.narrativeIntegrity > 0.7 &&
+             state.metrics.unmeasured.factsConfidence > 0.7
     },
     icon: 'https://randomuser.me/api/portraits/men/63.jpg'
   },

@@ -108,6 +108,9 @@ export function buildMessageSequence(node: Node, turn: number, playerName?: stri
       if (study.lastVerified) {
         studyContent += `\n\n<span style="font-size: 11px; color: #4ade80;">✓ Verified ${study.lastVerified}</span>`
       }
+      if (study.teachingNote) {
+        studyContent += `\n\n<span style="font-size: 11px; color: #fb923c;">⚠ Teaching note: ${study.teachingNote}</span>`
+      }
 
       messages.push({
         id: `${node.id}-casestudy-${idx}`,

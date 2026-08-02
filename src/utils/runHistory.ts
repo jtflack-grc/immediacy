@@ -100,17 +100,17 @@ export function clearSavedRuns(): void {
 }
 
 function calculateSuccessIndex(measured: any): number {
-  const { welfareStandardAdoption, productionEfficiency, welfareIncidentRate, costPerUnit } = measured
+  const { disclosurePosture, operationalControl, serviceDisruption, financialBurn } = measured
   // Normalize adoption (0-3 scale) to 0-1
-  const normalizedAdoption = welfareStandardAdoption / 3
+  const normalizedAdoption = disclosurePosture / 3
   // Lower is better for incident rate and cost
-  const normalizedIncidents = 1 - welfareIncidentRate
-  const normalizedCost = 1 - costPerUnit
+  const normalizedIncidents = 1 - serviceDisruption
+  const normalizedCost = 1 - financialBurn
   
-  return (normalizedAdoption * 0.4 + productionEfficiency * 0.2 + normalizedIncidents * 0.3 + normalizedCost * 0.1)
+  return (normalizedAdoption * 0.4 + operationalControl * 0.2 + normalizedIncidents * 0.3 + normalizedCost * 0.1)
 }
 
 function calculateDebtIndex(unmeasured: any): number {
-  const { welfareDebt, enforcementGap, regulatoryCapture, sentienceKnowledgeGap, systemIrreversibility } = unmeasured
-  return (welfareDebt * 0.3 + enforcementGap * 0.2 + regulatoryCapture * 0.2 + sentienceKnowledgeGap * 0.15 + systemIrreversibility * 0.15)
+  const { disclosureDebt, regulatoryExposure, narrativeIntegrity, factsConfidence, commitmentLock } = unmeasured
+  return (disclosureDebt * 0.3 + regulatoryExposure * 0.2 + (1 - narrativeIntegrity) * 0.2 + (1 - factsConfidence) * 0.15 + commitmentLock * 0.15)
 }

@@ -115,39 +115,39 @@ function generatePostMortemHTML(state: any, measuredIndex: number, debtIndex: nu
     <tbody>
       <tr>
         <td>Operational Control</td>
-        <td>${(state.metrics.measured.productionEfficiency * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.measured.operationalControl * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Disclosure Posture</td>
-        <td>${(state.metrics.measured.welfareStandardAdoption * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.measured.disclosurePosture * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Response Burn</td>
-        <td>${(state.metrics.measured.costPerUnit * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.measured.financialBurn * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Exposure Severity</td>
-        <td>${(state.metrics.measured.welfareIncidentRate * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.measured.serviceDisruption * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Disclosure Debt</td>
-        <td>${(state.metrics.unmeasured.welfareDebt * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.unmeasured.disclosureDebt * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Regulatory Clock Lag</td>
-        <td>${(state.metrics.unmeasured.enforcementGap * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.unmeasured.regulatoryExposure * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Narrative Capture</td>
-        <td>${(state.metrics.unmeasured.regulatoryCapture * 100).toFixed(1)}%</td>
+        <td>${((1 - state.metrics.unmeasured.narrativeIntegrity) * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Facts Gap</td>
-        <td>${(state.metrics.unmeasured.sentienceKnowledgeGap * 100).toFixed(1)}%</td>
+        <td>${((1 - state.metrics.unmeasured.factsConfidence) * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Commitment Lock</td>
-        <td>${(state.metrics.unmeasured.systemIrreversibility * 100).toFixed(1)}%</td>
+        <td>${(state.metrics.unmeasured.commitmentLock * 100).toFixed(1)}%</td>
       </tr>
     </tbody>
   </table>

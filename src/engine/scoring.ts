@@ -1,64 +1,52 @@
 import { State, MeasuredMetrics, UnmeasuredMetrics } from './scenarioTypes'
 
-/**
- * Calculate "Measured Success Index" - aggregate of measured metrics
- * Higher is better (weighted average)
- */
+/** Control Index — higher is better */
 export function calculateMeasuredSuccessIndex(metrics: MeasuredMetrics): number {
-  // Weighted average: production efficiency and welfare standard adoption are positive,
-  // while cost and incidents are negative influences on success (lower is better).
   const weights = {
-    productionEfficiency: 0.3,
-    welfareStandardAdoption: 0.3,  // Can be > 1, so normalize
-    // For cost and incidents we invert the metric (1 - x) so that
-    // lower values (good) contribute positively to the index.
-    costPerUnit: 0.2,
-    welfareIncidentRate: 0.2,
+    operationalControl: 0.22,
+    disclosurePosture: 0.22,
+    financialBurn: 0.14,
+    serviceDisruption: 0.14,
+    evidenceIntegrity: 0.14,
+    stakeholderTrust: 0.14,
   }
 
-  const normalizedAdoption = Math.min(1, metrics.welfareStandardAdoption / 3) // Normalize to 0-1
+  const posture = Math.min(1, metrics.disclosurePosture / 3)
 
   return (
-    metrics.productionEfficiency * weights.productionEfficiency +
-    normalizedAdoption * weights.welfareStandardAdoption +
-    (1 - metrics.costPerUnit) * weights.costPerUnit +          // Invert cost (lower is better)
-    (1 - metrics.welfareIncidentRate) * weights.welfareIncidentRate  // Invert incidents (lower is better)
+    metrics.operationalControl * weights.operationalControl +
+    posture * weights.disclosurePosture +
+    (1 - metrics.financialBurn) * weights.financialBurn +
+    (1 - metrics.serviceDisruption) * weights.serviceDisruption +
+    metrics.evidenceIntegrity * weights.evidenceIntegrity +
+    metrics.stakeholderTrust * weights.stakeholderTrust
   )
 }
 
-/**
- * Calculate "Governance Debt Index" - aggregate of unmeasured metrics
- * Higher means more debt accumulated
- */
+/** Disclosure Debt Index — higher means more hidden risk */
 export function calculateGovernanceDebtIndex(metrics: UnmeasuredMetrics): number {
-  // All unmeasured metrics contribute to debt
-  // System irreversibility is already inverted (higher = more irreversible = more debt)
   const weights = {
-    welfareDebt: 0.25,
-    enforcementGap: 0.25,
-    regulatoryCapture: 0.15,
-    sentienceKnowledgeGap: 0.15,
-    systemIrreversibility: 0.2,  // Higher irreversibility = higher debt
+    disclosureDebt: 0.28,
+    regulatoryExposure: 0.24,
+    commitmentLock: 0.2,
+    // invert higher-better metrics into debt contribution
+    narrativeIntegrity: 0.14,
+    factsConfidence: 0.14,
   }
 
   return (
-    metrics.welfareDebt * weights.welfareDebt +
-    metrics.enforcementGap * weights.enforcementGap +
-    metrics.regulatoryCapture * weights.regulatoryCapture +
-    metrics.sentienceKnowledgeGap * weights.sentienceKnowledgeGap +
-    metrics.systemIrreversibility * weights.systemIrreversibility
+    metrics.disclosureDebt * weights.disclosureDebt +
+    metrics.regulatoryExposure * weights.regulatoryExposure +
+    metrics.commitmentLock * weights.commitmentLock +
+    (1 - metrics.narrativeIntegrity) * weights.narrativeIntegrity +
+    (1 - metrics.factsConfidence) * weights.factsConfidence
   )
 }
 
-/**
- * Get trajectory data for post-mortem visualization
- */
 export function getTrajectoryData(_state: State, _auditTrail: State['auditTrail']) {
-  // This would track metrics over time
-  // For now, return empty arrays
   return {
     measuredSuccess: [] as number[],
     governanceDebt: [] as number[],
-    turns: [] as number[]
+    turns: [] as number[],
   }
 }

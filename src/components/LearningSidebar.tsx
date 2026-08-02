@@ -28,41 +28,41 @@ export default function LearningSidebar({ node, state, scenario, isCollapsed, on
 
     // Phase-specific concepts
     if (phaseId === 'P1_FOUNDATION') {
-      concepts.push('sentienceKnowledgeGap', 'welfareStandardAdoption', 'assumptions')
+      concepts.push('factsConfidence', 'disclosurePosture', 'assumptions')
     } else if (phaseId === 'P2_SCALE') {
-      concepts.push('welfareDebt', 'productionEfficiency', 'enforcementGap')
+      concepts.push('disclosureDebt', 'operationalControl', 'regulatoryExposure')
     } else if (phaseId === 'P3_ENFORCEMENT') {
-      concepts.push('enforcementGap', 'regulatoryCapture', 'measuredMetrics', 'unmeasuredMetrics')
+      concepts.push('regulatoryExposure', 'narrativeIntegrity', 'measuredMetrics', 'unmeasuredMetrics')
     } else if (phaseId === 'P4_INTEGRATION') {
-      concepts.push('systemIrreversibility', 'welfareDebt', 'memoryDecay')
+      concepts.push('commitmentLock', 'disclosureDebt', 'memoryDecay')
     } else if (phaseId === 'P5_IRREVERSIBILITY') {
-      concepts.push('systemIrreversibility', 'debtIndex', 'successIndex')
+      concepts.push('commitmentLock', 'debtIndex', 'successIndex')
     }
 
     // Node-specific concepts based on title/content
     const nodeTitle = node.title.toLowerCase()
     if (nodeTitle.includes('scope') || nodeTitle.includes('forensic') || nodeTitle.includes('facts') || nodeTitle.includes('detect')) {
-      concepts.push('sentienceKnowledgeGap')
+      concepts.push('factsConfidence')
     }
     if (nodeTitle.includes('notice') || nodeTitle.includes('disclos') || nodeTitle.includes('regulat') || nodeTitle.includes('gdpr')) {
-      concepts.push('enforcementGap', 'regulatoryCapture')
+      concepts.push('regulatoryExposure', 'narrativeIntegrity')
     }
     if (nodeTitle.includes('ransom') || nodeTitle.includes('pay') || nodeTitle.includes('deny') || nodeTitle.includes('negotiat')) {
-      concepts.push('welfareDebt', 'systemIrreversibility')
+      concepts.push('disclosureDebt', 'commitmentLock')
     }
     if (nodeTitle.includes('customer') || nodeTitle.includes('board') || nodeTitle.includes('comms') || nodeTitle.includes('cross')) {
-      concepts.push('regulatoryCapture', 'welfareStandardAdoption')
+      concepts.push('narrativeIntegrity', 'disclosurePosture')
     }
 
     // Add metrics that are currently being affected
-    if (state.metrics.unmeasured.welfareDebt > 0.3) {
-      concepts.push('welfareDebt')
+    if (state.metrics.unmeasured.disclosureDebt > 0.3) {
+      concepts.push('disclosureDebt')
     }
-    if (state.metrics.unmeasured.enforcementGap > 0.3) {
-      concepts.push('enforcementGap')
+    if (state.metrics.unmeasured.regulatoryExposure > 0.3) {
+      concepts.push('regulatoryExposure')
     }
-    if (state.metrics.unmeasured.systemIrreversibility > 0.5) {
-      concepts.push('systemIrreversibility')
+    if (state.metrics.unmeasured.commitmentLock > 0.5) {
+      concepts.push('commitmentLock')
     }
 
     // Remove duplicates

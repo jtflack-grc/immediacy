@@ -8,7 +8,7 @@ export interface DebtEvent {
   turn: number
   nodeTitle: string
   choice: string
-  debtType: 'welfareDebt' | 'enforcementGap' | 'regulatoryCapture' | 'sentienceKnowledgeGap' | 'systemIrreversibility'
+  debtType: 'disclosureDebt' | 'regulatoryExposure' | 'narrativeIntegrity' | 'factsConfidence' | 'commitmentLock'
   magnitude: number
   cumulativeDebt: number
   description: string
@@ -69,23 +69,28 @@ function buildDebtTimeline(state: State): DebtEvent[] {
     const prevMetrics = idx > 0 && state.auditTrail[idx - 1].metricsSnapshot?.unmeasured
       ? state.auditTrail[idx - 1].metricsSnapshot!.unmeasured
       : state.initialMetrics?.unmeasured || {
-          welfareDebt: 0,
-          enforcementGap: 0,
-          regulatoryCapture: 0,
-          sentienceKnowledgeGap: 0,
-          systemIrreversibility: 0
+          disclosureDebt: 0,
+          regulatoryExposure: 0,
+          narrativeIntegrity: 1,
+          factsConfidence: 1,
+          commitmentLock: 0
         }
 
+    // Debt-style types: higher-better metrics (narrativeIntegrity/factsConfidence) are
+    // tracked via their "gap" (1 - value) so a rising number always means rising debt.
     const debtTypes: Array<keyof typeof metrics> = [
-      'welfareDebt',
-      'enforcementGap',
-      'regulatoryCapture',
-      'sentienceKnowledgeGap',
-      'systemIrreversibility'
+      'disclosureDebt',
+      'regulatoryExposure',
+      'narrativeIntegrity',
+      'factsConfidence',
+      'commitmentLock'
     ]
+    const higherBetter = new Set<keyof typeof metrics>(['narrativeIntegrity', 'factsConfidence'])
 
     debtTypes.forEach(debtType => {
-      const change = metrics[debtType] - prevMetrics[debtType]
+      const currentValue = higherBetter.has(debtType) ? 1 - metrics[debtType] : metrics[debtType]
+      const prevValue = higherBetter.has(debtType) ? 1 - prevMetrics[debtType] : prevMetrics[debtType]
+      const change = currentValue - prevValue
       if (change > 0.05) { // Only record significant changes (>5%)
         cumulativeDebt = calculateGovernanceDebtIndex(metrics)
         events.push({
@@ -115,11 +120,11 @@ function generateDebtDescription(
   const magnitudePercent = (magnitude * 100).toFixed(0)
   
   const descriptions: Record<DebtEvent['debtType'], string> = {
-    welfareDebt: `Disclosure debt increased by ${magnitudePercent}% following "${record.chosenLabel}". Silence, drip truth, or spin compounded.`,
-    enforcementGap: `Regulatory clock lag increased by ${magnitudePercent}% after "${record.chosenLabel}". Notice timelines slipped relative to awareness.`,
-    regulatoryCapture: `Narrative capture increased by ${magnitudePercent}% following "${record.chosenLabel}". Messaging drifted from operational truth.`,
-    sentienceKnowledgeGap: `Facts gap increased by ${magnitudePercent}% after "${record.chosenLabel}". Blast radius or data types remained unclear.`,
-    systemIrreversibility: `Commitment lock increased by ${magnitudePercent}% following "${record.chosenLabel}". Statements or deals got harder to unwind.`
+    disclosureDebt: `Disclosure debt increased by ${magnitudePercent}% following "${record.chosenLabel}". Silence, drip truth, or spin compounded.`,
+    regulatoryExposure: `Regulatory clock lag increased by ${magnitudePercent}% after "${record.chosenLabel}". Notice timelines slipped relative to awareness.`,
+    narrativeIntegrity: `Narrative capture increased by ${magnitudePercent}% following "${record.chosenLabel}". Messaging drifted from operational truth.`,
+    factsConfidence: `Facts gap increased by ${magnitudePercent}% after "${record.chosenLabel}". Blast radius or data types remained unclear.`,
+    commitmentLock: `Commitment lock increased by ${magnitudePercent}% following "${record.chosenLabel}". Statements or deals got harder to unwind.`
   }
 
   return descriptions[debtType]
@@ -131,13 +136,13 @@ function generateDebtDescription(
 function calculateDebtSummary(state: State, timeline: DebtEvent[]): DebtReport['summary'] {
   const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
   
-  // Calculate debt by type
+  // Calculate debt by type (narrativeIntegrity/factsConfidence shown as their "gap")
   const debtByType: Record<string, number> = {
-    welfareDebt: state.metrics.unmeasured.welfareDebt,
-    enforcementGap: state.metrics.unmeasured.enforcementGap,
-    regulatoryCapture: state.metrics.unmeasured.regulatoryCapture,
-    sentienceKnowledgeGap: state.metrics.unmeasured.sentienceKnowledgeGap,
-    systemIrreversibility: state.metrics.unmeasured.systemIrreversibility
+    disclosureDebt: state.metrics.unmeasured.disclosureDebt,
+    regulatoryExposure: state.metrics.unmeasured.regulatoryExposure,
+    narrativeIntegrity: 1 - state.metrics.unmeasured.narrativeIntegrity,
+    factsConfidence: 1 - state.metrics.unmeasured.factsConfidence,
+    commitmentLock: state.metrics.unmeasured.commitmentLock
   }
 
   // Find peak debt
@@ -212,24 +217,24 @@ function analyzeDebtPatterns(state: State, timeline: DebtEvent[]): DebtReport['a
 
   if (maxDebtType) {
     const recommendationsMap: Record<string, string> = {
-      welfareDebt: 'Prioritize decisions that pay down disclosure debt — earlier, clearer statements beat drip truth.',
-      enforcementGap: 'Close regulatory clock lag. Document awareness and hit notice deadlines (Art. 33 / state / sector).',
-      regulatoryCapture: 'Align messaging with ops truth. Soft status pages age poorly under subpoena.',
-      sentienceKnowledgeGap: 'Invest in scoping and forensics to shrink the facts gap before re-notice risk compounds.',
-      systemIrreversibility: 'Preserve optionality. Avoid irreversible payments or denials until the loss table is clear.'
+      disclosureDebt: 'Prioritize decisions that pay down disclosure debt — earlier, clearer statements beat drip truth.',
+      regulatoryExposure: 'Close regulatory clock lag. Document awareness and hit notice deadlines (Art. 33 / state / sector).',
+      narrativeIntegrity: 'Align messaging with ops truth. Soft status pages age poorly under subpoena.',
+      factsConfidence: 'Invest in scoping and forensics to shrink the facts gap before re-notice risk compounds.',
+      commitmentLock: 'Preserve optionality. Avoid irreversible payments or denials until the loss table is clear.'
     }
     recommendations.push(recommendationsMap[maxDebtType[0]] || 'Monitor debt accumulation and adjust strategy as needed.')
   }
 
-  if (state.metrics.unmeasured.welfareDebt > 0.6) {
+  if (state.metrics.unmeasured.disclosureDebt > 0.6) {
     recommendations.push('High disclosure debt requires immediate attention. Prefer imperfect honesty over silence.')
   }
 
-  if (state.metrics.unmeasured.enforcementGap > 0.6) {
+  if (state.metrics.unmeasured.regulatoryExposure > 0.6) {
     recommendations.push('Large regulatory clock lag undermines credibility. Prioritize timed notice checkpoints.')
   }
 
-  if (state.metrics.unmeasured.systemIrreversibility > 0.7) {
+  if (state.metrics.unmeasured.commitmentLock > 0.7) {
     recommendations.push('High commitment lock limits future options. Avoid new irreversible statements or deals.')
   }
 
@@ -317,23 +322,23 @@ export function generateDebtReportHTML(report: DebtReport): string {
     <tbody>
       <tr>
         <td>Disclosure Debt</td>
-        <td>${(report.summary.debtByType.welfareDebt * 100).toFixed(1)}%</td>
+        <td>${(report.summary.debtByType.disclosureDebt * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Regulatory Clock Lag</td>
-        <td>${(report.summary.debtByType.enforcementGap * 100).toFixed(1)}%</td>
+        <td>${(report.summary.debtByType.regulatoryExposure * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Narrative Capture</td>
-        <td>${(report.summary.debtByType.regulatoryCapture * 100).toFixed(1)}%</td>
+        <td>${(report.summary.debtByType.narrativeIntegrity * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Facts Gap</td>
-        <td>${(report.summary.debtByType.sentienceKnowledgeGap * 100).toFixed(1)}%</td>
+        <td>${(report.summary.debtByType.factsConfidence * 100).toFixed(1)}%</td>
       </tr>
       <tr>
         <td>Commitment Lock</td>
-        <td>${(report.summary.debtByType.systemIrreversibility * 100).toFixed(1)}%</td>
+        <td>${(report.summary.debtByType.commitmentLock * 100).toFixed(1)}%</td>
       </tr>
     </tbody>
   </table>

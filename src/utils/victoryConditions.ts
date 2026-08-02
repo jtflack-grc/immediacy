@@ -1,7 +1,7 @@
 import { State } from '../engine/scenarioTypes'
 import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../engine/scoring'
 
-export type VictoryType = 'welfare' | 'debt' | 'enforcement' | 'balance' | null
+export type VictoryType = 'welfare' | 'debt' | 'regulatoryExposure' | 'balance' | null
 
 export interface VictoryCondition {
   type: VictoryType
@@ -41,15 +41,15 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
     color: '#60a5fa' // blue
   },
   {
-    type: 'enforcement',
+    type: 'regulatoryExposure',
     name: 'Clock Victory',
     description: 'Own regulatory clocks with minimal narrative capture',
     checkCondition: (state) => {
-      const enforcementGap = state.metrics.unmeasured.enforcementGap
-      const regulatoryCapture = state.metrics.unmeasured.regulatoryCapture
+      const regulatoryExposure = state.metrics.unmeasured.regulatoryExposure
+      const narrativeIntegrity = state.metrics.unmeasured.narrativeIntegrity
       const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
-      return enforcementGap < 0.15 && regulatoryCapture < 0.2 && avgWelfare > 0.5
+      return regulatoryExposure < 0.15 && narrativeIntegrity > 0.8 && avgWelfare > 0.5
     },
     message: 'You owned the clocks. Regulatory lag stayed low and messaging tracked operational truth.',
     color: '#a78bfa' // purple
@@ -61,15 +61,15 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
     checkCondition: (state) => {
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
-      const enforcementGap = state.metrics.unmeasured.enforcementGap
+      const regulatoryExposure = state.metrics.unmeasured.regulatoryExposure
       const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
       return successIndex > 0.65 && 
              debtIndex < 0.35 && 
-             enforcementGap < 0.25 && 
+             regulatoryExposure < 0.25 && 
              avgWelfare > 0.55 &&
-             state.metrics.unmeasured.regulatoryCapture < 0.3 &&
-             state.metrics.unmeasured.sentienceKnowledgeGap < 0.3
+             state.metrics.unmeasured.narrativeIntegrity > 0.7 &&
+             state.metrics.unmeasured.factsConfidence > 0.7
     },
     message: 'Balanced war-room: control, disclosure posture, clocks, and facts gap all held. Every second counted — and you spent them well.',
     color: '#fbbf24' // gold
@@ -82,7 +82,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
 export function checkVictoryConditions(state: State): VictoryType {
   // Check in order of specificity (most specific first)
   // Balance is checked last as it's the most comprehensive
-  const order = ['balance', 'enforcement', 'debt', 'welfare'] as VictoryType[]
+  const order = ['balance', 'regulatoryExposure', 'debt', 'welfare'] as VictoryType[]
   
   for (const victoryType of order) {
     const condition = VICTORY_CONDITIONS.find(c => c.type === victoryType)

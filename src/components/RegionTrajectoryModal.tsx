@@ -24,7 +24,7 @@ export default function RegionTrajectoryModal({ regionName, state, onClose }: Re
     const trajectory: Array<{ turn: number; value: number }> = []
     
     // Initial value
-    const initialValue = (state.initialMetrics?.measured as any)?.welfareStandardAdoption || 0
+    const initialValue = (state.initialMetrics?.measured as any)?.disclosurePosture || 0
     trajectory.push({ turn: 0, value: initialValue })
     
     // Trace through audit trail

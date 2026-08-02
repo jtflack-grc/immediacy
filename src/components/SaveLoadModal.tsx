@@ -441,8 +441,8 @@ function ComparisonView({ scenarios, onClose }: { scenarios: SavedScenario[], on
               fontSize: '10px',
               color: '#888'
             }}>
-              <div>Measured Success: {((scenario.state.metrics.measured.productionEfficiency * 100).toFixed(0))}%</div>
-              <div>Disclosure Debt: {((scenario.state.metrics.unmeasured.welfareDebt * 100).toFixed(0))}%</div>
+              <div>Measured Success: {((scenario.state.metrics.measured.operationalControl * 100).toFixed(0))}%</div>
+              <div>Disclosure Debt: {((scenario.state.metrics.unmeasured.disclosureDebt * 100).toFixed(0))}%</div>
             </div>
           </div>
         ))}

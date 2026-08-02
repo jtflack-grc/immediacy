@@ -7,47 +7,47 @@ export interface GlossaryTerm {
 }
 
 export const glossary: Record<string, GlossaryTerm> = {
-  'welfareDebt': {
+  'disclosureDebt': {
     term: 'Disclosure Debt',
     definition: 'Hidden costs that accumulate when you postpone hard statements, drip-feed truth, or spin. Like technical debt, it compounds silently until a screenshot or regulator forces the bill.',
     category: 'concept'
   },
-  'enforcementGap': {
+  'regulatoryExposure': {
     term: 'Regulatory Clock Lag',
     definition: 'The gap between awareness and notice clocks (GDPR Art. 33, state AG, sector rules). Lag widens when forensics stall or counsel treats “awaiting confirmation” as an indefinite pause.',
     category: 'concept'
   },
-  'regulatoryCapture': {
-    term: 'Narrative Capture',
-    definition: 'When messaging overrides operational truth — soft status pages, over-attribution, or silence framed as control. Capture ages poorly under subpoena and customer trust centers.',
+  'narrativeIntegrity': {
+    term: 'Narrative Integrity',
+    definition: 'How closely messaging tracks operational truth. Falls when soft status pages, over-attribution, or silence get framed as control — and ages poorly under subpoena and customer trust centers.',
     category: 'concept'
   },
-  'systemIrreversibility': {
+  'commitmentLock': {
     term: 'Commitment Lock',
     definition: 'How hard it is to unwind payments, public denials, or attributions once made. High lock means later facts fight your earlier war-room commitments.',
     category: 'concept'
   },
-  'sentienceKnowledgeGap': {
-    term: 'Facts Gap',
-    definition: 'Uncertainty about blast radius, data types, tenants affected, or attacker capability. Gaps drive re-notice risk and class-action exposure when later stages emerge.',
+  'factsConfidence': {
+    term: 'Facts Confidence',
+    definition: 'How confident you are about blast radius, data types, tenants affected, or attacker capability. Low confidence drives re-notice risk and class-action exposure when later stages emerge.',
     category: 'concept'
   },
-  'welfareStandardAdoption': {
+  'disclosurePosture': {
     term: 'Disclosure Posture',
     definition: 'How coherent and timed your notice process is across jurisdictions and customers. Strong posture means notices match forensics; weak posture means ad-hoc war-room thrash.',
     category: 'metric'
   },
-  'productionEfficiency': {
+  'operationalControl': {
     term: 'Operational Control',
     definition: 'How much of the incident you still own — containment, restore paths, and room to decide. Low control means downtime and adversary-driven disclosure dominate.',
     category: 'metric'
   },
-  'welfareIncidentRate': {
+  'serviceDisruption': {
     term: 'Exposure Severity',
     definition: 'How bad the blast looks right now: data sensitivity, encryption progress, leak-site pressure. Higher severity raises both primary response burn and secondary loss.',
     category: 'metric'
   },
-  'costPerUnit': {
+  'financialBurn': {
     term: 'Response Burn',
     definition: 'IR, counsel, overtime, and vendor spend racing the clock. Burn is primary loss — sometimes the right trade to cut secondary disclosure loss.',
     category: 'metric'
@@ -59,7 +59,7 @@ export const glossary: Record<string, GlossaryTerm> = {
   },
   'debtIndex': {
     term: 'Disclosure Debt Index',
-    definition: 'Combined measure of disclosure debt, clock lag, narrative capture, facts gap, and commitment lock. Higher means more hidden risk that will not survive a screenshot.',
+    definition: 'Combined measure of disclosure debt, clock lag, narrative integrity, facts confidence, and commitment lock. Higher means more hidden risk that will not survive a screenshot.',
     category: 'metric'
   },
   'assumptions': {
@@ -84,7 +84,7 @@ export const glossary: Record<string, GlossaryTerm> = {
   },
   'unmeasuredMetrics': {
     term: 'Unmeasured Metrics',
-    definition: 'Hidden costs that accumulate under time pressure: disclosure debt, clock lag, narrative capture, facts gap, commitment lock.',
+    definition: 'Hidden costs and confidences that shift under time pressure: disclosure debt, clock lag, narrative integrity, facts confidence, commitment lock.',
     category: 'concept'
   }
 }

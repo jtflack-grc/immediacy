@@ -176,18 +176,20 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
   const isHigherBetter = (metricKey: string): boolean => {
     // Metrics where higher is better
     const higherIsBetter = [
-      'productionEfficiency',
-      'welfareStandardAdoption'
+      'operationalControl',
+      'disclosurePosture',
+      'evidenceIntegrity',
+      'stakeholderTrust',
+      'narrativeIntegrity',
+      'factsConfidence'
     ]
     // Metrics where lower is better
     const lowerIsBetter = [
-      'costPerUnit',
-      'welfareIncidentRate',
-      'welfareDebt',
-      'enforcementGap',
-      'regulatoryCapture',
-      'sentienceKnowledgeGap',
-      'systemIrreversibility'
+      'financialBurn',
+      'serviceDisruption',
+      'disclosureDebt',
+      'regulatoryExposure',
+      'commitmentLock'
     ]
     
     if (higherIsBetter.includes(metricKey)) return true
@@ -438,14 +440,16 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           {/* Core metrics - always shown */}
-          <MetricBar label="Response Burn" value={state.metrics.measured.costPerUnit} color="#fbbf24" metricKey="costPerUnit" />
-          <MetricBar label="Exposure Severity" value={state.metrics.measured.welfareIncidentRate} color="#f87171" metricKey="welfareIncidentRate" />
-          <MetricBar label="Disclosure Posture" value={state.metrics.measured.welfareStandardAdoption / 3} max={1} color="#60a5fa" metricKey="welfareStandardAdoption" />
+          <MetricBar label="Financial Burn" value={state.metrics.measured.financialBurn} color="#fbbf24" metricKey="financialBurn" />
+          <MetricBar label="Service Disruption" value={state.metrics.measured.serviceDisruption} color="#f87171" metricKey="serviceDisruption" />
+          <MetricBar label="Disclosure Posture" value={state.metrics.measured.disclosurePosture / 3} max={1} color="#60a5fa" metricKey="disclosurePosture" />
           
           {/* Advanced metrics - shown when expanded */}
           {showAdvancedMetrics && (
             <>
-              <MetricBar label="Operational Control" value={state.metrics.measured.productionEfficiency} color="#4ade80" metricKey="productionEfficiency" />
+              <MetricBar label="Operational Control" value={state.metrics.measured.operationalControl} color="#4ade80" metricKey="operationalControl" />
+              <MetricBar label="Evidence Integrity" value={state.metrics.measured.evidenceIntegrity} color="#34d399" metricKey="evidenceIntegrity" />
+              <MetricBar label="Stakeholder Trust" value={state.metrics.measured.stakeholderTrust} color="#60a5fa" metricKey="stakeholderTrust" />
             </>
           )}
         </div>
@@ -505,15 +509,15 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           {/* Core metrics - always shown */}
-          <MetricBar label="Disclosure Debt" value={state.metrics.unmeasured.welfareDebt} color="#fb923c" metricKey="welfareDebt" />
-          <MetricBar label="Commitment Lock" value={state.metrics.unmeasured.systemIrreversibility} color="#ef4444" metricKey="systemIrreversibility" />
+          <MetricBar label="Disclosure Debt" value={state.metrics.unmeasured.disclosureDebt} color="#fb923c" metricKey="disclosureDebt" />
+          <MetricBar label="Commitment Lock" value={state.metrics.unmeasured.commitmentLock} color="#ef4444" metricKey="commitmentLock" />
           
           {/* Advanced metrics - shown when expanded */}
           {showAdvancedMetrics && (
             <>
-              <MetricBar label="Regulatory Clock Lag" value={state.metrics.unmeasured.enforcementGap} color="#f59e0b" metricKey="enforcementGap" />
-              <MetricBar label="Narrative Capture" value={state.metrics.unmeasured.regulatoryCapture} color="#ef4444" metricKey="regulatoryCapture" />
-              <MetricBar label="Facts Gap" value={state.metrics.unmeasured.sentienceKnowledgeGap} color="#a855f7" metricKey="sentienceKnowledgeGap" />
+              <MetricBar label="Regulatory Exposure" value={state.metrics.unmeasured.regulatoryExposure} color="#f59e0b" metricKey="regulatoryExposure" />
+              <MetricBar label="Narrative Integrity" value={state.metrics.unmeasured.narrativeIntegrity} color="#34d399" metricKey="narrativeIntegrity" />
+              <MetricBar label="Facts Confidence" value={state.metrics.unmeasured.factsConfidence} color="#a855f7" metricKey="factsConfidence" />
             </>
           )}
         </div>
@@ -582,7 +586,7 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           <div style={{ fontSize: '11px', color: '#bbb', lineHeight: '1.5', marginBottom: '8px' }}>
             {hoveredIndex === 'success' 
               ? 'Combines operational control, disclosure posture, response burn, and exposure severity into a single score. Higher is better.'
-              : 'Tracks hidden costs: regulatory clock lag, narrative capture, facts gap, commitment lock, and disclosure debt. Lower is better.'}
+              : 'Tracks hidden costs: regulatory clock lag, narrative integrity, facts confidence, commitment lock, and disclosure debt. Lower is better.'}
           </div>
           <div style={{ fontSize: '10px', color: '#888', fontStyle: 'italic', paddingTop: '8px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
             Click the icon for detailed explanation

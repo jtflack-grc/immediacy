@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 interface NotificationBannerProps {
-  type: 'great_person' | 'wonder' | 'phase_transition'
+  type: 'phase_transition'
   title: string
   description: string
   onClose: () => void
@@ -33,18 +33,6 @@ export default function NotificationBanner({
   if (!isVisible) return null
 
   const colors = {
-    great_person: {
-      bg: 'rgba(74, 222, 128, 0.15)',
-      border: 'rgba(74, 222, 128, 0.4)',
-      glow: 'rgba(74, 222, 128, 0.3)',
-      text: '#4ade80'
-    },
-    wonder: {
-      bg: 'rgba(251, 146, 60, 0.15)',
-      border: 'rgba(251, 146, 60, 0.4)',
-      glow: 'rgba(251, 146, 60, 0.3)',
-      text: '#fb923c'
-    },
     phase_transition: {
       bg: 'rgba(96, 165, 250, 0.15)',
       border: 'rgba(96, 165, 250, 0.4)',
@@ -113,8 +101,6 @@ export default function NotificationBanner({
                 textTransform: 'uppercase',
                 letterSpacing: '1px'
               }}>
-                {type === 'great_person' && 'Pressure Archetype Unlocked'}
-                {type === 'wonder' && 'Breakthrough Unlocked'}
                 {type === 'phase_transition' && 'Phase Transition'}
               </div>
               <div style={{

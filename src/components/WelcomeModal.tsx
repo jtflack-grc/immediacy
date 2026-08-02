@@ -148,6 +148,16 @@ export default function WelcomeModal({ onClose }: WelcomeModalProps) {
           OWASP teaching beats on each decision. Difficulty rails and the decision engine carry the game.
         </div>
 
+        <div style={{
+          marginTop: '12px',
+          fontSize: '11px',
+          color: '#888',
+          textAlign: 'center',
+          fontStyle: 'italic'
+        }}>
+          Regulatory clocks, OFAC screening, and insurance mechanics shown here are teaching simplifications, not legal advice.
+        </div>
+
         <button
           onClick={handleClose}
           style={{

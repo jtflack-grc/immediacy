@@ -1,6 +1,6 @@
 // Export utilities for sharing and saving scenarios
 
-import { State } from '../engine/scenarioTypes'
+import { SCHEMA_VERSION, State } from '../engine/scenarioTypes'
 import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../engine/scoring'
 
 export interface ExportData {
@@ -23,7 +23,7 @@ export function exportAsJSON(state: State): string {
   const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
   
   const exportData: ExportData = {
-    version: '1.0.0',
+    version: SCHEMA_VERSION,
     timestamp: Date.now(),
     state: JSON.parse(JSON.stringify(state)), // Deep copy
     summary: {

@@ -30,34 +30,34 @@ export default function PhaseSummaryModal({ phaseId, scenario, state, onClose }:
     if (phaseId.includes('DETECTION')) {
       insights.push('Detection choices set whether the war room owns the clock — or the adversary does.')
       insights.push('Under-scoping feels calm; it often becomes disclosure debt.')
-      if (state.metrics.unmeasured.sentienceKnowledgeGap < 0.25) {
+      if (state.metrics.unmeasured.factsConfidence > 0.75) {
         insights.push('Facts gap is tightening — notice content can get more specific.')
       }
-      if (state.metrics.measured.welfareStandardAdoption > 0.8) {
+      if (state.metrics.measured.disclosurePosture > 0.8) {
         insights.push('Disclosure posture is strengthening early — keep timed checkpoints.')
       }
     } else if (phaseId.includes('CONTAINMENT')) {
       insights.push('Containment trades uptime for blast-radius control. Misconfiguration debt shows up here.')
       insights.push('Extortion notes force adversary-driven disclosure timelines.')
-      if (state.metrics.measured.productionEfficiency > 0.55) {
+      if (state.metrics.measured.operationalControl > 0.55) {
         insights.push('Operational control is holding under pressure.')
       }
-      if (state.metrics.unmeasured.systemIrreversibility > 0.4) {
+      if (state.metrics.unmeasured.commitmentLock > 0.4) {
         insights.push('Commitment lock is rising — payments and hard statements get expensive to unwind.')
       }
     } else if (phaseId.includes('DISCLOSURE')) {
       insights.push('Regulator clocks, board slides, and the first public sentence are commitment locks.')
       insights.push('FAIR ranges beat false precision when facts are incomplete.')
-      if (state.metrics.unmeasured.enforcementGap < 0.25) {
+      if (state.metrics.unmeasured.regulatoryExposure < 0.25) {
         insights.push('Regulatory clock lag is under control — document the awareness rationale.')
       }
-      if (state.metrics.unmeasured.regulatoryCapture > 0.45) {
+      if (state.metrics.unmeasured.narrativeIntegrity < 0.55) {
         insights.push('Narrative capture is high — messaging may be drifting from operational truth.')
       }
     } else if (phaseId.includes('STAKEHOLDER')) {
       insights.push('Employees, insurers, press, and customers are parallel disclosure channels.')
       insights.push('Fairness across similarly situated customers is part of the control.')
-      if (state.metrics.unmeasured.welfareDebt > 0.45) {
+      if (state.metrics.unmeasured.disclosureDebt > 0.45) {
         insights.push('Disclosure debt is compounding — silence and drip truth are catching up.')
       }
     } else if (phaseId.includes('AFTERMATH')) {

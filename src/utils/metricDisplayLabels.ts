@@ -1,14 +1,16 @@
-/** User-facing labels for engine metric keys (IMMEDIACY remaps). */
+/** User-facing labels for incident-native metric keys */
 export const METRIC_DISPLAY_LABELS: Record<string, string> = {
-  productionEfficiency: 'Operational Control',
-  welfareStandardAdoption: 'Disclosure Posture',
-  costPerUnit: 'Response Burn',
-  welfareIncidentRate: 'Exposure Severity',
-  welfareDebt: 'Disclosure Debt',
-  enforcementGap: 'Regulatory Clock Lag',
-  regulatoryCapture: 'Narrative Capture',
-  sentienceKnowledgeGap: 'Facts Gap',
-  systemIrreversibility: 'Commitment Lock',
+  operationalControl: 'Operational Control',
+  financialBurn: 'Financial Burn',
+  serviceDisruption: 'Service Disruption',
+  disclosurePosture: 'Disclosure Posture',
+  evidenceIntegrity: 'Evidence Integrity',
+  stakeholderTrust: 'Stakeholder Trust',
+  disclosureDebt: 'Disclosure Debt',
+  regulatoryExposure: 'Regulatory Exposure',
+  narrativeIntegrity: 'Narrative Integrity',
+  factsConfidence: 'Facts Confidence',
+  commitmentLock: 'Commitment Lock',
 }
 
 export function metricLabel(key: string): string {

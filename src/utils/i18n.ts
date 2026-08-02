@@ -49,10 +49,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'Control Index',
       debtIndex: 'Disclosure Debt Index',
-      productionEfficiency: 'Operational Control',
-      costPerUnit: 'Response Burn',
-      welfareIncidentRate: 'Exposure Severity',
-      welfareStandardAdoption: 'Disclosure Posture'
+      operationalControl: 'Operational Control',
+      financialBurn: 'Response Burn',
+      serviceDisruption: 'Exposure Severity',
+      disclosurePosture: 'Disclosure Posture'
     },
     welcome: {
       whatThisIs: 'What This Is',
@@ -113,10 +113,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'Índice de Control',
       debtIndex: 'Índice de Deuda de Divulgación',
-      productionEfficiency: 'Control Operativo',
-      costPerUnit: 'Gasto de Respuesta',
-      welfareIncidentRate: 'Severidad de Exposición',
-      welfareStandardAdoption: 'Postura de Divulgación'
+      operationalControl: 'Control Operativo',
+      financialBurn: 'Gasto de Respuesta',
+      serviceDisruption: 'Severidad de Exposición',
+      disclosurePosture: 'Postura de Divulgación'
     },
     welcome: {
       whatThisIs: 'Qué Es Esto',
@@ -177,10 +177,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'Indice de Contrôle',
       debtIndex: 'Indice de Dette de Divulgation',
-      productionEfficiency: 'Contrôle Opérationnel',
-      costPerUnit: 'Coût de Réponse',
-      welfareIncidentRate: 'Sévérité d\'Exposition',
-      welfareStandardAdoption: 'Posture de Divulgation'
+      operationalControl: 'Contrôle Opérationnel',
+      financialBurn: 'Coût de Réponse',
+      serviceDisruption: 'Sévérité d\'Exposition',
+      disclosurePosture: 'Posture de Divulgation'
     },
     welcome: {
       whatThisIs: 'Qu\'est-ce que c\'est',
@@ -241,10 +241,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'Kontrollindex',
       debtIndex: 'Offenlegungs-Schuldenindex',
-      productionEfficiency: 'Operative Kontrolle',
-      costPerUnit: 'Reaktionsaufwand',
-      welfareIncidentRate: 'Expositionsschwere',
-      welfareStandardAdoption: 'Offenlegungshaltung'
+      operationalControl: 'Operative Kontrolle',
+      financialBurn: 'Reaktionsaufwand',
+      serviceDisruption: 'Expositionsschwere',
+      disclosurePosture: 'Offenlegungshaltung'
     },
     welcome: {
       whatThisIs: 'Was Dies Ist',
@@ -285,10 +285,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: '控制指数',
       debtIndex: '披露债务指数',
-      productionEfficiency: '运营控制',
-      costPerUnit: '响应消耗',
-      welfareIncidentRate: '暴露严重度',
-      welfareStandardAdoption: '披露态势'
+      operationalControl: '运营控制',
+      financialBurn: '响应消耗',
+      serviceDisruption: '暴露严重度',
+      disclosurePosture: '披露态势'
     },
     disclaimer: {
       title: '教育模型免责声明',
@@ -333,10 +333,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'Índice de Controle',
       debtIndex: 'Índice de Dívida de Divulgação',
-      productionEfficiency: 'Controle Operacional',
-      costPerUnit: 'Custo de Resposta',
-      welfareIncidentRate: 'Severidade da Exposição',
-      welfareStandardAdoption: 'Postura de Divulgação'
+      operationalControl: 'Controle Operacional',
+      financialBurn: 'Custo de Resposta',
+      serviceDisruption: 'Severidade da Exposição',
+      disclosurePosture: 'Postura de Divulgação'
     },
     welcome: {
       whatThisIs: 'O Que É Isso',
@@ -397,10 +397,10 @@ const translations: Record<Language, Translations> = {
     metrics: {
       successIndex: 'コントロール指数',
       debtIndex: '開示負債指数',
-      productionEfficiency: '運用コントロール',
-      costPerUnit: '対応コスト',
-      welfareIncidentRate: 'エクスポージャ深刻度',
-      welfareStandardAdoption: '開示姿勢'
+      operationalControl: '運用コントロール',
+      financialBurn: '対応コスト',
+      serviceDisruption: 'エクスポージャ深刻度',
+      disclosurePosture: '開示姿勢'
     },
     welcome: {
       whatThisIs: 'これは何か',

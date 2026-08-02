@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "title": "IMMEDIACY",
   "tagline": "Every Second Counts",
   "setting": "You are Incident Commander for Northline Systems, a mid-cap SaaS company with US + EU customers. A Friday evening alert just lit up. Extortion crews, counsel, reporters, regulators, and your board will all move faster than your facts.",
@@ -54,19 +54,18 @@
           "choices": [
             {
               "label": "Declare Sev-1 now; stand up war room; freeze high-risk changes",
-              "quality": "best",
               "nextNodeId": "N02_SCOPE_TRIAGE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.12,
-                    "costPerUnit": 0.06,
-                    "welfareStandardAdoption": 0.2
+                    "operationalControl": 0.12,
+                    "financialBurn": 0.06,
+                    "disclosurePosture": 0.2
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.08,
-                    "welfareDebt": -0.04,
-                    "enforcementGap": -0.03
+                    "factsConfidence": 0.08,
+                    "disclosureDebt": -0.04,
+                    "regulatoryExposure": -0.03
                   }
                 },
                 "map": {
@@ -88,17 +87,16 @@
             },
             {
               "label": "Quiet watch for 90 minutes; page only IR lead and CISO",
-              "quality": "good",
               "nextNodeId": "N02_SCOPE_TRIAGE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.04,
-                    "costPerUnit": 0.02
+                    "operationalControl": 0.04,
+                    "financialBurn": 0.02
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": 0.05,
-                    "welfareDebt": 0.04
+                    "factsConfidence": -0.05,
+                    "disclosureDebt": 0.04
                   }
                 },
                 "map": {
@@ -110,18 +108,17 @@
             },
             {
               "label": "Treat as noisy false positive; ask SOC to \"keep an eye on it\"",
-              "quality": "poor",
               "nextNodeId": "N02_SCOPE_TRIAGE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.08,
-                    "welfareIncidentRate": 0.1
+                    "operationalControl": -0.08,
+                    "serviceDisruption": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.1,
-                    "sentienceKnowledgeGap": 0.12,
-                    "enforcementGap": 0.06
+                    "disclosureDebt": 0.1,
+                    "factsConfidence": -0.12,
+                    "regulatoryExposure": 0.06
                   }
                 },
                 "map": {}
@@ -129,19 +126,18 @@
             },
             {
               "label": "Reboot the file server and tell Finance downtime is maintenance",
-              "quality": "terrible",
               "nextNodeId": "N02_SCOPE_TRIAGE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.15,
-                    "welfareIncidentRate": 0.15,
-                    "costPerUnit": 0.05
+                    "operationalControl": -0.15,
+                    "serviceDisruption": 0.15,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.15,
-                    "regulatoryCapture": 0.1,
-                    "systemIrreversibility": 0.08
+                    "disclosureDebt": 0.15,
+                    "narrativeIntegrity": -0.1,
+                    "commitmentLock": 0.08
                   }
                 },
                 "map": {
@@ -158,18 +154,17 @@
             },
             {
               "label": "Escalate to board chat immediately with incomplete facts",
-              "quality": "neutral",
               "nextNodeId": "N02_SCOPE_TRIAGE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.04,
-                    "welfareStandardAdoption": 0.05
+                    "financialBurn": 0.04,
+                    "disclosurePosture": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.06,
-                    "sentienceKnowledgeGap": -0.02,
-                    "systemIrreversibility": 0.05
+                    "narrativeIntegrity": -0.06,
+                    "factsConfidence": 0.02,
+                    "commitmentLock": 0.05
                   }
                 },
                 "map": {}
@@ -222,19 +217,18 @@
           "choices": [
             {
               "label": "Assume worst credible case: possible exfil of customer PII; start parallel forensics + counsel",
-              "quality": "best",
               "nextNodeId": "N03_ISOLATE_OR_OBSERVE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.25,
-                    "costPerUnit": 0.08,
-                    "productionEfficiency": 0.05
+                    "disclosurePosture": 0.25,
+                    "financialBurn": 0.08,
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.12,
-                    "enforcementGap": -0.06,
-                    "welfareDebt": -0.05
+                    "factsConfidence": 0.12,
+                    "regulatoryExposure": -0.06,
+                    "disclosureDebt": -0.05
                   }
                 },
                 "map": {
@@ -252,18 +246,17 @@
             },
             {
               "label": "Limit scope to the finance share until exfil is proven",
-              "quality": "neutral",
               "nextNodeId": "N03_ISOLATE_OR_OBSERVE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.03,
-                    "productionEfficiency": 0.06
+                    "financialBurn": 0.03,
+                    "operationalControl": 0.06
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": 0.08,
-                    "welfareDebt": 0.06,
-                    "enforcementGap": 0.05
+                    "factsConfidence": -0.08,
+                    "disclosureDebt": 0.06,
+                    "regulatoryExposure": 0.05
                   }
                 },
                 "map": {}
@@ -271,17 +264,16 @@
             },
             {
               "label": "Publicly call it a \"systems issue\" while scoping privately",
-              "quality": "poor",
               "nextNodeId": "N03_ISOLATE_OR_OBSERVE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.02
+                    "operationalControl": 0.02
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.12,
-                    "welfareDebt": 0.1,
-                    "systemIrreversibility": 0.08
+                    "narrativeIntegrity": -0.12,
+                    "disclosureDebt": 0.1,
+                    "commitmentLock": 0.08
                   }
                 },
                 "map": {
@@ -298,18 +290,17 @@
             },
             {
               "label": "Wait for insurer-approved IR firm before any internal scope call",
-              "quality": "good",
               "nextNodeId": "N03_ISOLATE_OR_OBSERVE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.05,
-                    "welfareStandardAdoption": 0.1
+                    "financialBurn": 0.05,
+                    "disclosurePosture": 0.1
                   },
                   "unmeasured": {
-                    "enforcementGap": 0.04,
-                    "sentienceKnowledgeGap": 0.03,
-                    "welfareDebt": 0.02
+                    "regulatoryExposure": 0.04,
+                    "factsConfidence": -0.03,
+                    "disclosureDebt": 0.02
                   }
                 },
                 "map": {}
@@ -317,18 +308,17 @@
             },
             {
               "label": "Declare customer impact in Slack to \"be transparent\" with incomplete evidence",
-              "quality": "terrible",
               "nextNodeId": "N03_ISOLATE_OR_OBSERVE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareIncidentRate": 0.08,
-                    "costPerUnit": 0.1
+                    "serviceDisruption": 0.08,
+                    "financialBurn": 0.1
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.15,
-                    "regulatoryCapture": 0.08,
-                    "welfareDebt": 0.12
+                    "commitmentLock": 0.15,
+                    "narrativeIntegrity": -0.08,
+                    "disclosureDebt": 0.12
                   }
                 },
                 "map": {}
@@ -388,18 +378,17 @@
           "choices": [
             {
               "label": "Aggressive segmentation: isolate finance + identity; accept customer login degradation",
-              "quality": "best",
               "nextNodeId": "N04_RANSOM_NOTE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.15,
-                    "welfareIncidentRate": -0.08,
-                    "costPerUnit": 0.1
+                    "operationalControl": 0.15,
+                    "serviceDisruption": -0.08,
+                    "financialBurn": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.06,
-                    "systemIrreversibility": 0.04
+                    "disclosureDebt": -0.06,
+                    "commitmentLock": 0.04
                   }
                 },
                 "map": {
@@ -419,62 +408,68 @@
                       "ttl": 2
                     }
                   ]
+                },
+                "setFlags": {
+                  "aggressiveIsolation": true
                 }
               }
             },
             {
               "label": "Partial isolate of known-bad hosts; keep core SaaS up",
-              "quality": "good",
               "nextNodeId": "N04_RANSOM_NOTE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.08,
-                    "welfareIncidentRate": -0.03,
-                    "costPerUnit": 0.05
+                    "operationalControl": 0.08,
+                    "serviceDisruption": -0.03,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": 0.04,
-                    "welfareDebt": 0.03
+                    "factsConfidence": -0.04,
+                    "disclosureDebt": 0.03
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "aggressiveIsolation": true
+                }
               }
             },
             {
               "label": "Observe overnight to map lateral movement before acting",
-              "quality": "poor",
               "nextNodeId": "N04_RANSOM_NOTE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.05,
-                    "welfareIncidentRate": 0.12
+                    "operationalControl": -0.05,
+                    "serviceDisruption": 0.12
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.1,
-                    "sentienceKnowledgeGap": -0.05,
-                    "enforcementGap": 0.06
+                    "disclosureDebt": 0.1,
+                    "factsConfidence": 0.05,
+                    "regulatoryExposure": 0.06
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "delayedEscalation": true
+                }
               }
             },
             {
               "label": "Full enterprise lockdown — every product offline until clean",
-              "quality": "neutral",
               "nextNodeId": "N04_RANSOM_NOTE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.2,
-                    "costPerUnit": 0.18,
-                    "welfareIncidentRate": -0.1
+                    "operationalControl": 0.2,
+                    "financialBurn": 0.18,
+                    "serviceDisruption": -0.1
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.1,
-                    "regulatoryCapture": -0.04,
-                    "welfareDebt": -0.02
+                    "commitmentLock": 0.1,
+                    "narrativeIntegrity": 0.04,
+                    "disclosureDebt": -0.02
                   }
                 },
                 "map": {}
@@ -482,18 +477,17 @@
             },
             {
               "label": "Pay the MSP to \"restore from backup\" without forensic imaging",
-              "quality": "terrible",
               "nextNodeId": "N04_RANSOM_NOTE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.1,
-                    "welfareIncidentRate": 0.1
+                    "operationalControl": -0.1,
+                    "serviceDisruption": 0.1
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": 0.15,
-                    "welfareDebt": 0.14,
-                    "systemIrreversibility": 0.12
+                    "factsConfidence": -0.15,
+                    "disclosureDebt": 0.14,
+                    "commitmentLock": 0.12
                   }
                 },
                 "map": {}
@@ -546,19 +540,18 @@
           "choices": [
             {
               "label": "Acknowledge via counsel/IR channel; demand proof pack; no payment talk yet",
-              "quality": "best",
               "nextNodeId": "N05_COUNSEL_ARRIVES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.2,
-                    "productionEfficiency": 0.05,
-                    "costPerUnit": 0.07
+                    "disclosurePosture": 0.2,
+                    "operationalControl": 0.05,
+                    "financialBurn": 0.07
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.1,
-                    "welfareDebt": -0.05,
-                    "regulatoryCapture": -0.04
+                    "factsConfidence": 0.1,
+                    "disclosureDebt": -0.05,
+                    "narrativeIntegrity": 0.04
                   }
                 },
                 "map": {
@@ -575,17 +568,16 @@
             },
             {
               "label": "Ignore the note; focus only on technical recovery",
-              "quality": "poor",
               "nextNodeId": "N05_COUNSEL_ARRIVES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.06
+                    "operationalControl": 0.06
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.12,
-                    "enforcementGap": 0.08,
-                    "sentienceKnowledgeGap": 0.05
+                    "disclosureDebt": 0.12,
+                    "regulatoryExposure": 0.08,
+                    "factsConfidence": -0.05
                   }
                 },
                 "map": {}
@@ -593,18 +585,17 @@
             },
             {
               "label": "Open payment negotiation immediately to buy time",
-              "quality": "neutral",
               "nextNodeId": "N05_COUNSEL_ARRIVES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.12,
-                    "welfareIncidentRate": -0.04
+                    "financialBurn": 0.12,
+                    "serviceDisruption": -0.04
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.12,
-                    "welfareDebt": 0.06,
-                    "regulatoryCapture": 0.05
+                    "commitmentLock": 0.12,
+                    "disclosureDebt": 0.06,
+                    "narrativeIntegrity": -0.05
                   }
                 },
                 "map": {}
@@ -612,18 +603,17 @@
             },
             {
               "label": "Publicly name the crew and dare them on social media",
-              "quality": "terrible",
               "nextNodeId": "N05_COUNSEL_ARRIVES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareIncidentRate": 0.1,
-                    "costPerUnit": 0.08
+                    "serviceDisruption": 0.1,
+                    "financialBurn": 0.08
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.1,
-                    "systemIrreversibility": 0.14,
-                    "welfareDebt": 0.1
+                    "narrativeIntegrity": -0.1,
+                    "commitmentLock": 0.14,
+                    "disclosureDebt": 0.1
                   }
                 },
                 "map": {
@@ -640,17 +630,16 @@
             },
             {
               "label": "Quietly ask a trusted peer CISO how they handled Cl0p-style notes",
-              "quality": "good",
               "nextNodeId": "N05_COUNSEL_ARRIVES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.1,
-                    "costPerUnit": 0.02
+                    "disclosurePosture": 0.1,
+                    "financialBurn": 0.02
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.06,
-                    "welfareDebt": -0.02
+                    "factsConfidence": 0.06,
+                    "disclosureDebt": -0.02
                   }
                 },
                 "map": {}
@@ -703,18 +692,17 @@
           "choices": [
             {
               "label": "Adopt privilege protocol AND a timed disclosure decision checkpoint (T+24h)",
-              "quality": "best",
               "nextNodeId": "N05B_CUSTOMER_HINT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.25,
-                    "costPerUnit": 0.06
+                    "disclosurePosture": 0.25,
+                    "financialBurn": 0.06
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.08,
-                    "welfareDebt": -0.06,
-                    "regulatoryCapture": -0.05
+                    "regulatoryExposure": -0.08,
+                    "disclosureDebt": -0.06,
+                    "narrativeIntegrity": 0.05
                   }
                 },
                 "map": {}
@@ -722,18 +710,17 @@
             },
             {
               "label": "Full stop: nothing leaves Legal without review, even internal status",
-              "quality": "neutral",
               "nextNodeId": "N05B_CUSTOMER_HINT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.04,
-                    "productionEfficiency": -0.04
+                    "financialBurn": 0.04,
+                    "operationalControl": -0.04
                   },
                   "unmeasured": {
-                    "enforcementGap": 0.1,
-                    "welfareDebt": 0.08,
-                    "regulatoryCapture": 0.06
+                    "regulatoryExposure": 0.1,
+                    "disclosureDebt": 0.08,
+                    "narrativeIntegrity": -0.06
                   }
                 },
                 "map": {}
@@ -741,18 +728,17 @@
             },
             {
               "label": "Bypass counsel for now; \"we need to move\"",
-              "quality": "poor",
               "nextNodeId": "N05B_CUSTOMER_HINT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.08,
-                    "costPerUnit": 0.03
+                    "operationalControl": 0.08,
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.1,
-                    "welfareDebt": 0.07,
-                    "regulatoryCapture": -0.02
+                    "commitmentLock": 0.1,
+                    "disclosureDebt": 0.07,
+                    "narrativeIntegrity": 0.02
                   }
                 },
                 "map": {}
@@ -760,17 +746,16 @@
             },
             {
               "label": "Ask counsel to draft a denial that \"no customer data is affected\" before forensics finish",
-              "quality": "terrible",
               "nextNodeId": "N05B_CUSTOMER_HINT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": -0.1
+                    "disclosurePosture": -0.1
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.18,
-                    "welfareDebt": 0.16,
-                    "systemIrreversibility": 0.15
+                    "narrativeIntegrity": -0.18,
+                    "disclosureDebt": 0.16,
+                    "commitmentLock": 0.15
                   }
                 },
                 "map": {}
@@ -778,17 +763,16 @@
             },
             {
               "label": "Bring insurance coverage counsel into the privilege circle tonight",
-              "quality": "good",
               "nextNodeId": "N05B_CUSTOMER_HINT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.05,
-                    "welfareStandardAdoption": 0.12
+                    "financialBurn": 0.05,
+                    "disclosurePosture": 0.12
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.04,
-                    "enforcementGap": -0.03
+                    "factsConfidence": 0.04,
+                    "regulatoryExposure": -0.03
                   }
                 },
                 "map": {}
@@ -841,18 +825,17 @@
           "choices": [
             {
               "label": "Honest holding reply: investigating, will provide formal notice if personal data implicated; offer private bridge",
-              "quality": "best",
               "nextNodeId": "N06_REGULATOR_CLOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.2,
-                    "productionEfficiency": 0.04
+                    "disclosurePosture": 0.2,
+                    "operationalControl": 0.04
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.05,
-                    "regulatoryCapture": -0.06,
-                    "enforcementGap": -0.04
+                    "disclosureDebt": -0.05,
+                    "narrativeIntegrity": 0.06,
+                    "regulatoryExposure": -0.04
                   }
                 },
                 "map": {
@@ -868,17 +851,16 @@
             },
             {
               "label": "Ask them to keep it confidential and \"stand by for a briefing tomorrow\"",
-              "quality": "neutral",
               "nextNodeId": "N06_REGULATOR_CLOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.02
+                    "financialBurn": 0.02
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.06,
-                    "enforcementGap": 0.05,
-                    "regulatoryCapture": 0.04
+                    "disclosureDebt": 0.06,
+                    "regulatoryExposure": 0.05,
+                    "narrativeIntegrity": -0.04
                   }
                 },
                 "map": {}
@@ -886,17 +868,16 @@
             },
             {
               "label": "Deny any issue to keep the renewal conversation calm",
-              "quality": "terrible",
               "nextNodeId": "N06_REGULATOR_CLOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.03
+                    "operationalControl": 0.03
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.16,
-                    "welfareDebt": 0.14,
-                    "systemIrreversibility": 0.12
+                    "narrativeIntegrity": -0.16,
+                    "disclosureDebt": 0.14,
+                    "commitmentLock": 0.12
                   }
                 },
                 "map": {}
@@ -904,18 +885,17 @@
             },
             {
               "label": "Loop them into the war room as a design partner",
-              "quality": "poor",
               "nextNodeId": "N06_REGULATOR_CLOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.05,
-                    "costPerUnit": 0.06
+                    "disclosurePosture": 0.05,
+                    "financialBurn": 0.06
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.08,
-                    "regulatoryCapture": 0.05,
-                    "welfareDebt": 0.04
+                    "commitmentLock": 0.08,
+                    "narrativeIntegrity": -0.05,
+                    "disclosureDebt": 0.04
                   }
                 },
                 "map": {}
@@ -923,17 +903,16 @@
             },
             {
               "label": "Route to counsel to reply under privilege with a factual, non-assuring update",
-              "quality": "good",
               "nextNodeId": "N06_REGULATOR_CLOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15,
-                    "costPerUnit": 0.04
+                    "disclosurePosture": 0.15,
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.03,
-                    "enforcementGap": -0.02
+                    "disclosureDebt": -0.03,
+                    "regulatoryExposure": -0.02
                   }
                 },
                 "map": {}
@@ -993,18 +972,17 @@
           "choices": [
             {
               "label": "Document awareness rationale; prepare GDPR Art. 33 draft; notify DPA if personal data likely",
-              "quality": "best",
               "nextNodeId": "N07_BOARD_BRIEF",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.3,
-                    "costPerUnit": 0.08
+                    "disclosurePosture": 0.3,
+                    "financialBurn": 0.08
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.15,
-                    "welfareDebt": -0.08,
-                    "regulatoryCapture": -0.05
+                    "regulatoryExposure": -0.15,
+                    "disclosureDebt": -0.08,
+                    "narrativeIntegrity": 0.05
                   }
                 },
                 "map": {
@@ -1028,17 +1006,16 @@
             },
             {
               "label": "Hold 24 hours for stronger forensics before any regulator contact",
-              "quality": "neutral",
               "nextNodeId": "N07_BOARD_BRIEF",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.04,
-                    "costPerUnit": 0.03
+                    "operationalControl": 0.04,
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "enforcementGap": 0.1,
-                    "welfareDebt": 0.08
+                    "regulatoryExposure": 0.1,
+                    "disclosureDebt": 0.08
                   }
                 },
                 "map": {}
@@ -1046,17 +1023,16 @@
             },
             {
               "label": "Notify only the friendliest regulator first as a \"courtesy\"",
-              "quality": "poor",
               "nextNodeId": "N07_BOARD_BRIEF",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.1
+                    "disclosurePosture": 0.1
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.1,
-                    "enforcementGap": 0.06,
-                    "welfareDebt": 0.07
+                    "narrativeIntegrity": -0.1,
+                    "regulatoryExposure": 0.06,
+                    "disclosureDebt": 0.07
                   }
                 },
                 "map": {}
@@ -1064,17 +1040,16 @@
             },
             {
               "label": "Argue no personal data involved until proven otherwise — no clock",
-              "quality": "terrible",
               "nextNodeId": "N07_BOARD_BRIEF",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": -0.02
+                    "financialBurn": -0.02
                   },
                   "unmeasured": {
-                    "enforcementGap": 0.18,
-                    "welfareDebt": 0.16,
-                    "systemIrreversibility": 0.1
+                    "regulatoryExposure": 0.18,
+                    "disclosureDebt": 0.16,
+                    "commitmentLock": 0.1
                   }
                 },
                 "map": {}
@@ -1082,17 +1057,16 @@
             },
             {
               "label": "Start internal notification clock + insurer notice even if DPA wait continues",
-              "quality": "good",
               "nextNodeId": "N07_BOARD_BRIEF",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.18,
-                    "costPerUnit": 0.05
+                    "disclosurePosture": 0.18,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.06,
-                    "welfareDebt": -0.04
+                    "regulatoryExposure": -0.06,
+                    "disclosureDebt": -0.04
                   }
                 },
                 "map": {}
@@ -1145,18 +1119,17 @@
           "choices": [
             {
               "label": "One slide: facts / unknowns / clocks / choices / FAIR loss range; no spin",
-              "quality": "best",
               "nextNodeId": "N08_COMMS_DRAFT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.22,
-                    "productionEfficiency": 0.05
+                    "disclosurePosture": 0.22,
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.08,
-                    "sentienceKnowledgeGap": -0.06,
-                    "welfareDebt": -0.05
+                    "narrativeIntegrity": 0.08,
+                    "factsConfidence": 0.06,
+                    "disclosureDebt": -0.05
                   }
                 },
                 "map": {}
@@ -1164,17 +1137,16 @@
             },
             {
               "label": "Emphasize containment success; bury possible exfil as a footnote",
-              "quality": "poor",
               "nextNodeId": "N08_COMMS_DRAFT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.08
+                    "operationalControl": 0.08
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.12,
-                    "welfareDebt": 0.1,
-                    "sentienceKnowledgeGap": 0.04
+                    "narrativeIntegrity": -0.12,
+                    "disclosureDebt": 0.1,
+                    "factsConfidence": -0.04
                   }
                 },
                 "map": {}
@@ -1182,17 +1154,16 @@
             },
             {
               "label": "Ask board to approve customer silence until ransom deadline passes",
-              "quality": "terrible",
               "nextNodeId": "N08_COMMS_DRAFT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.04
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.15,
-                    "enforcementGap": 0.1,
-                    "systemIrreversibility": 0.12
+                    "disclosureDebt": 0.15,
+                    "regulatoryExposure": 0.1,
+                    "commitmentLock": 0.12
                   }
                 },
                 "map": {}
@@ -1200,16 +1171,15 @@
             },
             {
               "label": "Present options only; refuse to recommend — \"you decide\"",
-              "quality": "neutral",
               "nextNodeId": "N08_COMMS_DRAFT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.05
+                    "disclosurePosture": 0.05
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.04,
-                    "regulatoryCapture": 0.03
+                    "disclosureDebt": 0.04,
+                    "narrativeIntegrity": -0.03
                   }
                 },
                 "map": {}
@@ -1217,17 +1187,16 @@
             },
             {
               "label": "Bring IR firm lead on the call to challenge management narrative live",
-              "quality": "good",
               "nextNodeId": "N08_COMMS_DRAFT",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15,
-                    "costPerUnit": 0.06
+                    "disclosurePosture": 0.15,
+                    "financialBurn": 0.06
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.08,
-                    "regulatoryCapture": -0.05
+                    "factsConfidence": 0.08,
+                    "narrativeIntegrity": 0.05
                   }
                 },
                 "map": {}
@@ -1280,18 +1249,17 @@
           "choices": [
             {
               "label": "Publish narrow true statement + update cadence; open customer trust center",
-              "quality": "best",
               "nextNodeId": "N09_EMPLOYEES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.28,
-                    "costPerUnit": 0.07
+                    "disclosurePosture": 0.28,
+                    "financialBurn": 0.07
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.1,
-                    "welfareDebt": -0.08,
-                    "enforcementGap": -0.04
+                    "narrativeIntegrity": 0.1,
+                    "disclosureDebt": -0.08,
+                    "regulatoryExposure": -0.04
                   }
                 },
                 "map": {
@@ -1316,17 +1284,16 @@
             },
             {
               "label": "Status page: \"intermittent degradation\" with no cyber mention",
-              "quality": "terrible",
               "nextNodeId": "N09_EMPLOYEES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.02
+                    "operationalControl": 0.02
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.18,
-                    "welfareDebt": 0.14,
-                    "systemIrreversibility": 0.1
+                    "narrativeIntegrity": -0.18,
+                    "disclosureDebt": 0.14,
+                    "commitmentLock": 0.1
                   }
                 },
                 "map": {}
@@ -1334,18 +1301,17 @@
             },
             {
               "label": "Full narrative dump including unverified root cause and named adversary",
-              "quality": "poor",
               "nextNodeId": "N09_EMPLOYEES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.1,
-                    "costPerUnit": 0.05
+                    "disclosurePosture": 0.1,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.12,
-                    "sentienceKnowledgeGap": -0.04,
-                    "regulatoryCapture": 0.06
+                    "commitmentLock": 0.12,
+                    "factsConfidence": 0.04,
+                    "narrativeIntegrity": -0.06
                   }
                 },
                 "map": {}
@@ -1353,17 +1319,16 @@
             },
             {
               "label": "No public statement; reply only to inbound press with \"no comment\"",
-              "quality": "neutral",
               "nextNodeId": "N09_EMPLOYEES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.02
+                    "financialBurn": 0.02
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.08,
-                    "enforcementGap": 0.05,
-                    "regulatoryCapture": 0.04
+                    "disclosureDebt": 0.08,
+                    "regulatoryExposure": 0.05,
+                    "narrativeIntegrity": -0.04
                   }
                 },
                 "map": {}
@@ -1371,21 +1336,87 @@
             },
             {
               "label": "Coordinate statement with major customers before public post",
-              "quality": "good",
               "nextNodeId": "N09_EMPLOYEES",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.18,
-                    "costPerUnit": 0.06
+                    "disclosurePosture": 0.18,
+                    "financialBurn": 0.06
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.04,
-                    "regulatoryCapture": -0.04
+                    "disclosureDebt": -0.04,
+                    "narrativeIntegrity": 0.04
                   }
                 },
                 "map": {}
               }
+            }
+          ]
+        },
+        {
+          "id": "N06B_ADVERSARY_FIRST",
+          "title": "Adversary-driven disclosure",
+          "prompt": "The leak site posted first. Your customers and a reporter already have the adversary’s narrative. What do you do now?",
+          "context": "Delayed escalation let the threat actor set the disclosure clock. Teaching note: this is a simulation of adversary-driven disclosure — not a claim that every delay causes a leak.",
+          "choices": [
+            {
+              "label": "Publish a bounded factual notice correcting the leak-site claims",
+              "nextNodeId": "N07_BOARD_BRIEF",
+              "timeCost": 40,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "disclosurePosture": 0.3,
+                    "stakeholderTrust": 0.05
+                  },
+                  "unmeasured": {
+                    "disclosureDebt": -0.08,
+                    "narrativeIntegrity": 0.06
+                  }
+                },
+                "timeCost": 40
+              }
+            },
+            {
+              "label": "Hold for counsel while monitoring the leak site",
+              "nextNodeId": "N07_BOARD_BRIEF",
+              "timeCost": 50,
+              "delta": {
+                "metrics": {
+                  "unmeasured": {
+                    "disclosureDebt": 0.1,
+                    "regulatoryExposure": 0.08,
+                    "narrativeIntegrity": -0.05
+                  }
+                },
+                "timeCost": 50
+              }
+            },
+            {
+              "label": "Full transparent dump of everything you know — including unverified items",
+              "nextNodeId": "N07_BOARD_BRIEF",
+              "timeCost": 35,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "disclosurePosture": 0.4
+                  },
+                  "unmeasured": {
+                    "factsConfidence": -0.08,
+                    "commitmentLock": 0.1,
+                    "disclosureDebt": -0.05
+                  }
+                },
+                "timeCost": 35
+              }
+            }
+          ],
+          "caseStudies": [
+            {
+              "title": "Teaching note — adversary leak sites",
+              "description": "Extortion crews often force disclosure timing. Legal notice clocks still run from awareness; leak-site posts do not replace regulator notice.",
+              "teachingNote": "Teaching simplification: leak-site timing is dramatized for the war game.",
+              "sourceType": "industry"
             }
           ]
         }
@@ -1431,17 +1462,16 @@
           "choices": [
             {
               "label": "All-hands with clear do/don't: no speculation, how to route press, wellness support",
-              "quality": "best",
               "nextNodeId": "N10_INSURER_FORENSICS",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15,
-                    "productionEfficiency": 0.05
+                    "disclosurePosture": 0.15,
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.06,
-                    "welfareDebt": -0.04
+                    "narrativeIntegrity": 0.06,
+                    "disclosureDebt": -0.04
                   }
                 },
                 "map": {}
@@ -1449,16 +1479,15 @@
             },
             {
               "label": "Managers-only brief; ask them to \"keep teams focused\"",
-              "quality": "neutral",
               "nextNodeId": "N10_INSURER_FORENSICS",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.03
+                    "operationalControl": 0.03
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.05,
-                    "regulatoryCapture": 0.04
+                    "disclosureDebt": 0.05,
+                    "narrativeIntegrity": -0.04
                   }
                 },
                 "map": {}
@@ -1466,17 +1495,16 @@
             },
             {
               "label": "Threaten discipline for any external mention",
-              "quality": "poor",
               "nextNodeId": "N10_INSURER_FORENSICS",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.02
+                    "operationalControl": -0.02
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.1,
-                    "welfareDebt": 0.08,
-                    "systemIrreversibility": 0.06
+                    "narrativeIntegrity": -0.1,
+                    "disclosureDebt": 0.08,
+                    "commitmentLock": 0.06
                   }
                 },
                 "map": {}
@@ -1484,15 +1512,14 @@
             },
             {
               "label": "Say nothing internally beyond the public statement",
-              "quality": "terrible",
               "nextNodeId": "N10_INSURER_FORENSICS",
               "delta": {
                 "metrics": {
                   "measured": {},
                   "unmeasured": {
-                    "welfareDebt": 0.1,
-                    "regulatoryCapture": 0.08,
-                    "sentienceKnowledgeGap": 0.05
+                    "disclosureDebt": 0.1,
+                    "narrativeIntegrity": -0.08,
+                    "factsConfidence": -0.05
                   }
                 },
                 "map": {}
@@ -1500,20 +1527,78 @@
             },
             {
               "label": "Publish an internal FAQ updated twice daily",
-              "quality": "good",
               "nextNodeId": "N10_INSURER_FORENSICS",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.12,
-                    "costPerUnit": 0.03
+                    "disclosurePosture": 0.12,
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.03,
-                    "sentienceKnowledgeGap": -0.03
+                    "disclosureDebt": -0.03,
+                    "factsConfidence": 0.03
                   }
                 },
                 "map": {}
+              }
+            }
+          ]
+        },
+        {
+          "id": "N10C_COVERAGE_RISK",
+          "title": "Insurer coverage at risk",
+          "prompt": "Late notice and weak preservation notes have the insurer questioning coverage. How do you respond?",
+          "context": "Late insurer notification threatens cooperation and coverage. Teaching note: policy language varies — treat this as a teaching scenario, not legal advice.",
+          "choices": [
+            {
+              "label": "Full cooperation package: timeline, preservation log, counsel present",
+              "nextNodeId": "N10B_REPORTER_CALL",
+              "timeCost": 45,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "evidenceIntegrity": 0.08,
+                    "financialBurn": 0.05
+                  },
+                  "unmeasured": {
+                    "regulatoryExposure": -0.04
+                  }
+                },
+                "timeCost": 45
+              }
+            },
+            {
+              "label": "Minimal update — dispute late-notice characterization",
+              "nextNodeId": "N10B_REPORTER_CALL",
+              "timeCost": 30,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "evidenceIntegrity": -0.05
+                  },
+                  "unmeasured": {
+                    "commitmentLock": 0.08,
+                    "regulatoryExposure": 0.06
+                  }
+                },
+                "timeCost": 30
+              }
+            },
+            {
+              "label": "Escalate to coverage counsel and pause forensics vendor spend",
+              "nextNodeId": "N10B_REPORTER_CALL",
+              "timeCost": 40,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "financialBurn": -0.04,
+                    "evidenceIntegrity": -0.03
+                  },
+                  "unmeasured": {
+                    "commitmentLock": 0.05
+                  }
+                },
+                "timeCost": 40
               }
             }
           ]
@@ -1553,18 +1638,17 @@
           "choices": [
             {
               "label": "Accept panel IR as lead; keep internal IR as challenge function; document coverage positions",
-              "quality": "best",
               "nextNodeId": "N10B_REPORTER_CALL",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.06,
-                    "welfareStandardAdoption": 0.15,
-                    "productionEfficiency": 0.04
+                    "financialBurn": 0.06,
+                    "disclosurePosture": 0.15,
+                    "operationalControl": 0.04
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.07,
-                    "welfareDebt": -0.03
+                    "factsConfidence": 0.07,
+                    "disclosureDebt": -0.03
                   }
                 },
                 "map": {}
@@ -1572,17 +1656,16 @@
             },
             {
               "label": "Refuse panel; keep preferred firm despite reservation of rights letter",
-              "quality": "neutral",
               "nextNodeId": "N10B_REPORTER_CALL",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.12,
-                    "productionEfficiency": 0.05
+                    "financialBurn": 0.12,
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.08,
-                    "welfareDebt": 0.05
+                    "commitmentLock": 0.08,
+                    "disclosureDebt": 0.05
                   }
                 },
                 "map": {}
@@ -1590,15 +1673,14 @@
             },
             {
               "label": "Minimize written record to \"protect coverage\"",
-              "quality": "terrible",
               "nextNodeId": "N10B_REPORTER_CALL",
               "delta": {
                 "metrics": {
                   "measured": {},
                   "unmeasured": {
-                    "welfareDebt": 0.14,
-                    "regulatoryCapture": 0.1,
-                    "enforcementGap": 0.08
+                    "disclosureDebt": 0.14,
+                    "narrativeIntegrity": -0.1,
+                    "regulatoryExposure": 0.08
                   }
                 },
                 "map": {}
@@ -1606,17 +1688,16 @@
             },
             {
               "label": "Ask carrier to pre-approve customer notification language",
-              "quality": "good",
               "nextNodeId": "N10B_REPORTER_CALL",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.12,
-                    "costPerUnit": 0.04
+                    "disclosurePosture": 0.12,
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.05,
-                    "welfareDebt": -0.03
+                    "regulatoryExposure": -0.05,
+                    "disclosureDebt": -0.03
                   }
                 },
                 "map": {}
@@ -1624,17 +1705,16 @@
             },
             {
               "label": "Hide ransom negotiations from the carrier for now",
-              "quality": "poor",
               "nextNodeId": "N10B_REPORTER_CALL",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.05
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.12,
-                    "welfareDebt": 0.1,
-                    "regulatoryCapture": 0.08
+                    "commitmentLock": 0.12,
+                    "disclosureDebt": 0.1,
+                    "narrativeIntegrity": -0.08
                   }
                 },
                 "map": {}
@@ -1687,17 +1767,16 @@
           "choices": [
             {
               "label": "On-record narrow confirms + background briefing; correct factual errors; no speculation",
-              "quality": "best",
               "nextNodeId": "N11_CUSTOMER_NOTIFY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.2,
-                    "costPerUnit": 0.05
+                    "disclosurePosture": 0.2,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.08,
-                    "welfareDebt": -0.06
+                    "narrativeIntegrity": 0.08,
+                    "disclosureDebt": -0.06
                   }
                 },
                 "map": {
@@ -1714,14 +1793,13 @@
             },
             {
               "label": "No comment; refer to prior status page",
-              "quality": "neutral",
               "nextNodeId": "N11_CUSTOMER_NOTIFY",
               "delta": {
                 "metrics": {
                   "measured": {},
                   "unmeasured": {
-                    "welfareDebt": 0.07,
-                    "regulatoryCapture": 0.05
+                    "disclosureDebt": 0.07,
+                    "narrativeIntegrity": -0.05
                   }
                 },
                 "map": {}
@@ -1729,17 +1807,16 @@
             },
             {
               "label": "Off-record spin: blame a vendor and \"nation-state\" without evidence",
-              "quality": "terrible",
               "nextNodeId": "N11_CUSTOMER_NOTIFY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareIncidentRate": 0.05
+                    "serviceDisruption": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.16,
-                    "systemIrreversibility": 0.14,
-                    "welfareDebt": 0.12
+                    "narrativeIntegrity": -0.16,
+                    "commitmentLock": 0.14,
+                    "disclosureDebt": 0.12
                   }
                 },
                 "map": {}
@@ -1747,17 +1824,16 @@
             },
             {
               "label": "Ask for more time; promise exclusive if they wait 24h",
-              "quality": "poor",
               "nextNodeId": "N11_CUSTOMER_NOTIFY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.03
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.06,
-                    "enforcementGap": 0.04,
-                    "systemIrreversibility": 0.05
+                    "disclosureDebt": 0.06,
+                    "regulatoryExposure": 0.04,
+                    "commitmentLock": 0.05
                   }
                 },
                 "map": {}
@@ -1765,17 +1841,16 @@
             },
             {
               "label": "Issue your own post 30 minutes before their story",
-              "quality": "good",
               "nextNodeId": "N11_CUSTOMER_NOTIFY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.16,
-                    "costPerUnit": 0.04
+                    "disclosurePosture": 0.16,
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.05,
-                    "welfareDebt": -0.04
+                    "narrativeIntegrity": 0.05,
+                    "disclosureDebt": -0.04
                   }
                 },
                 "map": {}
@@ -1828,19 +1903,18 @@
           "choices": [
             {
               "label": "Tiered notice now: confirmed + possibly affected; clear what we know/don't; offer monitoring where warranted",
-              "quality": "best",
               "nextNodeId": "N12_SEC_8K",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.35,
-                    "costPerUnit": 0.12,
-                    "welfareIncidentRate": -0.05
+                    "disclosurePosture": 0.35,
+                    "financialBurn": 0.12,
+                    "serviceDisruption": -0.05
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.12,
-                    "welfareDebt": -0.1,
-                    "regulatoryCapture": -0.06
+                    "regulatoryExposure": -0.12,
+                    "disclosureDebt": -0.1,
+                    "narrativeIntegrity": 0.06
                   }
                 },
                 "map": {
@@ -1858,17 +1932,16 @@
             },
             {
               "label": "Notify only confirmed affected; silence for possibles until more proof",
-              "quality": "neutral",
               "nextNodeId": "N12_SEC_8K",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.06,
-                    "welfareStandardAdoption": 0.1
+                    "financialBurn": 0.06,
+                    "disclosurePosture": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.08,
-                    "enforcementGap": 0.06
+                    "disclosureDebt": 0.08,
+                    "regulatoryExposure": 0.06
                   }
                 },
                 "map": {}
@@ -1876,17 +1949,16 @@
             },
             {
               "label": "Wait for ransom deadline — maybe the files are deleted",
-              "quality": "terrible",
               "nextNodeId": "N12_SEC_8K",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.04
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.18,
-                    "enforcementGap": 0.15,
-                    "systemIrreversibility": 0.1
+                    "disclosureDebt": 0.18,
+                    "regulatoryExposure": 0.15,
+                    "commitmentLock": 0.1
                   }
                 },
                 "map": {}
@@ -1894,18 +1966,17 @@
             },
             {
               "label": "Push ISP-style \"you may be affected\" to entire customer base",
-              "quality": "poor",
               "nextNodeId": "N12_SEC_8K",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.15,
-                    "welfareStandardAdoption": 0.05
+                    "financialBurn": 0.15,
+                    "disclosurePosture": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.06,
-                    "welfareDebt": 0.05,
-                    "systemIrreversibility": 0.04
+                    "narrativeIntegrity": -0.06,
+                    "disclosureDebt": 0.05,
+                    "commitmentLock": 0.04
                   }
                 },
                 "map": {}
@@ -1913,20 +1984,77 @@
             },
             {
               "label": "Notify regulators and customers same day with consistent facts package",
-              "quality": "good",
               "nextNodeId": "N12_SEC_8K",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.25,
-                    "costPerUnit": 0.1
+                    "disclosurePosture": 0.25,
+                    "financialBurn": 0.1
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.1,
-                    "welfareDebt": -0.07
+                    "regulatoryExposure": -0.1,
+                    "disclosureDebt": -0.07
                   }
                 },
                 "map": {}
+              }
+            }
+          ]
+        },
+        {
+          "id": "N09B_STAFF_FROM_PRESS",
+          "title": "Staff learned from the press",
+          "prompt": "Employees are learning about the incident from outside sources. Trust and rumor control are collapsing.",
+          "context": "Employee silence earlier meant staff were not briefed. Teaching note: internal communications timing is a judgment call; this fork dramatizes the cost of silence.",
+          "choices": [
+            {
+              "label": "All-hands with facts-first briefing and Q&A",
+              "nextNodeId": "N10_INSURER_FORENSICS",
+              "timeCost": 40,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "stakeholderTrust": 0.1
+                  },
+                  "unmeasured": {
+                    "disclosureDebt": -0.04,
+                    "narrativeIntegrity": 0.05
+                  }
+                },
+                "timeCost": 40
+              }
+            },
+            {
+              "label": "Written memo only — no live forum",
+              "nextNodeId": "N10_INSURER_FORENSICS",
+              "timeCost": 25,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "stakeholderTrust": -0.04
+                  },
+                  "unmeasured": {
+                    "disclosureDebt": 0.03
+                  }
+                },
+                "timeCost": 25
+              }
+            },
+            {
+              "label": "Ask managers to handle quietly team-by-team",
+              "nextNodeId": "N10_INSURER_FORENSICS",
+              "timeCost": 35,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "stakeholderTrust": -0.08
+                  },
+                  "unmeasured": {
+                    "disclosureDebt": 0.06,
+                    "narrativeIntegrity": -0.04
+                  }
+                },
+                "timeCost": 35
               }
             }
           ]
@@ -1973,18 +2101,17 @@
           "choices": [
             {
               "label": "File 8-K with careful, non-hyped description aligned to customer notice",
-              "quality": "best",
               "nextNodeId": "N12B_RANSOM_PAY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.25,
-                    "costPerUnit": 0.05
+                    "disclosurePosture": 0.25,
+                    "financialBurn": 0.05
                   },
                   "unmeasured": {
-                    "enforcementGap": -0.08,
-                    "regulatoryCapture": -0.06,
-                    "welfareDebt": -0.05
+                    "regulatoryExposure": -0.08,
+                    "narrativeIntegrity": 0.06,
+                    "disclosureDebt": -0.05
                   }
                 },
                 "map": {
@@ -2004,16 +2131,15 @@
             },
             {
               "label": "Delay filing; argue quantitative impact still unknown",
-              "quality": "neutral",
               "nextNodeId": "N12B_RANSOM_PAY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.02
+                    "financialBurn": 0.02
                   },
                   "unmeasured": {
-                    "enforcementGap": 0.1,
-                    "welfareDebt": 0.08
+                    "regulatoryExposure": 0.1,
+                    "disclosureDebt": 0.08
                   }
                 },
                 "map": {}
@@ -2021,15 +2147,14 @@
             },
             {
               "label": "Quiet Reg FD calls to top holders only",
-              "quality": "terrible",
               "nextNodeId": "N12B_RANSOM_PAY",
               "delta": {
                 "metrics": {
                   "measured": {},
                   "unmeasured": {
-                    "regulatoryCapture": 0.15,
-                    "systemIrreversibility": 0.12,
-                    "welfareDebt": 0.12
+                    "narrativeIntegrity": -0.15,
+                    "commitmentLock": 0.12,
+                    "disclosureDebt": 0.12
                   }
                 },
                 "map": {}
@@ -2037,17 +2162,16 @@
             },
             {
               "label": "File minimal 8-K, over-index on \"no material impact expected\"",
-              "quality": "poor",
               "nextNodeId": "N12B_RANSOM_PAY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.08
+                    "disclosurePosture": 0.08
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.1,
-                    "welfareDebt": 0.09,
-                    "systemIrreversibility": 0.08
+                    "narrativeIntegrity": -0.1,
+                    "disclosureDebt": 0.09,
+                    "commitmentLock": 0.08
                   }
                 },
                 "map": {}
@@ -2055,21 +2179,90 @@
             },
             {
               "label": "Board minutes the materiality analysis even if filing waits 24h",
-              "quality": "good",
               "nextNodeId": "N12B_RANSOM_PAY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15,
-                    "costPerUnit": 0.03
+                    "disclosurePosture": 0.15,
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.03,
-                    "enforcementGap": -0.04
+                    "disclosureDebt": -0.03,
+                    "regulatoryExposure": -0.04
                   }
                 },
                 "map": {}
               }
+            }
+          ]
+        },
+        {
+          "id": "N12C_PAYMENT_AFTERMATH",
+          "title": "Payment aftermath",
+          "prompt": "You paid. Restoration may improve — but sanctions review, repeat extortion, and commitment lock now dominate.",
+          "context": "OFAC and sanctions screening matter for ransom payments. Teaching note: this is not legal advice; payment is rarely “the answer.”",
+          "choices": [
+            {
+              "label": "Document OFAC screening and refuse further payments",
+              "nextNodeId": "N13_ATTRIBUTION",
+              "timeCost": 40,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "operationalControl": 0.05
+                  },
+                  "unmeasured": {
+                    "commitmentLock": 0.12,
+                    "regulatoryExposure": 0.05
+                  }
+                },
+                "timeCost": 40
+              }
+            },
+            {
+              "label": "Negotiate for decryptor only — no silence clause",
+              "nextNodeId": "N13_ATTRIBUTION",
+              "timeCost": 50,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "operationalControl": 0.08,
+                    "financialBurn": 0.06
+                  },
+                  "unmeasured": {
+                    "commitmentLock": 0.08,
+                    "disclosureDebt": -0.03
+                  }
+                },
+                "timeCost": 50
+              }
+            },
+            {
+              "label": "Publicly acknowledge payment under board direction",
+              "nextNodeId": "N13_ATTRIBUTION",
+              "timeCost": 35,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "disclosurePosture": 0.2,
+                    "stakeholderTrust": -0.06
+                  },
+                  "unmeasured": {
+                    "disclosureDebt": -0.05,
+                    "commitmentLock": 0.15
+                  }
+                },
+                "timeCost": 35
+              }
+            }
+          ],
+          "caseStudies": [
+            {
+              "title": "Teaching note — OFAC / ransom",
+              "description": "US persons must consider OFAC sanctions risk before ransom payment. Simulate the deliberation; obtain real counsel in real incidents.",
+              "teachingNote": "Legal requirement vs teaching simplification: OFAC screening is required in real US matters; in-game options compress that process.",
+              "sourceType": "government",
+              "url": "https://ofac.treasury.gov/"
             }
           ]
         },
@@ -2118,37 +2311,44 @@
           "choices": [
             {
               "label": "Refuse payment; accelerate rebuild + customer support; publish decision rationale internally",
-              "quality": "best",
               "nextNodeId": "N13_ATTRIBUTION",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.08,
-                    "costPerUnit": 0.1,
-                    "welfareStandardAdoption": 0.15
+                    "operationalControl": 0.08,
+                    "financialBurn": 0.1,
+                    "disclosurePosture": 0.15
                   },
                   "unmeasured": {
-                    "systemIrreversibility": -0.05,
-                    "welfareDebt": -0.04,
-                    "regulatoryCapture": -0.04
+                    "commitmentLock": -0.05,
+                    "disclosureDebt": -0.04,
+                    "narrativeIntegrity": 0.04
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "paidRansom": true
+                },
+                "nextWhen": [
+                  {
+                    "when": "paidRansom",
+                    "nextNodeId": "N12C_PAYMENT_AFTERMATH"
+                  }
+                ]
               }
             },
             {
               "label": "Negotiate for proof deletion only; still refuse decryptor purchase",
-              "quality": "good",
               "nextNodeId": "N13_ATTRIBUTION",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.14,
-                    "welfareIncidentRate": -0.03
+                    "financialBurn": 0.14,
+                    "serviceDisruption": -0.03
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.08,
-                    "welfareDebt": 0.04
+                    "commitmentLock": 0.08,
+                    "disclosureDebt": 0.04
                   }
                 },
                 "map": {}
@@ -2156,56 +2356,71 @@
             },
             {
               "label": "Pay for decryptor + deletion promise under NDA",
-              "quality": "poor",
               "nextNodeId": "N13_ATTRIBUTION",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.12,
-                    "costPerUnit": 0.2,
-                    "welfareIncidentRate": -0.05
+                    "operationalControl": 0.12,
+                    "financialBurn": 0.2,
+                    "serviceDisruption": -0.05
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.18,
-                    "welfareDebt": 0.1,
-                    "regulatoryCapture": 0.08
+                    "commitmentLock": 0.18,
+                    "disclosureDebt": 0.1,
+                    "narrativeIntegrity": -0.08
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "paidRansom": true
+                },
+                "nextWhen": [
+                  {
+                    "when": "paidRansom",
+                    "nextNodeId": "N12C_PAYMENT_AFTERMATH"
+                  }
+                ]
               }
             },
             {
               "label": "Pay quietly and tell customers the files were \"secured\"",
-              "quality": "terrible",
               "nextNodeId": "N13_ATTRIBUTION",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.1,
-                    "costPerUnit": 0.22
+                    "operationalControl": 0.1,
+                    "financialBurn": 0.22
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.2,
-                    "welfareDebt": 0.2,
-                    "systemIrreversibility": 0.22
+                    "narrativeIntegrity": -0.2,
+                    "disclosureDebt": 0.2,
+                    "commitmentLock": 0.22
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "paidRansom": true
+                },
+                "nextWhen": [
+                  {
+                    "when": "paidRansom",
+                    "nextNodeId": "N12C_PAYMENT_AFTERMATH"
+                  }
+                ]
               }
             },
             {
               "label": "Defer to insurer + counsel recommendation with board vote on record",
-              "quality": "neutral",
               "nextNodeId": "N13_ATTRIBUTION",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.08,
-                    "welfareStandardAdoption": 0.1
+                    "financialBurn": 0.08,
+                    "disclosurePosture": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.02,
-                    "systemIrreversibility": 0.05
+                    "disclosureDebt": 0.02,
+                    "commitmentLock": 0.05
                   }
                 },
                 "map": {}
@@ -2248,17 +2463,16 @@
           "choices": [
             {
               "label": "Describe TTPs and confidence level; avoid hard brand claims without high confidence",
-              "quality": "best",
               "nextNodeId": "N14_THIRD_PARTY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15
+                    "disclosurePosture": 0.15
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.07,
-                    "sentienceKnowledgeGap": -0.05,
-                    "welfareDebt": -0.03
+                    "narrativeIntegrity": 0.07,
+                    "factsConfidence": 0.05,
+                    "disclosureDebt": -0.03
                   }
                 },
                 "map": {}
@@ -2266,17 +2480,16 @@
             },
             {
               "label": "Publicly name the crew to \"warn the industry\"",
-              "quality": "neutral",
               "nextNodeId": "N14_THIRD_PARTY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.08,
-                    "costPerUnit": 0.03
+                    "disclosurePosture": 0.08,
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.08,
-                    "regulatoryCapture": 0.04
+                    "commitmentLock": 0.08,
+                    "narrativeIntegrity": -0.04
                   }
                 },
                 "map": {}
@@ -2284,15 +2497,14 @@
             },
             {
               "label": "Frame as likely nation-state to reduce negligence narrative",
-              "quality": "terrible",
               "nextNodeId": "N14_THIRD_PARTY",
               "delta": {
                 "metrics": {
                   "measured": {},
                   "unmeasured": {
-                    "regulatoryCapture": 0.18,
-                    "welfareDebt": 0.12,
-                    "systemIrreversibility": 0.1
+                    "narrativeIntegrity": -0.18,
+                    "disclosureDebt": 0.12,
+                    "commitmentLock": 0.1
                   }
                 },
                 "map": {}
@@ -2300,16 +2512,15 @@
             },
             {
               "label": "Stay silent on attribution entirely",
-              "quality": "good",
               "nextNodeId": "N14_THIRD_PARTY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.01
+                    "financialBurn": 0.01
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.02,
-                    "regulatoryCapture": -0.03
+                    "disclosureDebt": -0.02,
+                    "narrativeIntegrity": 0.03
                   }
                 },
                 "map": {}
@@ -2317,17 +2528,16 @@
             },
             {
               "label": "Leak a dramatic attribution to a friendly podcast",
-              "quality": "poor",
               "nextNodeId": "N14_THIRD_PARTY",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.04
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.12,
-                    "welfareDebt": 0.08,
-                    "systemIrreversibility": 0.08
+                    "narrativeIntegrity": -0.12,
+                    "disclosureDebt": 0.08,
+                    "commitmentLock": 0.08
                   }
                 },
                 "map": {}
@@ -2380,17 +2590,16 @@
           "choices": [
             {
               "label": "Own customer narrative; pursue vendor separately; share IOCs with peers",
-              "quality": "best",
               "nextNodeId": "N15_LESSONS_LOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.2,
-                    "productionEfficiency": 0.05
+                    "disclosurePosture": 0.2,
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.08,
-                    "welfareDebt": -0.06
+                    "narrativeIntegrity": 0.08,
+                    "disclosureDebt": -0.06
                   }
                 },
                 "map": {
@@ -2405,16 +2614,15 @@
             },
             {
               "label": "Joint bland statement spreading responsibility",
-              "quality": "neutral",
               "nextNodeId": "N15_LESSONS_LOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.03
+                    "financialBurn": 0.03
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.06,
-                    "welfareDebt": 0.05
+                    "narrativeIntegrity": -0.06,
+                    "disclosureDebt": 0.05
                   }
                 },
                 "map": {}
@@ -2422,17 +2630,16 @@
             },
             {
               "label": "Publicly torch the vendor to deflect",
-              "quality": "poor",
               "nextNodeId": "N15_LESSONS_LOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.02
+                    "operationalControl": 0.02
                   },
                   "unmeasured": {
-                    "regulatoryCapture": 0.12,
-                    "systemIrreversibility": 0.08,
-                    "welfareDebt": 0.07
+                    "narrativeIntegrity": -0.12,
+                    "commitmentLock": 0.08,
+                    "disclosureDebt": 0.07
                   }
                 },
                 "map": {}
@@ -2440,17 +2647,16 @@
             },
             {
               "label": "Quiet settlement with gag on root cause",
-              "quality": "terrible",
               "nextNodeId": "N15_LESSONS_LOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "costPerUnit": 0.1
+                    "financialBurn": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.14,
-                    "regulatoryCapture": 0.1,
-                    "sentienceKnowledgeGap": 0.08
+                    "disclosureDebt": 0.14,
+                    "narrativeIntegrity": -0.1,
+                    "factsConfidence": -0.08
                   }
                 },
                 "map": {}
@@ -2458,17 +2664,16 @@
             },
             {
               "label": "Publish a postmortem section on vendor control gaps without legal conclusions",
-              "quality": "good",
               "nextNodeId": "N15_LESSONS_LOCK",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.15,
-                    "costPerUnit": 0.04
+                    "disclosurePosture": 0.15,
+                    "financialBurn": 0.04
                   },
                   "unmeasured": {
-                    "sentienceKnowledgeGap": -0.06,
-                    "welfareDebt": -0.04
+                    "factsConfidence": 0.06,
+                    "disclosureDebt": -0.04
                   }
                 },
                 "map": {}
@@ -2521,20 +2726,19 @@
           "choices": [
             {
               "label": "Lock in: 72h decision checklist, quarterly tabletop, customer trust center, OWASP-mapped backlog funded",
-              "quality": "best",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.4,
-                    "productionEfficiency": 0.1,
-                    "welfareIncidentRate": -0.08
+                    "disclosurePosture": 0.4,
+                    "operationalControl": 0.1,
+                    "serviceDisruption": -0.08
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.12,
-                    "systemIrreversibility": 0.05,
-                    "enforcementGap": -0.08,
-                    "sentienceKnowledgeGap": -0.08
+                    "disclosureDebt": -0.12,
+                    "commitmentLock": 0.05,
+                    "regulatoryExposure": -0.08,
+                    "factsConfidence": 0.08
                   }
                 },
                 "map": {
@@ -2551,17 +2755,16 @@
             },
             {
               "label": "Fund detection tools; skip process/disclosure reforms",
-              "quality": "neutral",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.12,
-                    "costPerUnit": 0.1
+                    "operationalControl": 0.12,
+                    "financialBurn": 0.1
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.04,
-                    "regulatoryCapture": 0.03
+                    "disclosureDebt": 0.04,
+                    "narrativeIntegrity": -0.03
                   }
                 },
                 "map": {}
@@ -2569,17 +2772,16 @@
             },
             {
               "label": "Declare victory; return to pre-incident change freeze habits",
-              "quality": "terrible",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": 0.05
+                    "operationalControl": 0.05
                   },
                   "unmeasured": {
-                    "welfareDebt": 0.15,
-                    "systemIrreversibility": 0.12,
-                    "enforcementGap": 0.08
+                    "disclosureDebt": 0.15,
+                    "commitmentLock": 0.12,
+                    "regulatoryExposure": 0.08
                   }
                 },
                 "map": {}
@@ -2587,18 +2789,17 @@
             },
             {
               "label": "Overcorrect: every change requires board cyber committee — freeze innovation",
-              "quality": "poor",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "productionEfficiency": -0.08,
-                    "welfareStandardAdoption": 0.1,
-                    "costPerUnit": 0.08
+                    "operationalControl": -0.08,
+                    "disclosurePosture": 0.1,
+                    "financialBurn": 0.08
                   },
                   "unmeasured": {
-                    "systemIrreversibility": 0.15,
-                    "welfareDebt": 0.05
+                    "commitmentLock": 0.15,
+                    "disclosureDebt": 0.05
                   }
                 },
                 "map": {}
@@ -2606,18 +2807,17 @@
             },
             {
               "label": "Publish a public postmortem and invite customer challenge",
-              "quality": "good",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.3,
-                    "costPerUnit": 0.06
+                    "disclosurePosture": 0.3,
+                    "financialBurn": 0.06
                   },
                   "unmeasured": {
-                    "regulatoryCapture": -0.08,
-                    "welfareDebt": -0.08,
-                    "sentienceKnowledgeGap": -0.05
+                    "narrativeIntegrity": 0.08,
+                    "disclosureDebt": -0.08,
+                    "factsConfidence": 0.05
                   }
                 },
                 "map": {}
@@ -2650,15 +2850,14 @@
           "choices": [
             {
               "label": "End simulation — review post-mortem",
-              "quality": "best",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {
                   "measured": {
-                    "welfareStandardAdoption": 0.05
+                    "disclosurePosture": 0.05
                   },
                   "unmeasured": {
-                    "welfareDebt": -0.02
+                    "disclosureDebt": -0.02
                   }
                 },
                 "map": {}

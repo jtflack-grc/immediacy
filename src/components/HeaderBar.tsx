@@ -8,11 +8,12 @@ import { t, getLanguage, setLanguage, Language } from '../utils/i18n'
 interface HeaderBarProps {
   state: State
   onToggleDebug: () => void
-  onShowTutorial?: () => void
+  onShowHelp?: () => void
   onShowCredits?: () => void
+  onShowScenarioConditions?: () => void
 }
 
-export default function HeaderBar({ state, onToggleDebug, onShowTutorial, onShowCredits }: HeaderBarProps) {
+export default function HeaderBar({ state, onToggleDebug, onShowHelp, onShowCredits, onShowScenarioConditions }: HeaderBarProps) {
   const [currentLang, setCurrentLang] = useState<Language>(getLanguage())
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [showExportMenu, setShowExportMenu] = useState(false)
@@ -213,9 +214,9 @@ export default function HeaderBar({ state, onToggleDebug, onShowTutorial, onShow
           )}
         </div>
         
-        {onShowTutorial && (
+        {onShowHelp && (
           <button
-            onClick={onShowTutorial}
+            onClick={onShowHelp}
             style={{
               padding: '6px 10px',
               fontSize: '13px',
@@ -227,9 +228,29 @@ export default function HeaderBar({ state, onToggleDebug, onShowTutorial, onShow
               cursor: 'pointer',
               transition: 'all 0.2s ease'
             }}
-            title="Show tutorial"
+            title="Help — welcome & tutorial"
           >
             📖
+          </button>
+        )}
+        {onShowScenarioConditions && (
+          <button
+            onClick={onShowScenarioConditions}
+            style={{
+              padding: '8px 14px',
+              fontSize: '13px',
+              fontWeight: 600,
+              backgroundColor: 'rgba(15, 15, 15, 0.6)',
+              backdropFilter: 'blur(10px)',
+              color: '#fff',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            title="Scenario conditions — restart with different starting conditions"
+          >
+            Scenario
           </button>
         )}
         {/* Export Menu */}

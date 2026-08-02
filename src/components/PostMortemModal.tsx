@@ -14,6 +14,38 @@ import { getLossCondition } from '../utils/lossConditions'
 import AchievementBadge from './AchievementBadge'
 import { getAchievement } from '../utils/achievements'
 import TimelineView from './TimelineView'
+import { generateCrisisPostmortem, assessmentColor, Assessment } from '../utils/crisisPostmortem'
+
+function AssessmentBadge({ assessment }: { assessment: Assessment }) {
+  return (
+    <span style={{
+      fontSize: '10px',
+      fontWeight: 700,
+      padding: '2px 8px',
+      borderRadius: '10px',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      color: assessmentColor(assessment),
+      border: `1px solid ${assessmentColor(assessment)}60`,
+      backgroundColor: `${assessmentColor(assessment)}15`,
+    }}>
+      {assessment}
+    </span>
+  )
+}
+
+function PostmortemCard({ title, value, assessment, note }: { title: string; value: string; assessment?: Assessment; note?: string }) {
+  return (
+    <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+        <div style={{ fontSize: '11px', color: '#888' }}>{title}</div>
+        {assessment && <AssessmentBadge assessment={assessment} />}
+      </div>
+      <div style={{ fontSize: '20px', fontWeight: 600, color: '#fff' }}>{value}</div>
+      {note && <div style={{ fontSize: '11px', color: '#777', marginTop: '4px', lineHeight: '1.4' }}>{note}</div>}
+    </div>
+  )
+}
 
 interface PostMortemModalProps {
   state: State
@@ -36,6 +68,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
   const averageCountryScore = calculateAverageCountryScore(state)
   const victoryType = state.victoryType || checkVictoryConditions(state)
   const victory = victoryType ? getVictoryCondition(victoryType) : null
+  const postmortem = generateCrisisPostmortem(state)
 
   const handleSubmitToLeaderboard = () => {
     if (!playerName.trim()) {
@@ -50,11 +83,11 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
   }
   
   // Find top decisions that increased disclosure debt
-  const welfareDebtDecisions = state.auditTrail
+  const disclosureDebtDecisions = state.auditTrail
     .filter(record =>
       record.unmeasuredImpact.toLowerCase().includes('disclosure debt') ||
       record.unmeasuredImpact.toLowerCase().includes('welfare debt') ||
-      record.unmeasuredImpact.includes('welfareDebt')
+      record.unmeasuredImpact.includes('disclosureDebt')
     )
     .slice(0, 3)
 
@@ -184,6 +217,154 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
                 🏆 View Leaderboard
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Crisis Postmortem — multi-dimensional debrief, not a "correct answer" score */}
+        <div style={{ marginBottom: '32px' }}>
+          <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
+            Crisis Postmortem
+          </h3>
+          <div style={{ fontSize: '12px', color: '#888', marginBottom: '16px', lineHeight: '1.5' }}>
+            This debrief surfaces timing, trust, and governance signals from your run. It is not a claim that any single
+            choice was "correct" — every path here involved tradeoffs between speed, certainty, and disclosure.
+          </div>
+
+          {/* Timing milestones */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+            <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px' }}>Time to Contain</div>
+              <div style={{ fontSize: '20px', fontWeight: 600, color: '#fff' }}>
+                {postmortem.timeToContain.found ? (postmortem.timeToContain.clockLabel || `Turn ${postmortem.timeToContain.turn}`) : 'Not detected'}
+              </div>
+              {postmortem.timeToContain.found && (
+                <div style={{ fontSize: '11px', color: '#777', marginTop: '4px' }}>
+                  Turn {postmortem.timeToContain.turn}: {postmortem.timeToContain.chosenLabel}
+                </div>
+              )}
+            </div>
+            <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px' }}>Time to Declare</div>
+              <div style={{ fontSize: '20px', fontWeight: 600, color: '#fff' }}>
+                {postmortem.timeToDeclare.found ? (postmortem.timeToDeclare.clockLabel || `Turn ${postmortem.timeToDeclare.turn}`) : 'Not detected'}
+              </div>
+              {postmortem.timeToDeclare.found && (
+                <div style={{ fontSize: '11px', color: '#777', marginTop: '4px' }}>
+                  Turn {postmortem.timeToDeclare.turn}: {postmortem.timeToDeclare.chosenLabel}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Core dimensions */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px', marginBottom: '12px' }}>
+            <PostmortemCard title="Evidence Preservation" value={postmortem.evidencePreservation.displayValue} assessment={postmortem.evidencePreservation.assessment} />
+            <PostmortemCard title="Facts Confidence / Scope Accuracy" value={postmortem.factsConfidence.displayValue} assessment={postmortem.factsConfidence.assessment} />
+            <PostmortemCard title="Narrative Consistency" value={postmortem.narrativeConsistency.displayValue} assessment={postmortem.narrativeConsistency.assessment} />
+            <PostmortemCard title="Stakeholder Trust" value={postmortem.stakeholderTrust.displayValue} assessment={postmortem.stakeholderTrust.assessment} />
+            <PostmortemCard
+              title="Operational Recovery"
+              value={`${Math.round(postmortem.operationalRecovery.operationalControl * 100)}% control`}
+              assessment={postmortem.operationalRecovery.assessment}
+              note={`${Math.round(postmortem.operationalRecovery.serviceDisruption * 100)}% service disruption`}
+            />
+            <PostmortemCard
+              title="Regulatory Posture"
+              value={`${Math.round(postmortem.regulatoryPosture.disclosurePostureNormalized * 100)}%`}
+              assessment={postmortem.regulatoryPosture.assessment}
+              note={`${Math.round(postmortem.regulatoryPosture.regulatoryExposure * 100)}% regulatory exposure`}
+            />
+          </div>
+
+          {/* Disclosure timeliness */}
+          <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div style={{ fontSize: '12px', color: '#aaa', fontWeight: 600 }}>Disclosure Timeliness</div>
+              <AssessmentBadge assessment={postmortem.disclosureTimeliness.assessment} />
+            </div>
+            <div style={{ fontSize: '12px', color: '#aaa', marginBottom: '6px' }}>
+              Disclosure Debt: {Math.round(postmortem.disclosureTimeliness.disclosureDebt * 100)}% · Regulatory Exposure: {Math.round(postmortem.disclosureTimeliness.regulatoryExposure * 100)}%
+            </div>
+            {postmortem.disclosureTimeliness.missedDeadlines.length > 0 ? (
+              <div style={{ fontSize: '12px', color: '#ef4444' }}>
+                Missed deadlines: {postmortem.disclosureTimeliness.missedDeadlines.map(d => d.label).join('; ')}
+              </div>
+            ) : (
+              <div style={{ fontSize: '12px', color: '#4ade80' }}>No tracked deadlines were missed.</div>
+            )}
+          </div>
+
+          {/* Insurance + decision ownership + assumption quality */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+            <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: `1px solid ${postmortem.insurance.coverageAtRisk ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.1)'}` }}>
+              <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px' }}>Insurance</div>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: postmortem.insurance.coverageAtRisk ? '#ef4444' : '#4ade80', marginBottom: '4px' }}>
+                {postmortem.insurance.coverageAtRisk ? 'Coverage at risk' : 'Coverage intact'}
+              </div>
+              <div style={{ fontSize: '11px', color: '#777' }}>{postmortem.insurance.note}</div>
+            </div>
+            <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px' }}>Decision Ownership</div>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
+                {postmortem.decisionOwnership.uniqueOwners} owner{postmortem.decisionOwnership.uniqueOwners === 1 ? '' : 's'} / {postmortem.decisionOwnership.totalDecisions} decisions
+              </div>
+              <div style={{ fontSize: '11px', color: '#777' }}>
+                Diversity: {Math.round(postmortem.decisionOwnership.diversityRatio * 100)}% distinct owners
+              </div>
+            </div>
+            <div style={{ padding: '14px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px' }}>Assumption Quality</div>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
+                {Math.round(postmortem.assumptionQuality.averageStrength * 100)}% avg strength
+              </div>
+              <div style={{ fontSize: '11px', color: '#777' }}>
+                {postmortem.assumptionQuality.degradedCount} of {postmortem.assumptionQuality.totalCount} assumptions degraded
+              </div>
+            </div>
+          </div>
+
+          {/* Disclosure debt accumulated */}
+          <div style={{ padding: '14px', backgroundColor: '#1a1d29', borderRadius: '8px', marginBottom: '12px' }}>
+            <div style={{ fontSize: '12px', color: '#aaa' }}>
+              <strong style={{ color: '#fb923c' }}>Disclosure debt accumulated:</strong> {Math.round(postmortem.disclosureDebtAccumulated * 100)}% —
+              debt built up from postponed statements, drip disclosure, or spin during this run.
+            </div>
+          </div>
+
+          {/* Pivotal moments */}
+          {postmortem.pivotalMoments.length > 0 && (
+            <div style={{ marginBottom: '12px' }}>
+              <div style={{ fontSize: '12px', color: '#aaa', fontWeight: 600, marginBottom: '8px' }}>
+                Pivotal Moments (most movement in disclosure debt / commitment lock)
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {postmortem.pivotalMoments.map((moment, idx) => (
+                  <div key={idx} style={{ padding: '10px 12px', backgroundColor: '#111111', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#fff', marginBottom: '2px' }}>
+                      Turn {moment.turn}: {moment.nodeTitle}
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#aaa', marginBottom: '4px' }}>{moment.chosenLabel}</div>
+                    <div style={{ fontSize: '11px', color: '#777' }}>
+                      Δ disclosure debt {moment.disclosureDebtDelta >= 0 ? '+' : ''}{Math.round(moment.disclosureDebtDelta * 100)}%
+                      {' · '}
+                      Δ commitment lock {moment.commitmentLockDelta >= 0 ? '+' : ''}{Math.round(moment.commitmentLockDelta * 100)}%
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Counterfactuals */}
+          <div>
+            <div style={{ fontSize: '12px', color: '#aaa', fontWeight: 600, marginBottom: '8px' }}>
+              Counterfactuals to Reflect On
+            </div>
+            <ul style={{ margin: 0, paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {postmortem.counterfactuals.map((line, idx) => (
+                <li key={idx} style={{ fontSize: '12px', color: '#ccc', lineHeight: '1.5' }}>{line}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -457,9 +638,9 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           </h3>
           <div style={{ fontSize: '14px', color: '#aaa', lineHeight: '1.6' }}>
             <div style={{ marginBottom: '8px' }}>
-              <strong>Commitment Lock:</strong> {(state.metrics.unmeasured.systemIrreversibility * 100).toFixed(0)}%
+              <strong>Commitment Lock:</strong> {(state.metrics.unmeasured.commitmentLock * 100).toFixed(0)}%
             </div>
-            {state.metrics.unmeasured.systemIrreversibility > 0.8 ? (
+            {state.metrics.unmeasured.commitmentLock > 0.8 ? (
               <div style={{ color: '#ef4444', marginTop: '8px' }}>
                 ⚠️ Statements, payments, or attributions are hard to unwind. New facts will fight your earlier commitments.
               </div>
@@ -472,13 +653,13 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         </div>
 
         {/* Top disclosure-debt decisions */}
-        {welfareDebtDecisions.length > 0 && (
+        {disclosureDebtDecisions.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
               Top Decisions Increasing Disclosure Debt
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {welfareDebtDecisions.map((record, idx) => (
+              {disclosureDebtDecisions.map((record, idx) => (
                 <div key={idx} style={{ padding: '12px', backgroundColor: '#111111', borderRadius: '6px' }}>
                   <div style={{ fontSize: '13px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
                     Turn {record.turn}: {record.nodeTitle}

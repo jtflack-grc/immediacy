@@ -161,7 +161,7 @@ function detectFailureModes(runs: RunSummary[]): Pattern[] {
   const irreversibleRuns = runs.filter(r => {
     if (!r.metricsHistory || r.metricsHistory.length === 0) return false
     const finalMetrics = r.metricsHistory[r.metricsHistory.length - 1]
-    return finalMetrics?.unmeasured?.systemIrreversibility > 0.8
+    return finalMetrics?.unmeasured?.commitmentLock > 0.8
   })
   if (irreversibleRuns.length >= 2) {
     patterns.push({
@@ -170,7 +170,7 @@ function detectFailureModes(runs: RunSummary[]): Pattern[] {
       description: `${(irreversibleRuns.length / runs.length * 100).toFixed(0)}% of runs reached high system irreversibility (>80%), making course corrections difficult.`,
       frequency: irreversibleRuns.length / runs.length,
       confidence: 0.75,
-      examples: irreversibleRuns.slice(0, 3).map(r => `Irreversibility: ${(r.metricsHistory[r.metricsHistory.length - 1]?.unmeasured?.systemIrreversibility || 0) * 100}%`),
+      examples: irreversibleRuns.slice(0, 3).map(r => `Irreversibility: ${(r.metricsHistory[r.metricsHistory.length - 1]?.unmeasured?.commitmentLock || 0) * 100}%`),
       recommendation: 'Avoid locking in systems too early. Maintain flexibility for mid-game adjustments.'
     })
   }

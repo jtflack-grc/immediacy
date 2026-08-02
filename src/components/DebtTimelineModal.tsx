@@ -16,6 +16,10 @@ interface DebtEvent {
   color: string
 }
 
+// narrativeIntegrity/factsConfidence are higher-better; track their "gap" (1 - value)
+// so this debt-style timeline keeps its "increase = worse" semantics.
+const HIGHER_BETTER_DEBT_KEYS = new Set(['narrativeIntegrity', 'factsConfidence'])
+
 export default function DebtTimelineModal({ state, onClose }: DebtTimelineModalProps) {
   const [visible, setVisible] = useState(false)
   const [selectedDebtType, setSelectedDebtType] = useState<string | 'all'>('all')
@@ -35,11 +39,11 @@ export default function DebtTimelineModal({ state, onClose }: DebtTimelineModalP
     let cumulativeDebt = { ...state.initialMetrics?.unmeasured || {} }
     
     const debtColors: Record<string, string> = {
-      welfareDebt: '#ef4444',
-      enforcementGap: '#fbbf24',
-      regulatoryCapture: '#ec4899',
-      sentienceKnowledgeGap: '#8b5cf6',
-      systemIrreversibility: '#fb923c'
+      disclosureDebt: '#ef4444',
+      regulatoryExposure: '#fbbf24',
+      narrativeIntegrity: '#ec4899',
+      factsConfidence: '#8b5cf6',
+      commitmentLock: '#fb923c'
     }
 
     state.auditTrail.forEach((record: AuditRecord, idx: number) => {
@@ -52,12 +56,15 @@ export default function DebtTimelineModal({ state, onClose }: DebtTimelineModalP
 
       // Check each debt type
       Object.keys(currentSnapshot).forEach((debtType) => {
-        const prevValue = prevSnapshot[debtType] || 0
-        const currentValue = currentSnapshot[debtType] || 0
+        const isHigherBetter = HIGHER_BETTER_DEBT_KEYS.has(debtType)
+        const rawPrev = prevSnapshot[debtType] || 0
+        const rawCurrent = currentSnapshot[debtType] || 0
+        const prevValue = isHigherBetter ? 1 - rawPrev : rawPrev
+        const currentValue = isHigherBetter ? 1 - rawCurrent : rawCurrent
         const change = currentValue - prevValue
 
         if (Math.abs(change) > 0.01) { // Only significant changes
-          const newCumulative = { ...cumulativeDebt, [debtType]: currentValue }
+          const newCumulative = { ...cumulativeDebt, [debtType]: rawCurrent }
           cumulativeDebt = newCumulative
 
           events.push({
@@ -81,18 +88,20 @@ export default function DebtTimelineModal({ state, onClose }: DebtTimelineModalP
     ? debtEvents 
     : debtEvents.filter(e => e.debtType === selectedDebtType)
 
-  const debtTypes = ['welfareDebt', 'enforcementGap', 'regulatoryCapture', 'sentienceKnowledgeGap', 'systemIrreversibility']
+  const debtTypes = ['disclosureDebt', 'regulatoryExposure', 'narrativeIntegrity', 'factsConfidence', 'commitmentLock']
   const debtLabels: Record<string, string> = {
-    welfareDebt: 'Disclosure Debt',
-    enforcementGap: 'Regulatory Clock Lag',
-    regulatoryCapture: 'Narrative Capture',
-    sentienceKnowledgeGap: 'Facts Gap',
-    systemIrreversibility: 'Commitment Lock'
+    disclosureDebt: 'Disclosure Debt',
+    regulatoryExposure: 'Regulatory Clock Lag',
+    narrativeIntegrity: 'Narrative Capture',
+    factsConfidence: 'Facts Gap',
+    commitmentLock: 'Commitment Lock'
   }
 
-  // Calculate total debt accumulation
-  const totalDebt = Object.values(state.metrics.unmeasured).reduce((sum, val) => sum + val, 0)
-  const initialDebt = Object.values(state.initialMetrics?.unmeasured || {}).reduce((sum, val) => sum + val, 0)
+  // Calculate total debt accumulation (higher-better metrics contribute via their gap)
+  const sumAsDebt = (metrics: Record<string, number>) =>
+    Object.entries(metrics).reduce((sum, [key, val]) => sum + (HIGHER_BETTER_DEBT_KEYS.has(key) ? 1 - val : val), 0)
+  const totalDebt = sumAsDebt(state.metrics.unmeasured)
+  const initialDebt = sumAsDebt(state.initialMetrics?.unmeasured || {})
   const debtIncrease = totalDebt - initialDebt
 
   return (
