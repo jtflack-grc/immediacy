@@ -79,6 +79,14 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
     return !localStorage.getItem('hasUsedQuickStart')
   })
   const [choicesReady, setChoicesReady] = useState(false)
+  const [choicesNodeId, setChoicesNodeId] = useState(node?.id)
+
+  // Reset synchronously when the node changes (before child effects). An effect
+  // here races AIChatInterface's onChoicesReady and leaves choices permanently hidden.
+  if (node?.id !== choicesNodeId) {
+    setChoicesNodeId(node?.id)
+    setChoicesReady(false)
+  }
 
   const handleQuickStart = useCallback((quickRationale: string, quickAssumptions: string) => {
     setRationale(quickRationale)
@@ -99,11 +107,6 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
     setAssumptions('')
     setPreserveAssumptions(false)
   }, [onChoice, ownerRole, rationale, assumptions, preserveAssumptions])
-
-  // Reset choices ready when node changes
-  useEffect(() => {
-    setChoicesReady(false)
-  }, [node?.id])
 
   // Keyboard shortcuts - memoize handler to avoid recreating listener
   useEffect(() => {

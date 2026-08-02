@@ -75,8 +75,13 @@ export default function AIChatInterface({
       setDisplayedMessages(indices)
       indices.forEach(i => completedMessagesRef.current.add(i))
       justResetScrollRef.current = false
-      onChoicesReadyRef.current?.()
-      return
+      // Defer so DecisionPanel's render-time reset (on node change) lands first.
+      const readyId = window.setTimeout(() => {
+        if (generation === sequenceGenerationRef.current) {
+          onChoicesReadyRef.current?.()
+        }
+      }, 0)
+      return () => clearTimeout(readyId)
     }
 
     const startId = window.setTimeout(() => {
