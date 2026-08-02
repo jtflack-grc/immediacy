@@ -4,73 +4,64 @@
 
 Open-source, FAIR-informed third-party risk (TPRM) mapper in the same product family as [INQUISITION](https://github.com/jtflack-grc/inquisition) and [IMPACT!](https://github.com/jtflack-grc/impact).
 
-Educational freeware. Not affiliated with Safe Security or any commercial TPRM platform. Not advice.
+Educational freeware. Not affiliated with Safe Security. Not advice.
 
-## What it does
+**Live site:** https://jtflack-grc.github.io/interdependency/
 
-1. **Rails cases** — CrowdStrike (2024), Change Healthcare (2024), Clorox (2023) teach the three-panel grammar offline.
-2. **Open search** — resolve any US public company via SEC EDGAR, pull 10-K / 8-K windows, extract dependencies (gazetteer + optional LLM), link a curated incident KB, build FAIR-shaped scenarios, and render an interdependency globe/graph.
+## How search works (no cloud keys in the app)
 
-### Cribbed from Safe TPRM (public loop only)
+SEC EDGAR cannot be queried safely from a browser (CORS + User-Agent policy). This project **does not** require Fly or a personal API key embedded in the public page.
 
-| Capability | Interdependency |
+| Mode | How |
 |---|---|
-| Enter company → auto profile | Live `/api/analyze` |
-| SEC / public records | EDGAR 10-K & 8-K |
-| Outside-in | Passive OSINT (domain + crt.sh) |
-| Smart tiering | Interdependency Tier T1–T4 |
-| FAIR financial framing | Transparent LEF / loss-mag bands + editable assumptions |
-| Questionnaires, vendor chase, contracts, darknet | Out of scope |
+| **GitHub Pages** | Search Action-built static dossiers under `web/public/dossiers/` (+ ticker index). Refresh via workflow **Build EDGAR dossiers**. |
+| **Local live** | `npm run dev:api` + `npm run dev:web` — on-demand EDGAR for any US public company on your machine. |
 
-## Monorepo
-
-```
-packages/shared   Dossier TypeScript schema
-data/rails        Locked case studies
-data/kb           Gazetteer + incident knowledge base
-api               Fastify analysis service
-web               Vite + React three-panel UI
-```
-
-## Live site
-
-**https://jtflack-grc.github.io/interdependency/**
-
-- **Rails cases** load as static JSON (like the family apps).
-- **Live search** calls the analysis API (`https://interdependency-api.fly.dev`) for EDGAR 10-K/8-K + OSINT + FAIR scenarios. SEC cannot be queried safely from the browser, so the API is required for full-universe search.
-
-## Quick start
+## Quick start (local live search)
 
 ```bash
 npm install
 npm run build --workspace=@interdependency/shared
-npm run dev:api   # :8787  — required for live search locally
-npm run dev:web   # :5275
+npm run build --workspace=@interdependency/api
+npm run dev:api   # :8787
+npm run dev:web   # :5275  (proxies /api → API)
 ```
 
-Set `VITE_API_BASE=http://127.0.0.1:8787` when building/running the web app against a local API.
+Open http://localhost:5275 and Analyze any ticker (e.g. `HAYW`, `AAPL`).
 
-Optional LLM extraction on the API: export `OPENAI_API_KEY`.
-Set a descriptive `SEC_USER_AGENT` (SEC policy).
+Optional LLM extraction (API only, never baked into Pages): export `OPENAI_API_KEY`.
+
+## Refresh the public search pack
+
+GitHub → Actions → **Build EDGAR dossiers** → Run workflow with tickers  
+or locally:
+
+```bash
+node scripts/build-dossier.mjs HAYW,AAPL,MSFT,CLX
+```
+
+That writes `web/public/dossiers/*.json` and syncs `web/public/kb/company_tickers.json` for Pages. Commit/push (or let the Action do it).
+
+## Rails cases
+
+CrowdStrike, Change Healthcare, Clorox ship as static JSON and work offline on Pages.
+
+## Monorepo
+
+```
+packages/shared   Dossier schema
+data/             Source rails + KB
+api/              Local EDGAR analysis service
+web/              GitHub Pages UI
+scripts/          build-dossier.mjs
+```
 
 ## Deploy
 
-1. **Web:** GitHub Pages (`.github/workflows/deploy-pages.yml`).
-2. **Live API (Fly.io):**
-   ```powershell
-   .\.tools\flyctl\flyctl.exe auth login
-   .\scripts\deploy-api.ps1
-   ```
-   Or add repo secret `FLY_API_TOKEN` and run the **Deploy analysis API** workflow.
+- **Web:** GitHub Pages (`.github/workflows/deploy-pages.yml`)
+- **Dossier pack:** `.github/workflows/build-dossiers.yml` (uses `GITHUB_TOKEN` only)
 
-Default web build expects `https://interdependency-api.fly.dev`. Override with `VITE_API_BASE`.
-
-## Method honesty
-
-- Filings under-disclose tech stacks; missing vendors ≠ low risk.
-- Inferred / low-confidence hits are labeled.
-- Ranges are teaching tools with explicit assumptions — not certified FAIR analyses.
-- Passive OSINT only (no port scanning, credential dumps, or vendor email automation).
+`fly.toml` / API Dockerfile remain in-repo only if you later choose a host yourself — they are **not** required.
 
 ## License
 

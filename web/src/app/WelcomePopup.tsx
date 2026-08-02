@@ -38,9 +38,8 @@ export function WelcomePopup({
             INTERDEPENDENCY
           </h1>
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-slate-300">
-            Map who you depend on. Price what breaks. Educational freeware cribbed
-            from the public-assessment loop of commercial TPRM — not a Safe
-            Security product, not advice.
+            Map who you depend on. Price what breaks. Educational freeware — not a
+            Safe Security product, not advice. No cloud API keys in this app.
           </p>
 
           <div className="mt-8">
@@ -65,22 +64,18 @@ export function WelcomePopup({
           <div className="mt-6">
             <div className="mb-3 flex items-center justify-between gap-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/70">
-                Live company search
+                Company search
               </p>
               <span
                 className={`font-mono text-[9px] uppercase tracking-wider ${
                   liveReady === true
                     ? "text-emerald-300"
-                    : liveReady === false
-                      ? "text-amber-300"
-                      : "text-slate-500"
+                    : "text-slate-500"
                 }`}
               >
                 {liveReady === true
-                  ? "API online"
-                  : liveReady === false
-                    ? "API offline"
-                    : "Checking API…"}
+                  ? "Local EDGAR live"
+                  : "Pages pack / static"}
               </span>
             </div>
             <form
@@ -95,7 +90,7 @@ export function WelcomePopup({
               <input
                 name="q"
                 defaultValue="HAYW"
-                placeholder="Any US public ticker or name"
+                placeholder="US public ticker or name"
                 className="min-h-12 flex-1 border border-emerald-400/25 bg-black/50 px-4 font-mono text-sm text-white outline-none focus:border-emerald-300"
               />
               <button
@@ -106,11 +101,10 @@ export function WelcomePopup({
               </button>
             </form>
             <p className="mt-2 text-[11px] text-slate-500">
-              Live search pulls EDGAR 10-K/8-K + OSINT via{" "}
-              <span className="font-mono text-slate-400">{apiBase}</span>
-              {liveReady === false
-                ? " — deploy the API to enable full-universe search."
-                : "."}
+              Public site searches Action-built EDGAR dossiers (no Fly, no keys in
+              the page). On your machine,{" "}
+              <span className="font-mono text-slate-400">npm run dev:api</span>{" "}
+              enables true on-demand live search ({apiBase}).
             </p>
           </div>
         </div>

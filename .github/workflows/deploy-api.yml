@@ -1,16 +1,8 @@
 name: Deploy analysis API (Fly)
 
+# Optional / unused by default. Prefer build-dossiers.yml (no cloud host, no personal keys).
 on:
   workflow_dispatch:
-  push:
-    branches: [main, master]
-    paths:
-      - "api/**"
-      - "data/**"
-      - "packages/shared/**"
-      - "fly.toml"
-      - "package.json"
-      - ".github/workflows/deploy-api.yml"
 
 jobs:
   deploy:

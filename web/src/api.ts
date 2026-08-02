@@ -2,14 +2,14 @@ import type { Dossier } from "@interdependency/shared";
 import { analyzeClientSide } from "./clientAnalyze";
 
 /**
- * Live analysis API origin.
- * Override at build time with VITE_API_BASE.
- * Default points at the Fly app once deployed.
+ * Optional local analysis API only.
+ * - Dev: Vite proxies /api → localhost:8787 (npm run dev:api)
+ * - Pages: no cloud API, no personal keys — search uses Action-built static dossiers
  */
-const API_BASE = (
-  (import.meta.env.VITE_API_BASE as string | undefined) ||
-  "https://interdependency-api.fly.dev"
-).replace(/\/$/, "");
+const API_BASE = ((import.meta.env.VITE_API_BASE as string | undefined) || "").replace(
+  /\/$/,
+  ""
+);
 
 const RAILS_CASES = [
   {
@@ -29,15 +29,17 @@ const RAILS_CASES = [
   },
 ];
 
-async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    headers: { Accept: "application/json" },
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error((body as { error?: string }).error || res.statusText);
+async function tryLocalApiAnalyze(query: string): Promise<Dossier | null> {
+  const url = `${API_BASE}/api/analyze?q=${encodeURIComponent(query.trim())}`;
+  try {
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(API_BASE ? 120000 : 2000),
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as Dossier;
+  } catch {
+    return null;
   }
-  return res.json() as Promise<T>;
 }
 
 export async function fetchRailsList(): Promise<
@@ -52,10 +54,11 @@ export async function fetchRailsDossier(id: string): Promise<Dossier> {
   return res.json() as Promise<Dossier>;
 }
 
+/** True when local analysis API /health responds (dev only). */
 export async function pingLiveApi(): Promise<boolean> {
   try {
     const res = await fetch(`${API_BASE}/health`, {
-      signal: AbortSignal.timeout(4000),
+      signal: AbortSignal.timeout(1500),
     });
     return res.ok;
   } catch {
@@ -63,24 +66,20 @@ export async function pingLiveApi(): Promise<boolean> {
   }
 }
 
-/** Live-first: hit the analysis API; fall back to static packs only if API is down. */
+/**
+ * 1) Local API if running (true on-demand EDGAR)
+ * 2) Static dossiers/corpora on Pages (built by GitHub Actions)
+ */
 export async function analyzeQuery(query: string): Promise<Dossier> {
-  const q = encodeURIComponent(query.trim());
-  try {
-    return await getJson<Dossier>(`/api/analyze?q=${q}`);
-  } catch (err) {
-    // If the ticker is in the static pack, still return a dossier so the page is usable.
-    try {
-      return await analyzeClientSide(query);
-    } catch {
-      const msg = err instanceof Error ? err.message : "Live analyze failed";
-      throw new Error(
-        `${msg}. Live search needs the analysis API at ${API_BASE}.`
-      );
-    }
-  }
+  const live = await tryLocalApiAnalyze(query);
+  if (live) return live;
+  return analyzeClientSide(query);
 }
 
 export function getApiBase(): string {
-  return API_BASE;
+  return API_BASE || "local /api (npm run dev:api)";
+}
+
+export function getBuildDossierActionUrl(): string {
+  return "https://github.com/jtflack-grc/interdependency/actions/workflows/build-dossiers.yml";
 }

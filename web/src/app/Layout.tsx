@@ -95,20 +95,18 @@ export function Layout({
             }`}
             title={
               liveReady
-                ? "Live EDGAR search API is reachable"
-                : "Live API offline — bundled packs still work"
+                ? "Local EDGAR API is reachable"
+                : "Using Pages dossier pack (no cloud API)"
             }
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
                 liveReady === true
                   ? "bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,.8)]"
-                  : liveReady === false
-                    ? "bg-amber-300"
-                    : "bg-slate-500"
+                  : "bg-slate-500"
               }`}
             />
-            {liveReady === true ? "Live" : liveReady === false ? "Offline" : "…"}
+            {liveReady === true ? "Local live" : "Pack"}
           </span>
           <select
             className="hidden max-w-[10rem] border border-emerald-400/20 bg-black/40 px-2 py-1.5 font-mono text-[10px] text-slate-300 lg:block"

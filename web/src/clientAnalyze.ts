@@ -295,17 +295,24 @@ export async function analyzeClientSide(query: string): Promise<Dossier> {
   const q = query.trim();
   if (!q) throw new Error("Enter a ticker or company name");
 
-  // Prefer prebuilt dossier packs when present
+  // Prefer a prebuilt dossier pack when the query looks like a ticker
   const packRes = await fetch(`./dossiers/${q.toUpperCase()}.json`);
   if (packRes.ok) {
     return packRes.json() as Promise<Dossier>;
   }
 
-  const [tickers, gazetteer, incidentsKb] = await Promise.all([
+  const [seedTickers, gazetteer, incidentsKb] = await Promise.all([
     loadJson<TickerRow[]>("./kb/tickers-seed.json"),
     loadJson<GazetteerEntry[]>("./kb/gazetteer.json"),
     loadJson<IncidentKbEntry[]>("./kb/incidents.json"),
   ]);
+
+  let tickers = seedTickers;
+  try {
+    tickers = await loadJson<TickerRow[]>("./kb/company_tickers.json");
+  } catch {
+    /* seed only until Actions syncs the full SEC ticker file */
+  }
 
   const lower = q.toLowerCase();
   const resolved =
@@ -313,8 +320,14 @@ export async function analyzeClientSide(query: string): Promise<Dossier> {
     tickers.find((t) => t.title.toLowerCase().includes(lower));
   if (!resolved) {
     throw new Error(
-      `“${q}” is not in the static company pack yet. Try HAYW, CLX, CRWD, or a rails case. Optional API expands live EDGAR coverage.`
+      `“${q}” was not found in the ticker index. Try a US listed ticker (e.g. HAYW) or a rails case.`
     );
+  }
+
+  // Prefer a prebuilt dossier from the Actions search pack
+  const built = await fetch(`./dossiers/${resolved.ticker.toUpperCase()}.json`);
+  if (built.ok) {
+    return built.json() as Promise<Dossier>;
   }
 
   const cik = String(resolved.cik_str).padStart(10, "0");
@@ -324,6 +337,12 @@ export async function analyzeClientSide(query: string): Promise<Dossier> {
   if (corpusRes.ok) {
     corpus = await corpusRes.text();
     filingExcerpt = corpus.slice(0, 2500);
+  }
+
+  if (!corpus) {
+    throw new Error(
+      `${resolved.ticker} is in the ticker index, but no EDGAR dossier is published yet. Run GitHub Action “Build EDGAR dossiers” with ticker ${resolved.ticker}, or use local live search (npm run dev:api).`
+    );
   }
 
   const hits = extractDeterministic(corpus, gazetteer);
@@ -402,10 +421,11 @@ export async function analyzeClientSide(query: string): Promise<Dossier> {
     osintHosts: [],
     limitations: [
       ...DEFAULT_LIMITATIONS,
-      "This GitHub Pages build analyzes bundled public packs in-browser (no backend required).",
-      "For live EDGAR across the full ticker universe, run the optional analysis API.",
+      "Browser search uses Action-built dossiers / excerpts (no cloud API keys in the app).",
+      "For on-demand EDGAR of any ticker on your machine: npm run dev:api && npm run dev:web.",
+      "To add a company to the public Pages pack: run workflow Build EDGAR dossiers.",
       nodes.length === 0
-        ? "No gazetteer hits in the bundled excerpt — disclosure gap is itself a finding."
+        ? "No gazetteer hits in the bundled excerpt — disclosure gap is itself a finding. Queue a dossier build for fuller EDGAR text."
         : "Dependency list is incomplete by design; filings omit most of the real vendor inventory.",
     ],
   };

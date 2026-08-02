@@ -15,7 +15,8 @@
     "dev:all": "npm run dev:api & npm run dev:web",
     "build": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/api && npm run build --workspace=@interdependency/web",
     "build:web": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/web",
-    "start:api": "npm run start --workspace=@interdependency/api"
+    "start:api": "npm run start --workspace=@interdependency/api",
+    "dossiers": "node scripts/build-dossier.mjs"
   },
   "engines": {
     "node": ">=20"
