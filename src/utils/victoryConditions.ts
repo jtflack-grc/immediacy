@@ -15,8 +15,8 @@ export interface VictoryCondition {
 export const VICTORY_CONDITIONS: VictoryCondition[] = [
   {
     type: 'welfare',
-    name: 'Welfare Victory',
-    description: 'Achieve high welfare standards globally while maintaining efficiency',
+    name: 'Control Victory',
+    description: 'Strong operational control and jurisdiction posture under fire',
     checkCondition: (state) => {
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
       const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
@@ -24,26 +24,26 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
       
       return successIndex > 0.75 && avgWelfare > 0.6 && highWelfareCountries >= 5
     },
-    message: 'You have achieved exceptional welfare standards across the globe while maintaining production efficiency. Your commitment to animal welfare has created a model for others to follow.',
+    message: 'You held operational control and lifted jurisdiction posture across key regions. Containment and disclosure process stayed coherent under pressure.',
     color: '#4ade80' // green
   },
   {
     type: 'debt',
     name: 'Debt Victory',
-    description: 'Minimize welfare debt while maintaining reasonable standards',
+    description: 'Minimize disclosure debt while keeping credible control',
     checkCondition: (state) => {
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
       
       return debtIndex < 0.25 && successIndex > 0.5
     },
-    message: 'You have successfully minimized hidden costs and governance debt while maintaining reasonable welfare standards. Your pragmatic approach avoided the pitfalls of unmeasured risks.',
+    message: 'You kept disclosure debt low — silence and spin did not compound. Your story could survive a screenshot.',
     color: '#60a5fa' // blue
   },
   {
     type: 'enforcement',
-    name: 'Enforcement Victory',
-    description: 'Achieve perfect enforcement with minimal gaps',
+    name: 'Clock Victory',
+    description: 'Own regulatory clocks with minimal narrative capture',
     checkCondition: (state) => {
       const enforcementGap = state.metrics.unmeasured.enforcementGap
       const regulatoryCapture = state.metrics.unmeasured.regulatoryCapture
@@ -51,13 +51,13 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
       
       return enforcementGap < 0.15 && regulatoryCapture < 0.2 && avgWelfare > 0.5
     },
-    message: 'You have achieved exceptional enforcement with minimal gaps between policy and practice. Your governance systems ensure that standards translate into real-world improvements.',
+    message: 'You owned the clocks. Regulatory lag stayed low and messaging tracked operational truth.',
     color: '#a78bfa' // purple
   },
   {
     type: 'balance',
     name: 'Balance Victory',
-    description: 'Achieve all metrics in good ranges - the most challenging path',
+    description: 'Hold control, debt, clocks, and facts in healthy ranges',
     checkCondition: (state) => {
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
@@ -71,7 +71,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
              state.metrics.unmeasured.regulatoryCapture < 0.3 &&
              state.metrics.unmeasured.sentienceKnowledgeGap < 0.3
     },
-    message: 'You have achieved exceptional balance across all dimensions of governance. Your holistic approach demonstrates that it is possible to balance welfare, efficiency, enforcement, and long-term sustainability.',
+    message: 'Balanced war-room: control, disclosure posture, clocks, and facts gap all held. Every second counted — and you spent them well.',
     color: '#fbbf24' // gold
   }
 ]

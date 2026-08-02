@@ -25,8 +25,8 @@ export interface Wonder {
 export const WONDERS: Wonder[] = [
   {
     id: 'global_welfare_accord',
-    name: 'Global Welfare Accord',
-    description: 'A landmark international agreement establishing universal welfare standards. This accord represents unprecedented cooperation between nations.',
+    name: 'Cross-Border Notice Accord',
+    description: 'You aligned multi-jurisdiction notice so US, UK/EU, and APAC customers heard consistent facts on coordinated clocks.',
     completionCondition: (state) => {
       const highWelfareCountries = Object.values(state.map.regionValues).filter(v => v > 0.7).length
       const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
@@ -39,7 +39,6 @@ export const WONDERS: Wonder[] = [
         }
       },
       map: {
-        // Apply small boost to all tracked countries
         regionValues: {
           'USA': 0.05,
           'CAN': 0.05,
@@ -55,13 +54,13 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 46.2, lng: 2.2, country: 'France' }, // Geneva/UN area
+    location: { lat: 46.2, lng: 6.1, country: 'Switzerland' },
     icon: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=200&h=200&fit=crop'
   },
   {
     id: 'sentience_recognition_treaty',
-    name: 'Sentience Recognition Treaty',
-    description: 'A global treaty formally recognizing animal sentience as a foundation for all welfare policy. This treaty has been adopted by major powers worldwide.',
+    name: 'Facts-First Playbook',
+    description: 'You drove the facts gap down and locked a disclosure posture strong enough that notices matched forensics.',
     completionCondition: (state) => {
       return state.metrics.unmeasured.sentienceKnowledgeGap < 0.2 &&
              state.metrics.measured.welfareStandardAdoption > 1.5
@@ -76,13 +75,13 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 52.5, lng: 13.4, country: 'Germany' }, // Berlin
+    location: { lat: 38.9, lng: -77.0, country: 'USA' },
     icon: 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=200&h=200&fit=crop'
   },
   {
     id: 'alternative_protein_revolution',
-    name: 'Alternative Protein Revolution',
-    description: 'A breakthrough in alternative protein technologies that dramatically reduces reliance on traditional animal agriculture while maintaining nutrition.',
+    name: 'Clean Rebuild',
+    description: 'You restored operations without paying disclosure debt — high control, contained burn, low silence tax.',
     completionCondition: (state) => {
       return state.metrics.unmeasured.welfareDebt < 0.25 &&
              state.metrics.measured.productionEfficiency > 0.7 &&
@@ -100,13 +99,13 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 37.8, lng: -122.4, country: 'USA' }, // San Francisco Bay Area
+    location: { lat: 37.8, lng: -122.4, country: 'USA' },
     icon: 'https://images.unsplash.com/photo-1556911220-bff31c812fba?w=200&h=200&fit=crop'
   },
   {
     id: 'enforcement_network',
-    name: 'Global Enforcement Network',
-    description: 'An international network of enforcement agencies working together to ensure welfare standards are met across borders.',
+    name: 'Regulator-Ready War Room',
+    description: 'Clock lag and narrative capture stayed low while coordination arcs spanned jurisdictions.',
     completionCondition: (state) => {
       return state.metrics.unmeasured.enforcementGap < 0.2 &&
              state.metrics.unmeasured.regulatoryCapture < 0.25 &&
@@ -120,20 +119,21 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 50.8, lng: 4.4, country: 'Belgium' }, // Brussels
+    location: { lat: 53.35, lng: -6.26, country: 'Ireland' },
     icon: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=200&h=200&fit=crop'
   },
   {
     id: 'welfare_research_institute',
-    name: 'International Welfare Research Institute',
-    description: 'A premier research institution dedicated to advancing our understanding of animal welfare science and its practical applications.',
+    name: 'OWASP After-Action Lab',
+    description: 'You treated root-cause classes as curriculum — research-backed rationales and rising disclosure posture.',
     completionCondition: (state) => {
       return state.metrics.unmeasured.sentienceKnowledgeGap < 0.2 &&
              state.metrics.measured.welfareStandardAdoption > 1.2 &&
-             state.auditTrail.filter(r => 
-               r.rationale.toLowerCase().includes('research') ||
-               r.rationale.toLowerCase().includes('science')
-             ).length >= 4
+             state.auditTrail.filter(r =>
+               r.rationale.toLowerCase().includes('owasp') ||
+               r.rationale.toLowerCase().includes('forensic') ||
+               r.rationale.toLowerCase().includes('root cause')
+             ).length >= 3
     },
     effect: {
       metrics: {
@@ -145,13 +145,13 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 52.2, lng: 0.1, country: 'UK' }, // Cambridge
+    location: { lat: 37.4, lng: -122.1, country: 'USA' },
     icon: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=200&h=200&fit=crop'
   },
   {
     id: 'transition_fund',
-    name: 'Global Transition Fund',
-    description: 'A massive international fund supporting the transition to higher welfare systems, reducing financial barriers for producers.',
+    name: 'Trust-Center Endowment',
+    description: 'You funded lasting customer trust infrastructure — monitoring, updates, and burn held in check.',
     completionCondition: (state) => {
       return state.metrics.measured.costPerUnit < 0.4 &&
              state.metrics.unmeasured.welfareDebt < 0.3 &&
@@ -168,7 +168,7 @@ export const WONDERS: Wonder[] = [
         }
       }
     },
-    location: { lat: 40.7, lng: -74.0, country: 'USA' }, // New York
+    location: { lat: 40.7, lng: -74.0, country: 'USA' },
     icon: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=200&h=200&fit=crop'
   }
 ]

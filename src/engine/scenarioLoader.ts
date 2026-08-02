@@ -109,6 +109,7 @@ export function createInitialState(
   // Apply starting condition
   initialMetrics = applyStartingCondition(initialMetrics, startingCondition)
 
+  // Initial jurisdiction pressure / disclosure posture by country
   const regionValues = {
     // Americas
     'USA': 0.3,
@@ -127,6 +128,7 @@ export function createInitialState(
     'POL': 0.28,
     'SWE': 0.48,
     'DNK': 0.4,
+    'IRL': 0.45,
     // Asia
     'IND': 0.5,
     'CHN': 0.45,
@@ -136,6 +138,7 @@ export function createInitialState(
     'IDN': 0.3,
     'PHL': 0.28,
     'MYS': 0.3,
+    'SGP': 0.4,
     // Africa & Middle East
     'ZAF': 0.35,
     'EGY': 0.28,
@@ -147,13 +150,6 @@ export function createInitialState(
     // Oceania
     'AUS': 0.3,
     'NZL': 0.45,
-  }
-
-  // Debug: Verify all countries are included
-  console.log('createInitialState: regionValues count:', Object.keys(regionValues).length)
-  console.log('createInitialState: Has EGY?', 'EGY' in regionValues, regionValues['EGY'])
-  if (!('EGY' in regionValues)) {
-    console.error('❌ EGY missing from initial regionValues!')
   }
 
   return {

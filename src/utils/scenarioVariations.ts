@@ -165,7 +165,7 @@ export function getDifficultyDescription(difficulty: DifficultyLevel): string {
 export function getStartingConditionDescription(condition: StartingCondition): string {
   return {
     default: 'Standard baseline metrics',
-    optimistic: 'Favorable conditions with higher welfare standards already in place',
+    optimistic: 'Favorable starting posture — stronger disclosure process already in place',
     pessimistic: 'Challenging conditions with significant welfare debt and enforcement gaps',
     balanced: 'Moderate improvements across key metrics',
     crisis: 'Crisis scenario: high welfare debt, low enforcement, system near collapse',

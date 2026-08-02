@@ -130,13 +130,13 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               This simulator is designed for educational purposes to help users understand:
             </p>
             <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li>The complexity of animal welfare governance decisions</li>
-              <li>Trade-offs between different policy approaches</li>
-              <li>How decisions can have cascading effects on welfare outcomes</li>
-              <li>The importance of enforcement, transparency, and evidence-based policy</li>
+              <li>Trade-offs in short-horizon incident disclosure</li>
+              <li>How silence, spin, and speed change regulatory and customer outcomes</li>
+              <li>FAIR-style thinking under incomplete facts</li>
+              <li>Why jurisdiction clocks and adversary leak sites rewrite your narrative</li>
             </ul>
             <p style={{ marginTop: '12px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-              This tool should not be used as the sole basis for policy decisions. Real-world outcomes are influenced by many factors not captured in this simplified model.
+              This tool is educational. Real incidents involve facts, counsel, and regulators not fully captured here.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               Acknowledgments
             </h3>
             <p style={{ marginBottom: '8px' }}>
-              Special thanks to the researchers, organizations, and advocates working to improve animal welfare worldwide. This tool aims to make their insights more accessible and actionable.
+              Built on the Inheritance decision shell. Teaching beats draw on public incident disclosures, CISA/regulator guidance, OWASP, and FAIR-style risk framing.
             </p>
             <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
               For questions, feedback, or to report issues, please refer to the validation disclaimer in the application.

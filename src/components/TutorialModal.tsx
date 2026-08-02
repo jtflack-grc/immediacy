@@ -100,7 +100,7 @@ export default function TutorialModal({ onClose }: TutorialModalProps) {
           </ul>
           <p style={{ marginTop: '16px', lineHeight: '1.6' }}>
             All your decisions are tracked throughout the simulation. At the end, you'll get a post-mortem report
-            showing your trajectory and key insights—including how your choices created or avoided long-term lock-in for both animals and AI systems.
+            showing your trajectory — including how choices created or paid down disclosure debt and commitment lock.
           </p>
         </div>
       )
@@ -113,16 +113,15 @@ export default function TutorialModal({ onClose }: TutorialModalProps) {
             You're ready to begin! Remember:
           </p>
           <ul style={{ marginLeft: '20px', lineHeight: '1.8' }}>
-            <li>There are no "right" answers - explore different paths for both animal welfare and AI governance</li>
-            <li>Pay attention to both measured and unmeasured impacts (affects both animals and AI systems)</li>
-            <li><strong>Consider the long-term consequences</strong> - How will your choices affect future generations? What systems are you locking in? How will AI systems evolve?</li>
-            <li>Review advisor recommendations for research-backed insights on both animals and AI</li>
-            <li>Think about <strong>irreversibility</strong> - Which decisions create path dependencies that future generations can't easily undo? This includes AI system lock-in</li>
-            <li><strong>AI systems are already managing animals</strong> - Your decisions shape whether they prioritize welfare or efficiency</li>
+            <li>There are no perfect answers — explore different disclosure paths under pressure</li>
+            <li>Watch both measured control and unmeasured disclosure debt</li>
+            <li><strong>Every second counts</strong> — silence and spin compound on the clock</li>
+            <li>Review advisor recommendations for counsel, IR, Comms, and privacy angles</li>
+            <li>Think about <strong>commitment lock</strong> — statements, payments, and attributions that are hard to unwind</li>
+            <li><strong>Adversaries disclose too</strong> — leak sites and reporters write the story if you won't</li>
           </ul>
           <p style={{ marginTop: '16px', lineHeight: '1.6', fontStyle: 'italic' }}>
-            This simulator is part of the Electric Sheep/Futurekind ecosystem - exploring governance
-            for both animals and AI systems across vast timescales, considering the welfare of trillions of beings (animals and potentially sentient AI) across billions of years.
+            IMMEDIACY is part of the i on GRC lab family — a short-horizon disclosure war game on the Inheritance decision shell.
           </p>
         </div>
       )

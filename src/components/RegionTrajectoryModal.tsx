@@ -156,7 +156,7 @@ export default function RegionTrajectoryModal({ regionName, state, onClose }: Re
           borderRadius: '8px'
         }}>
           <div style={{ fontSize: '12px', color: '#888', marginBottom: '12px', fontWeight: 600 }}>
-            Welfare Standards Adoption Over Time
+            Disclosure Posture Over Time
           </div>
           <svg width="100%" height="120" style={{ overflow: 'visible' }}>
             {/* Grid lines */}

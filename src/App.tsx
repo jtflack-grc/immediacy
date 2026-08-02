@@ -347,15 +347,15 @@ function App() {
     const unmeasuredParts: string[] = []
     if (choice.delta.metrics?.unmeasured) {
       const um = choice.delta.metrics.unmeasured
-      if (um.welfareDebt) unmeasuredParts.push('increased welfare debt')
-      if (um.enforcementGap) unmeasuredParts.push('increased enforcement gap')
-      if (um.regulatoryCapture) unmeasuredParts.push('increased regulatory capture')
-      if (um.sentienceKnowledgeGap) unmeasuredParts.push('increased knowledge gaps about animal sentience')
-      if (um.systemIrreversibility) unmeasuredParts.push('increased system irreversibility')
+      if (um.welfareDebt) unmeasuredParts.push(um.welfareDebt > 0 ? 'increased disclosure debt' : 'reduced disclosure debt')
+      if (um.enforcementGap) unmeasuredParts.push(um.enforcementGap > 0 ? 'increased regulatory clock lag' : 'reduced regulatory clock lag')
+      if (um.regulatoryCapture) unmeasuredParts.push(um.regulatoryCapture > 0 ? 'increased narrative capture' : 'reduced narrative capture')
+      if (um.sentienceKnowledgeGap) unmeasuredParts.push(um.sentienceKnowledgeGap > 0 ? 'widened the facts gap' : 'narrowed the facts gap')
+      if (um.systemIrreversibility) unmeasuredParts.push(um.systemIrreversibility > 0 ? 'increased commitment lock' : 'reduced commitment lock')
     }
     const unmeasuredImpact = unmeasuredParts.length > 0 
       ? `This decision ${unmeasuredParts.join(', ')}.`
-      : 'No significant unmeasured impacts detected.'
+      : 'No significant unmeasured disclosure impacts detected.'
 
     // Apply the choice action
     const action: Action = {

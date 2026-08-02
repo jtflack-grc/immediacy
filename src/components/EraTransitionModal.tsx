@@ -233,7 +233,7 @@ export default function EraTransitionModal({ phaseId, scenario, state, onClose }
                   letterSpacing: '1px',
                   marginBottom: '8px'
                 }}>
-                  Avg Welfare
+                  Avg Posture
                 </div>
                 <div style={{
                   fontSize: '32px',

@@ -17,8 +17,8 @@ export interface LossCondition {
 export const LOSS_CONDITIONS: LossCondition[] = [
   {
     type: 'welfare_collapse',
-    name: 'Welfare Collapse',
-    description: 'Critical welfare metrics have dropped to dangerous levels',
+    name: 'Containment Collapse',
+    description: 'Operational control and jurisdiction posture have collapsed under exposure',
     checkCondition: (state) => {
       const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       const welfareIncidentRate = state.metrics.measured.welfareIncidentRate
@@ -33,14 +33,14 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       
       return avgWelfare < 0.3 && welfareIncidentRate > 0.5 && lowWelfareCountries >= 2
     },
-    message: 'Welfare standards have collapsed across multiple regions. High incident rates and low adoption suggest systemic failure in governance. Recovery will require significant intervention.',
-    warningMessage: 'Welfare standards are approaching critical levels. Multiple regions show declining adoption and increasing incident rates.',
+    message: 'Containment and jurisdiction posture have collapsed across multiple regions. Exposure severity is high and disclosure process is failing. Recovery will require significant intervention.',
+    warningMessage: 'Jurisdiction posture is approaching critical levels. Multiple regions show declining posture and rising exposure severity.',
     color: '#ef4444' // red
   },
   {
     type: 'debt_crisis',
-    name: 'Governance Debt Crisis',
-    description: 'Accumulated governance debt has reached unsustainable levels',
+    name: 'Disclosure Debt Crisis',
+    description: 'Accumulated disclosure debt has reached unsustainable levels',
     checkCondition: (state) => {
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
       const welfareDebt = state.metrics.unmeasured.welfareDebt
@@ -55,14 +55,14 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       
       return debtIndex > 0.6 || (welfareDebt > 0.65 && systemIrreversibility > 0.6)
     },
-    message: 'Governance debt has reached crisis levels. Hidden costs, accumulated welfare debt, and system irreversibility have created a situation where meaningful reform may no longer be possible.',
-    warningMessage: 'Governance debt is approaching critical levels. Hidden costs and system lock-in are accumulating rapidly.',
+    message: 'Disclosure debt has reached crisis levels. Silence, spin, and commitment locks have created a situation where an honest recovery narrative may no longer be possible.',
+    warningMessage: 'Disclosure debt is approaching critical levels. Narrative capture and commitment lock are accumulating rapidly.',
     color: '#f97316' // orange
   },
   {
     type: 'enforcement_failure',
-    name: 'Enforcement Failure',
-    description: 'Enforcement gap has become unmanageable',
+    name: 'Regulatory Clock Failure',
+    description: 'Regulatory clock lag has become unmanageable',
     checkCondition: (state) => {
       const enforcementGap = state.metrics.unmeasured.enforcementGap
       const regulatoryCapture = state.metrics.unmeasured.regulatoryCapture
@@ -77,14 +77,14 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       
       return enforcementGap > 0.55 && regulatoryCapture > 0.5 && welfareIncidentRate > 0.4
     },
-    message: 'Enforcement systems have failed. The gap between policy and practice is unmanageable, regulatory capture is severe, and incident rates remain high despite standards.',
-    warningMessage: 'Enforcement gap is widening. Regulatory capture and high incident rates suggest standards are not translating to practice.',
+    message: 'Regulatory clocks have slipped past credibility. Narrative capture is severe, and exposure remains high despite process theater.',
+    warningMessage: 'Regulatory clock lag is widening. Narrative capture and high exposure suggest notices are not matching reality.',
     color: '#eab308' // yellow
   },
   {
     type: 'irreversibility_lock',
-    name: 'System Irreversibility Lock',
-    description: 'System has become too locked-in to change',
+    name: 'Commitment Lock',
+    description: 'Statements, payments, or postures have become too locked-in to unwind',
     checkCondition: (state) => {
       const systemIrreversibility = state.metrics.unmeasured.systemIrreversibility
       // Derive rollback feasibility directly from irreversibility (high irreversibility -> low feasibility)
@@ -100,14 +100,14 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       
       return systemIrreversibility > 0.7 && rollbackFeasibility < 0.25 && avgWelfare < 0.5
     },
-    message: 'The system has become irreversibly locked in. Infrastructure, dependencies, and institutional momentum make meaningful change nearly impossible. You must live with the consequences of earlier decisions.',
-    warningMessage: 'System irreversibility is approaching critical levels. Rollback feasibility is declining, suggesting the system is becoming locked in.',
+    message: 'Commitment lock is extreme. Payments, public denials, or attributions cannot be walked back. You must live with the consequences of earlier war-room choices.',
+    warningMessage: 'Commitment lock is approaching critical levels. Rollback feasibility is declining — statements and deals are hardening.',
     color: '#8b5cf6' // purple
   },
   {
     type: 'regulatory_capture',
-    name: 'Regulatory Capture',
-    description: 'Regulatory capture has reached dangerous levels',
+    name: 'Narrative Capture',
+    description: 'Spin and selective storytelling have overridden operational truth',
     checkCondition: (state) => {
       const regulatoryCapture = state.metrics.unmeasured.regulatoryCapture
       const enforcementGap = state.metrics.unmeasured.enforcementGap
@@ -122,8 +122,8 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       
       return regulatoryCapture > 0.6 && enforcementGap > 0.5 && welfareDebt > 0.55
     },
-    message: 'Regulatory capture has reached dangerous levels. Industry influence over governance has compromised enforcement and allowed welfare debt to accumulate unchecked.',
-    warningMessage: 'Regulatory capture is increasing. Industry influence appears to be compromising enforcement effectiveness.',
+    message: 'Narrative capture has reached dangerous levels. Messaging has overridden facts, clocks have slipped, and disclosure debt is compounding unchecked.',
+    warningMessage: 'Narrative capture is increasing. Public statements appear to be drifting from operational truth.',
     color: '#dc2626' // dark red
   }
 ]

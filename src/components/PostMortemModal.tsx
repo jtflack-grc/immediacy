@@ -187,7 +187,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         {countryGrades.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
-              Global Impact: Country Welfare Grades
+              Global Impact: Jurisdiction Posture Grades
             </h3>
             <div style={{ 
               padding: '16px', 
@@ -201,7 +201,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
                 {(averageCountryScore * 100).toFixed(1)}%
               </div>
               <div style={{ fontSize: '11px', color: '#666', marginTop: '4px' }}>
-                Based on welfare improvements across all tracked countries
+                Based on disclosure / notice posture across tracked jurisdictions
               </div>
             </div>
             <div style={{ 
@@ -471,7 +471,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         {welfareDebtDecisions.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
-              Top Decisions Increasing Welfare Debt
+              Top Decisions Increasing Disclosure Debt
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {welfareDebtDecisions.map((record, idx) => (

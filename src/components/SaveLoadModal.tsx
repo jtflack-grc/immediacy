@@ -159,7 +159,7 @@ export default function SaveLoadModal({ currentState, scenarioVersion, onLoad, o
                 type="text"
                 value={saveName}
                 onChange={(e) => setSaveName(e.target.value)}
-                placeholder="e.g., 'Conservative Approach' or 'Aggressive Welfare'"
+                placeholder="e.g., 'Notify fast' or 'Contain then counsel'"
                 style={{
                   width: '100%',
                   padding: '10px',
@@ -442,7 +442,7 @@ function ComparisonView({ scenarios, onClose }: { scenarios: SavedScenario[], on
               color: '#888'
             }}>
               <div>Measured Success: {((scenario.state.metrics.measured.productionEfficiency * 100).toFixed(0))}%</div>
-              <div>Welfare Debt: {((scenario.state.metrics.unmeasured.welfareDebt * 100).toFixed(0))}%</div>
+              <div>Disclosure Debt: {((scenario.state.metrics.unmeasured.welfareDebt * 100).toFixed(0))}%</div>
             </div>
           </div>
         ))}

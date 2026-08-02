@@ -330,7 +330,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
           
           // Different color schemes based on map mode
           if (mapMode === 'welfareDebt') {
-            // Welfare Debt mode: purple/red scale
+            // Disclosure debt mode: purple/red scale
             if (value < 0.33) {
               const t = value / 0.33
               return `rgb(${Math.floor(50 + t * 100)}, ${Math.floor(20 + t * 50)}, ${Math.floor(100 + t * 155)})`
@@ -354,7 +354,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
               return `rgb(${Math.floor(255 - t * 100)}, ${Math.floor(255 - t * 100)}, ${Math.floor(50 - t * 50)})`
             }
           } else {
-            // Welfare Standards mode (default): red -> yellow -> green
+            // Disclosure posture mode (default): red -> yellow -> green
             // Red (0-33%) = Bad, Yellow (34-66%) = Medium, Green (67-100%) = Good
             let r, g, b
             if (value < 0.33) {
@@ -454,18 +454,11 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
             
             // Get country data and calculate grade
             const countryData = getCountryData(iso3, name)
-            if (iso3 === 'EGY') {
-              console.log('EGY countryData:', countryData)
-              console.log('EGY inPlay:', inPlay, 'value:', value)
-            }
             const baseScore = countryData?.baselineScore || 0.3
             // Combine baseline with current value (weighted average)
             const currentScore = Math.min(1, Math.max(0, baseScore + (value * 0.5)))
             const grade = inPlay ? getWelfareGrade(currentScore) : '—'
             const gradeColor = getGradeColor(grade)
-            if (iso3 === 'EGY') {
-              console.log('EGY grade calculation:', { baseScore, value, currentScore, grade, gradeColor })
-            }
             const fastFacts = countryData?.fastFacts || generateBasicFastFacts(iso3, name)
             
             setHoveredRegion({ 
@@ -624,7 +617,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
             )}
           </div>
           
-          {/* Welfare Metrics */}
+          {/* Jurisdiction posture metrics */}
           <div style={{ 
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -637,7 +630,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
           }}>
             <div>
               <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Current Score
+                Posture Score
               </div>
               <div style={{ fontSize: '22px', fontWeight: 700, color: hoveredRegion.gradeColor || '#fff' }}>
                 {(hoveredRegion.value * 100).toFixed(0)}%
@@ -667,7 +660,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
             )}
           </div>
 
-          {/* Fast Facts - Show All */}
+          {/* Jurisdiction facts */}
           {hoveredRegion.fastFacts && hoveredRegion.fastFacts.length > 0 && (
             <div style={{ marginBottom: '14px' }}>
               <div style={{ 
@@ -678,7 +671,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
                 letterSpacing: '0.5px', 
                 fontWeight: 700
               }}>
-                Key Facts
+                Disclosure & Notice
               </div>
               <ul style={{ 
                 margin: 0, 
@@ -712,7 +705,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
                 letterSpacing: '0.5px', 
                 fontWeight: 700
               }}>
-                Context
+                Jurisdiction Context
               </div>
               <div style={{ 
                 fontSize: '13px', 
