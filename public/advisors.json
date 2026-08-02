@@ -1,62 +1,118 @@
 [
   {
-    "id": "ADV_WELFARE_SCI",
-    "name": "Dr. Sarah Chen",
-    "title": "Welfare Scientist",
-    "specialization": ["Animal Welfare Science", "Five Domains Model", "Behavioral Indicators", "Physiological Welfare"],
-    "color": "#10b981",
-    "bio": "Leading researcher in animal welfare science with expertise in evidence-based welfare assessment. Focuses on measurable welfare outcomes and scientific validity.",
-    "researchDomains": ["Animal welfare science", "Behavioral indicators", "Physiological welfare", "Five Domains Model"],
+    "id": "ADV_COUNSEL",
+    "name": "Maya Okonkwo",
+    "title": "Outside Counsel",
+    "specialization": [
+      "Disclosure law",
+      "Privilege",
+      "Regulatory notice",
+      "Board governance"
+    ],
+    "color": "#3b82f6",
+    "bio": "Crisis counsel focused on timed disclosure checkpoints without false denials.",
+    "researchDomains": [
+      "GDPR Art. 33",
+      "State breach statutes",
+      "Securities disclosure",
+      "Privilege protocols"
+    ],
     "imageUrl": "https://randomuser.me/api/portraits/women/47.jpg"
   },
   {
-    "id": "ADV_POLICY_EXP",
-    "name": "Dr. James Mitchell",
-    "title": "Policy Expert",
-    "specialization": ["Governance Frameworks", "Regulatory Design", "International Standards", "Enforcement Capacity"],
-    "color": "#3b82f6",
-    "bio": "Expert in animal welfare policy and regulatory frameworks. Specializes in translating welfare science into effective governance structures.",
-    "researchDomains": ["Policy analysis", "Regulatory frameworks", "Animal Protection Index", "International standards"],
+    "id": "ADV_IR",
+    "name": "Chris Delgado",
+    "title": "Incident Response Lead",
+    "specialization": [
+      "Containment",
+      "Forensics",
+      "Ransomware",
+      "Evidence integrity"
+    ],
+    "color": "#10b981",
+    "bio": "IR lead who treats dwell time and evidence preservation as first-class controls.",
+    "researchDomains": [
+      "Ransomware playbooks",
+      "Memory forensics",
+      "Segmented containment",
+      "OFAC screening"
+    ],
     "imageUrl": "https://randomuser.me/api/portraits/men/33.jpg"
   },
   {
-    "id": "ADV_ECONOMIST",
-    "name": "Dr. Maria Rodriguez",
-    "title": "Agricultural Economist",
-    "specialization": ["Cost-Benefit Analysis", "Market Dynamics", "Production Economics", "Supply Chain Economics"],
+    "id": "ADV_COMMS",
+    "name": "Priya Natarajan",
+    "title": "Crisis Communications",
+    "specialization": [
+      "Holding statements",
+      "Press",
+      "Employee comms",
+      "Trust centers"
+    ],
     "color": "#f59e0b",
-    "bio": "Agricultural economist specializing in the economics of animal production systems. Analyzes trade-offs between welfare improvements and economic viability.",
-    "researchDomains": ["Agricultural economics", "Production systems", "Market analysis", "Cost-benefit analysis"],
+    "bio": "Comms lead who writes updateable truth, not clever spin.",
+    "researchDomains": [
+      "Crisis narratives",
+      "Journalist embargos",
+      "Customer trust centers"
+    ],
     "imageUrl": "https://randomuser.me/api/portraits/women/25.jpg"
   },
   {
-    "id": "ADV_CONSERVATION",
-    "name": "Dr. David Kimani",
-    "title": "Conservationist",
-    "specialization": ["Wildlife Conservation", "Ecosystem Health", "Biodiversity", "Sustainable Use"],
+    "id": "ADV_FAIR",
+    "name": "Jonah Berg",
+    "title": "Quantitative Risk Advisor",
+    "specialization": [
+      "FAIR",
+      "Loss magnitude",
+      "Control ROI",
+      "Board metrics"
+    ],
     "color": "#8b5cf6",
-    "bio": "Wildlife conservation expert focusing on the intersection of animal welfare and ecosystem health. Advocates for sustainable use frameworks.",
-    "researchDomains": ["Wildlife conservation", "Sustainable use", "Biodiversity", "Ecosystem health"],
+    "bio": "Translates war-room choices into ranges the board can govern.",
+    "researchDomains": [
+      "FAIR",
+      "Cyber loss data",
+      "Secondary loss from disclosure failure"
+    ],
     "imageUrl": "https://randomuser.me/api/portraits/men/52.jpg"
   },
   {
-    "id": "ADV_INDUSTRY",
-    "name": "Patricia Walsh",
-    "title": "Industry Representative",
-    "specialization": ["Production Systems", "Industry Practices", "Supply Chains", "Industry Standards"],
+    "id": "ADV_CISO_PEER",
+    "name": "Alex Romero",
+    "title": "Peer CISO",
+    "specialization": [
+      "Operator judgment",
+      "Vendor risk",
+      "Tabletops",
+      "OWASP mapping"
+    ],
     "color": "#ef4444",
-    "bio": "Industry veteran with deep knowledge of production systems and supply chains. Focuses on practical implementation and gradual transitions.",
-    "researchDomains": ["Production systems", "Industry standards", "Supply chain management", "Practical implementation"],
-    "imageUrl": "https://randomuser.me/api/portraits/women/44.jpg"
+    "bio": "Been through MOVEit-week. Allergic to nation-state cosplay and false precision.",
+    "researchDomains": [
+      "OWASP Top 10",
+      "Vendor incidents",
+      "Tabletop design"
+    ],
+    "imageUrl": "https://randomuser.me/api/portraits/men/75.jpg"
   },
   {
-    "id": "ADV_ETHICS",
-    "name": "Dr. Amara Patel",
-    "title": "Ethics Coordinator",
-    "specialization": ["Animal Ethics", "Sentience Research", "Moral Frameworks", "Rights-Based Approaches"],
+    "id": "ADV_PRIVACY",
+    "name": "Elena Voss",
+    "title": "Privacy Officer",
+    "specialization": [
+      "Individual notice",
+      "DPIA",
+      "Cross-border transfer",
+      "Data minimization"
+    ],
     "color": "#ec4899",
-    "bio": "Ethics scholar specializing in animal sentience and moral frameworks. Advocates for rights-based approaches to animal welfare governance.",
-    "researchDomains": ["Animal ethics", "Sentience research", "Moral philosophy", "Rights-based approaches"],
+    "bio": "Keeps the human beings behind the records in the room.",
+    "researchDomains": [
+      "GDPR",
+      "CCPA/CPRA",
+      "Notification content standards"
+    ],
     "imageUrl": "https://randomuser.me/api/portraits/women/28.jpg"
   }
 ]

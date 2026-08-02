@@ -89,17 +89,17 @@ export function createInitialState(
 
   let initialMetrics = {
     measured: {
-      productionEfficiency: 0.5,
-      costPerUnit: 0.3,
-      welfareIncidentRate: 0.1,
-      welfareStandardAdoption: 0.5,
+      productionEfficiency: 0.45,
+      costPerUnit: 0.25,
+      welfareIncidentRate: 0.22,
+      welfareStandardAdoption: 0.6,
     },
     unmeasured: {
-      welfareDebt: 0.1,
-      enforcementGap: 0.1,
+      welfareDebt: 0.15,
+      enforcementGap: 0.18,
       regulatoryCapture: 0.2,
-      sentienceKnowledgeGap: 0.2,
-      systemIrreversibility: 0.1, // Low irreversibility = high feasibility (inverted)
+      sentienceKnowledgeGap: 0.35,
+      systemIrreversibility: 0.12,
     },
   }
 

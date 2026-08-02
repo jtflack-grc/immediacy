@@ -58,13 +58,16 @@ interface DecisionPanelProps {
 }
 
 const OWNER_ROLES = [
-  'Animal Welfare Officer',
-  'Conservation Director',
-  'Food Systems Policy Lead',
-  'Regulatory Affairs Manager',
-  'Research Ethics Coordinator',
-  'Industry Relations Manager',
-  'Wildlife Protection Specialist',
+  'Incident Commander',
+  'CISO',
+  'Crisis Counsel',
+  'Comms Lead',
+  'Privacy Officer',
+  'IR Lead',
+  'Board Liaison',
+  'Privacy Counsel',
+  'SOC Manager',
+  'Customer Trust Lead',
 ]
 
 export default function DecisionPanel({ node, state, onChoice, turn, onReset }: DecisionPanelProps) {

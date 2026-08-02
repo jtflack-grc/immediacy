@@ -825,7 +825,7 @@ function App() {
                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
                   {(['welfareStandards', 'welfareDebt', 'enforcement'] as const).map(mode => {
                     const isActive = state?.map?.mode === mode
-                    const label = mode === 'welfareStandards' ? 'Standards' : mode === 'welfareDebt' ? 'Debt' : 'Enforcement'
+                    const label = mode === 'welfareStandards' ? 'Posture' : mode === 'welfareDebt' ? 'Debt' : 'Enforcement'
                     return (
                       <button
                         key={mode}

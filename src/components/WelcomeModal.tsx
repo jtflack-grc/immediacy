@@ -145,8 +145,7 @@ export default function WelcomeModal({ onClose }: WelcomeModalProps) {
         }}>
           <strong style={{ color: '#4ade80' }}>Scope.</strong> Short-horizon incident response and disclosure
           under adversarial pressure — FAIR-flavored impact, stakeholder jurisdictions on the globe, and
-          teaching beats drawn from real disclosure failures. Scenario content is still being rewritten from
-          the Inheritance shell; the rails, help, and visual system are already here.
+          OWASP teaching beats on each decision. Difficulty rails and the Inheritance decision engine carry the game.
         </div>
 
         <button

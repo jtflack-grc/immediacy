@@ -2,7 +2,7 @@ import { State } from '../engine/scenarioTypes'
 
 export interface GreatPerson {
   id: string
-  title: string  // e.g., "The Primatologist"
+  title: string
   description: string
   quote?: string
   triggerCondition: (state: State, auditTrail: State['auditTrail']) => boolean
@@ -15,221 +15,192 @@ export interface GreatPerson {
       regionValues?: Record<string, number>
     }
   }
-  icon?: string  // Optional emoji or icon identifier
+  icon?: string
 }
 
 export const GREAT_PEOPLE: GreatPerson[] = [
   {
-    id: 'the_primatologist',
-    title: 'The Primatologist',
-    description: 'A renowned researcher whose groundbreaking work on animal cognition has revolutionized our understanding of sentience. Their insights help bridge the gap between scientific knowledge and policy implementation.',
-    quote: 'Understanding animal minds is the foundation of ethical governance.',
+    id: 'the_extortion_crew',
+    title: 'ShinyFox (Extortion Archetype)',
+    description: 'A leak-site extortion crew that races your disclosure clock. They force adversary-driven disclosure if you stall.',
+    quote: 'If you will not tell your customers, we will.',
+    icon: 'https://randomuser.me/api/portraits/men/32.jpg',
+    triggerCondition: (state, auditTrail) => {
+      const keys = ['ransom', 'extortion', 'leak', 'pay', 'negotiate', 'shiny']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
+      )
+      return hits.length >= 2 || state.metrics.measured.welfareIncidentRate > 0.35
+    },
+    effect: {
+      metrics: {
+        measured: { welfareIncidentRate: 0.08 },
+        unmeasured: { welfareDebt: 0.06, enforcementGap: 0.04 }
+      }
+    }
+  },
+  {
+    id: 'the_crisis_counsel',
+    title: 'Crisis Counsel',
+    description: 'Outside counsel who installs privilege protocols and timed disclosure checkpoints — useful when they accelerate truth, toxic when they manufacture silence.',
+    quote: 'Privilege protects the strategy. It should not invent the facts.',
     icon: 'https://randomuser.me/api/portraits/women/65.jpg',
     triggerCondition: (state, auditTrail) => {
-      // Unlock if player prioritized research/knowledge in 3+ decisions
-      const researchKeywords = ['research', 'knowledge', 'understanding', 'study', 'science', 'sentience']
-      const researchDecisions = auditTrail.filter(record => 
-        researchKeywords.some(keyword => 
-          record.rationale.toLowerCase().includes(keyword) ||
-          record.chosenLabel.toLowerCase().includes(keyword)
-        )
+      const keys = ['counsel', 'legal', 'privilege', 'gdpr', 'regulator', '8-k', 'notice']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
       )
-      return researchDecisions.length >= 3 && state.metrics.unmeasured.sentienceKnowledgeGap < 0.3
+      return hits.length >= 3 && state.metrics.unmeasured.enforcementGap < 0.45
     },
     effect: {
       metrics: {
-        unmeasured: {
-          sentienceKnowledgeGap: -0.15
-        }
+        measured: { welfareStandardAdoption: 0.15 },
+        unmeasured: { enforcementGap: -0.1, regulatoryCapture: -0.04 }
       }
     }
   },
   {
-    id: 'the_welfare_engineer',
-    title: 'The Welfare Engineer',
-    description: 'An innovator who designs humane systems that balance welfare with practical production needs. Their engineering solutions demonstrate that ethical standards need not compromise efficiency.',
-    quote: 'Good design serves both animals and producers.',
-    icon: 'https://randomuser.me/api/portraits/men/75.jpg',
-    triggerCondition: (state, auditTrail) => {
-      // Unlock if player focused on welfare standards and efficiency
-      const welfareDecisions = auditTrail.filter(record =>
-        record.chosenLabel.toLowerCase().includes('welfare') ||
-        record.chosenLabel.toLowerCase().includes('standard')
-      )
-      const efficiencyMaintained = state.metrics.measured.productionEfficiency > 0.5
-      return welfareDecisions.length >= 3 && efficiencyMaintained
-    },
-    effect: {
-      metrics: {
-        measured: {
-          welfareStandardAdoption: 0.2,
-          productionEfficiency: 0.05
-        }
-      }
-    }
-  },
-  {
-    id: 'the_ethicist',
-    title: 'The Ethicist',
-    description: 'A philosopher whose work on animal ethics has shaped modern welfare frameworks. Their moral reasoning helps balance competing ethical considerations and reduce accumulated welfare debt.',
-    quote: 'Ethics without action is mere contemplation.',
+    id: 'the_reporter',
+    title: 'The Reporter',
+    description: 'A deadline-driven journalist with a leak-site screenshot. They will publish with or without you — your choice is primary source or reacting quote.',
+    quote: 'I go to press in three hours. Do you want the facts right?',
     icon: 'https://randomuser.me/api/portraits/women/44.jpg',
     triggerCondition: (state, auditTrail) => {
-      // Unlock if player emphasized ethics in decisions
-      const ethicsKeywords = ['ethic', 'moral', 'right', 'wrong', 'value', 'principle']
-      const ethicsDecisions = auditTrail.filter(record =>
-        ethicsKeywords.some(keyword =>
-          record.rationale.toLowerCase().includes(keyword) ||
-          record.chosenLabel.toLowerCase().includes(keyword)
-        )
+      const keys = ['press', 'reporter', 'media', 'public', 'statement', 'no comment']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
       )
-      return ethicsDecisions.length >= 3 && state.metrics.unmeasured.welfareDebt < 0.4
+      return hits.length >= 2 || state.turn >= 10
     },
     effect: {
       metrics: {
-        unmeasured: {
-          welfareDebt: -0.12
-        }
-      }
+        unmeasured: { regulatoryCapture: -0.06, welfareDebt: 0.03 }
+      },
+      map: { regionValues: { USA: 0.05, GBR: 0.04 } }
     }
   },
   {
-    id: 'the_conservationist',
-    title: 'The Conservationist',
-    description: 'An advocate whose research on ecosystem health has influenced conservation policy. Their holistic approach connects individual welfare with broader environmental and biodiversity concerns.',
-    quote: 'Every animal is part of a larger system.',
+    id: 'the_regulator',
+    title: 'The Regulator',
+    description: 'A supervisory authority watching your awareness rationale and notice fairness. Documentation beats vibes.',
+    quote: 'When did you become aware — and who did you tell first?',
+    icon: 'https://randomuser.me/api/portraits/men/75.jpg',
+    triggerCondition: (state, auditTrail) => {
+      const keys = ['regulator', 'dpa', 'gdpr', 'notify', 'clock', 'ag ', 'hipaa', '8-k']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
+      )
+      return hits.length >= 2 && state.metrics.measured.welfareStandardAdoption > 0.8
+    },
+    effect: {
+      metrics: {
+        unmeasured: { enforcementGap: -0.12 }
+      },
+      map: { regionValues: { IRL: 0.08, DEU: 0.06, USA: 0.05 } }
+    }
+  },
+  {
+    id: 'the_ir_lead',
+    title: 'The IR Lead',
+    description: 'Operator who prioritizes evidence integrity and containment over restoration theater.',
+    quote: 'If you restore before you image, you are volunteering for amnesia.',
     icon: 'https://randomuser.me/api/portraits/men/81.jpg',
     triggerCondition: (state, auditTrail) => {
-      // Unlock if player considered broader impacts
-      const conservationKeywords = ['ecosystem', 'wildlife', 'conservation', 'biodiversity', 'environment']
-      const conservationDecisions = auditTrail.filter(record =>
-        conservationKeywords.some(keyword =>
-          record.rationale.toLowerCase().includes(keyword) ||
-          record.chosenLabel.toLowerCase().includes(keyword)
-        )
+      const keys = ['isolate', 'forensic', 'contain', 'segment', 'evidence', 'image']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
       )
-      return conservationDecisions.length >= 2
+      return hits.length >= 3 && state.metrics.measured.productionEfficiency > 0.55
     },
     effect: {
       metrics: {
-        unmeasured: {
-          welfareDebt: -0.08
-        },
-        measured: {
-          welfareStandardAdoption: 0.1
-        }
+        measured: { productionEfficiency: 0.08, welfareIncidentRate: -0.05 },
+        unmeasured: { sentienceKnowledgeGap: -0.1 }
       }
     }
   },
   {
-    id: 'the_policy_architect',
-    title: 'The Policy Architect',
-    description: 'A governance expert who designs effective regulatory frameworks. Their systematic approach helps bridge the gap between policy intent and practical enforcement.',
-    quote: 'Good policy is policy that works.',
+    id: 'the_board_chair',
+    title: 'The Board Chair',
+    description: 'Demands one slide of truth: facts, unknowns, clocks, choices, FAIR ranges. Punishes surprises more than bad news.',
+    quote: 'Optimism is not a fiduciary duty.',
     icon: 'https://randomuser.me/api/portraits/women/68.jpg',
     triggerCondition: (state, auditTrail) => {
-      // Unlock if player focused on enforcement and governance
-      const governanceKeywords = ['enforcement', 'regulation', 'policy', 'governance', 'compliance', 'oversight']
-      const governanceDecisions = auditTrail.filter(record =>
-        governanceKeywords.some(keyword =>
-          record.rationale.toLowerCase().includes(keyword) ||
-          record.chosenLabel.toLowerCase().includes(keyword)
-        )
+      const keys = ['board', 'fair', 'material', '8-k', 'slide', 'investor']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
       )
-      return governanceDecisions.length >= 3 && state.metrics.unmeasured.enforcementGap < 0.3
+      return hits.length >= 2 && state.metrics.unmeasured.regulatoryCapture < 0.45
     },
     effect: {
       metrics: {
-        unmeasured: {
-          enforcementGap: -0.12,
-          regulatoryCapture: -0.05
-        }
+        measured: { welfareStandardAdoption: 0.12 },
+        unmeasured: { regulatoryCapture: -0.08, welfareDebt: -0.05 }
       }
     }
   },
   {
-    id: 'the_transition_specialist',
-    title: 'The Transition Specialist',
-    description: 'An expert in systemic change who helps organizations transition to higher welfare standards without disrupting operations. Their practical experience guides smooth transformations.',
-    quote: 'Change is inevitable; transition is a choice.',
-    icon: 'https://randomuser.me/api/portraits/men/92.jpg',
+    id: 'the_privacy_officer',
+    title: 'The Privacy Officer',
+    description: 'Keeps the humans behind the records in the room — tiered notice, fairness, and cross-border clocks.',
+    quote: 'A DM to your favorite customer is not a notification program.',
+    icon: 'https://randomuser.me/api/portraits/women/28.jpg',
     triggerCondition: (state, auditTrail) => {
-      // Unlock if player balanced transitions and avoided debt
-      const transitionKeywords = ['transition', 'alternative', 'change', 'transform', 'adapt']
-      const transitionDecisions = auditTrail.filter(record =>
-        transitionKeywords.some(keyword =>
-          record.rationale.toLowerCase().includes(keyword) ||
-          record.chosenLabel.toLowerCase().includes(keyword)
-        )
+      const keys = ['customer', 'notify', 'privacy', 'pii', 'gdpr', 'ccpa', 'notice']
+      const hits = auditTrail.filter(r =>
+        keys.some(k => r.chosenLabel.toLowerCase().includes(k) || r.rationale.toLowerCase().includes(k))
       )
-      const lowDebt = state.metrics.unmeasured.welfareDebt < 0.3
-      const lowIrreversibility = state.metrics.unmeasured.systemIrreversibility < 0.4
-      return transitionDecisions.length >= 2 && lowDebt && lowIrreversibility
+      return hits.length >= 3 && state.metrics.unmeasured.welfareDebt < 0.5
     },
     effect: {
       metrics: {
-        unmeasured: {
-          welfareDebt: -0.1,
-          systemIrreversibility: -0.08
-        }
+        measured: { welfareStandardAdoption: 0.18 },
+        unmeasured: { welfareDebt: -0.1, enforcementGap: -0.06 }
       }
     }
   }
 ]
 
-/**
- * Check if any Great Person should be unlocked based on current state
- */
 export function checkGreatPersonUnlocks(state: State): GreatPerson | null {
   const unlockedIds = state.greatPeople?.map(gp => gp.id) || []
-  
+
   for (const person of GREAT_PEOPLE) {
-    // Skip if already unlocked
-    if (unlockedIds.includes(person.id)) {
-      continue
-    }
-    
-    // Check trigger condition
+    if (unlockedIds.includes(person.id)) continue
     if (person.triggerCondition(state, state.auditTrail)) {
       return person
     }
   }
-  
+
   return null
 }
 
-/**
- * Apply a Great Person's effect to state metrics
- */
 export function applyGreatPersonEffect(state: State, person: GreatPerson): State {
   const newState = { ...state }
-  
+
   if (person.effect.metrics) {
     if (person.effect.metrics.measured) {
       newState.metrics.measured = {
         ...newState.metrics.measured,
         ...person.effect.metrics.measured
       }
-      // Clamp values
       newState.metrics.measured.productionEfficiency = Math.max(0, Math.min(1, newState.metrics.measured.productionEfficiency))
       newState.metrics.measured.costPerUnit = Math.max(0, Math.min(1, newState.metrics.measured.costPerUnit))
       newState.metrics.measured.welfareIncidentRate = Math.max(0, Math.min(1, newState.metrics.measured.welfareIncidentRate))
       newState.metrics.measured.welfareStandardAdoption = Math.max(0, newState.metrics.measured.welfareStandardAdoption)
     }
-    
+
     if (person.effect.metrics.unmeasured) {
       newState.metrics.unmeasured = {
         ...newState.metrics.unmeasured,
         ...person.effect.metrics.unmeasured
       }
-      // Clamp values
       Object.keys(newState.metrics.unmeasured).forEach(key => {
         const value = newState.metrics.unmeasured[key as keyof typeof newState.metrics.unmeasured]
         newState.metrics.unmeasured[key as keyof typeof newState.metrics.unmeasured] = Math.max(0, Math.min(1, value))
       })
     }
   }
-  
+
   if (person.effect.map?.regionValues) {
     newState.map.regionValues = { ...newState.map.regionValues }
     Object.entries(person.effect.map.regionValues).forEach(([iso3, adjustment]) => {
@@ -238,6 +209,6 @@ export function applyGreatPersonEffect(state: State, person: GreatPerson): State
       ))
     })
   }
-  
+
   return newState
 }

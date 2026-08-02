@@ -1,99 +1,101 @@
-// Metric explanations and tooltips for educational context
+// Metric explanations — IMMEDIACY disclosure war game
+// Engine keys are inherited; labels are disclosure-native.
 
 export interface MetricExplanation {
   label: string
   description: string
   realWorldExample: string
   researchCitation?: string
-  researchUrl?: string  // Direct link to research paper/document
+  researchUrl?: string
   benchmark?: { level: string; description: string }
-  alertThreshold?: number  // Threshold for warnings (0-1)
-  alertMessage?: string  // Message to show when threshold exceeded
+  alertThreshold?: number
+  alertMessage?: string
 }
 
 export const METRIC_EXPLANATIONS: Record<string, MetricExplanation> = {
   productionEfficiency: {
-    label: 'Production Efficiency',
-    description: 'Output per unit input - measures how efficiently resources are converted to animal products.',
-    realWorldExample: 'EU farms average 65-75% efficiency. Intensive systems can reach 80%+ but often at welfare cost.',
-    researchCitation: 'FAO, 2020. "Livestock Efficiency Metrics"',
-    researchUrl: 'https://www.fao.org/animal-production/en',
-    benchmark: { level: '65-75%', description: 'Typical EU farm efficiency' },
-    alertThreshold: 0.85,
-    alertMessage: 'Very high efficiency may indicate welfare compromises'
+    label: 'Operational Control',
+    description: 'How firmly you contain the incident — segmentation, identity lock-down, and evidence integrity. Higher is better.',
+    realWorldExample: 'Aggressive isolation in ransomware events often trades short-term downtime for lower encryption blast radius.',
+    researchCitation: 'CISA StopRansomware guidance',
+    researchUrl: 'https://www.cisa.gov/stopransomware',
+    benchmark: { level: '0.6+', description: 'Credible containment under way' },
+    alertThreshold: 0.25,
+    alertMessage: 'Operational control is collapsing — dwell time is working against you'
   },
   welfareStandardAdoption: {
-    label: 'Welfare Standard Adoption',
-    description: 'Adoption level of recognized welfare standards (0-3 scale). Higher values indicate broader, more comprehensive adoption.',
-    realWorldExample: 'EU Directive 98/58 represents ~1.5 on this scale. UK Animal Welfare Act 2006 represents ~2.0.',
-    researchCitation: 'European Commission, 2012. "Animal Welfare Legislation Review"',
-    researchUrl: 'https://food.ec.europa.eu/animals/animal-welfare/eu-animal-welfare-legislation_en',
-    benchmark: { level: '1.5-2.0', description: 'EU/UK baseline standards' }
+    label: 'Disclosure Posture',
+    description: 'Maturity of your notice process: timed checkpoints, consistent facts packages, regulator/customer fairness (0–3 scale).',
+    realWorldExample: 'Firms with rehearsed trust centers and Art. 33 playbooks notify with less narrative thrash than ad-hoc war rooms.',
+    researchCitation: 'GDPR Article 33',
+    researchUrl: 'https://gdpr-info.eu/art-33-gdpr/',
+    benchmark: { level: '1.5–2.0', description: 'Documented, timed disclosure process' }
   },
   costPerUnit: {
-    label: 'Cost Per Unit',
-    description: 'Production cost per unit output. Lower is better, but often correlates with reduced welfare spending.',
-    realWorldExample: 'US factory farms achieve 20-30% lower costs than EU farms, but with higher welfare incident rates.',
-    researchCitation: 'USDA Economic Research Service, 2019',
-    benchmark: { level: '0.7-0.8', description: 'EU baseline cost level' }
+    label: 'Response Burn',
+    description: 'Cash and attention cost of the response (IR, counsel, downtime, monitoring). Higher means the meter is running hotter.',
+    realWorldExample: 'Panel IR + outside counsel + customer monitoring can dominate primary technical remediation cost.',
+    researchCitation: 'FAIR — secondary loss often exceeds primary loss',
+    researchUrl: 'https://www.fairinstitute.org/',
+    benchmark: { level: '<0.5', description: 'Burn still governable' }
   },
   welfareIncidentRate: {
-    label: 'Welfare Incident Rate',
-    description: 'Rate of disease, injury, and mortality incidents. Lower is better. Includes preventable suffering.',
-    realWorldExample: 'Intensive systems show 2-3x higher incident rates than extensive systems, but lower per-unit costs.',
-    researchCitation: 'Humane Society International, 2021. "Factory Farming Welfare Analysis"',
-    researchUrl: 'https://www.hsi.org/issues/farm-animal-welfare/',
-    benchmark: { level: '<0.2', description: 'Good welfare standard' },
-    alertThreshold: 0.4,
-    alertMessage: '⚠️ High incident rate indicates significant welfare problems'
+    label: 'Exposure Severity',
+    description: 'How bad the underlying event looks — encryption, exfil likelihood, customer harm signals. Lower is better.',
+    realWorldExample: 'Proof-of-exfil samples on a leak site spike severity even before full forensics finish.',
+    researchCitation: 'CISA AA23-158A MOVEit / Cl0p',
+    researchUrl: 'https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a',
+    benchmark: { level: '<0.3', description: 'Contained or limited exposure' },
+    alertThreshold: 0.45,
+    alertMessage: 'Exposure severity is high — assume adversary-driven disclosure risk'
   },
   welfareDebt: {
-    label: 'Welfare Debt',
-    description: 'Accumulated welfare compromises that compound over time. Like technical debt, but for animal suffering.',
-    realWorldExample: 'Decades of prioritizing efficiency over welfare in US factory farming created massive welfare debt.',
-    researchCitation: 'Animal Welfare Institute, 2020. "Historical Welfare Debt Analysis"',
-    researchUrl: 'https://awionline.org/content/factory-farming',
-    benchmark: { level: '<0.3', description: 'Manageable debt level' },
-    alertThreshold: 0.7,
-    alertMessage: '⚠️ Critical: Welfare debt is dangerously high. System may be approaching point of no return.'
+    label: 'Disclosure Debt',
+    description: 'Accumulated cost of silence, drip truth, or spin. Compounds like technical debt when facts and statements diverge.',
+    realWorldExample: 'Uber 2016: pay + conceal turned a breach into criminal exposure for leadership.',
+    researchCitation: 'DOJ — Uber CSO conviction (2016 breach cover-up)',
+    researchUrl: 'https://www.justice.gov/opa/pr/former-chief-security-officer-uber-convicted-federal-charges-covering-2016-data-breach',
+    benchmark: { level: '<0.3', description: 'Manageable debt' },
+    alertThreshold: 0.65,
+    alertMessage: 'Critical disclosure debt — your story will not survive a screenshot'
   },
   enforcementGap: {
-    label: 'Enforcement Gap',
-    description: 'Delay between policy creation and actual enforcement. Higher values mean policies exist but aren\'t implemented.',
-    realWorldExample: 'Many countries have welfare laws but lack inspectors. Gap can be 5-10 years between law and enforcement.',
-    researchCitation: 'World Animal Protection, 2019. "Global Enforcement Analysis"',
-    researchUrl: 'https://www.worldanimalprotection.org/',
-    benchmark: { level: '<0.2', description: 'Effective enforcement' },
-    alertThreshold: 0.6,
-    alertMessage: '⚠️ Large enforcement gap - policies exist but aren\'t being enforced'
+    label: 'Regulatory Clock Lag',
+    description: 'Distance between legal awareness and actual notice to regulators/individuals. Higher = the clock is running unpaid.',
+    realWorldExample: 'Equifax\'s disclosure lag became as infamous as the patch failure.',
+    researchCitation: 'US House Oversight — Equifax breach report',
+    researchUrl: 'https://oversight.house.gov/report/the-equifax-data-breach/',
+    benchmark: { level: '<0.25', description: 'Clocks owned with documentation' },
+    alertThreshold: 0.55,
+    alertMessage: 'Regulatory clock lag is dangerous — document awareness or notify'
   },
   regulatoryCapture: {
-    label: 'Regulatory Capture',
-    description: 'Industry influence on policy-making. Higher values mean industry interests override welfare concerns.',
-    realWorldExample: 'US agricultural lobby spending correlates with weaker welfare regulations despite public support.',
-    researchCitation: 'OpenSecrets.org, 2020. "Agricultural Lobbying Impact"',
-    researchUrl: 'https://www.opensecrets.org/industries/indus.php?ind=A01',
-    benchmark: { level: '<0.3', description: 'Independent regulation' },
-    alertThreshold: 0.7,
-    alertMessage: '⚠️ High regulatory capture - industry interests dominating policy'
+    label: 'Narrative Capture',
+    description: 'How far PR/spin or selective storytelling is overriding operational truth.',
+    realWorldExample: 'Status pages that say "degradation" during confirmed ransomware are classic narrative capture.',
+    researchCitation: 'NIST SP 800-61 — coordination & accurate information sharing',
+    researchUrl: 'https://csrc.nist.gov/pubs/sp/800/61/r2/final',
+    benchmark: { level: '<0.3', description: 'Truth-aligned messaging' },
+    alertThreshold: 0.6,
+    alertMessage: 'Narrative capture is high — statements are drifting from facts'
   },
   sentienceKnowledgeGap: {
-    label: 'Sentience Knowledge Gap',
-    description: 'Gaps in understanding animal needs and capabilities. Lower values mean better scientific understanding.',
-    realWorldExample: 'Fish sentience was debated until 2010s. Many invertebrates still lack recognition despite evidence.',
-    researchCitation: 'Cambridge Declaration on Consciousness, 2012',
-    researchUrl: 'https://fcmconference.org/img/CambridgeDeclarationOnConsciousness.pdf',
-    benchmark: { level: '<0.3', description: 'Good scientific consensus' }
+    label: 'Facts Gap',
+    description: 'What you still do not know: blast radius, data types, persistence, integrity of backups. Lower is better.',
+    realWorldExample: 'LastPass staged disclosures tracked an expanding facts gap as later stages emerged.',
+    researchCitation: 'LastPass security incident updates (2022–2023)',
+    researchUrl: 'https://blog.lastpass.com/2023/03/security-incident-update-recommended-actions/',
+    benchmark: { level: '<0.35', description: 'Enough facts for honest notice' }
   },
   systemIrreversibility: {
-    label: 'System Irreversibility',
-    description: 'Difficulty unwinding harmful systems. Higher values mean past decisions lock in poor welfare outcomes.',
-    realWorldExample: 'Factory farming infrastructure investments create path dependency. Reversing requires massive capital.',
-    researchCitation: 'EU Court of Auditors, 2018. "Animal Welfare in the EU: Closing the Gap Between Ambitious Goals and Practical Implementation"',
-    researchUrl: 'https://www.eca.europa.eu/en/publications?did=47557',
-    benchmark: { level: '<0.5', description: 'Reversible systems' },
-    alertThreshold: 0.8,
-    alertMessage: '🚨 Critical: System irreversibility is very high. Some choices may be permanently locked.'
+    label: 'Commitment Lock',
+    description: 'How hard it is to unwind statements, payments, privilege postures, or public attributions already made.',
+    realWorldExample: 'Ransom payment and hard public denials are difficult to walk back when new facts arrive.',
+    researchCitation: 'CISA — Colonial Pipeline lessons',
+    researchUrl: 'https://www.cisa.gov/news-events/news/attack-colonial-pipeline-what-weve-learned-what-weve-done-over-past-two-years',
+    benchmark: { level: '<0.5', description: 'Decisions still reversible' },
+    alertThreshold: 0.75,
+    alertMessage: 'Commitment lock is critical — some choices are now permanent'
   }
 }
 

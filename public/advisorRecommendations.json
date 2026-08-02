@@ -1,358 +1,829 @@
 {
-  "N01_SENTIENCE_RECOGNITION": [
+  "N01_FIRST_SIGNAL": [
     {
-      "advisorId": "ADV_ETHICS",
+      "advisorId": "ADV_IR",
       "choiceIndex": 0,
-      "reasoning": "Broad recognition of sentience aligns with current scientific understanding across vertebrates and selected invertebrates. Research from Animal Sentience journal and the Cambridge Declaration on Consciousness supports this comprehensive approach. Narrow recognition creates an arbitrary moral boundary that may be difficult to expand later.",
+      "reasoning": "Preserve evidence, contain aggressively where blast radius is credible, and refuse restoration shortcuts that destroy forensics.",
       "researchCitations": [
         {
-          "text": "Cambridge Declaration on Consciousness (2012): Non-human animals have the neuroanatomical, neurochemical, and neurophysiological substrates of conscious states",
-          "url": "https://fcmconference.org/img/CambridgeDeclarationOnConsciousness.pdf",
+          "text": "CISA Stop Ransomware guidance",
+          "url": "https://www.cisa.gov/stopransomware",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Higher operational control",
+        "Better facts for notice content"
+      ],
+      "concerns": [
+        "Downtime cost",
+        "Business pushback"
+      ]
+    },
+    {
+      "advisorId": "ADV_FAIR",
+      "choiceIndex": 0,
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
+      "researchCitations": [
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Better capital decisions",
+        "Shared language for tradeoffs"
+      ],
+      "concerns": [
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
+      ]
+    }
+  ],
+  "N02_SCOPE_TRIAGE": [
+    {
+      "advisorId": "ADV_PRIVACY",
+      "choiceIndex": 0,
+      "reasoning": "People behind the records need timely, specific notice. Fairness across similarly situated customers is part of the control.",
+      "researchCitations": [
+        {
+          "text": "HHS HIPAA breach notification rule overview",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower regulatory clock lag",
+        "Trust salvage"
+      ],
+      "concerns": [
+        "Call-center load",
+        "Over-notification fatigue"
+      ]
+    },
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    }
+  ],
+  "N03_ISOLATE_OR_OBSERVE": [
+    {
+      "advisorId": "ADV_IR",
+      "choiceIndex": 0,
+      "reasoning": "Preserve evidence, contain aggressively where blast radius is credible, and refuse restoration shortcuts that destroy forensics.",
+      "researchCitations": [
+        {
+          "text": "CISA Stop Ransomware guidance",
+          "url": "https://www.cisa.gov/stopransomware",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Higher operational control",
+        "Better facts for notice content"
+      ],
+      "concerns": [
+        "Downtime cost",
+        "Business pushback"
+      ]
+    },
+    {
+      "advisorId": "ADV_CISO_PEER",
+      "choiceIndex": 0,
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
+      "researchCitations": [
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
           "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Faster peer learning",
+        "Credibility with operators"
+      ],
+      "concerns": [
+        "Ego and blame storms",
+        "Vendor legal friction"
+      ]
+    }
+  ],
+  "N04_RANSOM_NOTE": [
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    },
+    {
+      "advisorId": "ADV_IR",
+      "choiceIndex": 0,
+      "reasoning": "Preserve evidence, contain aggressively where blast radius is credible, and refuse restoration shortcuts that destroy forensics.",
+      "researchCitations": [
+        {
+          "text": "CISA Stop Ransomware guidance",
+          "url": "https://www.cisa.gov/stopransomware",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Higher operational control",
+        "Better facts for notice content"
+      ],
+      "concerns": [
+        "Downtime cost",
+        "Business pushback"
+      ]
+    }
+  ],
+  "N05_COUNSEL_ARRIVES": [
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    },
+    {
+      "advisorId": "ADV_FAIR",
+      "choiceIndex": 0,
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
+      "researchCitations": [
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Better capital decisions",
+        "Shared language for tradeoffs"
+      ],
+      "concerns": [
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
+      ]
+    }
+  ],
+  "N05B_CUSTOMER_HINT": [
+    {
+      "advisorId": "ADV_PRIVACY",
+      "choiceIndex": 0,
+      "reasoning": "People behind the records need timely, specific notice. Fairness across similarly situated customers is part of the control.",
+      "researchCitations": [
+        {
+          "text": "HHS HIPAA breach notification rule overview",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower regulatory clock lag",
+        "Trust salvage"
+      ],
+      "concerns": [
+        "Call-center load",
+        "Over-notification fatigue"
+      ]
+    },
+    {
+      "advisorId": "ADV_COMMS",
+      "choiceIndex": 0,
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
+      "researchCitations": [
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
           "year": 2012,
-          "lastVerified": "2026-01-19",
-          "archiveUrl": "https://web.archive.org/web/20200101000000*/https://fcmconference.org/img/CambridgeDeclarationOnConsciousness.pdf"
-        },
-        {
-          "text": "Animal Sentience Journal: Evidence for sentience in cephalopods and decapod crustaceans",
-          "url": "https://www.wellbeingintlstudiesrepository.org/animsent/",
-          "sourceType": "peer-reviewed",
-          "lastVerified": "2026-01-19"
-        },
-        {
-          "text": "Universal Declaration on Animal Welfare: Recognition of sentience as foundational principle",
-          "url": "https://www.worldanimalprotection.ca/our-work/global-animal-protection/universal-declaration/",
-          "sourceType": "ngo",
-          "year": 2007,
-          "lastVerified": "2026-01-19"
+          "lastVerified": "2026-08-01"
         }
       ],
       "benefits": [
-        "Establishes comprehensive legal foundation for welfare protections",
-        "Aligns with scientific consensus on animal consciousness",
-        "Prevents future need to expand recognition piecemeal"
+        "Lower narrative capture",
+        "Updateable public record"
       ],
       "concerns": [
-        "May face stronger political resistance",
-        "Requires enforcement capacity for broader scope"
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
       ]
-    },
+    }
+  ],
+  "N06_REGULATOR_CLOCK": [
     {
-      "advisorId": "ADV_WELFARE_SCI",
+      "advisorId": "ADV_COUNSEL",
       "choiceIndex": 0,
-      "reasoning": "Broad recognition is supported by extensive research on sentience across taxa. The Five Domains Model applies across vertebrates and selected invertebrates, suggesting welfare considerations should not be arbitrarily limited. Narrow recognition may exclude species with demonstrated cognitive and emotional capacities.",
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
       "researchCitations": [
         {
-          "text": "Five Domains Model (Mellor & Beausoleil, 2015): Comprehensive welfare assessment framework applicable across species",
-          "doi": "10.1016/j.applanim.2015.08.006"
-        },
-        {
-          "text": "Animal-Based Welfare Indicators (MDPI, 2023): Evidence-based indicators support broad recognition",
-          "url": "https://www.mdpi.com/journal/animals/special_issues/welfare_indicators",
-          "sourceType": "peer-reviewed",
-          "year": 2023,
-          "lastVerified": "2026-01-19"
-        },
-        {
-          "text": "Comparative cognition research: Sentience evidence across vertebrate and invertebrate taxa",
-          "url": "https://www.cell.com/trends/cognitive-sciences/fulltext/S1364-6613(20)30019-2",
-          "sourceType": "peer-reviewed",
-          "doi": "10.1016/j.tics.2020.01.002",
-          "year": 2020,
-          "lastVerified": "2026-01-19"
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
         }
       ],
       "benefits": [
-        "Evidence-based approach to sentience recognition",
-        "Supports comprehensive welfare science",
-        "Reduces knowledge gaps about animal needs"
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
       ],
       "concerns": [
-        "Implementation complexity increases with scope",
-        "Requires scientific consensus on invertebrate sentience"
+        "Still need operational facts",
+        "Clock may already be running"
       ]
     },
     {
-      "advisorId": "ADV_ECONOMIST",
-      "choiceIndex": 1,
-      "reasoning": "Narrow recognition reduces immediate implementation costs while establishing essential legal foundation. Gradual expansion can follow once enforcement systems are established. This approach balances welfare goals with economic and political feasibility.",
-      "researchCitations": [
-        "Cost-benefit analysis of welfare standards (Nature Scientific Reports, 2021): Implementation costs scale with scope",
-        "Production economics research: Gradual adoption reduces market disruption",
-        "Policy implementation studies: Phased approaches improve compliance rates"
-      ],
-      "benefits": [
-        "Lower initial implementation costs",
-        "Easier political acceptance",
-        "Allows gradual system development"
-      ],
-      "concerns": [
-        "May limit future protections if expansion is difficult",
-        "Could create path dependency favoring narrow scope"
-      ]
-    },
-    {
-      "advisorId": "ADV_POLICY_EXP",
+      "advisorId": "ADV_PRIVACY",
       "choiceIndex": 0,
-      "reasoning": "Broad recognition provides stronger legal foundation for future welfare standards. While implementation may be more complex, the comprehensive framework reduces need for later legal amendments. International standards (WOAH/OIE) increasingly support broad recognition.",
+      "reasoning": "People behind the records need timely, specific notice. Fairness across similarly situated customers is part of the control.",
       "researchCitations": [
-        "Animal Protection Index methodology: Legal recognition as foundational indicator",
-        "WOAH/OIE welfare standards: International trend toward broad recognition",
-        "Policy framework studies: Comprehensive frameworks reduce amendment needs"
+        {
+          "text": "HHS HIPAA breach notification rule overview",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Stronger legal foundation for welfare standards",
-        "Alignment with international standards",
-        "Reduces future regulatory gaps"
+        "Lower regulatory clock lag",
+        "Trust salvage"
       ],
       "concerns": [
-        "Requires robust enforcement capacity",
-        "May face implementation delays"
+        "Call-center load",
+        "Over-notification fatigue"
       ]
     }
   ],
-  "N02_FARM_STANDARDS": [
+  "N07_BOARD_BRIEF": [
     {
-      "advisorId": "ADV_WELFARE_SCI",
+      "advisorId": "ADV_FAIR",
       "choiceIndex": 0,
-      "reasoning": "Mandatory baseline standards with enforcement are essential for measurable welfare improvements. Voluntary standards have shown limited effectiveness in improving actual welfare outcomes. Research shows that mandatory standards with proper enforcement lead to better welfare indicators.",
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
       "researchCitations": [
-        "Animal-Based Welfare Indicators (MDPI, 2023): Mandatory standards correlate with better welfare outcomes",
-        "Five Domains Model: Comprehensive standards address all welfare domains",
-        "Welfare assessment studies: Voluntary programs show inconsistent compliance"
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Measurable welfare improvements",
-        "Consistent application across producers",
-        "Evidence-based standards"
+        "Better capital decisions",
+        "Shared language for tradeoffs"
       ],
       "concerns": [
-        "Requires significant enforcement capacity",
-        "Higher implementation costs"
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
       ]
     },
     {
-      "advisorId": "ADV_POLICY_EXP",
+      "advisorId": "ADV_COUNSEL",
       "choiceIndex": 0,
-      "reasoning": "Mandatory standards with government oversight provide accountability and consistency. The Animal Protection Index shows that countries with mandatory standards and enforcement capacity score higher on welfare outcomes. Voluntary systems often lack transparency and accountability.",
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
       "researchCitations": [
-        "Animal Protection Index (World Animal Protection): Mandatory standards correlate with better welfare scores",
-        "Regulatory effectiveness studies: Government oversight improves compliance",
-        "Policy implementation research: Mandatory frameworks reduce regulatory capture"
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Accountability and transparency",
-        "Consistent enforcement",
-        "Reduces regulatory capture"
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
       ],
       "concerns": [
-        "Requires government capacity building",
-        "May face industry resistance"
-      ]
-    },
-    {
-      "advisorId": "ADV_ECONOMIST",
-      "choiceIndex": 1,
-      "reasoning": "Voluntary industry-led standards can achieve faster adoption with lower enforcement costs. Market-driven certification schemes can incentivize compliance through consumer preferences. However, this approach requires strong market signals and transparency.",
-      "researchCitations": [
-        "Market-based welfare standards (GLOBALG.A.P.): Consumer-driven adoption",
-        "Certification economics: Voluntary programs can achieve scale",
-        "Supply chain research: Market incentives for welfare improvements"
-      ],
-      "benefits": [
-        "Faster market adoption",
-        "Lower government enforcement costs",
-        "Market-driven innovation"
-      ],
-      "concerns": [
-        "Risk of regulatory capture",
-        "Inconsistent enforcement",
-        "Dependent on consumer demand"
-      ]
-    },
-    {
-      "advisorId": "ADV_INDUSTRY",
-      "choiceIndex": 1,
-      "reasoning": "Voluntary standards allow industry to develop practical solutions that balance welfare with production realities. Industry-led initiatives can adapt more quickly to local conditions and production systems. Mandatory standards may be too rigid for diverse production contexts.",
-      "researchCitations": [
-        "Industry best practices: Flexibility in implementation",
-        "Production system diversity: One-size-fits-all standards may not work",
-        "Industry innovation: Voluntary programs can drive rapid improvement"
-      ],
-      "benefits": [
-        "Industry buy-in and cooperation",
-        "Flexibility for diverse systems",
-        "Faster implementation"
-      ],
-      "concerns": [
-        "May prioritize efficiency over welfare",
-        "Lacks independent oversight",
-        "Inconsistent standards"
+        "Still need operational facts",
+        "Clock may already be running"
       ]
     }
   ],
-  "N03_FACTORY_FARMING": [
+  "N08_COMMS_DRAFT": [
     {
-      "advisorId": "ADV_WELFARE_SCI",
+      "advisorId": "ADV_COMMS",
       "choiceIndex": 0,
-      "reasoning": "Strict welfare standards for intensive operations address the most significant welfare challenges. Research shows that intensive systems can achieve good welfare with proper standards, space, and enrichment. The Five Domains Model provides framework for comprehensive improvements.",
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
       "researchCitations": [
-        "Five Domains Model: Welfare improvements possible in intensive systems",
-        "Space and enrichment research: Critical factors for welfare in intensive systems",
-        "Welfare assessment studies: Intensive systems can meet high welfare standards"
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
+          "year": 2012,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Addresses largest welfare challenges",
-        "Evidence-based improvements",
-        "Comprehensive welfare framework"
+        "Lower narrative capture",
+        "Updateable public record"
       ],
       "concerns": [
-        "Significant cost increases",
-        "Requires major system changes"
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
       ]
     },
     {
-      "advisorId": "ADV_ECONOMIST",
-      "choiceIndex": 1,
-      "reasoning": "Gradual voluntary improvements with incentives balance welfare goals with economic realities. Sudden strict standards could disrupt food supply and increase costs dramatically. Incentive-based approaches can achieve improvements while maintaining market stability.",
-      "researchCitations": [
-        "Economic impact of welfare standards: Gradual transitions reduce market disruption",
-        "Incentive-based programs: Cost-effective welfare improvements",
-        "Market stability research: Phased approaches maintain supply"
-      ],
-      "benefits": [
-        "Maintains market stability",
-        "Lower immediate costs",
-        "Industry cooperation"
-      ],
-      "concerns": [
-        "Slower welfare improvements",
-        "May not address core issues",
-        "Dependent on incentives"
-      ]
-    },
-    {
-      "advisorId": "ADV_POLICY_EXP",
+      "advisorId": "ADV_CISO_PEER",
       "choiceIndex": 0,
-      "reasoning": "Strict standards with enforcement are necessary to address welfare issues in intensive systems. Voluntary approaches have historically failed to achieve meaningful improvements. Policy research shows that mandatory standards with clear timelines are most effective.",
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
       "researchCitations": [
-        "Policy effectiveness studies: Mandatory standards achieve better outcomes",
-        "Regulatory enforcement: Clear standards with penalties improve compliance",
-        "Historical analysis: Voluntary programs show limited impact"
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
+          "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Predictable compliance",
-        "Clear enforcement framework",
-        "Measurable progress"
+        "Faster peer learning",
+        "Credibility with operators"
       ],
       "concerns": [
-        "Enforcement capacity required",
-        "Industry resistance",
-        "Implementation timeline"
+        "Ego and blame storms",
+        "Vendor legal friction"
       ]
     }
   ],
-  "N04_ALTERNATIVE_PROTEINS": [
+  "N09_EMPLOYEES": [
     {
-      "advisorId": "ADV_WELFARE_SCI",
+      "advisorId": "ADV_COMMS",
       "choiceIndex": 0,
-      "reasoning": "Heavy investment in alternative proteins offers the potential to dramatically reduce animal suffering while maintaining food security. Research shows that cultured meat and plant-based alternatives can provide nutrition without traditional welfare concerns. This represents a paradigm shift in food production.",
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
       "researchCitations": [
-        "Alternative protein research: Potential to reduce animal use",
-        "Cultured meat studies: Welfare benefits of cell-based production",
-        "Nutritional analysis: Plant-based alternatives meet dietary needs"
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
+          "year": 2012,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Potential to eliminate many welfare concerns",
-        "Scalable production",
-        "Reduces welfare debt"
+        "Lower narrative capture",
+        "Updateable public record"
       ],
       "concerns": [
-        "Technology still developing",
-        "May create new dependencies",
-        "Uncertain long-term impacts"
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
       ]
     },
     {
-      "advisorId": "ADV_ECONOMIST",
+      "advisorId": "ADV_IR",
       "choiceIndex": 0,
-      "reasoning": "Heavy investment positions the economy at the forefront of a growing market. Alternative proteins are projected to capture significant market share. Early investment can create competitive advantages and reduce long-term costs through economies of scale.",
+      "reasoning": "Preserve evidence, contain aggressively where blast radius is credible, and refuse restoration shortcuts that destroy forensics.",
       "researchCitations": [
-        "Market projections: Alternative proteins growing market share",
-        "Investment economics: Early mover advantages",
-        "Cost reduction: Economies of scale in production"
+        {
+          "text": "CISA Stop Ransomware guidance",
+          "url": "https://www.cisa.gov/stopransomware",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Market leadership position",
-        "Economic growth potential",
-        "Long-term cost reductions"
+        "Higher operational control",
+        "Better facts for notice content"
       ],
       "concerns": [
-        "High initial investment",
-        "Market uncertainty",
-        "Technology risks"
-      ]
-    },
-    {
-      "advisorId": "ADV_INDUSTRY",
-      "choiceIndex": 1,
-      "reasoning": "Moderate support allows for market testing and gradual transition. Maintaining traditional systems ensures food security while alternative proteins develop. This balanced approach reduces risk and allows industry to adapt gradually.",
-      "researchCitations": [
-        "Market transition studies: Gradual shifts reduce disruption",
-        "Food security research: Maintaining multiple production systems",
-        "Industry adaptation: Phased transitions improve outcomes"
-      ],
-      "benefits": [
-        "Reduces market disruption",
-        "Maintains food security",
-        "Allows gradual industry adaptation"
-      ],
-      "concerns": [
-        "Slower welfare improvements",
-        "May miss market opportunities",
-        "Maintains welfare debt"
+        "Downtime cost",
+        "Business pushback"
       ]
     }
   ],
-  "N05_WILDLIFE_CONSERVATION": [
+  "N10_INSURER_FORENSICS": [
     {
-      "advisorId": "ADV_CONSERVATION",
+      "advisorId": "ADV_COUNSEL",
       "choiceIndex": 0,
-      "reasoning": "Strict protection with limited sustainable use balances animal welfare with ecosystem health. Research shows that well-managed protected areas support both wildlife welfare and biodiversity. Sustainable use frameworks must prioritize welfare alongside conservation goals.",
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
       "researchCitations": [
-        "Wildlife conservation research: Protected areas support welfare and biodiversity",
-        "Sustainable use frameworks: Balancing welfare and conservation",
-        "Ecosystem health studies: Welfare and conservation are complementary"
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Protects wildlife welfare",
-        "Maintains ecosystem health",
-        "Long-term conservation outcomes"
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
       ],
       "concerns": [
-        "Requires strong enforcement",
-        "May limit local livelihoods",
-        "Enforcement capacity needed"
+        "Still need operational facts",
+        "Clock may already be running"
       ]
     },
     {
-      "advisorId": "ADV_CONSERVATION",
-      "choiceIndex": 1,
-      "reasoning": "Sustainable use with welfare oversight can support both conservation and local communities. Research from IPBES shows that community-managed sustainable use can achieve conservation goals while respecting welfare. This approach requires robust oversight and monitoring.",
+      "advisorId": "ADV_FAIR",
+      "choiceIndex": 0,
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
       "researchCitations": [
-        "IPBES Sustainable Use Assessment: Community-managed systems can work",
-        "Conservation and welfare: Integrated approaches",
-        "Community-based conservation: Local participation improves outcomes"
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
       ],
       "benefits": [
-        "Supports local communities",
-        "Achieves conservation goals",
-        "Community participation"
+        "Better capital decisions",
+        "Shared language for tradeoffs"
       ],
       "concerns": [
-        "Requires oversight capacity",
-        "Welfare standards must be maintained",
-        "Monitoring challenges"
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
+      ]
+    }
+  ],
+  "N10B_REPORTER_CALL": [
+    {
+      "advisorId": "ADV_COMMS",
+      "choiceIndex": 0,
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
+      "researchCitations": [
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
+          "year": 2012,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower narrative capture",
+        "Updateable public record"
+      ],
+      "concerns": [
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
+      ]
+    },
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    }
+  ],
+  "N11_CUSTOMER_NOTIFY": [
+    {
+      "advisorId": "ADV_PRIVACY",
+      "choiceIndex": 0,
+      "reasoning": "People behind the records need timely, specific notice. Fairness across similarly situated customers is part of the control.",
+      "researchCitations": [
+        {
+          "text": "HHS HIPAA breach notification rule overview",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower regulatory clock lag",
+        "Trust salvage"
+      ],
+      "concerns": [
+        "Call-center load",
+        "Over-notification fatigue"
+      ]
+    },
+    {
+      "advisorId": "ADV_COMMS",
+      "choiceIndex": 0,
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
+      "researchCitations": [
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
+          "year": 2012,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower narrative capture",
+        "Updateable public record"
+      ],
+      "concerns": [
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
+      ]
+    }
+  ],
+  "N12_SEC_8K": [
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    },
+    {
+      "advisorId": "ADV_FAIR",
+      "choiceIndex": 0,
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
+      "researchCitations": [
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Better capital decisions",
+        "Shared language for tradeoffs"
+      ],
+      "concerns": [
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
+      ]
+    }
+  ],
+  "N12B_RANSOM_PAY": [
+    {
+      "advisorId": "ADV_CISO_PEER",
+      "choiceIndex": 0,
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
+      "researchCitations": [
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
+          "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Faster peer learning",
+        "Credibility with operators"
+      ],
+      "concerns": [
+        "Ego and blame storms",
+        "Vendor legal friction"
+      ]
+    },
+    {
+      "advisorId": "ADV_COUNSEL",
+      "choiceIndex": 0,
+      "reasoning": "Document the awareness rationale and put a timed disclosure checkpoint on the calendar. Privilege protects strategy — it should not manufacture silence.",
+      "researchCitations": [
+        {
+          "text": "GDPR Article 33 — notification of a personal data breach to the supervisory authority",
+          "url": "https://gdpr-info.eu/art-33-gdpr/",
+          "sourceType": "government",
+          "year": 2018,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Defensible regulatory posture",
+        "Clear decision record for the board"
+      ],
+      "concerns": [
+        "Still need operational facts",
+        "Clock may already be running"
+      ]
+    }
+  ],
+  "N13_ATTRIBUTION": [
+    {
+      "advisorId": "ADV_CISO_PEER",
+      "choiceIndex": 0,
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
+      "researchCitations": [
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
+          "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Faster peer learning",
+        "Credibility with operators"
+      ],
+      "concerns": [
+        "Ego and blame storms",
+        "Vendor legal friction"
+      ]
+    },
+    {
+      "advisorId": "ADV_COMMS",
+      "choiceIndex": 0,
+      "reasoning": "Say less, say true, say when you will update. Holding lines must survive a leak-site screenshot.",
+      "researchCitations": [
+        {
+          "text": "NIST SP 800-61 incident handling — coordination and information sharing themes",
+          "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final",
+          "sourceType": "government",
+          "year": 2012,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower narrative capture",
+        "Updateable public record"
+      ],
+      "concerns": [
+        "Press will still push",
+        "Internal rumor risk if employees are dark"
+      ]
+    }
+  ],
+  "N14_THIRD_PARTY": [
+    {
+      "advisorId": "ADV_CISO_PEER",
+      "choiceIndex": 0,
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
+      "researchCitations": [
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
+          "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Faster peer learning",
+        "Credibility with operators"
+      ],
+      "concerns": [
+        "Ego and blame storms",
+        "Vendor legal friction"
+      ]
+    },
+    {
+      "advisorId": "ADV_PRIVACY",
+      "choiceIndex": 0,
+      "reasoning": "People behind the records need timely, specific notice. Fairness across similarly situated customers is part of the control.",
+      "researchCitations": [
+        {
+          "text": "HHS HIPAA breach notification rule overview",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html",
+          "sourceType": "government",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Lower regulatory clock lag",
+        "Trust salvage"
+      ],
+      "concerns": [
+        "Call-center load",
+        "Over-notification fatigue"
+      ]
+    }
+  ],
+  "N15_LESSONS_LOCK": [
+    {
+      "advisorId": "ADV_FAIR",
+      "choiceIndex": 0,
+      "reasoning": "Give the board ranges, not theater precision. Secondary loss from delayed or deceptive disclosure often dominates primary technical loss.",
+      "researchCitations": [
+        {
+          "text": "FAIR Institute — quantitative information risk",
+          "url": "https://www.fairinstitute.org/",
+          "sourceType": "industry",
+          "year": 2024,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Better capital decisions",
+        "Shared language for tradeoffs"
+      ],
+      "concerns": [
+        "Data quality early in the incident",
+        "Anchoring bias on the mode"
+      ]
+    },
+    {
+      "advisorId": "ADV_CISO_PEER",
+      "choiceIndex": 0,
+      "reasoning": "Map the failure to an OWASP class when you can, refuse nation-state cosplay, and own the customer narrative even if a vendor failed.",
+      "researchCitations": [
+        {
+          "text": "OWASP Top 10",
+          "url": "https://owasp.org/www-project-top-ten/",
+          "sourceType": "academic",
+          "year": 2021,
+          "lastVerified": "2026-08-01"
+        }
+      ],
+      "benefits": [
+        "Faster peer learning",
+        "Credibility with operators"
+      ],
+      "concerns": [
+        "Ego and blame storms",
+        "Vendor legal friction"
       ]
     }
   ]

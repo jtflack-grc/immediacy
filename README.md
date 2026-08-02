@@ -27,12 +27,17 @@ GitHub Pages via `.github/workflows/deploy-pages.yml` on push to `main`.
 - Colors, typography, dark war-room look
 - Difficulty rails / scenario variations
 - Opening welcome + tutorial help
-- 5-second title intro (riffed: **IMMEDIACY** / *Every Second Counts*)
-- Engine, globe, metrics panel, Great People scaffolding
+- 5-second title intro (**IMMEDIACY** / *Every Second Counts*)
+- Engine, globe, metrics panel, pressure-archetype scaffolding
 
-## What’s next
+## Scenario (v1)
 
-- Rewrite `public/scenario.v1.json` for disclosure phases
-- Retarget Great People → pressure archetypes (counsel, reporters, operators, extortion crews…)
-- FAIR-forward meters (disclosure debt, narrative integrity, clock)
-- OWASP / teaching cards on the globe
+Northline Systems ransomware / extortion war game — **5 phases, 19 nodes**:
+
+1. **Detection** — first signal → scope triage  
+2. **Containment** — isolate, ransom note, counsel, customer hint  
+3. **Disclosure Pressure** — regulator clock, board, first public sentence  
+4. **Stakeholders** — employees, insurer, reporter, customer notice  
+5. **Aftermath** — 8-K, pay/refuse, attribution, vendor blame, lessons lock  
+
+Metrics keep Inheritance keys under the hood; UI labels are disclosure-native (Operational Control, Disclosure Debt, Facts Gap, Commitment Lock, …). Case studies + OWASP teaching beats ride on each node. Regenerate with `node scripts/build-immediacy-scenario.mjs`.

@@ -53,7 +53,7 @@ export default function GreatPersonPanel({ state }: GreatPersonPanelProps) {
           textTransform: 'uppercase',
           letterSpacing: '0.5px'
         }}>
-          Great People
+          Pressure Archetypes
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {greatPeople.map((person) => {

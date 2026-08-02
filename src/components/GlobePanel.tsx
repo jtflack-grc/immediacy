@@ -551,9 +551,8 @@ export default function GlobePanel({ regionValues, state, mapMode = 'welfareStan
         border: '1px solid rgba(255, 255, 255, 0.08)'
       }}>
         <div style={{ fontWeight: 600, marginBottom: '8px' }}>
-          {mapMode === 'welfareStandards' ? 'Welfare Standards' : 
-           mapMode === 'welfareDebt' ? 'Welfare Debt' : 
-           'Enforcement'}
+          {mapMode === 'welfareStandards' ? 'Disclosure Posture' :
+           mapMode === 'welfareDebt' ? 'Disclosure Debt' : 'Regulatory Pressure'}
         </div>
         <div style={{ fontSize: '11px', color: '#aaa', lineHeight: '1.6' }}>
           {mapMode === 'welfareStandards' ? (

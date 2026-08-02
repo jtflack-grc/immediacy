@@ -35,7 +35,7 @@ export default function GreatPersonModal({ person, state, onClose }: GreatPerson
       }} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 600, color: '#fff', margin: 0 }}>
-            Great Person Unlocked
+            Pressure Archetype Unlocked
           </h2>
           <button
             onClick={onClose}

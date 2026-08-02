@@ -8,33 +8,33 @@ interface IndexExplainerModalProps {
 export default function IndexExplainerModal({ type, onClose }: IndexExplainerModalProps) {
   const isSuccess = type === 'success'
   
-  const title = isSuccess ? 'Measured Success Index' : 'Governance Debt Index'
+  const title = isSuccess ? 'Measured Control Index' : 'Disclosure Debt Index'
   const description = isSuccess 
-    ? 'The Measured Success Index represents how well you\'ve achieved explicit, quantifiable welfare outcomes. It combines production efficiency, welfare standard adoption, cost management, and incident reduction into a single score.'
-    : 'The Governance Debt Index represents hidden costs and risks that accumulate from decisions. It tracks enforcement gaps, regulatory capture, knowledge gaps, system irreversibility, and welfare debt that may not be immediately visible but impact long-term outcomes.'
+    ? 'The Measured Control Index combines operational control, disclosure posture, response burn, and exposure severity into a single war-room score.'
+    : 'The Disclosure Debt Index tracks hidden costs: regulatory clock lag, narrative capture, facts gap, commitment lock, and disclosure debt that compound under time pressure.'
   
   const components = isSuccess
     ? [
-        { name: 'Production Efficiency', desc: 'How efficiently animal products are produced while maintaining welfare standards' },
-        { name: 'Welfare Standard Adoption', desc: 'The extent to which welfare standards are implemented across the system' },
-        { name: 'Cost Per Unit', desc: 'Economic efficiency - lower costs mean more sustainable welfare improvements' },
-        { name: 'Welfare Incident Rate', desc: 'Frequency of welfare violations - lower is better' }
+        { name: 'Operational Control', desc: 'Containment strength — segmentation, identity lock-down, evidence integrity' },
+        { name: 'Disclosure Posture', desc: 'Maturity of timed notice, fairness, and facts packages' },
+        { name: 'Response Burn', desc: 'Cash and attention cost of IR, counsel, downtime, monitoring' },
+        { name: 'Exposure Severity', desc: 'How bad the underlying event looks — lower is better' }
       ]
     : [
-        { name: 'Welfare Debt', desc: 'Accumulated negative impacts on animal welfare that haven\'t been addressed' },
-        { name: 'Enforcement Gap', desc: 'Difference between standards set and standards actually enforced' },
-        { name: 'Regulatory Capture', desc: 'Extent to which industry interests influence regulation over public welfare' },
-        { name: 'Sentience Knowledge Gap', desc: 'Uncertainty about which animals are sentient and to what degree' },
-        { name: 'System Irreversibility', desc: 'How difficult it becomes to change course once decisions are implemented' }
+        { name: 'Disclosure Debt', desc: 'Accumulated cost of silence, drip truth, or spin' },
+        { name: 'Regulatory Clock Lag', desc: 'Distance between awareness and actual notice' },
+        { name: 'Narrative Capture', desc: 'How far messaging has drifted from operational truth' },
+        { name: 'Facts Gap', desc: 'What you still do not know about blast radius and data types' },
+        { name: 'Commitment Lock', desc: 'How hard statements, payments, or attributions are to unwind' }
       ]
   
   const goal = isSuccess
-    ? 'Your goal is to maximize the Measured Success Index by making decisions that improve welfare standards, reduce incidents, and maintain economic viability.'
-    : 'Your goal is to minimize the Governance Debt Index by avoiding decisions that create hidden costs, enforcement problems, or lock you into unsustainable paths.'
+    ? 'Maximize control and honest posture without burning the company for theater metrics.'
+    : 'Minimize disclosure debt — silence and spin compound faster than most technical loss.'
   
   const interpretation = isSuccess
-    ? 'A high Success Index (80%+) indicates strong welfare outcomes with good economic performance. A low index suggests either welfare standards aren\'t being met, costs are too high, or incidents are frequent.'
-    : 'A low Debt Index (<20%) means you\'ve avoided hidden costs and maintained flexibility. A high index (>60%) suggests you\'ve accumulated significant unmeasured risks that could cause problems later.'
+    ? 'A high Control Index means containment and disclosure process are both holding. A low index means you are losing the room, the clock, or both.'
+    : 'A low Debt Index means your story can survive a screenshot. A high index means adversary-driven disclosure is about to write your narrative.'
 
   return (
     <div style={{
