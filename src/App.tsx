@@ -866,10 +866,11 @@ function App() {
             )}
             
             {/* Tools Menu - disabled for stability (was causing rare black-screen issues) */}
-            
+
+            {/* Money / FAIR first — above pressure & wonders */}
+            {state && <MetricsPanel state={state} />}
             {state && <GreatPersonPanel state={state} />}
             {state && <WonderPanel state={state} />}
-            {state && <MetricsPanel state={state} />}
           </div>
         )}
 

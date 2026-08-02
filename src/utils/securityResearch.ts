@@ -17,6 +17,48 @@ export interface SecurityResearchCard {
 
 export const securityResearchCards: SecurityResearchCard[] = [
   {
+    id: 'fair_secondary_loss',
+    title: 'FAIR — Secondary Loss from Disclosure Failure',
+    framework: 'FAIR',
+    description:
+      'Quantitative risk framing: primary loss (response, downtime) vs secondary loss (fines, lawsuits, churn, reputation). Delayed or deceptive disclosure often dominates the loss table.',
+    keyQuestions: [
+      'Are board slides using ranges or false precision?',
+      'Which choice reduces secondary loss even if burn rises?',
+      'How do you price narrative capture as a loss driver?',
+    ],
+    researchAreas: [
+      'Loss magnitude & frequency',
+      'Secondary loss drivers',
+      'Control ROI under time pressure',
+    ],
+    horizon: 'Board decision window',
+    relevance:
+      'FAIR ranges beat optimism-as-fiduciary-duty.',
+    url: 'https://www.fairinstitute.org/',
+  },
+  {
+    id: 'fair_primary_vs_secondary',
+    title: 'FAIR Scenario — Burn Now vs Pay Later',
+    framework: 'FAIR',
+    description:
+      'War-room trade: spend primary loss (IR burn, downtime) to cut secondary loss (fines, churn, re-notice). A cheap quiet hour often prices as the most expensive choice on the total-loss curve.',
+    keyQuestions: [
+      'Does this option raise primary burn while cutting secondary mode?',
+      'What is the secondary max if disclosure debt keeps compounding?',
+      'Would the board fund burn if they saw the dollar ranges?',
+    ],
+    researchAreas: [
+      'Primary loss forms (productivity, response)',
+      'Secondary loss forms (fines, liability, competitive)',
+      'Decision quality under incomplete forensics',
+    ],
+    horizon: 'This turn → residual loss years',
+    relevance:
+      'Money is the urgency signal — FAIR makes the trade visible.',
+    url: 'https://www.fairinstitute.org/what-is-fair',
+  },
+  {
     id: 'owasp_access_control',
     title: 'OWASP A01 — Broken Access Control',
     framework: 'OWASP',
@@ -162,27 +204,6 @@ export const securityResearchCards: SecurityResearchCard[] = [
     relevance:
       'Payment is the sharpest commitment lock in the game.',
     url: 'https://www.cisa.gov/stopransomware',
-  },
-  {
-    id: 'fair_secondary_loss',
-    title: 'FAIR — Secondary Loss from Disclosure Failure',
-    framework: 'FAIR',
-    description:
-      'Quantitative risk framing: primary loss (response, downtime) vs secondary loss (fines, lawsuits, churn, reputation). Delayed or deceptive disclosure often dominates the loss table.',
-    keyQuestions: [
-      'Are board slides using ranges or false precision?',
-      'Which choice reduces secondary loss even if burn rises?',
-      'How do you price narrative capture as a loss driver?',
-    ],
-    researchAreas: [
-      'Loss magnitude & frequency',
-      'Secondary loss drivers',
-      'Control ROI under time pressure',
-    ],
-    horizon: 'Board decision window',
-    relevance:
-      'FAIR ranges beat optimism-as-fiduciary-duty.',
-    url: 'https://www.fairinstitute.org/',
   },
   {
     id: 'regulatory_clocks',

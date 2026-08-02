@@ -5,6 +5,7 @@ import { getMetricExplanation } from '../utils/metricExplanations'
 import MetricHistoryViewer from './MetricHistoryViewer'
 import IndexExplainerModal from './IndexExplainerModal'
 import SecurityResearchPanel from './SecurityResearchPanel'
+import FairLossPanel from './FairLossPanel'
 import { getLossCondition } from '../utils/lossConditions'
 
 interface MetricsPanelProps {
@@ -330,7 +331,7 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           margin: 0,
           letterSpacing: '-0.02em'
         }}>
-          Metrics Dashboard
+          Loss & Metrics
         </h3>
         <button
           onClick={() => setShowAdvancedMetrics(!showAdvancedMetrics)}
@@ -359,6 +360,9 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           {showAdvancedMetrics ? '▼ Show Less' : '▶ Show All Metrics'}
         </button>
       </div>
+
+      {/* Money first — FAIR dollar urgency */}
+      <FairLossPanel state={state} />
 
       {/* Loss Warnings */}
       {state.lossWarnings && state.lossWarnings.length > 0 && (
@@ -418,6 +422,9 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
         </div>
       )}
 
+      {/* FAIR / security scenarios — above governance bars */}
+      <SecurityResearchPanel />
+
       {/* Measured Metrics */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ fontSize: '12px', color: '#888', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
@@ -431,14 +438,14 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           {/* Core metrics - always shown */}
-          <MetricBar label="Disclosure Posture" value={state.metrics.measured.welfareStandardAdoption / 3} max={1} color="#60a5fa" metricKey="welfareStandardAdoption" />
+          <MetricBar label="Response Burn" value={state.metrics.measured.costPerUnit} color="#fbbf24" metricKey="costPerUnit" />
           <MetricBar label="Exposure Severity" value={state.metrics.measured.welfareIncidentRate} color="#f87171" metricKey="welfareIncidentRate" />
+          <MetricBar label="Disclosure Posture" value={state.metrics.measured.welfareStandardAdoption / 3} max={1} color="#60a5fa" metricKey="welfareStandardAdoption" />
           
           {/* Advanced metrics - shown when expanded */}
           {showAdvancedMetrics && (
             <>
               <MetricBar label="Operational Control" value={state.metrics.measured.productionEfficiency} color="#4ade80" metricKey="productionEfficiency" />
-              <MetricBar label="Response Burn" value={state.metrics.measured.costPerUnit} color="#fbbf24" metricKey="costPerUnit" />
             </>
           )}
         </div>
@@ -553,9 +560,6 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           </div>
         </div>
       </div>
-
-      {/* Security Research Lab */}
-      <SecurityResearchPanel />
 
       {/* Index Tooltip */}
       {hoveredIndex && indexTooltipPosition && (

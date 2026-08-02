@@ -11,22 +11,23 @@ const frameworkColor: Record<string, string> = {
 }
 
 export default function SecurityResearchPanel() {
-  const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [isCollapsed, setIsCollapsed] = useState(true)
-  const [filter, setFilter] = useState<string>('ALL')
+  const [expandedId, setExpandedId] = useState<string | null>('fair_secondary_loss')
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [filter, setFilter] = useState<string>('FAIR')
 
-  const frameworks = ['ALL', 'OWASP', 'MITRE', 'NIST', 'CISA', 'FAIR', 'Regulatory']
+  const frameworks = ['FAIR', 'OWASP', 'MITRE', 'NIST', 'CISA', 'Regulatory', 'ALL']
   const cards = filter === 'ALL'
     ? securityResearchCards
     : securityResearchCards.filter(c => c.framework === filter)
 
   return (
     <div style={{
-      marginTop: '32px',
+      marginBottom: '24px',
       padding: '16px',
       backgroundColor: '#111111',
       borderRadius: '8px',
-      border: '1px solid rgba(249, 115, 22, 0.25)'
+      border: '1px solid rgba(251, 191, 36, 0.35)',
+      boxShadow: '0 0 18px rgba(251, 191, 36, 0.08)',
     }}>
       <div
         style={{
@@ -41,10 +42,10 @@ export default function SecurityResearchPanel() {
         <h3 style={{
           fontSize: '14px',
           fontWeight: 600,
-          color: '#f97316',
+          color: '#fbbf24',
           margin: 0
         }}>
-          Security Research Lab
+          FAIR Scenarios & Research
         </h3>
         <div style={{ fontSize: '12px', color: '#888' }}>
           {isCollapsed ? '▼' : '▲'}
@@ -60,7 +61,7 @@ export default function SecurityResearchPanel() {
             marginBottom: '12px',
             fontStyle: 'italic'
           }}>
-            OWASP, MITRE ATT&CK, NIST, CISA, and FAIR cards for the war room. Expand a card — links open primary sources.
+            Dollar-first framing. Start with FAIR loss scenarios — then OWASP, MITRE, NIST, CISA, and regulatory clocks.
           </p>
 
           <div style={{
