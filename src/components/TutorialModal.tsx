@@ -24,7 +24,7 @@ export default function TutorialModal({ onClose }: TutorialModalProps) {
             Silence is a choice. So is saying too much, too soon.
           </p>
           <p style={{ lineHeight: '1.6', fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-            Tagline: Every Second Counts. Built on the Inheritance decision shell.
+            Tagline: Every Second Counts.
           </p>
         </div>
       )
@@ -121,7 +121,7 @@ export default function TutorialModal({ onClose }: TutorialModalProps) {
             <li><strong>Adversaries disclose too</strong> — leak sites and reporters write the story if you won't</li>
           </ul>
           <p style={{ marginTop: '16px', lineHeight: '1.6', fontStyle: 'italic' }}>
-            IMMEDIACY is part of the i on GRC lab family — a short-horizon disclosure war game on the Inheritance decision shell.
+            IMMEDIACY is part of the i on GRC lab family — a short-horizon disclosure war game.
           </p>
         </div>
       )

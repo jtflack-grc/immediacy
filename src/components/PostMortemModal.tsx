@@ -49,9 +49,13 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
     alert('Score submitted to leaderboard!')
   }
   
-  // Find top 3 decisions that increased welfare debt
+  // Find top decisions that increased disclosure debt
   const welfareDebtDecisions = state.auditTrail
-    .filter(record => record.unmeasuredImpact.includes('welfare debt') || record.unmeasuredImpact.includes('welfareDebt'))
+    .filter(record =>
+      record.unmeasuredImpact.toLowerCase().includes('disclosure debt') ||
+      record.unmeasuredImpact.toLowerCase().includes('welfare debt') ||
+      record.unmeasuredImpact.includes('welfareDebt')
+    )
     .slice(0, 3)
 
   return (
@@ -331,7 +335,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div style={{ padding: '16px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: '#888', marginBottom: '8px' }}>
-                Measured Success Index
+                Measured Control Index
                 <button
                   onClick={() => setShowIndexExplainer('success')}
                   style={{
@@ -345,7 +349,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
                     alignItems: 'center',
                     lineHeight: '1'
                   }}
-                  title="Learn about Success Index"
+                  title="Learn about Control Index"
                 >
                   ℹ️
                 </button>
@@ -356,7 +360,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
             </div>
             <div style={{ padding: '16px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(251, 146, 60, 0.2)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: '#888', marginBottom: '8px' }}>
-                Governance Debt Index
+                Disclosure Debt Index
                 <button
                   onClick={() => setShowIndexExplainer('debt')}
                   style={{
@@ -370,7 +374,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
                     alignItems: 'center',
                     lineHeight: '1'
                   }}
-                  title="Learn about Debt Index"
+                  title="Learn about Disclosure Debt Index"
                 >
                   ℹ️
                 </button>
@@ -391,7 +395,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
             <div style={{ padding: '16px', backgroundColor: '#111111', borderRadius: '8px' }}>
               <div style={{ display: 'flex', gap: '24px', marginBottom: '16px' }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>Measured Success</div>
+                  <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>Measured Control</div>
                   <div style={{ height: '60px', position: 'relative', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
                     {state.auditTrail.map((_record, idx) => {
                       const progress = (idx + 1) / Math.max(state.auditTrail.length, 1)
@@ -415,7 +419,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
                   </div>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>Governance Debt</div>
+                  <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>Disclosure Debt</div>
                   <div style={{ height: '60px', position: 'relative', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
                     {state.auditTrail.map((_record, idx) => {
                       const progress = (idx + 1) / Math.max(state.auditTrail.length, 1)
@@ -449,19 +453,19 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         {/* System Irreversibility */}
         <div style={{ marginBottom: '32px', padding: '16px', backgroundColor: '#1a1d29', borderRadius: '8px' }}>
           <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-            Irreversibility Analysis
+            Commitment Lock Analysis
           </h3>
           <div style={{ fontSize: '14px', color: '#aaa', lineHeight: '1.6' }}>
             <div style={{ marginBottom: '8px' }}>
-              <strong>System Irreversibility:</strong> {(state.metrics.unmeasured.systemIrreversibility * 100).toFixed(0)}%
+              <strong>Commitment Lock:</strong> {(state.metrics.unmeasured.systemIrreversibility * 100).toFixed(0)}%
             </div>
             {state.metrics.unmeasured.systemIrreversibility > 0.8 ? (
               <div style={{ color: '#ef4444', marginTop: '8px' }}>
-                ⚠️ The system has become difficult to unwind. Changes would require significant coordination and may be prohibitively expensive.
+                ⚠️ Statements, payments, or attributions are hard to unwind. New facts will fight your earlier commitments.
               </div>
             ) : (
               <div style={{ color: '#10b981', marginTop: '8px' }}>
-                ✓ The system maintains reasonable flexibility for future changes.
+                ✓ You still have room to update the narrative as facts improve.
               </div>
             )}
           </div>

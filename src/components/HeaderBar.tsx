@@ -32,12 +32,12 @@ export default function HeaderBar({ state, onToggleDebug, onShowTutorial, onShow
   ]
   const handleExportJSON = () => {
     const json = exportAsJSON(state)
-    downloadFile(json, `welfare-governance-${Date.now()}.json`, 'application/json')
+    downloadFile(json, `immediacy-${Date.now()}.json`, 'application/json')
   }
   
   const handleExportCSV = () => {
     const csv = exportAsCSV(state)
-    downloadFile(csv, `welfare-governance-${Date.now()}.csv`, 'text/csv')
+    downloadFile(csv, `immediacy-${Date.now()}.csv`, 'text/csv')
   }
   
   const handleShare = () => {
@@ -97,7 +97,7 @@ export default function HeaderBar({ state, onToggleDebug, onShowTutorial, onShow
       
       {/* Centered Title */}
       <h1 
-        title="an animal governance and risk simulator"
+        title="Every Second Counts"
         style={{ 
           position: 'absolute',
           left: '50%',

@@ -452,7 +452,7 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
           boxShadow: '0 0 20px rgba(74, 222, 128, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <div style={{ fontSize: '12px', color: '#888', fontWeight: 500 }}>Success Index</div>
+            <div style={{ fontSize: '12px', color: '#888', fontWeight: 500 }}>Control Index</div>
             <button
               onClick={() => setShowIndexExplainer('success')}
               onMouseEnter={(e) => {
@@ -475,7 +475,7 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
                 alignItems: 'center',
                 lineHeight: '1'
               }}
-              title="Click to learn more about Success Index"
+              title="Click to learn more about Control Index"
             >
               ℹ️
             </button>

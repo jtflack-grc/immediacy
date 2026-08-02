@@ -93,7 +93,7 @@ export default function WelcomeModal({ onClose }: WelcomeModalProps) {
             Pressure, Not Perfect Plans
           </div>
           <div style={{ fontSize: '14px', color: '#ddd', lineHeight: '1.6' }}>
-            Inheritance asked what compounds over decades. Immediacy asks what breaks in the next hour.
+            Most governance sims ask what compounds over decades. Immediacy asks what breaks in the next hour.
             <strong> Disclosure debt</strong>, <strong>narrative integrity</strong>, and the <strong>clock</strong> track how
             fast you lose control of the story — and whether regulators, reporters, or threat actors get there first.
           </div>
@@ -145,7 +145,7 @@ export default function WelcomeModal({ onClose }: WelcomeModalProps) {
         }}>
           <strong style={{ color: '#4ade80' }}>Scope.</strong> Short-horizon incident response and disclosure
           under adversarial pressure — FAIR-flavored impact, stakeholder jurisdictions on the globe, and
-          OWASP teaching beats on each decision. Difficulty rails and the Inheritance decision engine carry the game.
+          OWASP teaching beats on each decision. Difficulty rails and the decision engine carry the game.
         </div>
 
         <button
@@ -180,7 +180,7 @@ export default function WelcomeModal({ onClose }: WelcomeModalProps) {
           color: '#666',
           textAlign: 'center'
         }}>
-          Part of the i on GRC lab family — built on the Inheritance shell
+          Part of the i on GRC lab family
         </div>
       </div>
     </div>

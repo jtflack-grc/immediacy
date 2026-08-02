@@ -13,7 +13,7 @@ export interface Translations {
 const translations: Record<Language, Translations> = {
   en: {
     app: {
-      title: 'Inheritance',
+      title: 'IMMEDIACY',
       decision: 'Decision',
       metrics: 'Metrics',
       advisors: 'Advisor Recommendations',
@@ -42,28 +42,28 @@ const translations: Record<Language, Translations> = {
       credits: 'Credits'
     },
     mapModes: {
-      standards: 'Standards',
+      standards: 'Posture',
       debt: 'Debt',
       enforcement: 'Enforcement'
     },
     metrics: {
-      successIndex: 'Success Index',
-      debtIndex: 'Debt Index',
-      productionEfficiency: 'Production Efficiency',
-      costPerUnit: 'Cost Per Unit',
-      welfareIncidentRate: 'Welfare Incident Rate',
-      welfareStandardAdoption: 'Welfare Standard Adoption'
+      successIndex: 'Control Index',
+      debtIndex: 'Disclosure Debt Index',
+      productionEfficiency: 'Operational Control',
+      costPerUnit: 'Response Burn',
+      welfareIncidentRate: 'Exposure Severity',
+      welfareStandardAdoption: 'Disclosure Posture'
     },
     welcome: {
       whatThisIs: 'What This Is',
-      longtermistPerspective: 'A Longtermist Perspective',
-      keyConcept: 'Key Concept: Governance Debt',
+      longtermistPerspective: 'Pressure, Not Perfect Plans',
+      keyConcept: 'Key Concept: Disclosure Debt',
       noWinning: 'There\'s No "Winning"',
-      longtermistScope: 'Longtermist scope:',
-      footer: 'Part of the Electric Sheep / Futurekind ecosystem'
+      longtermistScope: 'Scope:',
+      footer: 'Part of the i on GRC lab family'
     },
     tutorial: {
-      welcome: 'Welcome to the Animal Welfare Governance Simulator',
+      welcome: 'Welcome to IMMEDIACY',
       globe: 'The 3D Globe',
       decisions: 'Making Decisions',
       metrics: 'Understanding Metrics',
@@ -77,7 +77,7 @@ const translations: Record<Language, Translations> = {
   },
   es: {
     app: {
-      title: 'Inheritance',
+      title: 'IMMEDIACY',
       decision: 'Decisión',
       metrics: 'Métricas',
       advisors: 'Recomendaciones de Asesores',
@@ -141,7 +141,7 @@ const translations: Record<Language, Translations> = {
   },
   fr: {
     app: {
-      title: 'Simulateur de Gouvernance du Bien-être Animal',
+      title: 'IMMEDIACY',
       decision: 'Décision',
       metrics: 'Métriques',
       advisors: 'Recommandations des Conseillers',
@@ -205,7 +205,7 @@ const translations: Record<Language, Translations> = {
   },
   de: {
     app: {
-      title: 'Inheritance',
+      title: 'IMMEDIACY',
       decision: 'Entscheidung',
       metrics: 'Metriken',
       advisors: 'Beraterempfehlungen',
@@ -269,7 +269,7 @@ const translations: Record<Language, Translations> = {
   },
   zh: {
     app: {
-      title: 'Inheritance',
+      title: 'IMMEDIACY',
       decision: '决策',
       metrics: '指标',
       advisors: '顾问建议',
@@ -297,7 +297,7 @@ const translations: Record<Language, Translations> = {
   },
   pt: {
     app: {
-      title: 'Simulador de Governança de Bem-estar Animal',
+      title: 'IMMEDIACY',
       decision: 'Decisão',
       metrics: 'Métricas',
       advisors: 'Recomendações de Assessores',
@@ -361,7 +361,7 @@ const translations: Record<Language, Translations> = {
   },
   ja: {
     app: {
-      title: 'Inheritance',
+      title: 'IMMEDIACY',
       decision: '決定',
       metrics: '指標',
       advisors: 'アドバイザー推奨',

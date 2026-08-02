@@ -166,9 +166,9 @@ export function getStartingConditionDescription(condition: StartingCondition): s
   return {
     default: 'Standard baseline metrics',
     optimistic: 'Favorable starting posture — stronger disclosure process already in place',
-    pessimistic: 'Challenging conditions with significant welfare debt and enforcement gaps',
+    pessimistic: 'Challenging conditions with significant disclosure debt and clock lag',
     balanced: 'Moderate improvements across key metrics',
-    crisis: 'Crisis scenario: high welfare debt, low enforcement, system near collapse',
+    crisis: 'Crisis scenario: high disclosure debt, slipped clocks, commitment lock rising',
     transition: 'Transition period: moderate improvements but high system irreversibility',
     innovation: 'Innovation-driven: good metrics but knowledge gaps remain'
   }[condition]

@@ -57,7 +57,7 @@ export function generatePolicyBrief(state: State): PolicyBrief {
   const risks = identifyRisks(state, debtIndex)
 
   return {
-    title: `Animal Welfare Governance Policy Brief - Turn ${state.turn}`,
+    title: `IMMEDIACY Disclosure Brief - Turn ${state.turn}`,
     executiveSummary,
     keyDecisions,
     outcomes: {
@@ -193,16 +193,16 @@ export function formatPolicyBriefAsMarkdown(brief: PolicyBrief): string {
 
   markdown += `## Outcomes\n\n`
   markdown += `### Measured Metrics\n\n`
-  markdown += `- Welfare Standard Adoption: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
-  markdown += `- Production Efficiency: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
-  markdown += `- Cost Per Unit: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
-  markdown += `- Welfare Incident Rate: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
+  markdown += `- Disclosure Posture: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
+  markdown += `- Operational Control: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
+  markdown += `- Response Burn: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
+  markdown += `- Exposure Severity: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
 
-  markdown += `### Governance Debt Metrics\n\n`
-  markdown += `- Welfare Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
-  markdown += `- Enforcement Gap: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
-  markdown += `- Regulatory Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
-  markdown += `- System Irreversibility: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
+  markdown += `### Disclosure Debt Metrics\n\n`
+  markdown += `- Disclosure Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
+  markdown += `- Regulatory Clock Lag: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
+  markdown += `- Narrative Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
+  markdown += `- Commitment Lock: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
 
   markdown += `## Recommendations\n\n`
   brief.recommendations.forEach(rec => {
@@ -217,7 +217,7 @@ export function formatPolicyBriefAsMarkdown(brief: PolicyBrief): string {
   markdown += `\n`
 
   markdown += `---\n\n`
-  markdown += `*This policy brief was auto-generated from the Animal Welfare Governance Simulator.*\n`
+  markdown += `*This brief was auto-generated from IMMEDIACY.*\n`
 
   return markdown
 }
@@ -245,15 +245,15 @@ export function formatPolicyBriefAsText(brief: PolicyBrief): string {
   text += `\n\nOUTCOMES\n`
   text += `${'-'.repeat(20)}\n`
   text += `Measured Metrics:\n`
-  text += `  - Welfare Standard Adoption: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
-  text += `  - Production Efficiency: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
-  text += `  - Cost Per Unit: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
-  text += `  - Welfare Incident Rate: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
-  text += `Governance Debt Metrics:\n`
-  text += `  - Welfare Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
-  text += `  - Enforcement Gap: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
-  text += `  - Regulatory Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
-  text += `  - System Irreversibility: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
+  text += `  - Disclosure Posture: ${(brief.outcomes.measured.welfareStandardAdoption * 100).toFixed(1)}%\n`
+  text += `  - Operational Control: ${(brief.outcomes.measured.productionEfficiency * 100).toFixed(1)}%\n`
+  text += `  - Response Burn: ${(brief.outcomes.measured.costPerUnit * 100).toFixed(1)}%\n`
+  text += `  - Exposure Severity: ${(brief.outcomes.measured.welfareIncidentRate * 100).toFixed(1)}%\n\n`
+  text += `Disclosure Debt Metrics:\n`
+  text += `  - Disclosure Debt: ${(brief.outcomes.unmeasured.welfareDebt * 100).toFixed(1)}%\n`
+  text += `  - Regulatory Clock Lag: ${(brief.outcomes.unmeasured.enforcementGap * 100).toFixed(1)}%\n`
+  text += `  - Narrative Capture: ${(brief.outcomes.unmeasured.regulatoryCapture * 100).toFixed(1)}%\n`
+  text += `  - Commitment Lock: ${(brief.outcomes.unmeasured.systemIrreversibility * 100).toFixed(1)}%\n\n`
 
   text += `RECOMMENDATIONS\n`
   text += `${'-'.repeat(20)}\n`
@@ -268,7 +268,7 @@ export function formatPolicyBriefAsText(brief: PolicyBrief): string {
   })
 
   text += `\n${'='.repeat(50)}\n`
-  text += `This policy brief was auto-generated from the Animal Welfare Governance Simulator.\n`
+  text += `This brief was auto-generated from IMMEDIACY.\n`
 
   return text
 }

@@ -224,7 +224,7 @@ export default function MetaAnalysisModal({ onClose }: MetaAnalysisModalProps) {
                   textTransform: 'uppercase',
                   letterSpacing: '0.5px'
                 }}>
-                  Average Success Index
+                  Average Control Index
                 </div>
                 <div style={{
                   fontSize: '28px',

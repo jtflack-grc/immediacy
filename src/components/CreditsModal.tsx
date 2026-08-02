@@ -77,7 +77,7 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               </p>
             </div>
             <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
-              Version 1.0.0
+              Version 0.1.0
             </p>
           </div>
 
@@ -86,30 +86,27 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               Technologies & Libraries
             </h3>
             <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li><strong>React</strong> - UI framework</li>
-              <li><strong>react-globe.gl</strong> - 3D globe visualization</li>
-              <li><strong>Three.js</strong> - 3D graphics rendering</li>
-              <li><strong>Vite</strong> - Build tool and dev server</li>
-              <li><strong>TypeScript</strong> - Type-safe JavaScript</li>
+              <li><strong>React</strong> — UI framework</li>
+              <li><strong>react-globe.gl</strong> — 3D globe visualization</li>
+              <li><strong>Three.js</strong> — 3D graphics rendering</li>
+              <li><strong>Vite</strong> — Build tool and dev server</li>
+              <li><strong>TypeScript</strong> — Type-safe JavaScript</li>
             </ul>
           </div>
 
           <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Data Sources & Research
+              Teaching Sources
             </h3>
             <p style={{ marginBottom: '12px' }}>
-              Shell mechanics ported from Inheritance. Disclosure framing draws on:
+              Scenario framing and case studies draw on:
             </p>
             <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc', marginBottom: '12px' }}>
               <li>FAIR / quantitative risk framing for short-horizon impact</li>
               <li>Public incident disclosure case studies and near-misses</li>
-              <li>OWASP and security teaching material for globe cards (in progress)</li>
-              <li>SEC / regulatory disclosure norms as scenario pressure</li>
+              <li>OWASP Top 10 as war-room curriculum</li>
+              <li>CISA, SEC, GDPR/DPA, and related disclosure norms</li>
             </ul>
-            <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-              Advisor and metric citations will be retargeted as the Immediacy scenario lands.
-            </p>
           </div>
 
           <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
@@ -117,8 +114,8 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               Geographic Data
             </h3>
             <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li>World GeoJSON data for country boundaries</li>
-              <li>Jurisdiction / stakeholder overlays (being retargeted for disclosure pressure)</li>
+              <li>World GeoJSON for country boundaries</li>
+              <li>Jurisdiction hover cards for breach-notice / disclosure pressure</li>
             </ul>
           </div>
 
@@ -145,7 +142,7 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
               Acknowledgments
             </h3>
             <p style={{ marginBottom: '8px' }}>
-              Built on the Inheritance decision shell. Teaching beats draw on public incident disclosures, CISA/regulator guidance, OWASP, and FAIR-style risk framing.
+              Part of the i on GRC lab family. Teaching beats draw on public incident disclosures, regulator guidance, OWASP, and FAIR-style risk framing.
             </p>
             <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
               For questions, feedback, or to report issues, please refer to the validation disclaimer in the application.
