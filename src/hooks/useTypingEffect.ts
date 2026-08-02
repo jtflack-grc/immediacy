@@ -12,7 +12,7 @@ export function useTypingEffect({
   text,
   speed = 8, // 8 characters per interval
   interval = 20, // 20ms per interval = ~400 chars/sec
-  skipAnimation = false,
+  skipAnimation = true,
   onComplete
 }: UseTypingEffectOptions) {
   const [displayedText, setDisplayedText] = useState('')

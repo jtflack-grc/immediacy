@@ -13,7 +13,7 @@ interface ChatMessageProps {
 export default function ChatMessage({ 
   content, 
   isAI = true, 
-  skipAnimation = false,
+  skipAnimation = true,
   onTypingComplete,
   delay = 0,
   showAvatar = true

@@ -10,9 +10,9 @@ import { glossary } from '../utils/glossary'
 import { shuffleWithIndices } from '../utils/shuffle'
 import AIChatInterface from './AIChatInterface'
 
-// Add premium animations for EthosGPT header
-const ethosAnimations = document.createElement('style')
-ethosAnimations.textContent = `
+// Header status-indicator animations
+const tempoAnimations = document.createElement('style')
+tempoAnimations.textContent = `
   @keyframes pulse {
     0%, 100% {
       opacity: 1;
@@ -44,9 +44,9 @@ ethosAnimations.textContent = `
     }
   }
 `
-if (!document.head.querySelector('style[data-ethos-animations]')) {
-  ethosAnimations.setAttribute('data-ethos-animations', 'true')
-  document.head.appendChild(ethosAnimations)
+if (!document.head.querySelector('style[data-tempo-animations]')) {
+  tempoAnimations.setAttribute('data-tempo-animations', 'true')
+  document.head.appendChild(tempoAnimations)
 }
 
 interface DecisionPanelProps {
@@ -80,7 +80,6 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
     return !localStorage.getItem('hasUsedQuickStart')
   })
   const [choicesReady, setChoicesReady] = useState(false)
-  const [skipAnimation, setSkipAnimation] = useState(false)
 
   const handleQuickStart = useCallback((quickRationale: string, quickAssumptions: string) => {
     setRationale(quickRationale)
@@ -105,7 +104,6 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
   // Reset choices ready when node changes
   useEffect(() => {
     setChoicesReady(false)
-    setSkipAnimation(false)
   }, [node?.id])
 
   // Keyboard shortcuts - memoize handler to avoid recreating listener
@@ -155,7 +153,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
 
   return (
     <div>
-      {/* EthosGPT Header - Premium LLM Branding */}
+      {/* TEMPO — war-room briefing header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -246,7 +244,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
               lineHeight: 1.2,
               textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
             }}>
-              EthosGPT
+              TEMPO
             </h2>
             
             {/* Premium Status Indicator */}
@@ -290,7 +288,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
                 textTransform: 'uppercase',
                 textShadow: '0 0 8px rgba(74, 222, 128, 0.3)'
               }}>
-                Online
+                Live
               </span>
             </div>
           </div>
@@ -306,14 +304,14 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
             alignItems: 'center',
             gap: '8px'
           }}>
-            <span>AI Governance Assistant</span>
+            <span>War-room briefing</span>
             <span style={{ color: '#555', fontSize: '10px' }}>•</span>
             <span style={{ 
               fontSize: '11px',
               color: '#666',
               fontStyle: 'italic'
             }}>
-              v2.1
+              Every second counts
             </span>
           </div>
         </div>
@@ -326,27 +324,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
         isFirstTime={isFirstTime}
       />
       
-      {/* Skip Animation Button */}
-      <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'flex-end' }}>
-        <button
-          onClick={() => setSkipAnimation(true)}
-          style={{
-            padding: '6px 12px',
-            fontSize: '11px',
-            backgroundColor: 'transparent',
-            color: '#888',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            opacity: skipAnimation ? 0.5 : 1
-          }}
-          disabled={skipAnimation}
-        >
-          {skipAnimation ? 'Animation Skipped' : 'Skip Animation'}
-        </button>
-      </div>
-      
-      {/* AI Chat Interface */}
+      {/* Briefing feed — animations off by default */}
       <div style={{ 
         marginBottom: '20px', 
         backgroundColor: '#000000', 
@@ -360,7 +338,7 @@ export default function DecisionPanel({ node, state, onChoice, turn, onReset }: 
           node={node}
           turn={turn}
           state={state}
-          skipAnimation={skipAnimation}
+          skipAnimation={true}
           onChoicesReady={() => setChoicesReady(true)}
         />
       </div>

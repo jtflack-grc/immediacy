@@ -18,7 +18,7 @@ export default function AIChatInterface({
   turn,
   state,
   onMessageComplete,
-  skipAnimation = false,
+  skipAnimation = true,
   onChoicesReady
 }: AIChatInterfaceProps) {
   const [displayedMessages, setDisplayedMessages] = useState<number[]>([])

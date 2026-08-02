@@ -6,7 +6,7 @@ interface TurnUCollectionProps {
   skipAnimation?: boolean
 }
 
-export default function TurnUCollection({ onNameSubmit, skipAnimation = false }: TurnUCollectionProps) {
+export default function TurnUCollection({ onNameSubmit, skipAnimation = true }: TurnUCollectionProps) {
   const [name, setName] = useState('')
   const [displayedMessages, setDisplayedMessages] = useState<number[]>([])
   const [showInput, setShowInput] = useState(false)
@@ -22,7 +22,7 @@ export default function TurnUCollection({ onNameSubmit, skipAnimation = false }:
   const welcomeMessages = useMemo(() => [
     {
       id: 'welcome-1',
-      content: "Welcome to **IMMEDIACY**! I'm **EthosGPT**, your crisis-room assistant. Every second counts.",
+      content: "Welcome to **IMMEDIACY**! I'm **TEMPO**, your war-room briefing. Every second counts.",
       delay: 0
     },
     {
@@ -115,7 +115,7 @@ export default function TurnUCollection({ onNameSubmit, skipAnimation = false }:
       height: '100%',
       minHeight: '100%'
     }}>
-      {/* EthosGPT Header - Premium LLM Branding */}
+      {/* TEMPO — war-room briefing header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -206,7 +206,7 @@ export default function TurnUCollection({ onNameSubmit, skipAnimation = false }:
               lineHeight: 1.2,
               textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
             }}>
-              EthosGPT
+              TEMPO
             </h2>
             
             {/* Premium Status Indicator */}
@@ -266,14 +266,14 @@ export default function TurnUCollection({ onNameSubmit, skipAnimation = false }:
             alignItems: 'center',
             gap: '8px'
           }}>
-            <span>AI Governance Assistant</span>
+            <span>War-room briefing</span>
             <span style={{ color: '#555', fontSize: '10px' }}>•</span>
             <span style={{ 
               fontSize: '11px',
               color: '#666',
               fontStyle: 'italic'
             }}>
-              v2.1
+              Every second counts
             </span>
           </div>
         </div>

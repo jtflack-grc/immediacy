@@ -784,7 +784,7 @@ function App() {
           {state && !state.playerName ? (
             <TurnUCollection 
               onNameSubmit={handleNameSubmit}
-              skipAnimation={false}
+              skipAnimation={true}
             />
           ) : (
             <DecisionPanel 
