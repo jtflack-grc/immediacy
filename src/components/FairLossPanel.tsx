@@ -220,15 +220,22 @@ export default function FairLossPanel({ state }: FairLossPanelProps) {
                   borderRadius: '5px',
                 }}
               >
-                <span style={{ lineHeight: 1.35 }}>
+                <span style={{ lineHeight: 1.35, display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span style={{
                     color: d.kind === 'primary' ? '#fbbf24' : '#fb923c',
-                    fontWeight: 600,
-                    marginRight: '6px',
+                    fontWeight: 700,
+                    fontSize: '9px',
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    flexShrink: 0,
+                    padding: '1px 5px',
+                    borderRadius: '3px',
+                    border: `1px solid ${d.kind === 'primary' ? '#fbbf24' : '#fb923c'}55`,
+                    backgroundColor: d.kind === 'primary' ? 'rgba(251,191,36,0.12)' : 'rgba(251,146,60,0.12)',
                   }}>
                     {d.kind === 'primary' ? 'P' : 'S'}
                   </span>
-                  {d.label}
+                  <span>{d.label}</span>
                 </span>
                 <span style={{
                   color: '#fff',

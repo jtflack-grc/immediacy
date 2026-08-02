@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { Node, State } from '../engine/scenarioTypes'
 import ChatMessage from './ChatMessage'
-import { buildMessageSequence, ChatMessage as MessageType } from '../utils/messageBuilder'
+import { buildMessageSequence, getBriefingMessages } from '../utils/messageBuilder'
 import { getRelevantSecurityCardsForNode } from '../utils/securityResearchMatching'
 
 interface AIChatInterfaceProps {
@@ -22,87 +22,114 @@ export default function AIChatInterface({
   onChoicesReady
 }: AIChatInterfaceProps) {
   const [displayedMessages, setDisplayedMessages] = useState<number[]>([])
-  const [allMessagesComplete, setAllMessagesComplete] = useState(false)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const completedMessagesRef = useRef<Set<number>>(new Set())
   const userScrolledUpRef = useRef(false)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const justResetScrollRef = useRef(false) // Flag to prevent auto-scroll immediately after reset
+  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const justResetScrollRef = useRef(false)
+  const sequenceGenerationRef = useRef(0)
+  const onChoicesReadyRef = useRef(onChoicesReady)
+  const onMessageCompleteRef = useRef(onMessageComplete)
 
-  // Build message sequence
-  const messageSequence = useMemo(() => {
-    return buildMessageSequence(node, turn, state?.playerName)
-  }, [node.id, turn, state?.playerName])
+  useEffect(() => {
+    onChoicesReadyRef.current = onChoicesReady
+  }, [onChoicesReady])
 
-  // Contextual security research beats (OWASP / MITRE / etc.)
+  useEffect(() => {
+    onMessageCompleteRef.current = onMessageComplete
+  }, [onMessageComplete])
+
   const researchCards = useMemo(() => {
     return getRelevantSecurityCardsForNode(node.id)
   }, [node.id])
 
-  // Initialize: show first message immediately and reset scroll position
+  // Single sequence for display indexes AND completion — research included.
+  const messageSequence = useMemo(() => {
+    return buildMessageSequence(node, turn, state?.playerName, researchCards)
+  }, [node.id, node.title, node.prompt, node.caseStudies, turn, state?.playerName, researchCards])
+
+  const briefingMessages = useMemo(
+    () => getBriefingMessages(messageSequence),
+    [messageSequence]
+  )
+
+  // Initialize / reset when the node changes
   useEffect(() => {
-    // First, clear all messages to reset the container height
+    const generation = ++sequenceGenerationRef.current
+
+    if (advanceTimeoutRef.current) {
+      clearTimeout(advanceTimeoutRef.current)
+      advanceTimeoutRef.current = null
+    }
+
     setDisplayedMessages([])
     completedMessagesRef.current.clear()
-    setAllMessagesComplete(false)
     userScrolledUpRef.current = false
     justResetScrollRef.current = true
-    
-    // Wait a bit for the container to remount (due to key change)
-    setTimeout(() => {
-      // Reset scroll immediately
+
+    // Animations off: reveal the full briefing immediately so completion
+    // can't race against a second research-injected array.
+    if (skipAnimation) {
+      const indices = briefingMessages.map((_, i) => i)
+      setDisplayedMessages(indices)
+      indices.forEach(i => completedMessagesRef.current.add(i))
+      justResetScrollRef.current = false
+      onChoicesReadyRef.current?.()
+      return
+    }
+
+    const startId = window.setTimeout(() => {
+      if (generation !== sequenceGenerationRef.current) return
       if (chatContainerRef.current) {
         chatContainerRef.current.scrollTop = 0
       }
-      
-      // Wait for DOM to update, then show first message
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Ensure scroll is at top before showing first message
-          if (chatContainerRef.current) {
+        if (generation !== sequenceGenerationRef.current) return
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = 0
+        }
+        setDisplayedMessages([0])
+
+        const enforceTop = () => {
+          if (chatContainerRef.current && justResetScrollRef.current) {
             chatContainerRef.current.scrollTop = 0
           }
-          
-          // Now show the first message
-          setDisplayedMessages([0])
-          
-          // Continue enforcing top position aggressively
-          const enforceTop = () => {
-            if (chatContainerRef.current && justResetScrollRef.current) {
-              chatContainerRef.current.scrollTop = 0
-            }
+        }
+        const intervalId = setInterval(enforceTop, 8)
+        let rafId: number
+        const enforceRaf = () => {
+          enforceTop()
+          if (justResetScrollRef.current) {
+            rafId = requestAnimationFrame(enforceRaf)
           }
-          
-          // Aggressively enforce top position at high frequency
-          const intervalId = setInterval(enforceTop, 8) // ~120fps for maximum enforcement
-          
-          // Also enforce on every animation frame
-          let rafId: number
-          const enforceRaf = () => {
-            enforceTop()
-            if (justResetScrollRef.current) {
-              rafId = requestAnimationFrame(enforceRaf)
-            }
-          }
-          rafId = requestAnimationFrame(enforceRaf)
-          
-          setTimeout(() => {
-            clearInterval(intervalId)
-            cancelAnimationFrame(rafId)
-            justResetScrollRef.current = false
-          }, 2000) // Keep enforcing for 2 seconds
-        })
-      })
-    }, 10) // Small delay to let container remount
-  }, [node.id])
+        }
+        rafId = requestAnimationFrame(enforceRaf)
 
-  // Handle message completion and show next message
+        window.setTimeout(() => {
+          clearInterval(intervalId)
+          cancelAnimationFrame(rafId)
+          if (generation === sequenceGenerationRef.current) {
+            justResetScrollRef.current = false
+          }
+        }, 2000)
+      })
+    }, 10)
+
+    return () => {
+      clearTimeout(startId)
+      if (advanceTimeoutRef.current) {
+        clearTimeout(advanceTimeoutRef.current)
+        advanceTimeoutRef.current = null
+      }
+    }
+  }, [node.id, skipAnimation, briefingMessages])
+
   const handleMessageComplete = (messageIndex: number) => {
+    if (skipAnimation) return
     if (completedMessagesRef.current.has(messageIndex)) return
     completedMessagesRef.current.add(messageIndex)
 
-    // Scroll to bottom when message completes (only if user hasn't scrolled up and not first message)
-    // Don't scroll on first message to keep it at top
     if (chatContainerRef.current && !userScrolledUpRef.current && messageIndex > 0 && !justResetScrollRef.current) {
       requestAnimationFrame(() => {
         if (chatContainerRef.current) {
@@ -111,13 +138,17 @@ export default function AIChatInterface({
       })
     }
 
-    // Show next message if available
-    if (messageIndex < messageSequence.length - 1) {
-      const nextMessage = messageSequence[messageIndex + 1]
+    if (messageIndex < briefingMessages.length - 1) {
+      const nextMessage = briefingMessages[messageIndex + 1]
       const isNextCaseStudy = nextMessage?.type === 'caseStudy'
-      const delayBetweenMessages = isNextCaseStudy ? 50 : 300 // Instant for case studies
-      
-      setTimeout(() => {
+      const delayBetweenMessages = isNextCaseStudy ? 50 : 300
+
+      if (advanceTimeoutRef.current) {
+        clearTimeout(advanceTimeoutRef.current)
+      }
+      const generation = sequenceGenerationRef.current
+      advanceTimeoutRef.current = setTimeout(() => {
+        if (generation !== sequenceGenerationRef.current) return
         setDisplayedMessages(prev => {
           if (!prev.includes(messageIndex + 1)) {
             return [...prev, messageIndex + 1]
@@ -126,53 +157,39 @@ export default function AIChatInterface({
         })
       }, delayBetweenMessages)
     } else {
-      // All messages complete
-      setAllMessagesComplete(true)
-      if (onChoicesReady) {
-        onChoicesReady()
-      }
+      onChoicesReadyRef.current?.()
     }
 
-    if (onMessageComplete) {
-      onMessageComplete()
-    }
+    onMessageCompleteRef.current?.()
   }
 
-  // Monitor user scroll behavior to detect manual scrolling
   useEffect(() => {
     const container = chatContainerRef.current
     if (!container) return
 
     const handleScroll = (e: Event) => {
-      // If we just reset, aggressively force scroll back to top and prevent default
       if (justResetScrollRef.current) {
         e.preventDefault()
         e.stopPropagation()
         container.scrollTop = 0
-        return false // Don't process further during reset period
+        return false
       }
-      
+
       const scrollTop = container.scrollTop
       const scrollHeight = container.scrollHeight
       const clientHeight = container.clientHeight
       const distanceFromBottom = scrollHeight - scrollTop - clientHeight
-      
-      // If user scrolls more than 150px from bottom, they're reading - don't auto-scroll
       userScrolledUpRef.current = distanceFromBottom > 150
     }
 
     container.addEventListener('scroll', handleScroll, { passive: false, capture: true })
-    return () => container.removeEventListener('scroll', handleScroll, { capture: true } as any)
+    return () => container.removeEventListener('scroll', handleScroll, { capture: true } as EventListenerOptions)
   }, [])
 
-  // Auto-scroll to bottom when new messages appear (not during typing)
   useEffect(() => {
-    // Don't auto-scroll if we just reset or if it's the first message
     if (justResetScrollRef.current || displayedMessages.length <= 1) {
-      // Aggressively ensure we stay at top if we just reset
       if (justResetScrollRef.current && chatContainerRef.current) {
         chatContainerRef.current.scrollTop = 0
-        // Also enforce on next frame
         requestAnimationFrame(() => {
           if (chatContainerRef.current && justResetScrollRef.current) {
             chatContainerRef.current.scrollTop = 0
@@ -181,17 +198,13 @@ export default function AIChatInterface({
       }
       return
     }
-    
+
     if (chatContainerRef.current) {
-      // Clear any pending scroll
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
       }
 
-      // Only auto-scroll if user hasn't manually scrolled up
       if (!userScrolledUpRef.current) {
-        // Use instant scroll (no animation) to prevent jitter
-        // Scroll happens only when new messages are added, not during typing
         requestAnimationFrame(() => {
           if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
@@ -205,33 +218,11 @@ export default function AIChatInterface({
         clearTimeout(scrollTimeoutRef.current)
       }
     }
-  }, [displayedMessages.length]) // Only trigger when message count changes, not on every render
-
-  // Inject research lab beats before choices
-  const allMessagesWithResearch = useMemo(() => {
-    const messages = [...messageSequence]
-    
-    if (researchCards.length > 0) {
-      const choicesIndex = messages.findIndex(m => m.type === 'choices')
-      const insertAt = choicesIndex >= 0 ? choicesIndex : messages.length
-      researchCards.slice(0, 2).forEach((card, idx) => {
-        const content = `**Research Lab · ${card.framework}**\n\n**${card.title}**\n\n${card.description}\n\n*Consider:* ${card.keyQuestions[0]}`
-        messages.splice(insertAt + idx, 0, {
-          id: `${node.id}-research-${idx}`,
-          type: 'research',
-          content,
-          delay: insertAt > 0 ? messages[Math.max(0, insertAt - 1)].delay + 1000 : 0,
-          metadata: { researchIndex: idx }
-        })
-      })
-    }
-    
-    return messages
-  }, [messageSequence, researchCards, node.id])
+  }, [displayedMessages.length])
 
   return (
     <div
-      key={node.id} // Force remount on node change to reset scroll state
+      key={node.id}
       ref={chatContainerRef}
       style={{
         height: '100%',
@@ -242,42 +233,35 @@ export default function AIChatInterface({
         borderRadius: '8px'
       }}
       onScroll={(e) => {
-        // Prevent any scrolling during reset period
         if (justResetScrollRef.current) {
           e.currentTarget.scrollTop = 0
         }
       }}
     >
-      {allMessagesWithResearch.map((message, index) => {
+      {briefingMessages.map((message, index) => {
         if (!displayedMessages.includes(index)) {
           return null
         }
 
-        // Calculate delay relative to when previous message started displaying
-        // For the first displayed message, use its absolute delay
-        // For subsequent messages, calculate relative delay
         const previousDisplayedIndex = displayedMessages
           .filter(i => i < index)
           .sort((a, b) => b - a)[0]
-        
-        const previousMessage = previousDisplayedIndex !== undefined 
-          ? allMessagesWithResearch[previousDisplayedIndex] 
+
+        const previousMessage = previousDisplayedIndex !== undefined
+          ? briefingMessages[previousDisplayedIndex]
           : null
-        
+
         const delay = previousMessage && index > 0
           ? Math.max(0, message.delay - previousMessage.delay)
           : message.delay
 
-        // Don't skip animation for case studies - let them type out fast
-        const shouldSkipAnimation = skipAnimation
-        
         return (
           <ChatMessage
             key={message.id}
             content={message.content}
             isAI={true}
-            skipAnimation={shouldSkipAnimation}
-            delay={shouldSkipAnimation ? 0 : delay}
+            skipAnimation={skipAnimation}
+            delay={skipAnimation ? 0 : delay}
             onTypingComplete={() => handleMessageComplete(index)}
             showAvatar={true}
           />

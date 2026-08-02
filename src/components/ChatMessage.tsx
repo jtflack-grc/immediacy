@@ -31,10 +31,8 @@ export default function ChatMessage({
     if (skipAnimation) {
       setDisplayedText(content)
       setIsTyping(false)
-      if (onCompleteRef.current) {
-        setTimeout(() => onCompleteRef.current?.(), 0)
-      }
-      return
+      const timeoutId = window.setTimeout(() => onCompleteRef.current?.(), 0)
+      return () => clearTimeout(timeoutId)
     }
 
     setIsTyping(true)

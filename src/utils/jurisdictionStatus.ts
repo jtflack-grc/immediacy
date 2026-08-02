@@ -28,7 +28,7 @@ function formatDuration(minutes: number): string {
 }
 
 /** Best-effort match of a jurisdiction to a tracked regulatory deadline (deadlines aren't stored per-country). */
-function relevantRegulatoryDeadline(iso3: string, deadlines: IncidentDeadline[]): IncidentDeadline | undefined {
+export function relevantRegulatoryDeadline(iso3: string, deadlines: IncidentDeadline[]): IncidentDeadline | undefined {
   const regulatory = deadlines.filter(d => d.kind === 'regulatory')
   if (regulatory.length === 0) return undefined
 
@@ -132,6 +132,22 @@ export function getJurisdictionStatus(
 }
 
 /**
+ * True when this jurisdiction has an applicable notice clock or has moved past
+ * idle status because of that clock — not merely because global counsel flags flipped.
+ */
+export function isJurisdictionActivelyImplicated(
+  iso3: string,
+  status: JurisdictionStatus,
+  state?: State
+): boolean {
+  const deadline = relevantRegulatoryDeadline(iso3, state?.deadlines || [])
+  if (deadline) return true
+  return status.notificationStatus === 'notice_due'
+    || status.notificationStatus === 'filed'
+    || status.notificationStatus === 'overdue'
+}
+
+/**
  * Jurisdiction status for every "in play" country in the current state, sorted by
  * regulatory pressure (highest first) so the most urgent jurisdictions surface first.
  */
@@ -145,6 +161,15 @@ export function calculateJurisdictionStatuses(state: State): JurisdictionStatus[
   })
 
   return statuses.sort((a, b) => b.regulatoryPressure - a.regulatoryPressure)
+}
+
+/**
+ * Only jurisdictions with an active/matched clock or notice progress — for war-room panels.
+ */
+export function calculateActiveJurisdictionStatuses(state: State): JurisdictionStatus[] {
+  return calculateJurisdictionStatuses(state).filter(s =>
+    isJurisdictionActivelyImplicated(s.iso3, s, state)
+  )
 }
 
 /**

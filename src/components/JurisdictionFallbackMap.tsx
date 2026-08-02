@@ -3,6 +3,7 @@ import { IN_PLAY_ISO3 } from '../utils/jurisdictionData'
 import {
   getJurisdictionStatus,
   JurisdictionStatus,
+  isJurisdictionActivelyImplicated,
   notificationStatusColor,
   notificationStatusLabel,
   regulatoryPressureColor,
@@ -25,11 +26,12 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
     mapMode === 'disclosurePosture' ? 'Disclosure Posture' :
     mapMode === 'disclosureDebt' ? 'Disclosure Debt' : 'Regulatory Pressure'
 
-  // Only jurisdictions actually "in play" for this incident get a status card.
+  // Only jurisdictions with an active clock or notice progress — not the full in-play roster.
   const jurisdictions = Object.entries(regionValues)
     .filter(([iso3]) => IN_PLAY_ISO3.has(iso3))
     .map(([iso3, value]) => getJurisdictionStatus(iso3, value, state))
     .filter((s): s is JurisdictionStatus => s !== null)
+    .filter(s => isJurisdictionActivelyImplicated(s.iso3, s, state))
     .sort((a, b) => b.regulatoryPressure - a.regulatoryPressure)
 
   const deadlines = state?.deadlines || []
@@ -146,7 +148,7 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
 
       {jurisdictions.length === 0 && (
         <div style={{ fontSize: '12px', color: '#666', marginTop: '20px' }}>
-          No jurisdictions in play yet.
+          No notice clocks opened yet — jurisdictions appear here as evidence or deadlines implicate them.
         </div>
       )}
     </div>
