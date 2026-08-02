@@ -42,9 +42,7 @@ export default function App() {
       setShowWelcome(false);
     } catch (e) {
       setError(
-        e instanceof Error
-          ? e.message
-          : "Live search failed — is the API running?"
+        e instanceof Error ? e.message : "Analyze failed — try HAYW or a rails case."
       );
     } finally {
       setLoading(false);

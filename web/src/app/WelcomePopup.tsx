@@ -60,7 +60,7 @@ export function WelcomePopup({
 
           <div className="mt-6">
             <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/70">
-              Or search any US public company
+              Or analyze a bundled public company
             </p>
             <form
               className="flex flex-col gap-2 sm:flex-row"
@@ -85,7 +85,8 @@ export function WelcomePopup({
               </button>
             </form>
             <p className="mt-2 text-[11px] text-slate-500">
-              Live search needs the analysis API. Rails cases work offline.
+              Runs entirely in your browser on GitHub Pages — try HAYW. Rails
+              cases need no network beyond the page load.
             </p>
           </div>
         </div>

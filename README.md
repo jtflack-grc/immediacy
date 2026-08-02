@@ -32,38 +32,38 @@ api               Fastify analysis service
 web               Vite + React three-panel UI
 ```
 
+## Live site
+
+**https://jtflack-grc.github.io/interdependency/**
+
+Same model as INQUISITION / IMPACT!: a static GitHub Pages web app. Rails cases and bundled company packs (e.g. HAYW) analyze entirely in the browser.
+
 ## Quick start
 
 ```bash
 npm install
 npm run build --workspace=@interdependency/shared
-
-# terminal 1
-npm run dev:api
-
-# terminal 2
 npm run dev:web
 ```
 
 - Web: http://localhost:5275  
-- API: http://localhost:8787/health  
 
-Optional LLM extraction: copy `.env.example` → `api/.env` or export `OPENAI_API_KEY`.
-
-Set a descriptive `SEC_USER_AGENT` (SEC policy).
-
-## Live analyze example
+Optional analysis API (full live EDGAR beyond the static pack):
 
 ```bash
-curl "http://127.0.0.1:8787/api/analyze?q=HAYW"
+npm run dev:api   # :8787
+# then build web with VITE_API_BASE=http://127.0.0.1:8787
 ```
+
+Optional LLM extraction on the API: copy `.env.example` → export `OPENAI_API_KEY`.
+Set a descriptive `SEC_USER_AGENT` (SEC policy).
 
 ## Deploy
 
-- **Web:** GitHub Pages via `.github/workflows/deploy-pages.yml`. Set repo variable `VITE_API_BASE` to your API origin.
-- **API:** `fly.toml` + `api/Dockerfile` (`fly deploy`). Set `CORS_ORIGINS` to your Pages origin.
+- **Web (primary):** GitHub Pages via `.github/workflows/deploy-pages.yml` — no backend required.
+- **API (optional):** `fly.toml` + `api/Dockerfile`. Set Pages repo variable `VITE_API_BASE` only if you want live EDGAR for the full ticker universe.
 
-Rails JSON is also copied to `web/public/rails/` so cases load if the API is down.
+Static assets live under `web/public/rails/`, `web/public/kb/`, and `web/public/dossiers/`.
 
 ## Method honesty
 

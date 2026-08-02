@@ -1,0 +1,83 @@
+[
+  {
+    "id": "inc-crowdstrike-2024",
+    "title": "CrowdStrike Falcon content update outage",
+    "year": 2024,
+    "entityIds": ["crowdstrike"],
+    "summary": "A faulty Falcon sensor content update caused widespread Windows crashes and operational disruption for customers relying on the endpoint agent update channel.",
+    "url": "https://www.crowdstrike.com/blog/falcon-content-update-preliminary-post-incident-review/",
+    "classes": ["software"]
+  },
+  {
+    "id": "inc-change-healthcare-2024",
+    "title": "Change Healthcare ransomware / clearinghouse disruption",
+    "year": 2024,
+    "entityIds": ["change-healthcare"],
+    "summary": "Ransomware against Change Healthcare disrupted claims and payment clearing for a large share of U.S. healthcare transactions — a textbook concentration / intermediary failure.",
+    "url": "https://www.unitedhealthgroup.com/newsroom/2024/2024-03-13-uhg-updates-on-change-healthcare-cyberattack.html",
+    "classes": ["processor"]
+  },
+  {
+    "id": "inc-clorox-2023",
+    "title": "Clorox cyberattack via service-desk social engineering",
+    "year": 2023,
+    "entityIds": ["helpdesk-msp"],
+    "summary": "Attackers reportedly used social engineering against an IT service desk pathway; manufacturing and retail availability were heavily disrupted for weeks.",
+    "url": "https://investors.thecloroxcompany.com/",
+    "classes": ["msp"]
+  },
+  {
+    "id": "inc-solarwinds-2020",
+    "title": "SolarWinds Orion supply-chain compromise",
+    "year": 2020,
+    "entityIds": ["solarwinds"],
+    "summary": "Nation-state actors inserted malicious code into Orion updates, compromising customers who installed the tainted builds.",
+    "url": "https://www.cisa.gov/news-events/news/joint-statement-federal-bureau-investigation-fbi-cybersecurity-and-infrastructure",
+    "classes": ["software"]
+  },
+  {
+    "id": "inc-moveit-2023",
+    "title": "MOVEit Transfer mass exploitation",
+    "year": 2023,
+    "entityIds": ["movelt"],
+    "summary": "Exploitation of Progress MOVEit Transfer led to large-scale data theft across organizations that depended on the file-transfer product — including via third-party processors.",
+    "url": "https://www.cisa.gov/news-events/alerts/2023/06/01/cisa-and-fbi-release-joint-advisory-response-active-exploitation",
+    "classes": ["software", "processor"]
+  },
+  {
+    "id": "inc-okta-2022",
+    "title": "Okta support-system compromise",
+    "year": 2022,
+    "entityIds": ["okta"],
+    "summary": "Compromise of an Okta support system raised identity-provider concentration risk for customers relying on Okta for authentication.",
+    "url": "https://sec.okta.com/harfiles",
+    "classes": ["identity"]
+  },
+  {
+    "id": "inc-exchange-hafnium-2021",
+    "title": "Microsoft Exchange Server Hafnium exploitation",
+    "year": 2021,
+    "entityIds": ["microsoft"],
+    "summary": "Zero-day exploitation of on-premises Exchange servers demonstrated how a ubiquitous enterprise platform becomes a shared third-party-style dependency risk.",
+    "url": "https://www.microsoft.com/en-us/security/blog/2021/03/02/hafnium-targeting-exchange-servers/",
+    "classes": ["software", "cloud"]
+  },
+  {
+    "id": "inc-sap-reccos-2021",
+    "title": "SAP RECON / critical ERP exposure patterns",
+    "year": 2021,
+    "entityIds": ["sap"],
+    "summary": "Critical SAP vulnerabilities (including RECON-class issues in prior years and ongoing ERP internet exposure research) illustrate how ERP platforms concentrate operational and data risk when internet-facing or poorly segmented.",
+    "url": "https://www.onapsis.com/research/recon",
+    "classes": ["erp"]
+  },
+  {
+    "id": "inc-oracle-cloud-2020",
+    "title": "Oracle Cloud / EBS historical exposure research",
+    "year": 2020,
+    "entityIds": ["oracle"],
+    "summary": "Public research and CVE history around Oracle E-Business Suite and related stacks highlight ERP as a high-impact dependency class when authentication or patching lags.",
+    "url": "https://www.oracle.com/security-alerts/",
+    "classes": ["erp"]
+  }
+]
