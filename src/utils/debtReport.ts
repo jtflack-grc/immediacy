@@ -2,6 +2,7 @@
 
 import { State, AuditRecord } from '../engine/scenarioTypes'
 import { calculateGovernanceDebtIndex } from '../engine/scoring'
+import { metricLabel } from './metricDisplayLabels'
 
 export interface DebtEvent {
   turn: number
@@ -211,25 +212,25 @@ function analyzeDebtPatterns(state: State, timeline: DebtEvent[]): DebtReport['a
 
   if (maxDebtType) {
     const recommendationsMap: Record<string, string> = {
-      welfareDebt: 'Prioritize decisions that address accumulated welfare compromises. Consider targeted interventions to reduce welfare debt.',
-      enforcementGap: 'Build enforcement capacity to close the gap between policy and implementation. Invest in inspection systems and oversight mechanisms.',
-      regulatoryCapture: 'Strengthen independent oversight to reduce industry influence. Consider mechanisms that protect policy independence.',
-      sentienceKnowledgeGap: 'Invest in research and knowledge-building to address gaps in understanding animal welfare needs.',
-      systemIrreversibility: 'Maintain flexibility in governance systems. Avoid decisions that lock in problematic patterns too early.'
+      welfareDebt: 'Prioritize decisions that pay down disclosure debt — earlier, clearer statements beat drip truth.',
+      enforcementGap: 'Close regulatory clock lag. Document awareness and hit notice deadlines (Art. 33 / state / sector).',
+      regulatoryCapture: 'Align messaging with ops truth. Soft status pages age poorly under subpoena.',
+      sentienceKnowledgeGap: 'Invest in scoping and forensics to shrink the facts gap before re-notice risk compounds.',
+      systemIrreversibility: 'Preserve optionality. Avoid irreversible payments or denials until the loss table is clear.'
     }
     recommendations.push(recommendationsMap[maxDebtType[0]] || 'Monitor debt accumulation and adjust strategy as needed.')
   }
 
   if (state.metrics.unmeasured.welfareDebt > 0.6) {
-    recommendations.push('High welfare debt requires immediate attention. Consider policy adjustments that directly address welfare compromises.')
+    recommendations.push('High disclosure debt requires immediate attention. Prefer imperfect honesty over silence.')
   }
 
   if (state.metrics.unmeasured.enforcementGap > 0.6) {
-    recommendations.push('Large enforcement gaps undermine policy effectiveness. Prioritize building enforcement capacity.')
+    recommendations.push('Large regulatory clock lag undermines credibility. Prioritize timed notice checkpoints.')
   }
 
   if (state.metrics.unmeasured.systemIrreversibility > 0.7) {
-    recommendations.push('High system irreversibility limits future options. Consider maintaining flexibility for mid-course corrections.')
+    recommendations.push('High commitment lock limits future options. Avoid new irreversible statements or deals.')
   }
 
   return {
@@ -342,7 +343,7 @@ export function generateDebtReportHTML(report: DebtReport): string {
     <div class="event">
       <div class="event-title">Turn ${event.turn}: ${event.nodeTitle}</div>
       <div class="event-details">
-        <span class="debt-type">${event.debtType}</span>
+        <span class="debt-type">${metricLabel(event.debtType)}</span>
         <strong>Choice:</strong> ${event.choice}<br>
         <strong>Magnitude:</strong> +${(event.magnitude * 100).toFixed(1)}%<br>
         <strong>Cumulative Debt:</strong> ${(event.cumulativeDebt * 100).toFixed(1)}%<br>

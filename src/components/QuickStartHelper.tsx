@@ -31,31 +31,30 @@ export default function QuickStartHelper({ node, onQuickStart, isFirstTime }: Qu
     let rationale = ''
     let assumptions = ''
 
-    if (nodeTitle.includes('sentience')) {
-      rationale = 'Recognizing sentience broadly establishes a stronger legal foundation for future protections, even if it requires more political capital upfront.'
-      assumptions = 'I assume that legal recognition of sentience will enable stronger welfare protections over time, and that political resistance can be managed through careful framing.'
-    } else if (nodeTitle.includes('farm') || nodeTitle.includes('standard')) {
-      rationale = 'Mandatory baseline standards ensure consistent welfare improvements across regions, though enforcement will be challenging.'
-      assumptions = 'I assume that mandatory standards will be more effective than voluntary ones, and that industry will adapt rather than resist strongly.'
-    } else if (nodeTitle.includes('factory') || nodeTitle.includes('intensive')) {
-      rationale = 'Phased mandatory standards balance welfare improvements with industry transition needs, reducing resistance while making progress.'
-      assumptions = 'I assume that gradual implementation allows industry to adapt, and that transition support reduces economic disruption.'
-    } else if (nodeTitle.includes('alternative') || nodeTitle.includes('protein')) {
-      rationale = 'Supporting alternative proteins reduces long-term animal suffering while maintaining food security during transition.'
-      assumptions = 'I assume that alternative proteins will scale effectively, and that supporting them now accelerates adoption without creating dependency.'
-    } else if (nodeTitle.includes('wildlife') || nodeTitle.includes('conservation')) {
-      rationale = 'Balancing conservation with welfare recognizes that wild animals deserve protection while maintaining ecosystem health.'
-      assumptions = 'I assume that conservation and welfare goals can be aligned, and that protecting wildlife habitats benefits both wild and farmed animals.'
-    } else if (nodeTitle.includes('enforcement')) {
-      rationale = 'Building enforcement capacity ensures policies translate into real-world outcomes, though it requires sustained investment.'
-      assumptions = 'I assume that enforcement capacity is critical for policy effectiveness, and that underfunding creates gaps that undermine welfare goals.'
-    } else if (nodeTitle.includes('international') || nodeTitle.includes('standard')) {
-      rationale = 'International coordination creates consistent welfare standards, reducing regulatory arbitrage and improving global outcomes.'
-      assumptions = 'I assume that international standards can be harmonized despite different contexts, and that coordination reduces race-to-the-bottom dynamics.'
+    if (nodeTitle.includes('detect') || nodeTitle.includes('triage') || nodeTitle.includes('scope')) {
+      rationale = 'Clarify blast radius and data types early so disclosure clocks start from real awareness, not optimistic silence.'
+      assumptions = 'I assume incomplete forensics still beat invented certainty, and that facts gap compounds faster than burn.'
+    } else if (nodeTitle.includes('contain') || nodeTitle.includes('isolate') || nodeTitle.includes('restore')) {
+      rationale = 'Spend primary burn to regain operational control before adversary-driven disclosure writes the narrative.'
+      assumptions = 'I assume containment that preserves evidence is worth short-term disruption if secondary loss drops.'
+    } else if (nodeTitle.includes('disclos') || nodeTitle.includes('notice') || nodeTitle.includes('notify')) {
+      rationale = 'Timed, factual notice pays down disclosure debt even when counsel wants more certainty.'
+      assumptions = 'I assume regulators and customers punish drip truth more than imperfect-but-honest first notices.'
+    } else if (nodeTitle.includes('ransom') || nodeTitle.includes('pay') || nodeTitle.includes('negotiat')) {
+      rationale = 'Payment and public denial are commitment locks — price the secondary loss before locking the path.'
+      assumptions = 'I assume FAIR-style ranges beat optimism-as-fiduciary-duty under extortion pressure.'
+    } else if (nodeTitle.includes('board') || nodeTitle.includes('comms') || nodeTitle.includes('customer')) {
+      rationale = 'Keep messaging aligned with ops truth to avoid narrative capture that will not survive a screenshot.'
+      assumptions = 'I assume soft status pages age poorly under subpoena and trust-center scrutiny.'
+    } else if (nodeTitle.includes('enforc') || nodeTitle.includes('regulat') || nodeTitle.includes('gdpr') || nodeTitle.includes('sec')) {
+      rationale = 'Close regulatory clock lag relative to awareness; document the rationale either way.'
+      assumptions = 'I assume “awaiting forensics” is a control only when it has a deadline, not an indefinite stall.'
+    } else if (nodeTitle.includes('cross') || nodeTitle.includes('jurisdict') || nodeTitle.includes('global')) {
+      rationale = 'Coordinate multi-jurisdiction notices so selective briefing does not create disclosure debt.'
+      assumptions = 'I assume similarly situated customers deserve the same factual package across regions.'
     } else {
-      // Generic fallback
-      rationale = 'This decision balances immediate welfare improvements with long-term system sustainability, considering both measured outcomes and hidden costs.'
-      assumptions = 'I assume that decisions made now will compound over time, and that balancing short-term gains with long-term welfare is essential.'
+      rationale = 'This decision balances response burn against secondary disclosure loss — silence is still a choice.'
+      assumptions = 'I assume choices compound on FAIR ranges: primary burn now can cut secondary loss later.'
     }
 
     return { rationale, assumptions }

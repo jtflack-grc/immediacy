@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { State } from '../engine/scenarioTypes'
 import { GREAT_PEOPLE, GreatPerson } from '../utils/greatPeople'
+import { metricLabel } from '../utils/metricDisplayLabels'
 
 interface GreatPersonPanelProps {
   state: State
@@ -24,13 +25,13 @@ export default function GreatPersonPanel({ state }: GreatPersonPanelProps) {
     if (person.effect.metrics?.measured) {
       Object.entries(person.effect.metrics.measured).forEach(([key, value]) => {
         const sign = value > 0 ? '+' : ''
-        effects.push(`${key}: ${sign}${(value * 100).toFixed(0)}%`)
+        effects.push(`${metricLabel(key)}: ${sign}${(value * 100).toFixed(0)}%`)
       })
     }
     if (person.effect.metrics?.unmeasured) {
       Object.entries(person.effect.metrics.unmeasured).forEach(([key, value]) => {
         const sign = value > 0 ? '+' : ''
-        effects.push(`${key}: ${sign}${(value * 100).toFixed(0)}%`)
+        effects.push(`${metricLabel(key)}: ${sign}${(value * 100).toFixed(0)}%`)
       })
     }
     return effects

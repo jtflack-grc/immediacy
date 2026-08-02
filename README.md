@@ -2,7 +2,7 @@
 
 Short-horizon **disclosure war game**. Seat-of-the-pants decisions under time pressure — Legal, HR, Tech, Comms, Board — where silence is a choice.
 
-Built on the [Inheritance](https://github.com/jtflack-grc/inheritance) decision shell (3-panel UI, globe, difficulty rails, opening help, 5s title card). Scenario content is being rewritten from animal/longtermism toward incident disclosure and FAIR-flavored pressure metrics.
+Built on the Inheritance decision shell (3-panel UI, globe, difficulty rails, opening help, 5s title card). Product content is IMMEDIACY — incident disclosure and FAIR-flavored pressure metrics.
 
 ## Run locally
 

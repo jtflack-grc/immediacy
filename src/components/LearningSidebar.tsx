@@ -41,16 +41,16 @@ export default function LearningSidebar({ node, state, scenario, isCollapsed, on
 
     // Node-specific concepts based on title/content
     const nodeTitle = node.title.toLowerCase()
-    if (nodeTitle.includes('sentience')) {
+    if (nodeTitle.includes('scope') || nodeTitle.includes('forensic') || nodeTitle.includes('facts') || nodeTitle.includes('detect')) {
       concepts.push('sentienceKnowledgeGap')
     }
-    if (nodeTitle.includes('enforcement') || nodeTitle.includes('compliance')) {
+    if (nodeTitle.includes('notice') || nodeTitle.includes('disclos') || nodeTitle.includes('regulat') || nodeTitle.includes('gdpr')) {
       concepts.push('enforcementGap', 'regulatoryCapture')
     }
-    if (nodeTitle.includes('alternative') || nodeTitle.includes('protein')) {
+    if (nodeTitle.includes('ransom') || nodeTitle.includes('pay') || nodeTitle.includes('deny') || nodeTitle.includes('negotiat')) {
       concepts.push('welfareDebt', 'systemIrreversibility')
     }
-    if (nodeTitle.includes('international') || nodeTitle.includes('standard')) {
+    if (nodeTitle.includes('customer') || nodeTitle.includes('board') || nodeTitle.includes('comms') || nodeTitle.includes('cross')) {
       concepts.push('regulatoryCapture', 'welfareStandardAdoption')
     }
 
@@ -81,33 +81,33 @@ export default function LearningSidebar({ node, state, scenario, isCollapsed, on
     const phaseId = phase.id
     if (phaseId === 'P1_FOUNDATION') {
       return [
-        'How early decisions set the foundation for all future welfare protections',
-        'Why recognizing animal sentience legally matters for long-term outcomes',
-        'How assumptions about welfare can decay if not reaffirmed'
+        'How early detection choices set the disclosure clock for everything that follows',
+        'Why facts gaps and awareness calls matter before counsel scripts the room',
+        'How war-room assumptions decay if you do not reaffirm them under pressure'
       ]
     } else if (phaseId === 'P2_SCALE') {
       return [
-        'How scaling welfare systems creates new challenges and tradeoffs',
-        'Why efficiency gains can conflict with welfare improvements',
-        'How welfare debt accumulates even when measured outcomes look good'
+        'How containment scale creates burn vs. secondary-loss tradeoffs',
+        'Why operational control can conflict with aggressive disclosure timing',
+        'How disclosure debt accumulates even when the board slide looks calm'
       ]
     } else if (phaseId === 'P3_ENFORCEMENT') {
       return [
-        'Why enforcement gaps emerge between policy and practice',
-        'How regulatory capture can undermine welfare goals',
-        'The difference between measured outcomes and hidden risks'
+        'Why regulatory clock lag opens between awareness and notice',
+        'How narrative capture can undermine credible disclosure',
+        'The difference between measured control and hidden disclosure debt'
       ]
     } else if (phaseId === 'P4_INTEGRATION') {
       return [
-        'How systems become harder to change as they mature',
-        'Why integration creates dependencies that are hard to reverse',
-        'How memory decay weakens institutional commitment to welfare'
+        'How payments and public statements harden into commitment lock',
+        'Why customer, regulator, and board narratives get hard to reverse',
+        'How memory decay weakens institutional discipline mid-incident'
       ]
     } else if (phaseId === 'P5_IRREVERSIBILITY') {
       return [
-        'How governance decisions compound into long-term system constraints',
-        'Why reversing welfare systems becomes difficult over time',
-        'The relationship between success metrics and hidden debt'
+        'How war-room choices compound into aftermath constraints',
+        'Why denial, pay, or over-claim paths are hard to unwind later',
+        'The relationship between control scores and secondary loss'
       ]
     }
     return []

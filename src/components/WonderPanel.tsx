@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { State } from '../engine/scenarioTypes'
 import { WONDERS, Wonder } from '../utils/wonders'
+import { metricLabel } from '../utils/metricDisplayLabels'
 
 interface WonderPanelProps {
   state: State
@@ -24,19 +25,19 @@ export default function WonderPanel({ state }: WonderPanelProps) {
     if (wonder.effect.metrics?.measured) {
       Object.entries(wonder.effect.metrics.measured).forEach(([key, value]) => {
         const sign = value > 0 ? '+' : ''
-        effects.push(`${key}: ${sign}${(value * 100).toFixed(0)}%`)
+        effects.push(`${metricLabel(key)}: ${sign}${(value * 100).toFixed(0)}%`)
       })
     }
     if (wonder.effect.metrics?.unmeasured) {
       Object.entries(wonder.effect.metrics.unmeasured).forEach(([key, value]) => {
         const sign = value > 0 ? '+' : ''
-        effects.push(`${key}: ${sign}${(value * 100).toFixed(0)}%`)
+        effects.push(`${metricLabel(key)}: ${sign}${(value * 100).toFixed(0)}%`)
       })
     }
     if (wonder.effect.map?.regionValues) {
       const regions = Object.keys(wonder.effect.map.regionValues).length
       if (regions > 0) {
-        effects.push(`Regional boost: +${(wonder.effect.map.regionValues[Object.keys(wonder.effect.map.regionValues)[0]]! * 100).toFixed(0)}% to ${regions} regions`)
+        effects.push(`Jurisdiction boost: +${(wonder.effect.map.regionValues[Object.keys(wonder.effect.map.regionValues)[0]]! * 100).toFixed(0)}% to ${regions} regions`)
       }
     }
     return effects
@@ -59,7 +60,7 @@ export default function WonderPanel({ state }: WonderPanelProps) {
           textTransform: 'uppercase',
           letterSpacing: '0.5px'
         }}>
-          Wonders
+          Breakthroughs
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {completedWonders.map((wonderId) => {

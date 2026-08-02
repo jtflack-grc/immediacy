@@ -106,28 +106,28 @@ const translations: Record<Language, Translations> = {
       credits: 'Créditos'
     },
     mapModes: {
-      standards: 'Estándares',
+      standards: 'Postura',
       debt: 'Deuda',
       enforcement: 'Cumplimiento'
     },
     metrics: {
-      successIndex: 'Índice de Éxito',
-      debtIndex: 'Índice de Deuda',
-      productionEfficiency: 'Eficiencia de Producción',
-      costPerUnit: 'Costo por Unidad',
-      welfareIncidentRate: 'Tasa de Incidentes de Bienestar',
-      welfareStandardAdoption: 'Adopción de Estándares de Bienestar'
+      successIndex: 'Índice de Control',
+      debtIndex: 'Índice de Deuda de Divulgación',
+      productionEfficiency: 'Control Operativo',
+      costPerUnit: 'Gasto de Respuesta',
+      welfareIncidentRate: 'Severidad de Exposición',
+      welfareStandardAdoption: 'Postura de Divulgación'
     },
     welcome: {
       whatThisIs: 'Qué Es Esto',
-      longtermistPerspective: 'Una Perspectiva Longtermista',
-      keyConcept: 'Concepto Clave: Deuda de Gobernanza',
+      longtermistPerspective: 'Presión, No Planes Perfectos',
+      keyConcept: 'Concepto Clave: Deuda de Divulgación',
       noWinning: 'No Hay "Ganar"',
-      longtermistScope: 'Alcance longtermista:',
-      footer: 'Parte del ecosistema Electric Sheep / Futurekind'
+      longtermistScope: 'Alcance:',
+      footer: 'Parte del laboratorio i on GRC'
     },
     tutorial: {
-      welcome: 'Bienvenido al Simulador de Gobernanza de Bienestar Animal',
+      welcome: 'Bienvenido a IMMEDIACY',
       globe: 'El Globo 3D',
       decisions: 'Tomar Decisiones',
       metrics: 'Entender las Métricas',
@@ -170,28 +170,28 @@ const translations: Record<Language, Translations> = {
       credits: 'Crédits'
     },
     mapModes: {
-      standards: 'Normes',
+      standards: 'Posture',
       debt: 'Dette',
       enforcement: 'Application'
     },
     metrics: {
-      successIndex: 'Indice de Réussite',
-      debtIndex: 'Indice de Dette',
-      productionEfficiency: 'Efficacité de Production',
-      costPerUnit: 'Coût par Unité',
-      welfareIncidentRate: 'Taux d\'Incidents de Bien-être',
-      welfareStandardAdoption: 'Adoption des Normes de Bien-être'
+      successIndex: 'Indice de Contrôle',
+      debtIndex: 'Indice de Dette de Divulgation',
+      productionEfficiency: 'Contrôle Opérationnel',
+      costPerUnit: 'Coût de Réponse',
+      welfareIncidentRate: 'Sévérité d\'Exposition',
+      welfareStandardAdoption: 'Posture de Divulgation'
     },
     welcome: {
       whatThisIs: 'Qu\'est-ce que c\'est',
-      longtermistPerspective: 'Une Perspective Longtermiste',
-      keyConcept: 'Concept Clé: Dette de Gouvernance',
+      longtermistPerspective: 'Pression, Pas de Plans Parfaits',
+      keyConcept: 'Concept Clé: Dette de Divulgation',
       noWinning: 'Il n\'y a pas de "Victoire"',
-      longtermistScope: 'Portée longtermiste:',
-      footer: 'Faisant partie de l\'écosystème Electric Sheep / Futurekind'
+      longtermistScope: 'Portée:',
+      footer: 'Faisant partie du labo i on GRC'
     },
     tutorial: {
-      welcome: 'Bienvenue dans le Simulateur de Gouvernance du Bien-être Animal',
+      welcome: 'Bienvenue dans IMMEDIACY',
       globe: 'Le Globe 3D',
       decisions: 'Prendre des Décisions',
       metrics: 'Comprendre les Métriques',
@@ -234,28 +234,28 @@ const translations: Record<Language, Translations> = {
       credits: 'Credits'
     },
     mapModes: {
-      standards: 'Standards',
+      standards: 'Haltung',
       debt: 'Schulden',
       enforcement: 'Durchsetzung'
     },
     metrics: {
-      successIndex: 'Erfolgsindex',
-      debtIndex: 'Schuldenindex',
-      productionEfficiency: 'Produktionseffizienz',
-      costPerUnit: 'Kosten pro Einheit',
-      welfareIncidentRate: 'Tierschutzvorfallrate',
-      welfareStandardAdoption: 'Tierschutzstandard-Annahme'
+      successIndex: 'Kontrollindex',
+      debtIndex: 'Offenlegungs-Schuldenindex',
+      productionEfficiency: 'Operative Kontrolle',
+      costPerUnit: 'Reaktionsaufwand',
+      welfareIncidentRate: 'Expositionsschwere',
+      welfareStandardAdoption: 'Offenlegungshaltung'
     },
     welcome: {
       whatThisIs: 'Was Dies Ist',
-      longtermistPerspective: 'Eine Longtermistische Perspektive',
-      keyConcept: 'Schlüsselkonzept: Governance-Schulden',
+      longtermistPerspective: 'Druck, Keine Perfekten Pläne',
+      keyConcept: 'Schlüsselkonzept: Offenlegungsschulden',
       noWinning: 'Es Gibt Kein "Gewinnen"',
-      longtermistScope: 'Longtermistischer Umfang:',
-      footer: 'Teil des Electric Sheep / Futurekind Ökosystems'
+      longtermistScope: 'Umfang:',
+      footer: 'Teil des i on GRC Labors'
     },
     tutorial: {
-      welcome: 'Willkommen beim Tierschutz-Governance-Simulator',
+      welcome: 'Willkommen bei IMMEDIACY',
       globe: 'Der 3D-Globus',
       decisions: 'Entscheidungen Treffen',
       metrics: 'Metriken Verstehen',
@@ -278,17 +278,17 @@ const translations: Record<Language, Translations> = {
       reset: '重置'
     },
     mapModes: {
-      standards: '标准',
+      standards: '态势',
       debt: '债务',
-      enforcement: '执法'
+      enforcement: '监管'
     },
     metrics: {
-      successIndex: '成功指数',
-      debtIndex: '债务指数',
-      productionEfficiency: '生产效率',
-      costPerUnit: '单位成本',
-      welfareIncidentRate: '福利事件率',
-      welfareStandardAdoption: '福利标准采用'
+      successIndex: '控制指数',
+      debtIndex: '披露债务指数',
+      productionEfficiency: '运营控制',
+      costPerUnit: '响应消耗',
+      welfareIncidentRate: '暴露严重度',
+      welfareStandardAdoption: '披露态势'
     },
     disclaimer: {
       title: '教育模型免责声明',
@@ -326,28 +326,28 @@ const translations: Record<Language, Translations> = {
       credits: 'Créditos'
     },
     mapModes: {
-      standards: 'Padrões',
+      standards: 'Postura',
       debt: 'Dívida',
       enforcement: 'Fiscalização'
     },
     metrics: {
-      successIndex: 'Índice de Sucesso',
-      debtIndex: 'Índice de Dívida',
-      productionEfficiency: 'Eficiência de Produção',
-      costPerUnit: 'Custo por Unidade',
-      welfareIncidentRate: 'Taxa de Incidentes de Bem-estar',
-      welfareStandardAdoption: 'Adoção de Padrões de Bem-estar'
+      successIndex: 'Índice de Controle',
+      debtIndex: 'Índice de Dívida de Divulgação',
+      productionEfficiency: 'Controle Operacional',
+      costPerUnit: 'Custo de Resposta',
+      welfareIncidentRate: 'Severidade da Exposição',
+      welfareStandardAdoption: 'Postura de Divulgação'
     },
     welcome: {
       whatThisIs: 'O Que É Isso',
-      longtermistPerspective: 'Uma Perspectiva Longtermista',
-      keyConcept: 'Conceito Chave: Dívida de Governança',
+      longtermistPerspective: 'Pressão, Não Planos Perfeitos',
+      keyConcept: 'Conceito Chave: Dívida de Divulgação',
       noWinning: 'Não Há "Vitória"',
-      longtermistScope: 'Escopo longtermista:',
-      footer: 'Parte do ecossistema Electric Sheep / Futurekind'
+      longtermistScope: 'Escopo:',
+      footer: 'Parte do laboratório i on GRC'
     },
     tutorial: {
-      welcome: 'Bem-vindo ao Simulador de Governança de Bem-estar Animal',
+      welcome: 'Bem-vindo ao IMMEDIACY',
       globe: 'O Globo 3D',
       decisions: 'Tomar Decisões',
       metrics: 'Entender Métricas',
@@ -390,28 +390,28 @@ const translations: Record<Language, Translations> = {
       credits: 'クレジット'
     },
     mapModes: {
-      standards: '基準',
+      standards: '姿勢',
       debt: '負債',
       enforcement: '執行'
     },
     metrics: {
-      successIndex: '成功指数',
-      debtIndex: '負債指数',
-      productionEfficiency: '生産効率',
-      costPerUnit: '単価',
-      welfareIncidentRate: '福祉インシデント率',
-      welfareStandardAdoption: '福祉基準の採用'
+      successIndex: 'コントロール指数',
+      debtIndex: '開示負債指数',
+      productionEfficiency: '運用コントロール',
+      costPerUnit: '対応コスト',
+      welfareIncidentRate: 'エクスポージャ深刻度',
+      welfareStandardAdoption: '開示姿勢'
     },
     welcome: {
       whatThisIs: 'これは何か',
-      longtermistPerspective: '長期主義的視点',
-      keyConcept: '重要な概念：ガバナンス負債',
+      longtermistPerspective: '完璧な計画ではなく圧力',
+      keyConcept: '重要な概念：開示負債',
       noWinning: '「勝利」はない',
-      longtermistScope: '長期主義的範囲：',
-      footer: 'Electric Sheep / Futurekind エコシステムの一部'
+      longtermistScope: '範囲：',
+      footer: 'i on GRCラボの一部'
     },
     tutorial: {
-      welcome: '動物福祉ガバナンスシミュレーターへようこそ',
+      welcome: 'IMMEDIACYへようこそ',
       globe: '3D地球儀',
       decisions: '意思決定',
       metrics: '指標の理解',

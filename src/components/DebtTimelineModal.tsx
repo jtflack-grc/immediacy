@@ -83,11 +83,11 @@ export default function DebtTimelineModal({ state, onClose }: DebtTimelineModalP
 
   const debtTypes = ['welfareDebt', 'enforcementGap', 'regulatoryCapture', 'sentienceKnowledgeGap', 'systemIrreversibility']
   const debtLabels: Record<string, string> = {
-    welfareDebt: 'Welfare Debt',
-    enforcementGap: 'Enforcement Gap',
-    regulatoryCapture: 'Regulatory Capture',
-    sentienceKnowledgeGap: 'Sentience Knowledge Gap',
-    systemIrreversibility: 'System Irreversibility'
+    welfareDebt: 'Disclosure Debt',
+    enforcementGap: 'Regulatory Clock Lag',
+    regulatoryCapture: 'Narrative Capture',
+    sentienceKnowledgeGap: 'Facts Gap',
+    systemIrreversibility: 'Commitment Lock'
   }
 
   // Calculate total debt accumulation

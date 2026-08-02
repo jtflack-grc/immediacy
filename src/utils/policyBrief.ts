@@ -76,20 +76,20 @@ function generateExecutiveSummary(state: State, successIndex: number, debtIndex:
   const totalDecisions = state.auditTrail.length
   const completedPhases = new Set(state.auditTrail.map(r => r.phaseId)).size
   
-  let summary = `This policy brief summarizes ${totalDecisions} governance decisions made across ${completedPhases} phases. `
+  let summary = `This brief summarizes ${totalDecisions} war-room decisions across ${completedPhases} incident phases. `
   
   if (successIndex > 0.7 && debtIndex < 0.4) {
-    summary += `The governance approach achieved strong outcomes with a success index of ${(successIndex * 100).toFixed(0)}% and relatively low governance debt (${(debtIndex * 100).toFixed(0)}%). `
-    summary += `This suggests a balanced approach that maintained both immediate welfare improvements and long-term governance health.`
+    summary += `The approach achieved strong outcomes with a control index of ${(successIndex * 100).toFixed(0)}% and relatively low disclosure debt (${(debtIndex * 100).toFixed(0)}%). `
+    summary += `This suggests a balanced approach that held operational control while paying down secondary disclosure loss.`
   } else if (successIndex > 0.7 && debtIndex >= 0.4) {
-    summary += `While achieving high success (${(successIndex * 100).toFixed(0)}%), governance debt has accumulated to ${(debtIndex * 100).toFixed(0)}%. `
-    summary += `This indicates strong short-term outcomes but potential long-term sustainability challenges.`
+    summary += `While achieving high control (${(successIndex * 100).toFixed(0)}%), disclosure debt has accumulated to ${(debtIndex * 100).toFixed(0)}%). `
+    summary += `This indicates strong short-horizon containment but secondary loss risk from silence, spin, or clock lag.`
   } else if (successIndex < 0.5 && debtIndex < 0.4) {
-    summary += `The approach maintained low governance debt (${(debtIndex * 100).toFixed(0)}%) but achieved moderate success (${(successIndex * 100).toFixed(0)}%). `
-    summary += `This suggests a cautious approach that prioritized governance stability over rapid change.`
+    summary += `The approach kept disclosure debt low (${(debtIndex * 100).toFixed(0)}%) but achieved only moderate control (${(successIndex * 100).toFixed(0)}%). `
+    summary += `This suggests caution on narrative at the expense of operational tempo.`
   } else {
-    summary += `The approach resulted in moderate success (${(successIndex * 100).toFixed(0)}%) with governance debt at ${(debtIndex * 100).toFixed(0)}%. `
-    summary += `This indicates challenges in both immediate outcomes and long-term governance sustainability.`
+    summary += `The approach resulted in moderate control (${(successIndex * 100).toFixed(0)}%) with disclosure debt at ${(debtIndex * 100).toFixed(0)}%. `
+    summary += `This indicates challenges in both containment and disclosure discipline.`
   }
 
   return summary
@@ -101,42 +101,35 @@ function generateExecutiveSummary(state: State, successIndex: number, debtIndex:
 function generateRecommendations(state: State, successIndex: number, debtIndex: number): string[] {
   const recommendations: string[] = []
 
-  // High debt recommendations
   if (debtIndex > 0.6) {
-    recommendations.push('Prioritize building enforcement capacity to address accumulated governance debt.')
-    recommendations.push('Consider policy adjustments that reduce enforcement gaps and regulatory capture.')
+    recommendations.push('Prioritize paying down disclosure debt — silence and spin compound faster than most technical loss.')
+    recommendations.push('Close regulatory clock lag and narrative capture with timed, facts-first notices.')
   }
 
-  // Low success recommendations
   if (successIndex < 0.5) {
-    recommendations.push('Focus on decisions that improve welfare standard adoption and production efficiency.')
-    recommendations.push('Review early decisions that may have constrained later options.')
+    recommendations.push('Focus on decisions that restore operational control and coherent disclosure posture.')
+    recommendations.push('Review early choices that may have locked burn or facts gap too high.')
   }
 
-  // System irreversibility
   if (state.metrics.unmeasured.systemIrreversibility > 0.7) {
-    recommendations.push('High system irreversibility limits future flexibility. Consider maintaining options for mid-course corrections.')
+    recommendations.push('Commitment lock is high. Avoid new irreversible payments or denials until facts stabilize.')
   }
 
-  // Enforcement gap
   if (state.metrics.unmeasured.enforcementGap > 0.6) {
-    recommendations.push('Address enforcement capacity gaps to ensure policy effectiveness.')
+    recommendations.push('Address regulatory clock lag — document awareness and hit notice deadlines.')
   }
 
-  // Regulatory capture
   if (state.metrics.unmeasured.regulatoryCapture > 0.6) {
-    recommendations.push('Strengthen independent oversight mechanisms to reduce regulatory capture risks.')
+    recommendations.push('Align messaging with ops truth to reduce narrative capture before regulators or customers force it.')
   }
 
-  // Welfare debt
   if (state.metrics.unmeasured.welfareDebt > 0.6) {
-    recommendations.push('Address accumulated welfare compromises through targeted interventions.')
+    recommendations.push('Address accumulated disclosure debt with clearer, earlier statements even if imperfect.')
   }
 
-  // If doing well, reinforce positive patterns
   if (successIndex > 0.7 && debtIndex < 0.4) {
-    recommendations.push('Continue the balanced approach that has achieved strong outcomes with low debt.')
-    recommendations.push('Maintain focus on both immediate welfare improvements and long-term governance health.')
+    recommendations.push('Continue balancing response burn against secondary disclosure loss.')
+    recommendations.push('Keep FAIR ranges on the board — dollars create urgency the room understands.')
   }
 
   return recommendations.length > 0 ? recommendations : ['Continue monitoring metrics and adjusting strategy as needed.']
@@ -149,27 +142,27 @@ function identifyRisks(state: State, debtIndex: number): string[] {
   const risks: string[] = []
 
   if (debtIndex > 0.7) {
-    risks.push('High governance debt may limit future policy options and create enforcement challenges.')
+    risks.push('High disclosure debt may force adversary- or regulator-driven narrative before you are ready.')
   }
 
   if (state.metrics.unmeasured.systemIrreversibility > 0.8) {
-    risks.push('Very high system irreversibility makes course corrections difficult. Future flexibility is constrained.')
+    risks.push('Very high commitment lock makes course corrections difficult. Payments and denials will fight new facts.')
   }
 
   if (state.metrics.unmeasured.enforcementGap > 0.7) {
-    risks.push('Large enforcement gaps may lead to policy ineffectiveness and compliance failures.')
+    risks.push('Large regulatory clock lag invites fines, orders, and loss of customer trust.')
   }
 
   if (state.metrics.unmeasured.regulatoryCapture > 0.7) {
-    risks.push('High regulatory capture risks undermining policy independence and effectiveness.')
+    risks.push('High narrative capture risks undermining credibility when screenshots surface.')
   }
 
   if (state.metrics.measured.welfareIncidentRate > 0.6) {
-    risks.push('High welfare incident rate indicates ongoing welfare challenges that need attention.')
+    risks.push('High exposure severity indicates ongoing blast-radius and leak-site pressure.')
   }
 
   if (state.metrics.measured.costPerUnit > 0.7) {
-    risks.push('High production costs may create market pressures that undermine welfare standards.')
+    risks.push('High response burn may strain the room — watch that spend still cuts secondary loss.')
   }
 
   return risks.length > 0 ? risks : ['No major risks identified at this time.']

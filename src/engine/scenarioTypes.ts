@@ -11,7 +11,7 @@ export interface UnmeasuredMetrics {
   welfareDebt: number              // 0-1, accumulated welfare compromises
   enforcementGap: number           // 0-1, delay between policy and enforcement
   regulatoryCapture: number        // 0-1, industry influence on policy
-  sentienceKnowledgeGap: number    // 0-1, gaps in understanding animal needs
+  sentienceKnowledgeGap: number    // 0-1, facts gap (blast radius / data types)
   // 0-1, how locked-in harmful systems are.
   // Higher values mean **more** irreversible (worse) and feed directly into governance debt.
   systemIrreversibility: number

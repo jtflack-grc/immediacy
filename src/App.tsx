@@ -417,7 +417,7 @@ function App() {
         // Show Wonder notification banner
         setNotification({
           type: 'wonder',
-          title: wonder.title,
+          title: wonder.name,
           description: wonder.description
         })
       }

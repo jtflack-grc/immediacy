@@ -267,7 +267,7 @@ export default function EraTransitionModal({ phaseId, scenario, state, onClose }
                   color: '#666',
                   marginTop: '4px'
                 }}>
-                  High welfare (&gt;70%)
+                  High posture (&gt;70%)
                 </div>
               </div>
             </div>

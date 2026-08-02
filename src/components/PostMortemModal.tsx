@@ -471,7 +471,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           </div>
         </div>
 
-        {/* Top Welfare Debt Decisions */}
+        {/* Top disclosure-debt decisions */}
         {welfareDebtDecisions.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>

@@ -8,83 +8,83 @@ export interface GlossaryTerm {
 
 export const glossary: Record<string, GlossaryTerm> = {
   'welfareDebt': {
-    term: 'Welfare Debt',
-    definition: 'Hidden costs and compromises that accumulate over time when welfare decisions prioritize short-term efficiency over long-term animal wellbeing. Like technical debt in software, it compounds silently.',
+    term: 'Disclosure Debt',
+    definition: 'Hidden costs that accumulate when you postpone hard statements, drip-feed truth, or spin. Like technical debt, it compounds silently until a screenshot or regulator forces the bill.',
     category: 'concept'
   },
   'enforcementGap': {
-    term: 'Enforcement Gap',
-    definition: 'The difference between what welfare policies require and what actually happens in practice. Gaps widen when oversight is underfunded or industry influence grows.',
+    term: 'Regulatory Clock Lag',
+    definition: 'The gap between awareness and notice clocks (GDPR Art. 33, state AG, sector rules). Lag widens when forensics stall or counsel treats “awaiting confirmation” as an indefinite pause.',
     category: 'concept'
   },
   'regulatoryCapture': {
-    term: 'Regulatory Capture',
-    definition: 'When industry interests influence regulators to prioritize business concerns over animal welfare. Often happens gradually through lobbying, revolving doors, or resource constraints.',
+    term: 'Narrative Capture',
+    definition: 'When messaging overrides operational truth — soft status pages, over-attribution, or silence framed as control. Capture ages poorly under subpoena and customer trust centers.',
     category: 'concept'
   },
   'systemIrreversibility': {
-    term: 'System Irreversibility',
-    definition: 'How difficult it becomes to reverse or change welfare systems once they\'re established. High irreversibility means you\'re locked into paths that may be hard to undo.',
+    term: 'Commitment Lock',
+    definition: 'How hard it is to unwind payments, public denials, or attributions once made. High lock means later facts fight your earlier war-room commitments.',
     category: 'concept'
   },
   'sentienceKnowledgeGap': {
-    term: 'Sentience Knowledge Gap',
-    definition: 'Uncertainty about which animals are sentient and to what degree. Gaps can delay protections or lead to inconsistent treatment across species.',
+    term: 'Facts Gap',
+    definition: 'Uncertainty about blast radius, data types, tenants affected, or attacker capability. Gaps drive re-notice risk and class-action exposure when later stages emerge.',
     category: 'concept'
   },
   'welfareStandardAdoption': {
-    term: 'Welfare Standard Adoption',
-    definition: 'How widely welfare standards are actually implemented across regions and industries. High adoption means more animals benefit, but may increase costs.',
+    term: 'Disclosure Posture',
+    definition: 'How coherent and timed your notice process is across jurisdictions and customers. Strong posture means notices match forensics; weak posture means ad-hoc war-room thrash.',
     category: 'metric'
   },
   'productionEfficiency': {
-    term: 'Production Efficiency',
-    definition: 'Output per unit of input (animals, feed, resources). Higher efficiency can reduce costs but may conflict with welfare if achieved through intensive methods.',
+    term: 'Operational Control',
+    definition: 'How much of the incident you still own — containment, restore paths, and room to decide. Low control means downtime and adversary-driven disclosure dominate.',
     category: 'metric'
   },
   'welfareIncidentRate': {
-    term: 'Welfare Incident Rate',
-    definition: 'Frequency of disease, injury, mortality, or other welfare problems. Lower is better, but incidents may be underreported or hidden.',
+    term: 'Exposure Severity',
+    definition: 'How bad the blast looks right now: data sensitivity, encryption progress, leak-site pressure. Higher severity raises both primary response burn and secondary loss.',
     category: 'metric'
   },
   'costPerUnit': {
-    term: 'Cost Per Unit',
-    definition: 'Production cost per unit of output. Lower costs can make welfare improvements harder to justify economically, creating tension with welfare goals.',
+    term: 'Response Burn',
+    definition: 'IR, counsel, overtime, and vendor spend racing the clock. Burn is primary loss — sometimes the right trade to cut secondary disclosure loss.',
     category: 'metric'
   },
   'successIndex': {
-    term: 'Success Index',
-    definition: 'Combined measure of welfare standard adoption, low incident rates, and reasonable costs. Higher means better measured outcomes, but doesn\'t capture hidden debt.',
+    term: 'Control Index',
+    definition: 'Combined war-room score of operational control, disclosure posture, response burn, and exposure severity. Higher is better — but it does not capture disclosure debt.',
     category: 'metric'
   },
   'debtIndex': {
-    term: 'Debt Index',
-    definition: 'Combined measure of accumulated welfare debt, enforcement gaps, regulatory capture, and system irreversibility. Higher means more hidden risks that could cause problems later.',
+    term: 'Disclosure Debt Index',
+    definition: 'Combined measure of disclosure debt, clock lag, narrative capture, facts gap, and commitment lock. Higher means more hidden risk that will not survive a screenshot.',
     category: 'metric'
   },
   'assumptions': {
     term: 'Assumptions',
-    definition: 'Your stated beliefs about what matters in welfare governance. These can decay over time if not reaffirmed, weakening your decision-making foundation.',
+    definition: 'Your stated beliefs about what matters in this incident. These can decay over time if not reaffirmed, weakening decision quality under pressure.',
     category: 'mechanic'
   },
   'memoryDecay': {
     term: 'Memory Decay',
-    definition: 'How institutional knowledge and assumptions fade over time. Without reaffirmation, your stated values may weaken, making it harder to maintain welfare standards.',
+    definition: 'How institutional knowledge and assumptions fade across turns. Without reaffirmation, earlier war-room values weaken and commitments drift.',
     category: 'mechanic'
   },
   'phaseTransition': {
     term: 'Phase Transition',
-    definition: 'Moving from one governance stage to another (Foundation → Scale → Enforcement → Integration → Irreversibility). Each phase introduces new challenges and tradeoffs.',
+    definition: 'Moving from one incident stage to another (Detection → Containment → Disclosure → Negotiation → Aftermath). Each phase introduces new clocks and tradeoffs.',
     category: 'phase'
   },
   'measuredMetrics': {
     term: 'Measured Metrics',
-    definition: 'Outcomes that organizations typically track: efficiency, costs, incident rates, adoption rates. These are visible but may miss hidden problems.',
+    definition: 'What the war room watches on the board: control, burn, exposure, posture. Visible — but they may miss compounding disclosure debt.',
     category: 'concept'
   },
   'unmeasuredMetrics': {
     term: 'Unmeasured Metrics',
-    definition: 'Hidden costs and risks that accumulate over time: welfare debt, enforcement gaps, regulatory capture. These compound silently and may not show up until later.',
+    definition: 'Hidden costs that accumulate under time pressure: disclosure debt, clock lag, narrative capture, facts gap, commitment lock.',
     category: 'concept'
   }
 }

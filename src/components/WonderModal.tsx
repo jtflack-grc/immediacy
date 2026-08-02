@@ -35,7 +35,7 @@ export default function WonderModal({ wonder, state, onClose }: WonderModalProps
       }} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 600, color: '#fbbf24', margin: 0 }}>
-            Wonder Completed
+            Breakthrough Unlocked
           </h2>
           <button
             onClick={onClose}

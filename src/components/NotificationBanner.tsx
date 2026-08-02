@@ -114,7 +114,7 @@ export default function NotificationBanner({
                 letterSpacing: '1px'
               }}>
                 {type === 'great_person' && 'Pressure Archetype Unlocked'}
-                {type === 'wonder' && 'Wonder Completed'}
+                {type === 'wonder' && 'Breakthrough Unlocked'}
                 {type === 'phase_transition' && 'Phase Transition'}
               </div>
               <div style={{

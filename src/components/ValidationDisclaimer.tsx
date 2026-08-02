@@ -55,19 +55,19 @@ export default function ValidationDisclaimer() {
             </button>
           </div>
           <div style={{ fontSize: '11px', color: '#aaa', lineHeight: '1.6', marginBottom: '8px' }}>
-            This simulator is an <strong style={{ color: '#fff' }}>educational tool</strong> designed to illustrate how governance decisions can impact animal welfare outcomes. The model uses deterministic rules based on research-backed assumptions, but real-world outcomes are influenced by many factors not captured here.
+            This simulator is an <strong style={{ color: '#fff' }}>educational tool</strong> designed to illustrate how war-room disclosure decisions create measured burn and unmeasured disclosure debt. The model uses deterministic rules based on research-backed assumptions, but real-world outcomes are influenced by many factors not captured here.
           </div>
           <div style={{ fontSize: '11px', color: '#888', lineHeight: '1.5', marginBottom: '8px' }}>
             <strong style={{ color: '#fff' }}>Key Assumptions:</strong>
             <ul style={{ margin: '4px 0 0 16px', padding: 0 }}>
               <li>Metrics are simplified representations</li>
-              <li>Country impacts are modeled, not predicted</li>
-              <li>Time horizons are compressed for simulation</li>
-              <li>System dynamics are deterministic</li>
+              <li>Jurisdiction pressure is modeled, not predicted</li>
+              <li>Incident clocks are compressed for simulation</li>
+              <li>War-room dynamics are deterministic</li>
             </ul>
           </div>
           <div style={{ fontSize: '10px', color: '#666', fontStyle: 'italic', marginTop: '8px', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '8px' }}>
-            This tool is for educational purposes only and should not be used as the sole basis for policy decisions. See the audit trail for full transparency of model assumptions.
+            This tool is for educational purposes only and should not be used as the sole basis for incident or disclosure decisions. See the audit trail for full transparency of model assumptions.
           </div>
         </div>
       )}

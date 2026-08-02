@@ -12,25 +12,24 @@ export interface Achievement {
 export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 'ethical_pioneer',
-    name: 'Ethical Pioneer',
-    description: 'Always chose the highest welfare option in every decision',
+    name: 'Facts-First Lead',
+    description: 'Consistently chose disclosure and containment paths over silence and spin',
     checkCondition: (state) => {
-      // Check if all decisions prioritized welfare
-      const welfareKeywords = ['welfare', 'standard', 'protect', 'recognize', 'broad']
-      const allWelfare = state.auditTrail.every(record =>
-        welfareKeywords.some(keyword =>
+      const discloseKeywords = ['disclos', 'notice', 'notify', 'contain', 'isolate', 'facts', 'honest', 'transparent']
+      const allDisclose = state.auditTrail.every(record =>
+        discloseKeywords.some(keyword =>
           record.chosenLabel.toLowerCase().includes(keyword) ||
           record.rationale.toLowerCase().includes(keyword)
         )
       )
-      return state.auditTrail.length >= 5 && allWelfare
+      return state.auditTrail.length >= 5 && allDisclose
     },
     icon: 'https://randomuser.me/api/portraits/women/68.jpg'
   },
   {
     id: 'pragmatic_governor',
-    name: 'Pragmatic Governor',
-    description: 'Balanced all concerns across measured and unmeasured metrics',
+    name: 'War-Room Balancer',
+    description: 'Held measured control while keeping disclosure debt in check',
     checkCondition: (state) => {
       const successIndex = state.metrics.measured.productionEfficiency * 0.3 +
                           Math.min(1, state.metrics.measured.welfareStandardAdoption / 3) * 0.3 +
@@ -44,10 +43,10 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'research_champion',
-    name: 'Research Champion',
-    description: 'Prioritized knowledge gaps and research throughout',
+    name: 'Scope Champion',
+    description: 'Prioritized forensics and facts-gap reduction throughout',
     checkCondition: (state) => {
-      const researchKeywords = ['research', 'knowledge', 'understanding', 'study', 'science']
+      const researchKeywords = ['forensic', 'scope', 'facts', 'research', 'investigate', 'confirm']
       const researchDecisions = state.auditTrail.filter(record =>
         researchKeywords.some(keyword =>
           record.rationale.toLowerCase().includes(keyword) ||
@@ -60,8 +59,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'debt_eliminator',
-    name: 'Debt Eliminator',
-    description: 'Minimized welfare debt throughout the scenario',
+    name: 'Debt Killer',
+    description: 'Kept disclosure debt low across the incident',
     checkCondition: (state) => {
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
       return debtIndex < 0.2 && state.metrics.unmeasured.welfareDebt < 0.15
@@ -70,8 +69,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'enforcement_master',
-    name: 'Enforcement Master',
-    description: 'Achieved minimal enforcement gaps',
+    name: 'Clock Keeper',
+    description: 'Held regulatory clock lag and narrative capture down',
     checkCondition: (state) => {
       return state.metrics.unmeasured.enforcementGap < 0.15 &&
              state.metrics.unmeasured.regulatoryCapture < 0.2
@@ -80,8 +79,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'efficiency_expert',
-    name: 'Efficiency Expert',
-    description: 'Maintained high production efficiency throughout',
+    name: 'Containment Ace',
+    description: 'Maintained high operational control with contained burn',
     checkCondition: (state) => {
       return state.metrics.measured.productionEfficiency > 0.75 &&
              state.metrics.measured.costPerUnit < 0.3
@@ -90,30 +89,30 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'global_leader',
-    name: 'Global Leader',
-    description: 'Achieved high welfare standards in 7+ countries',
+    name: 'Jurisdiction Lead',
+    description: 'Held strong disclosure posture across 7+ jurisdictions',
     checkCondition: (state) => {
-      const highWelfareCountries = Object.values(state.map.regionValues).filter(v => v > 0.7).length
-      return highWelfareCountries >= 7
+      const highPostureCountries = Object.values(state.map.regionValues).filter(v => v > 0.7).length
+      return highPostureCountries >= 7
     },
     icon: 'https://randomuser.me/api/portraits/women/55.jpg'
   },
   {
     id: 'balanced_approach',
-    name: 'Balanced Approach',
-    description: 'Achieved balance victory - all metrics in good ranges',
+    name: 'Every Second Counts',
+    description: 'Balance victory — control, clocks, and debt all in good ranges',
     checkCondition: (state) => {
       const successIndex = state.metrics.measured.productionEfficiency * 0.3 +
                           Math.min(1, state.metrics.measured.welfareStandardAdoption / 3) * 0.3 +
                           (1 - state.metrics.measured.costPerUnit) * 0.2 +
                           (1 - state.metrics.measured.welfareIncidentRate) * 0.2
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
-      const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
+      const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
       return successIndex > 0.65 && 
              debtIndex < 0.35 && 
              state.metrics.unmeasured.enforcementGap < 0.25 && 
-             avgWelfare > 0.55 &&
+             avgPosture > 0.55 &&
              state.metrics.unmeasured.regulatoryCapture < 0.3 &&
              state.metrics.unmeasured.sentienceKnowledgeGap < 0.3
     },
@@ -122,7 +121,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 'rapid_decision_maker',
     name: 'Rapid Decision Maker',
-    description: 'Completed the scenario in under 15 turns',
+    description: 'Closed the war game in under 15 turns',
     checkCondition: (state) => {
       return state.turn <= 15 && state.flags.isComplete
     },
@@ -130,8 +129,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 'thoughtful_planner',
-    name: 'Thoughtful Planner',
-    description: 'Maintained assumptions throughout with minimal degradation',
+    name: 'Assumption Anchor',
+    description: 'Maintained strong assumptions with minimal decay',
     checkCondition: (state) => {
       const strongAssumptions = state.memory.assumptionsBank.filter(a => a.strength > 0.7).length
       return state.memory.assumptionsBank.length >= 5 && strongAssumptions >= 3

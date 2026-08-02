@@ -206,7 +206,7 @@ export default function ResearchBibliography({ scenario, onClose }: ResearchBibl
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'inheritance-bibliography.bib'
+    a.download = 'immediacy-bibliography.bib'
     a.click()
     URL.revokeObjectURL(url)
     setShowExportMenu(false)
@@ -226,7 +226,7 @@ export default function ResearchBibliography({ scenario, onClose }: ResearchBibl
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'inheritance-bibliography-apa.txt'
+    a.download = 'immediacy-bibliography-apa.txt'
     a.click()
     URL.revokeObjectURL(url)
     setShowExportMenu(false)
@@ -245,7 +245,7 @@ export default function ResearchBibliography({ scenario, onClose }: ResearchBibl
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'inheritance-bibliography-mla.txt'
+    a.download = 'immediacy-bibliography-mla.txt'
     a.click()
     URL.revokeObjectURL(url)
     setShowExportMenu(false)
@@ -268,7 +268,7 @@ export default function ResearchBibliography({ scenario, onClose }: ResearchBibl
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'inheritance-bibliography.md'
+    a.download = 'immediacy-bibliography.md'
     a.click()
     URL.revokeObjectURL(url)
     setShowExportMenu(false)

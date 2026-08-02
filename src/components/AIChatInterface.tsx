@@ -218,7 +218,7 @@ export default function AIChatInterface({
         const content = `**Research Lab · ${card.framework}**\n\n**${card.title}**\n\n${card.description}\n\n*Consider:* ${card.keyQuestions[0]}`
         messages.splice(insertAt + idx, 0, {
           id: `${node.id}-research-${idx}`,
-          type: 'longtermism',
+          type: 'longtermism', // message channel id (legacy); content is Research Lab
           content,
           delay: insertAt > 0 ? messages[Math.max(0, insertAt - 1)].delay + 1000 : 0,
           metadata: { longtermismIndex: idx }

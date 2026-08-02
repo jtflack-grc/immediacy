@@ -3,60 +3,58 @@
 export function getMetricChangeReason(metricKey: string, change: number, choiceContext?: string): string {
   const isIncrease = change > 0
   
-  // Measured metrics
   if (metricKey === 'productionEfficiency') {
     return isIncrease
-      ? 'New production methods or technologies increased output per unit of input.'
-      : 'Welfare improvements or regulatory requirements reduced production efficiency.'
+      ? 'Containment or restore actions strengthened operational control of the incident.'
+      : 'Scope expanded, restore stalled, or isolation tradeoffs cut operational control.'
   }
   
   if (metricKey === 'welfareStandardAdoption') {
     return isIncrease
-      ? 'Higher welfare standards were mandated or adopted across more operations and regions.'
-      : 'Standards were weakened, delayed, or faced lower adoption rates.'
+      ? 'Disclosure process tightened — notices, trust-center updates, or counsel checkpoints aligned.'
+      : 'Disclosure posture slipped: delayed notices, inconsistent messaging, or ad-hoc war-room thrash.'
   }
   
   if (metricKey === 'costPerUnit') {
     return isIncrease
-      ? 'Welfare improvements, enforcement, or regulations increased production costs.'
-      : 'Efficiency gains, industry optimization, or relaxed standards reduced costs.'
+      ? 'IR, counsel, overtime, or vendor spend raised response burn.'
+      : 'Burn eased as the room stabilized or expensive paths were deferred.'
   }
   
   if (metricKey === 'welfareIncidentRate') {
     return isIncrease
-      ? 'Disease, injury, or mortality rates increased due to inadequate standards or enforcement.'
-      : 'Better welfare standards and practices reduced incidents of disease, injury, and mortality.'
+      ? 'Exposure severity rose — more sensitive data, encryption progress, or leak-site pressure.'
+      : 'Exposure severity eased as containment held or blast radius clarified downward.'
   }
   
-  // Unmeasured metrics (governance debt)
   if (metricKey === 'welfareDebt') {
     return isIncrease
-      ? 'Short-term compromises on animal welfare created hidden costs that will compound over time.'
-      : 'Decisions prioritized long-term welfare outcomes, reducing accumulated welfare compromises.'
+      ? 'Silence, drip truth, or spin added disclosure debt that will compound until forced.'
+      : 'Harder, earlier statements paid down disclosure debt.'
   }
   
   if (metricKey === 'enforcementGap') {
     return isIncrease
-      ? 'Enforcement capacity failed to keep pace with new standards, creating a gap between policy and practice.'
-      : 'Investment in enforcement infrastructure or simpler standards reduced the enforcement gap.'
+      ? 'Notice clocks slipped relative to awareness — regulatory clock lag widened.'
+      : 'Timed disclosure checkpoints or counsel discipline closed regulatory clock lag.'
   }
   
   if (metricKey === 'regulatoryCapture') {
     return isIncrease
-      ? 'Industry influence over policymaking increased, potentially prioritizing business concerns over welfare.'
-      : 'Independent oversight or stronger government regulation reduced industry capture of policymaking.'
+      ? 'Messaging drifted from operational truth — narrative capture increased.'
+      : 'Facts-first updates reduced narrative capture.'
   }
   
   if (metricKey === 'sentienceKnowledgeGap') {
     return isIncrease
-      ? 'Scientific understanding of animal sentience failed to advance or policy excluded certain species.'
-      : 'Research investment or broader recognition of sentience reduced uncertainty about animal needs.'
+      ? 'Blast radius, data types, or attacker capability stayed unclear — facts gap widened.'
+      : 'Forensics or scoping narrowed the facts gap.'
   }
   
   if (metricKey === 'systemIrreversibility') {
     return isIncrease
-      ? 'Economic dependencies and infrastructure investments made current systems harder to change or unwind.'
-      : 'Flexibility was preserved or alternative systems were developed, maintaining options for future change.'
+      ? 'Payments, denials, or attributions locked in — commitment lock rose.'
+      : 'You preserved optionality; commitment lock eased.'
   }
   
   return 'This metric was affected by your decision.'
