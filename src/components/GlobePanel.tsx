@@ -3,7 +3,14 @@ import Globe from 'react-globe.gl'
 import { ArcDatum, HubDatum, RingDatum } from '../engine/scenarioTypes'
 import { getActiveArcs, getActiveHubs, getActiveRings } from '../engine/selectors'
 import { State } from '../engine/scenarioTypes'
-import { getCountryData, getWelfareGrade, getGradeColor, generateBasicFastFacts } from '../utils/countryWelfareData'
+import { getCountryData, generateBasicFastFacts, IN_PLAY_ISO3 } from '../utils/countryWelfareData'
+import {
+  getJurisdictionStatus,
+  JurisdictionStatus,
+  notificationStatusColor,
+  notificationStatusLabel,
+  regulatoryPressureColor,
+} from '../utils/countryGradeScoring'
 import StarfieldBackground from './StarfieldBackground'
 import GlobeParticleEffects from './GlobeParticleEffects'
 import RegionTrajectoryModal from './RegionTrajectoryModal'
@@ -15,36 +22,19 @@ interface GlobePanelProps {
 }
 
 export default function GlobePanel({ regionValues, state, mapMode = 'disclosurePosture' }: GlobePanelProps) {
-  console.log('GlobePanel rendering with regionValues:', regionValues)
   const globeEl = useRef<any>()
   const [worldData, setWorldData] = useState<any>(null)
   const [arcsData, setArcsData] = useState<ArcDatum[]>([])
   const [hubsData, setHubsData] = useState<HubDatum[]>([])
   const [ringsData, setRingsData] = useState<RingDatum[]>([])
 
-  // Debug logging for regionValues
-  useEffect(() => {
-    const countryCount = Object.keys(regionValues).length
-    console.log('GlobePanel regionValues:', countryCount, 'countries')
-    console.log('Has EGY?', 'EGY' in regionValues, regionValues['EGY'])
-    console.log('Sample countries:', Object.keys(regionValues).slice(0, 5))
-    if (regionValues['EGY'] !== undefined) {
-      console.log('✅ EGY found in regionValues:', regionValues['EGY'])
-    } else {
-      console.warn('❌ EGY NOT found in regionValues')
-    }
-  }, [regionValues])
-  const [hoveredRegion, setHoveredRegion] = useState<{ 
+  const [hoveredRegion, setHoveredRegion] = useState<{
     name: string
     iso3: string
-    value: number
-    grade: string
-    gradeColor: string
     fastFacts: string[]
     detailedContext?: string
     sources?: string[]
-    baselineGrade?: string
-    baselineScore?: number
+    status: JurisdictionStatus
   } | null>(null)
   const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null)
   const [hoveredPolygonId, setHoveredPolygonId] = useState<string | null>(null)
@@ -159,15 +149,11 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
     )
   }
 
-  // Only countries explicitly present in regionValues are "in play".
-  // Everything else should render muted so the globe isn't visually noisy.
-  const hasRegionValue = (iso3: string) => {
-    const has = Object.prototype.hasOwnProperty.call(regionValues, iso3)
-    if (iso3 === 'EGY') {
-      console.log('EGY check:', has, 'value:', regionValues[iso3])
-    }
-    return has
-  }
+  // A jurisdiction only gets full hover detail / highlight treatment when it both
+  // carries a tracked map value AND is one of the jurisdictions actually "in play"
+  // for this incident (see IN_PLAY_ISO3). Everything else renders muted.
+  const hasRegionValue = (iso3: string) =>
+    Object.prototype.hasOwnProperty.call(regionValues, iso3) && IN_PLAY_ISO3.has(iso3)
 
   const getMutedCountryColor = (isHovered: boolean) =>
     isHovered ? 'rgba(120, 180, 255, 0.22)' : 'rgba(70, 130, 200, 0.12)'
@@ -275,11 +261,13 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
         ringColor={(d: any) => {
           const colors: Record<string, string> = {
             policy_shift: '#3b82f6',
-            welfare_incident: '#ef4444',
+            breach_notice: '#ef4444',
             regulatory_response: '#f59e0b',
             market_change: '#8b5cf6',
             research_breakthrough: '#10b981',
-            public_pressure: '#ec4899'
+            public_pressure: '#ec4899',
+            leak_site: '#dc2626',
+            customer_report: '#22d3ee'
           }
           return colors[d.eventType] || '#888'
         }}
@@ -447,32 +435,32 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
             const iso3 = polygon.id || polygon.properties?.ISO_A3 || polygon.properties?.iso_a3
             const name = polygon.properties?.name || polygon.properties?.NAME || 'Unknown'
             const inPlay = hasRegionValue(iso3)
-            const value = inPlay ? (regionValues[iso3] ?? 0) : 0
-            
-            // Set hovered polygon for visual highlighting
+
+            if (!inPlay) {
+              // Not one of the jurisdictions in play for this incident — no detail tooltip.
+              setHoveredPolygonId(null)
+              document.body.style.cursor = 'default'
+              return
+            }
+
+            const value = regionValues[iso3] ?? 0
+
             setHoveredPolygonId(iso3)
-            
-            // Get country data and calculate grade
+
             const countryData = getCountryData(iso3, name)
-            const baseScore = countryData?.baselineScore || 0.3
-            // Combine baseline with current value (weighted average)
-            const currentScore = Math.min(1, Math.max(0, baseScore + (value * 0.5)))
-            const grade = inPlay ? getWelfareGrade(currentScore) : '—'
-            const gradeColor = getGradeColor(grade)
+            const status = getJurisdictionStatus(iso3, value, state, name)
             const fastFacts = countryData?.fastFacts || generateBasicFastFacts(iso3, name)
-            
-            setHoveredRegion({ 
-              name: countryData?.name || name, 
-              iso3, 
-              value: currentScore,
-              grade,
-              gradeColor,
-              fastFacts,
-              detailedContext: countryData?.detailedContext,
-              sources: countryData?.sources,
-              baselineScore: countryData?.baselineScore,
-              baselineGrade: countryData?.baselineGrade
-            })
+
+            if (status) {
+              setHoveredRegion({
+                name: countryData?.name || name,
+                iso3,
+                fastFacts,
+                detailedContext: countryData?.detailedContext,
+                sources: countryData?.sources,
+                status,
+              })
+            }
             if (event) {
               setTooltipPosition({ x: event.clientX, y: event.clientY })
             }
@@ -489,8 +477,11 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
           if (polygon) {
             const iso3 = polygon.id || polygon.properties?.ISO_A3 || polygon.properties?.iso_a3
             const name = polygon.properties?.name || polygon.properties?.NAME || 'Unknown'
+            const inPlay = hasRegionValue(iso3)
+            if (!inPlay) return
+
             const value = regionValues[iso3] || 0
-            
+
             // Check if region has trajectory (for trajectory modal)
             const hasTrajectory = state?.auditTrail.some(record => 
               record.delta?.map?.regionValues?.[iso3] !== undefined
@@ -501,25 +492,20 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
             } else {
               // Show tooltip on click for touch devices
               const countryData = getCountryData(iso3, name)
-              const baseScore = countryData?.baselineScore || 0.3
-              const currentScore = Math.min(1, Math.max(0, baseScore + (value * 0.5)))
-              const inPlay = hasRegionValue(iso3)
-              const grade = inPlay ? getWelfareGrade(currentScore) : '—'
-              const gradeColor = getGradeColor(grade)
+              const status = getJurisdictionStatus(iso3, value, state, name)
               const fastFacts = countryData?.fastFacts || generateBasicFastFacts(iso3, name)
-              
-              setHoveredRegion({ 
-                name: countryData?.name || name, 
-                iso3, 
-                value: currentScore,
-                grade,
-                gradeColor,
-                fastFacts,
-                detailedContext: countryData?.detailedContext,
-                sources: countryData?.sources,
-                baselineScore: countryData?.baselineScore
-              })
-              
+
+              if (status) {
+                setHoveredRegion({
+                  name: countryData?.name || name,
+                  iso3,
+                  fastFacts,
+                  detailedContext: countryData?.detailedContext,
+                  sources: countryData?.sources,
+                  status,
+                })
+              }
+
               if (event) {
                 setTooltipPosition({ x: event.clientX, y: event.clientY })
               } else {
@@ -570,7 +556,7 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
         </div>
       </div>
 
-      {/* Enhanced Hover Tooltip with Fast Facts and Grade */}
+      {/* Enhanced Hover Tooltip: notification status, clock, confidence, regulatory pressure */}
       {hoveredRegion && tooltipPosition && (
         <div 
           style={{
@@ -578,11 +564,11 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
             left: `${Math.min(tooltipPosition.x + 15, window.innerWidth - 420)}px`,
             top: `${Math.min(tooltipPosition.y - 10, window.innerHeight - 550)}px`,
             backgroundColor: '#000000',
-            border: '2px solid ' + (hoveredRegion.gradeColor || 'rgba(255, 255, 255, 0.2)'),
+            border: '2px solid ' + notificationStatusColor(hoveredRegion.status.notificationStatus),
             borderRadius: '10px',
             padding: '18px',
             zIndex: 10000,
-            boxShadow: `0 8px 24px rgba(0, 0, 0, 0.8), 0 0 20px ${hoveredRegion.gradeColor || '#000'}40`,
+            boxShadow: `0 8px 24px rgba(0, 0, 0, 0.8), 0 0 20px ${notificationStatusColor(hoveredRegion.status.notificationStatus)}40`,
             pointerEvents: 'auto',
             minWidth: '380px',
             maxWidth: '420px',
@@ -599,25 +585,43 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
             setTooltipPosition(null)
           }}
         >
-          {/* Header with Country Name and Grade */}
+          {/* Header with Country Name and Notification Status */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
             <div style={{ fontSize: '20px', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
               {hoveredRegion.name}
             </div>
-            {hoveredRegion.grade && hoveredRegion.grade !== '—' && (
-              <div style={{
-                fontSize: '36px',
-                fontWeight: 800,
-                color: hoveredRegion.gradeColor,
-                textShadow: `0 0 12px ${hoveredRegion.gradeColor}80`,
-                lineHeight: '1'
-              }}>
-                {hoveredRegion.grade}
-              </div>
-            )}
+            <div style={{
+              fontSize: '11px',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: notificationStatusColor(hoveredRegion.status.notificationStatus),
+              border: `1px solid ${notificationStatusColor(hoveredRegion.status.notificationStatus)}60`,
+              backgroundColor: `${notificationStatusColor(hoveredRegion.status.notificationStatus)}15`,
+              padding: '4px 10px',
+              borderRadius: '10px',
+            }}>
+              {notificationStatusLabel(hoveredRegion.status.notificationStatus)}
+            </div>
           </div>
-          
-          {/* Jurisdiction posture metrics */}
+
+          {/* Clock hint */}
+          <div style={{
+            marginBottom: '12px',
+            padding: '10px 12px',
+            backgroundColor: '#111111',
+            borderRadius: '6px',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            fontSize: '12px',
+            color: '#ddd',
+          }}>
+            <span style={{ color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '11px', marginRight: '6px' }}>
+              Clock
+            </span>
+            {hoveredRegion.status.clockHint}
+          </div>
+
+          {/* Jurisdiction pressure metrics */}
           <div style={{ 
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -630,34 +634,20 @@ export default function GlobePanel({ regionValues, state, mapMode = 'disclosureP
           }}>
             <div>
               <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Posture Score
+                Confidence
               </div>
-              <div style={{ fontSize: '22px', fontWeight: 700, color: hoveredRegion.gradeColor || '#fff' }}>
-                {(hoveredRegion.value * 100).toFixed(0)}%
+              <div style={{ fontSize: '22px', fontWeight: 700, color: '#60a5fa' }}>
+                {(hoveredRegion.status.confidence * 100).toFixed(0)}%
               </div>
             </div>
-            {hoveredRegion.baselineScore !== undefined && (
-              <div>
-                <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  Baseline
-                </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                  <div style={{ fontSize: '22px', fontWeight: 700, color: '#aaa' }}>
-                    {(hoveredRegion.baselineScore * 100).toFixed(0)}%
-                  </div>
-                  {hoveredRegion.baselineGrade && (
-                    <div style={{ 
-                      fontSize: '16px', 
-                      fontWeight: 700, 
-                      color: getGradeColor(hoveredRegion.baselineGrade),
-                      opacity: 0.8
-                    }}>
-                      ({hoveredRegion.baselineGrade})
-                    </div>
-                  )}
-                </div>
+            <div>
+              <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Regulatory Pressure
               </div>
-            )}
+              <div style={{ fontSize: '22px', fontWeight: 700, color: regulatoryPressureColor(hoveredRegion.status.regulatoryPressure) }}>
+                {(hoveredRegion.status.regulatoryPressure * 100).toFixed(0)}%
+              </div>
+            </div>
           </div>
 
           {/* Jurisdiction facts */}

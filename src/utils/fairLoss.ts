@@ -1,4 +1,4 @@
-import { Metrics } from '../engine/scenarioTypes'
+import { Metrics, EvidenceFact } from '../engine/scenarioTypes'
 
 export interface FairRange {
   min: number
@@ -20,6 +20,10 @@ export interface FairLossEstimate {
   drivers: FairDriver[]
   headline: string
   urgency: 'elevated' | 'severe' | 'critical'
+  /** 0–1 — how much we trust this board estimate right now */
+  confidence: number
+  confidenceLabel: 'very low' | 'low' | 'moderate' | 'improving' | 'high'
+  provisional: boolean
 }
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n))
@@ -45,14 +49,28 @@ function rangeFromMode(mode: number, down: number, up: number): FairRange {
   }
 }
 
+function estimateConfidence(metrics: Metrics, evidence?: EvidenceFact[]): number {
+  const facts = clamp(metrics.unmeasured.factsConfidence, 0, 1)
+  const verified = (evidence || []).filter(e => e.kind === 'verified' || e.verificationStatus === 'corroborated').length
+  const prelim = (evidence || []).filter(e => e.kind === 'preliminary' || e.kind === 'assumption').length
+  const evidenceBoost = Math.min(0.35, verified * 0.12 + prelim * 0.03)
+  return clamp(facts * 0.65 + evidenceBoost + 0.1, 0.08, 0.92)
+}
+
+function confidenceLabel(c: number): FairLossEstimate['confidenceLabel'] {
+  if (c < 0.25) return 'very low'
+  if (c < 0.4) return 'low'
+  if (c < 0.55) return 'moderate'
+  if (c < 0.75) return 'improving'
+  return 'high'
+}
+
 /**
  * Lightweight FAIR-style loss estimate for Northline-scale SaaS.
- * Derived from existing war-room metrics (no separate state fields).
- *
- * Primary ≈ response / downtime / IR burn
- * Secondary ≈ fines, churn, litigation, reputation from disclosure failure
+ * Early estimates are deliberately wide / low-confidence (provisional board range).
+ * As factsConfidence and verified evidence rise, ranges tighten.
  */
-export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
+export function estimateFairLoss(metrics: Metrics, evidence?: EvidenceFact[]): FairLossEstimate {
   const m = metrics.measured
   const u = metrics.unmeasured
   const control = clamp(m.operationalControl, 0, 1)
@@ -62,8 +80,16 @@ export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
   const debt = clamp(u.disclosureDebt, 0, 1)
   const clock = clamp(u.regulatoryExposure, 0, 1)
   const narrative = clamp(1 - u.narrativeIntegrity, 0, 1)
-  const facts = clamp(1 - u.factsConfidence, 0, 1)
+  const factsGap = clamp(1 - u.factsConfidence, 0, 1)
   const lock = clamp(u.commitmentLock, 0, 1)
+
+  const confidence = estimateConfidence(metrics, evidence)
+  const provisional = confidence < 0.55
+  // Low confidence → wider bands; high confidence → tighter
+  const spread = 1.15 + (1 - confidence) * 1.35
+  const down = clamp(0.55 / spread, 0.22, 0.55)
+  const upPrimary = clamp(1.35 * spread, 1.4, 3.2)
+  const upSecondary = clamp(1.75 * spread, 1.6, 4.0)
 
   const primaryDrivers: FairDriver[] = [
     { id: 'burn', label: 'Response burn (IR, counsel, overtime)', dollars: burn * 8_000_000, kind: 'primary' },
@@ -76,7 +102,7 @@ export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
     { id: 'clock', label: 'Regulatory clock lag → fines / orders', dollars: clock * 14_000_000, kind: 'secondary' },
     { id: 'narrative', label: 'Narrative capture → trust destruction', dollars: narrative * 16_000_000, kind: 'secondary' },
     { id: 'lock', label: 'Commitment lock (pay / deny / overclaim)', dollars: lock * 12_000_000, kind: 'secondary' },
-    { id: 'facts', label: 'Facts gap → re-notice & class actions', dollars: facts * 9_000_000, kind: 'secondary' },
+    { id: 'facts', label: 'Facts gap → re-notice & class actions', dollars: factsGap * 9_000_000, kind: 'secondary' },
     {
       id: 'interaction',
       label: 'Exposure × weak disclosure (compounding)',
@@ -85,7 +111,6 @@ export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
     },
   ]
 
-  // Strong posture slightly dampens secondary loss
   const postureRelief = posture * 6_000_000
 
   const primaryMode =
@@ -97,8 +122,8 @@ export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
     1_200_000 + secondaryDrivers.reduce((s, d) => s + d.dollars, 0) - postureRelief
   )
 
-  const primary = rangeFromMode(primaryMode, 0.48, 1.75)
-  const secondary = rangeFromMode(secondaryMode, 0.38, 2.35)
+  const primary = rangeFromMode(primaryMode, down, upPrimary)
+  const secondary = rangeFromMode(secondaryMode, down * 0.85, upSecondary)
   const total: FairRange = {
     min: primary.min + secondary.min,
     mode: primary.mode + secondary.mode,
@@ -114,13 +139,25 @@ export function estimateFairLoss(metrics: Metrics): FairLossEstimate {
   if (total.mode >= 45_000_000 || secondary.mode > primary.mode * 1.8) urgency = 'critical'
   else if (total.mode >= 22_000_000 || debt > 0.45 || clock > 0.5) urgency = 'severe'
 
+  const label = confidenceLabel(confidence)
   const secondaryShare = total.mode > 0 ? secondary.mode / total.mode : 0
-  const headline =
-    secondaryShare > 0.58
+  const headline = provisional
+    ? `Provisional board range (${label} confidence) — widen or tighten as facts verify`
+    : secondaryShare > 0.58
       ? 'Secondary loss dominates — disclosure failure is the expensive problem'
       : secondaryShare > 0.42
         ? 'Primary and secondary losses are both material'
         : 'Primary response costs lead — disclosure debt still accumulating'
 
-  return { primary, secondary, total, drivers, headline, urgency }
+  return {
+    primary,
+    secondary,
+    total,
+    drivers,
+    headline,
+    urgency,
+    confidence,
+    confidenceLabel: label,
+    provisional,
+  }
 }

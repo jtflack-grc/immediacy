@@ -180,6 +180,15 @@ export function createInitialState(
     timeMode: 'simulated',
     evidence: [
       {
+        id: 'fact_seed_soc_alert',
+        text: '02:13 UTC — SOC ALERT: identity monitoring detected impossible travel across three privileged accounts; customer telemetry is beginning to fail.',
+        kind: 'preliminary',
+        source: 'SOC',
+        timestamp: 0,
+        confidence: 0.4,
+        verificationStatus: 'unverified',
+      },
+      {
         id: 'fact_seed_detection',
         text: 'SOC flagged anomalous exfil-pattern traffic at T+0 — awareness time not yet certified.',
         kind: 'preliminary',

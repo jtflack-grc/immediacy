@@ -4,7 +4,7 @@ import GlobeErrorBoundary from './components/GlobeErrorBoundary'
 import JurisdictionFallbackMap from './components/JurisdictionFallbackMap'
 import { isWebGLAvailable } from './utils/webgl'
 import DecisionPanel from './components/DecisionPanel'
-import TurnUCollection from './components/TurnUCollection'
+import SocAlertBanner from './components/SocAlertBanner'
 import HeaderBar from './components/HeaderBar'
 import MetricsPanel from './components/MetricsPanel'
 import PostMortemModal from './components/PostMortemModal'
@@ -304,8 +304,10 @@ function App() {
     }
 
     // Advance incident clock and deliver dispatches
+    const dispatchLogLengthBefore = newState.dispatchLog.length
     const timeCost = getTimeCost(choice)
     newState = advanceIncidentTime(newState, timeCost)
+    const dispatchDeliveredThisTurn = newState.dispatchLog.length > dispatchLogLengthBefore
 
     // Now that the clock has advanced, stamp the just-created audit record with the
     // incident time it actually landed at (rather than the pre-advance time).
@@ -357,7 +359,7 @@ function App() {
     
     if (choice.delta.metrics?.measured) {
       Object.entries(choice.delta.metrics.measured).forEach(([metric, change]) => {
-        if (Math.abs(change) > 0.01) { // Only show significant changes
+        if (Math.abs(change) > 0.06) { // Only show larger swings — keep this panel subtle
           measuredChanges.push({
             metric,
             change,
@@ -370,7 +372,7 @@ function App() {
     
     if (choice.delta.metrics?.unmeasured) {
       Object.entries(choice.delta.metrics.unmeasured).forEach(([metric, change]) => {
-        if (Math.abs(change) > 0.01) {
+        if (Math.abs(change) > 0.06) { // Only show larger swings — keep this panel subtle
           unmeasuredChanges.push({
             metric,
             change,
@@ -390,12 +392,24 @@ function App() {
       })
     }
     
-    // Show impact modal (re-enabled)
+    // Only interrupt with the full impact modal for genuinely notable turns — everything
+    // else relies on the subtler ChoiceFeedbackPanel (or nothing at all).
     const newPhaseId = getPhaseByNodeId(scenario, finalState.currentNodeId) || phaseId
     const phaseChanged = phaseId !== newPhaseId
-    
-    // Show impact modal only if phase didn't change
-    if (!phaseChanged) {
+
+    const metricDeltaSum =
+      Object.values(choice.delta.metrics?.measured || {}).reduce((sum, v) => sum + Math.abs(v as number), 0) +
+      Object.values(choice.delta.metrics?.unmeasured || {}).reduce((sum, v) => sum + Math.abs(v as number), 0)
+
+    const SIGNIFICANT_FLAGS = ['adversaryDisclosedFirst', 'paidRansom', 'scopeRevisedUp']
+    const significantFlagNewlySet = SIGNIFICANT_FLAGS.some(
+      flag => finalStateWithAchievements.flags[flag] && !previousStateSnapshot.flags[flag]
+    )
+
+    const isNotableTurn =
+      phaseChanged || metricDeltaSum > 0.35 || dispatchDeliveredThisTurn || significantFlagNewlySet
+
+    if (isNotableTurn) {
       setLastChoiceData({
         choiceLabel: choice.label,
         nodeTitle: currentNode.title,
@@ -405,17 +419,17 @@ function App() {
       })
       setShowImpactModal(true)
     } else {
-      // Phase changed - close impact modal
       setShowImpactModal(false)
       setLastChoiceData(null)
     }
   }, [scenario, state])
 
-  const handleNameSubmit = useCallback((name: string) => {
-    if (state) {
-      dispatch({ type: 'SET_PLAYER_NAME', payload: { playerName: name } })
-    }
-  }, [state])
+  // Cold open: a single acknowledgement on the SOC alert sets the incident lead name
+  // (defaulting to "Incident Lead") and drops straight into the first decision node —
+  // no TEMPO name-quiz intro.
+  const handleSocAcknowledge = useCallback((name?: string) => {
+    dispatch({ type: 'SET_PLAYER_NAME', payload: { playerName: name?.trim() || 'Incident Lead' } })
+  }, [])
 
   const handleReset = useCallback(() => {
     if (!scenario) return
@@ -465,8 +479,9 @@ function App() {
     
     // Phase changed - show subtle notification
     if (previousPhaseId !== currentPhaseId && state && state.turn > 0) {
-      // Force close all modals immediately to prevent black screen
-      setShowImpactModal(false)
+      // Phase Summary modal is disabled/unused — keep it closed. The Decision Impact
+      // Modal is intentionally left alone here: phaseChanged is one of the conditions
+      // that triggers it in handleChoice, so closing it here would immediately undo that.
       setShowPhaseSummary(false)
       setCompletedPhaseId(previousPhaseId)
       
@@ -637,12 +652,7 @@ function App() {
             display: 'flex',
             flexDirection: 'column'
           }}>
-          {state && !state.playerName ? (
-            <TurnUCollection 
-              onNameSubmit={handleNameSubmit}
-              skipAnimation={true}
-            />
-          ) : (
+          {state && (
             <DecisionPanel 
               node={currentNode}
               state={state}
@@ -887,6 +897,12 @@ function App() {
             localStorage.setItem('hasSeenTitleCard', 'true')
           }}
         />
+      )}
+
+      {/* SOC Alert - cold open lands here instead of a TEMPO name quiz. Single
+          acknowledgement sets the incident lead name and drops straight into N01. */}
+      {!showTitleCard && state && !state.playerName && (
+        <SocAlertBanner onAcknowledge={handleSocAcknowledge} />
       )}
 
       {/* Welcome Modal - opt-in via Help button only; chains into the Tutorial on close */}

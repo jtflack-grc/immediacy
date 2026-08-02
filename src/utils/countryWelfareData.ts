@@ -1,16 +1,34 @@
 /**
  * Jurisdiction disclosure / cyber-pressure data for globe hovers.
- * Grades reflect baseline disclosure & breach-notice posture (not animal welfare).
+ * Scores reflect baseline disclosure & breach-notice posture (not animal welfare).
  */
 
-export interface CountryWelfareData {
+export interface CountryJurisdictionData {
   name: string
   iso3: string
   fastFacts: string[]
-  baselineGrade: 'A' | 'B' | 'C' | 'D' | 'F'
   baselineScore: number
+  /** Optional baseline regulatory-pressure estimate (0-1, higher = more pressure). */
+  baselinePressure?: number
   sources?: string[]
   detailedContext?: string
+}
+
+/** @deprecated use CountryJurisdictionData */
+export type CountryWelfareData = CountryJurisdictionData
+
+/**
+ * The jurisdictions actually "in play" for the default Northline incident scenario.
+ * The globe / fallback map / post-mortem should only surface hover detail, status,
+ * and pressure for these — everything else in `countryWelfareData` is background
+ * reference data for jurisdictions that could matter in other scenarios.
+ */
+export const IN_PLAY_ISO3: ReadonlySet<string> = new Set([
+  'USA', 'CAN', 'GBR', 'IRL', 'DEU', 'FRA', 'NLD', 'SGP', 'AUS', 'BRA', 'IND',
+])
+
+export function isInPlayJurisdiction(iso3: string): boolean {
+  return IN_PLAY_ISO3.has(iso3)
 }
 
 function entry(
@@ -20,20 +38,20 @@ function entry(
   baselineScore: number,
   detailedContext: string,
   sources: string[] = []
-): CountryWelfareData {
+): CountryJurisdictionData {
   return {
     name,
     iso3,
     fastFacts,
     baselineScore,
-    baselineGrade: getWelfareGrade(baselineScore) as CountryWelfareData['baselineGrade'],
+    baselinePressure: Math.max(0, Math.min(1, 1 - baselineScore)),
     detailedContext,
     sources,
   }
 }
 
 /** Detailed data for tracked jurisdictions */
-export const countryWelfareData: Record<string, CountryWelfareData> = {
+export const countryWelfareData: Record<string, CountryJurisdictionData> = {
   USA: entry(
     'United States',
     'USA',
@@ -502,32 +520,7 @@ export function generateBasicFastFacts(iso3: string, _countryName: string): stri
   ]
 }
 
-/** Letter grade from posture / pressure score (0-1) */
-export function getWelfareGrade(score: number): 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F' {
-  if (score >= 0.9) return 'A+'
-  if (score >= 0.85) return 'A'
-  if (score >= 0.8) return 'A-'
-  if (score >= 0.75) return 'B+'
-  if (score >= 0.7) return 'B'
-  if (score >= 0.65) return 'B-'
-  if (score >= 0.6) return 'C+'
-  if (score >= 0.55) return 'C'
-  if (score >= 0.5) return 'C-'
-  if (score >= 0.45) return 'D+'
-  if (score >= 0.4) return 'D'
-  if (score >= 0.35) return 'D-'
-  return 'F'
-}
-
-export function getGradeColor(grade: string): string {
-  if (grade.startsWith('A')) return '#4ade80'
-  if (grade.startsWith('B')) return '#84cc16'
-  if (grade.startsWith('C')) return '#eab308'
-  if (grade.startsWith('D')) return '#f97316'
-  return '#ef4444'
-}
-
-export function getCountryData(iso3: string, countryName?: string): CountryWelfareData | null {
+export function getCountryData(iso3: string, countryName?: string): CountryJurisdictionData | null {
   if (countryWelfareData[iso3]) {
     return countryWelfareData[iso3]
   }
@@ -546,8 +539,8 @@ export function getCountryData(iso3: string, countryName?: string): CountryWelfa
       name: countryName,
       iso3,
       fastFacts: generateBasicFastFacts(iso3, countryName),
-      baselineGrade: getWelfareGrade(baselineScore) as CountryWelfareData['baselineGrade'],
       baselineScore,
+      baselinePressure: Math.max(0, Math.min(1, 1 - baselineScore)),
     }
   }
 

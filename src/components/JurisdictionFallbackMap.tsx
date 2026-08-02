@@ -1,5 +1,12 @@
 import { State, MapMode } from '../engine/scenarioTypes'
-import { getCountryData, getWelfareGrade, getGradeColor } from '../utils/countryWelfareData'
+import { IN_PLAY_ISO3 } from '../utils/countryWelfareData'
+import {
+  getJurisdictionStatus,
+  JurisdictionStatus,
+  notificationStatusColor,
+  notificationStatusLabel,
+  regulatoryPressureColor,
+} from '../utils/countryGradeScoring'
 import { formatIncidentClock } from '../engine/incidentClock'
 
 interface JurisdictionFallbackMapProps {
@@ -18,30 +25,12 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
     mapMode === 'disclosurePosture' ? 'Disclosure Posture' :
     mapMode === 'disclosureDebt' ? 'Disclosure Debt' : 'Regulatory Pressure'
 
-  const worseIsHigh = mapMode === 'disclosureDebt' || mapMode === 'regulatoryExposure'
-
-  const colorForValue = (value: number): string => {
-    const v = worseIsHigh ? 1 - value : value
-    if (v < 0.33) return '#ef4444'
-    if (v < 0.66) return '#fbbf24'
-    return '#4ade80'
-  }
-
+  // Only jurisdictions actually "in play" for this incident get a status card.
   const jurisdictions = Object.entries(regionValues)
-    .map(([iso3, value]) => {
-      const countryData = getCountryData(iso3, iso3)
-      const baseScore = countryData?.baselineScore ?? 0.3
-      const currentScore = Math.min(1, Math.max(0, baseScore + value * 0.5))
-      const grade = getWelfareGrade(currentScore)
-      return {
-        iso3,
-        name: countryData?.name || iso3,
-        value,
-        grade,
-        gradeColor: getGradeColor(grade),
-      }
-    })
-    .sort((a, b) => (worseIsHigh ? b.value - a.value : b.value - a.value))
+    .filter(([iso3]) => IN_PLAY_ISO3.has(iso3))
+    .map(([iso3, value]) => getJurisdictionStatus(iso3, value, state))
+    .filter((s): s is JurisdictionStatus => s !== null)
+    .sort((a, b) => b.regulatoryPressure - a.regulatoryPressure)
 
   const deadlines = state?.deadlines || []
   const incidentTime = state?.incidentTime || 0
@@ -65,19 +54,11 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
 
       {/* Legend */}
       <div style={{ display: 'flex', gap: '14px', fontSize: '11px', marginBottom: '18px', flexWrap: 'wrap' }}>
-        {worseIsHigh ? (
-          <>
-            <span style={{ color: '#4ade80' }}>🟢 Low (0-33%)</span>
-            <span style={{ color: '#fbbf24' }}>🟡 Medium (34-66%)</span>
-            <span style={{ color: '#ef4444' }}>🔴 High (67-100%)</span>
-          </>
-        ) : (
-          <>
-            <span style={{ color: '#ef4444' }}>🔴 Low (0-33%)</span>
-            <span style={{ color: '#fbbf24' }}>🟡 Medium (34-66%)</span>
-            <span style={{ color: '#4ade80' }}>🟢 High (67-100%)</span>
-          </>
-        )}
+        <span style={{ color: notificationStatusColor('not_started') }}>⚪ Not Started</span>
+        <span style={{ color: notificationStatusColor('assessing') }}>🔵 Assessing</span>
+        <span style={{ color: notificationStatusColor('notice_due') }}>🟡 Notice Due</span>
+        <span style={{ color: notificationStatusColor('filed') }}>🟢 Filed</span>
+        <span style={{ color: notificationStatusColor('overdue') }}>🔴 Overdue</span>
       </div>
 
       {/* Notice clocks */}
@@ -115,7 +96,7 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           gap: '10px',
         }}
       >
@@ -126,17 +107,38 @@ export default function JurisdictionFallbackMap({ regionValues, state, mapMode =
               padding: '10px',
               borderRadius: '8px',
               backgroundColor: '#111111',
-              border: `1px solid ${colorForValue(j.value)}55`,
-              borderLeft: `4px solid ${colorForValue(j.value)}`,
+              border: `1px solid ${notificationStatusColor(j.notificationStatus)}55`,
+              borderLeft: `4px solid ${notificationStatusColor(j.notificationStatus)}`,
             }}
           >
-            <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '2px' }}>{j.name}</div>
-            <div style={{ fontSize: '10px', color: '#888', marginBottom: '6px' }}>{j.iso3}</div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span style={{ fontSize: '16px', fontWeight: 700, color: colorForValue(j.value) }}>
-                {(j.value * 100).toFixed(0)}%
-              </span>
-              <span style={{ fontSize: '13px', fontWeight: 700, color: j.gradeColor }}>{j.grade}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600 }}>{j.name}</div>
+              <div style={{ fontSize: '10px', color: '#888' }}>{j.iso3}</div>
+            </div>
+            <div style={{
+              fontSize: '10px',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: notificationStatusColor(j.notificationStatus),
+              marginBottom: '6px',
+            }}>
+              {notificationStatusLabel(j.notificationStatus)}
+            </div>
+            <div style={{ fontSize: '10px', color: '#888', marginBottom: '8px', lineHeight: '1.4' }}>
+              {j.clockHint}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px' }}>
+              <div>
+                <div style={{ fontSize: '9px', color: '#666', textTransform: 'uppercase' }}>Confidence</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: '#60a5fa' }}>{(j.confidence * 100).toFixed(0)}%</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '9px', color: '#666', textTransform: 'uppercase' }}>Pressure</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: regulatoryPressureColor(j.regulatoryPressure) }}>
+                  {(j.regulatoryPressure * 100).toFixed(0)}%
+                </div>
+              </div>
             </div>
           </div>
         ))}

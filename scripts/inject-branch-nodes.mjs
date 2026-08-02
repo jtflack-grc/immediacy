@@ -24,6 +24,36 @@ function choice(label, next, metrics = {}, timeCost = 30) {
 
 const branchNodes = [
   {
+    phaseId: 'P2_CONTAINMENT',
+    after: 'N03_ISOLATE_OR_OBSERVE',
+    node: {
+      id: 'N03B_CONTAINED_THEN_RANSOM',
+      title: 'Contained — Then the Note Arrives',
+      prompt: 'Aggressive containment at first signal already isolated the affected segments. While ops confirms clean status, a leak-site style note appears: "ShinyFox" claims your data and gives 48 hours to respond.',
+      context: 'Because you moved to hard containment the moment the first signal landed, the isolate-or-observe dilemma never happened — dwell time was cut short before the attacker could spread further. Teaching note: early aggressive containment forecloses some options (dwell-time intelligence) while foreclosing others (wider encryption).',
+      vignette: 'Teaching beat: containment speed trades TTP intelligence for blast-radius control. Fast isolation limits both the attacker and your own visibility.',
+      choices: [
+        choice('Acknowledge via counsel/IR channel; demand proof pack; no payment talk yet', 'N05_COUNSEL_ARRIVES', {
+          measured: { disclosurePosture: 0.18, operationalControl: 0.06 },
+          unmeasured: { factsConfidence: 0.08, disclosureDebt: -0.05 },
+        }, 35),
+        choice('Ignore the note; focus only on technical recovery', 'N05_COUNSEL_ARRIVES', {
+          unmeasured: { disclosureDebt: 0.08, regulatoryExposure: 0.05 },
+        }, 25),
+        choice('Open payment negotiation immediately to buy time', 'N05_COUNSEL_ARRIVES', {
+          measured: { financialBurn: 0.1 },
+          unmeasured: { commitmentLock: 0.1, disclosureDebt: 0.04 },
+        }, 40),
+      ],
+      caseStudies: [{
+        title: 'Teaching note — early containment tradeoffs',
+        description: 'Fast, aggressive containment shortens attacker dwell time but also shortens your own forensic visibility into what they touched.',
+        teachingNote: 'Teaching simplification: this node compresses the isolate-or-observe decision because it was effectively already made at first signal.',
+        sourceType: 'industry',
+      }],
+    },
+  },
+  {
     phaseId: 'P3_DISCLOSURE',
     after: 'N05B_CUSTOMER_HINT',
     node: {
@@ -133,9 +163,43 @@ const branchNodes = [
   },
 ]
 
-// Wire a few choices on N03 to set divergent paths via nextWhen flags (engine also uses flags)
+// Wire a few choices on N01/N02/N03/etc. to set divergent paths via flags (engine also uses flags)
 for (const phase of scenario.phases) {
   for (const node of phase.nodes) {
+    if (node.id === 'N01_FIRST_SIGNAL') {
+      for (const c of node.choices) {
+        const l = c.label.toLowerCase()
+        // Declaring Sev-1 and freezing changes at the very first signal is early hard
+        // containment — later this skips the isolate-or-observe dilemma entirely.
+        if (l.includes('declare sev-1') || l.includes('freeze high-risk changes')) {
+          c.delta = c.delta || {}
+          c.delta.setFlags = { ...(c.delta.setFlags || {}), earlyHardContain: true }
+        }
+        // Quiet watching / treating it as noise at first signal is the delayed-escalation
+        // path — it can let the adversary set the disclosure clock later (N06B).
+        if (l.includes('quiet watch') || l.includes('page only ir lead') || l.includes('noisy false positive') || l.includes('keep an eye on it')) {
+          c.delta = c.delta || {}
+          c.delta.setFlags = { ...(c.delta.setFlags || {}), delayedEscalation: true }
+        }
+      }
+    }
+    if (node.id === 'N02_SCOPE_TRIAGE') {
+      for (const c of node.choices) {
+        const l = c.label.toLowerCase()
+        // Broad, transparent scope call — facts-first, so later comms can skip the
+        // soft-status drafting detour and go straight to briefing employees.
+        if (l.includes('assume worst credible case')) {
+          c.delta = c.delta || {}
+          c.delta.setFlags = { ...(c.delta.setFlags || {}), boundedEarlyDisclosure: true, factsFirstComms: true }
+        }
+        // Under-scoped / premature-certainty call — later forces the harder
+        // insurer/coverage-risk conversation instead of the standard forensics path.
+        if (l.includes('limit scope to the finance share')) {
+          c.delta = c.delta || {}
+          c.delta.setFlags = { ...(c.delta.setFlags || {}), underScoped: true, prematureCertainty: true }
+        }
+      }
+    }
     if (node.id === 'N03_ISOLATE_OR_OBSERVE') {
       for (const c of node.choices) {
         const l = c.label.toLowerCase()
@@ -191,6 +255,9 @@ for (const phase of scenario.phases) {
 }
 
 for (const b of branchNodes) {
+  const alreadyInjected = scenario.phases.some(p => p.nodes.some(n => n.id === b.node.id))
+  if (alreadyInjected) continue
+
   const phase = findPhase(b.phaseId) || scenario.phases.find(p => p.nodes.some(n => n.id === b.after))
   if (!phase) {
     // find any phase and append

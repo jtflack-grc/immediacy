@@ -76,7 +76,7 @@ function RangeRow({
 }
 
 export default function FairLossPanel({ state }: FairLossPanelProps) {
-  const estimate = useMemo(() => estimateFairLoss(state.metrics), [
+  const estimate = useMemo(() => estimateFairLoss(state.metrics, state.evidence), [
     state.metrics.measured.operationalControl,
     state.metrics.measured.financialBurn,
     state.metrics.measured.serviceDisruption,
@@ -86,6 +86,7 @@ export default function FairLossPanel({ state }: FairLossPanelProps) {
     state.metrics.unmeasured.narrativeIntegrity,
     state.metrics.unmeasured.factsConfidence,
     state.metrics.unmeasured.commitmentLock,
+    state.evidence,
     state.turn,
   ])
 
@@ -116,30 +117,43 @@ export default function FairLossPanel({ state }: FairLossPanelProps) {
             letterSpacing: '0.08em',
             marginBottom: '4px',
           }}>
-            FAIR Loss Exposure
+            {estimate.provisional ? 'Board exposure range (provisional)' : 'FAIR loss exposure'}
           </div>
           <div style={{ fontSize: '12px', color: '#888', lineHeight: 1.4 }}>
-            Northline-scale ranges · primary response vs secondary disclosure loss
+            {estimate.provisional
+              ? 'Early estimate before verified scope — not a point forecast'
+              : 'Northline-scale ranges · primary response vs secondary disclosure loss'}
           </div>
         </div>
-        <div style={{
-          fontSize: '10px',
-          fontWeight: 700,
-          color: accent,
-          textTransform: 'uppercase',
-          letterSpacing: '0.06em',
-          padding: '4px 8px',
-          borderRadius: '4px',
-          border: `1px solid ${accent}66`,
-          backgroundColor: `${accent}18`,
-          whiteSpace: 'nowrap',
-        }}>
-          {estimate.urgency}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+          <div style={{
+            fontSize: '10px',
+            fontWeight: 700,
+            color: accent,
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            border: `1px solid ${accent}66`,
+            backgroundColor: `${accent}18`,
+            whiteSpace: 'nowrap',
+          }}>
+            {estimate.urgency}
+          </div>
+          <div style={{
+            fontSize: '10px',
+            fontWeight: 600,
+            color: estimate.provisional ? '#fbbf24' : '#86efac',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
+          }}>
+            Confidence: {estimate.confidenceLabel} ({Math.round(estimate.confidence * 100)}%)
+          </div>
         </div>
       </div>
 
       <RangeRow
-        label="Total loss (mode)"
+        label={estimate.provisional ? 'Working mode (wide band)' : 'Total loss (mode)'}
         min={estimate.total.min}
         mode={estimate.total.mode}
         max={estimate.total.max}
@@ -236,7 +250,7 @@ export default function FairLossPanel({ state }: FairLossPanelProps) {
         color: '#666',
         lineHeight: 1.4,
       }}>
-        Educational FAIR-style ranges from war-room metrics — not actuarial pricing.
+        Educational FAIR-style ranges — provisional until facts verify. Not actuarial pricing.
       </div>
     </div>
   )

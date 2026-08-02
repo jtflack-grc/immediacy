@@ -8,7 +8,13 @@ import LeaderboardModal from './LeaderboardModal'
 import { submitToLeaderboard, calculateScore } from '../utils/socialFeatures'
 import { generateShareableURL } from '../utils/exportUtils'
 import IndexExplainerModal from './IndexExplainerModal'
-import { calculateCountryGrades, calculateAverageCountryScore } from '../utils/countryGradeScoring'
+import {
+  calculateJurisdictionStatuses,
+  calculateAverageCountryScore,
+  notificationStatusColor,
+  notificationStatusLabel,
+  regulatoryPressureColor,
+} from '../utils/countryGradeScoring'
 import { checkVictoryConditions, getVictoryCondition } from '../utils/victoryConditions'
 import { getLossCondition } from '../utils/lossConditions'
 import AchievementBadge from './AchievementBadge'
@@ -64,7 +70,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
   const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
   const degradedAssumptions = getDegradedAssumptions(state)
   const totalScore = calculateScore(state)
-  const countryGrades = calculateCountryGrades(state)
+  const jurisdictionStatuses = calculateJurisdictionStatuses(state)
   const averageCountryScore = calculateAverageCountryScore(state)
   const victoryType = state.victoryType || checkVictoryConditions(state)
   const victory = victoryType ? getVictoryCondition(victoryType) : null
@@ -152,75 +158,8 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           </div>
         </div>
 
-        {/* Score and Leaderboard */}
-        <div style={{ marginBottom: '32px', padding: '20px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <div>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>Total Score</div>
-              <div style={{ fontSize: '32px', fontWeight: 600, color: '#4ade80' }}>
-                {(totalScore * 100).toFixed(1)}
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {showSubmitForm && (
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={playerName}
-                    onChange={(e) => setPlayerName(e.target.value)}
-                    style={{
-                      padding: '8px 12px',
-                      backgroundColor: '#000000',
-                      color: '#fff',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '4px',
-                      fontSize: '12px',
-                      width: '150px'
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        handleSubmitToLeaderboard()
-                      }
-                    }}
-                  />
-                  <button
-                    onClick={handleSubmitToLeaderboard}
-                    style={{
-                      padding: '8px 16px',
-                      fontSize: '12px',
-                      backgroundColor: '#1a1a1a',
-                      color: '#fff',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontWeight: 600
-                    }}
-                  >
-                    Submit Score
-                  </button>
-                </div>
-              )}
-              <button
-                onClick={() => setShowLeaderboard(true)}
-                style={{
-                  padding: '8px 16px',
-                  fontSize: '12px',
-                  backgroundColor: '#1a1a1a',
-                  color: '#fff',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontWeight: 600
-                }}
-              >
-                🏆 View Leaderboard
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Crisis Postmortem — multi-dimensional debrief, not a "correct answer" score */}
+        {/* Crisis Postmortem — primary debrief, not a "correct answer" score. Kept ahead of the
+            score/leaderboard block intentionally: this is a training debrief, not a victory screen. */}
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
             Crisis Postmortem
@@ -368,11 +307,79 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           </div>
         </div>
 
-        {/* Country Grades Summary */}
-        {countryGrades.length > 0 && (
+        {/* Score and Leaderboard */}
+        <div style={{ marginBottom: '32px', padding: '20px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <div>
+              <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>Total Score</div>
+              <div style={{ fontSize: '32px', fontWeight: 600, color: '#4ade80' }}>
+                {(totalScore * 100).toFixed(1)}
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {showSubmitForm && (
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    value={playerName}
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    style={{
+                      padding: '8px 12px',
+                      backgroundColor: '#000000',
+                      color: '#fff',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      width: '150px'
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSubmitToLeaderboard()
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={handleSubmitToLeaderboard}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '12px',
+                      backgroundColor: '#1a1a1a',
+                      color: '#fff',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: 600
+                    }}
+                  >
+                    Submit Score
+                  </button>
+                </div>
+              )}
+              <button
+                onClick={() => setShowLeaderboard(true)}
+                style={{
+                  padding: '8px 16px',
+                  fontSize: '12px',
+                  backgroundColor: '#1a1a1a',
+                  color: '#fff',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: 600
+                }}
+              >
+                🏆 View Leaderboard
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Jurisdiction Status Table */}
+        {jurisdictionStatuses.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
-              Global Impact: Jurisdiction Posture Grades
+              Global Impact: Jurisdictions In Play
             </h3>
             <div style={{ 
               padding: '16px', 
@@ -381,46 +388,58 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
               marginBottom: '12px',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Average Country Score</div>
+              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Average Jurisdiction Posture</div>
               <div style={{ fontSize: '28px', fontWeight: 600, color: '#4ade80' }}>
                 {(averageCountryScore * 100).toFixed(1)}%
               </div>
               <div style={{ fontSize: '11px', color: '#666', marginTop: '4px' }}>
-                Based on disclosure / notice posture across tracked jurisdictions
+                Based on disclosure / notice posture across jurisdictions in play for this incident
               </div>
             </div>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', 
-              gap: '10px',
-              maxHeight: '300px',
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              maxHeight: '360px',
               overflowY: 'auto'
             }}>
-              {countryGrades.map(country => (
-                <div 
-                  key={country.iso3}
+              {jurisdictionStatuses.map(j => (
+                <div
+                  key={j.iso3}
                   style={{
-                    padding: '10px',
+                    display: 'grid',
+                    gridTemplateColumns: '1.4fr 1fr 1.6fr 0.8fr 0.8fr',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '10px 12px',
                     backgroundColor: '#000000',
                     borderRadius: '6px',
-                    border: `2px solid ${country.gradeColor}`,
-                    textAlign: 'center'
+                    borderLeft: `3px solid ${notificationStatusColor(j.notificationStatus)}`,
                   }}
                 >
-                  <div style={{ fontSize: '11px', color: '#888', marginBottom: '4px' }}>
-                    {country.name}
+                  <div>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#fff' }}>{j.name}</div>
+                    <div style={{ fontSize: '10px', color: '#666' }}>{j.iso3}</div>
                   </div>
-                  <div style={{ 
-                    fontSize: '24px', 
-                    fontWeight: 700, 
-                    color: country.gradeColor,
-                    marginBottom: '4px',
-                    textShadow: `0 0 8px ${country.gradeColor}60`
+                  <div style={{
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    color: notificationStatusColor(j.notificationStatus),
                   }}>
-                    {country.grade}
+                    {notificationStatusLabel(j.notificationStatus)}
                   </div>
-                  <div style={{ fontSize: '10px', color: country.change >= 0 ? '#4ade80' : '#ef4444' }}>
-                    {country.change >= 0 ? '↑' : '↓'} {Math.abs(country.change * 100).toFixed(1)}%
+                  <div style={{ fontSize: '11px', color: '#999' }}>{j.clockHint}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '9px', color: '#666', textTransform: 'uppercase' }}>Confidence</div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#60a5fa' }}>{(j.confidence * 100).toFixed(0)}%</div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '9px', color: '#666', textTransform: 'uppercase' }}>Pressure</div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: regulatoryPressureColor(j.regulatoryPressure) }}>
+                      {(j.regulatoryPressure * 100).toFixed(0)}%
+                    </div>
                   </div>
                 </div>
               ))}

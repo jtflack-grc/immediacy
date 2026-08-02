@@ -2,13 +2,13 @@ import { Node } from '../engine/scenarioTypes'
 
 export interface ChatMessage {
   id: string
-  type: 'system' | 'prompt' | 'context' | 'vignette' | 'caseStudy' | 'moralUncertainty' | 'longtermism' | 'choices'
+  type: 'system' | 'prompt' | 'context' | 'vignette' | 'caseStudy' | 'research' | 'choices'
   content: string
   delay: number // Milliseconds to wait before showing this message
   metadata?: {
     caseStudyIndex?: number
     uncertaintyIndex?: number
-    longtermismIndex?: number
+    researchIndex?: number
   }
 }
 
@@ -124,24 +124,22 @@ export function buildMessageSequence(node: Node, turn: number, playerName?: stri
     })
   }
 
-  // 6. Moral uncertainties
+  // 6. Key questions (formerly moral uncertainties)
   if ((node as any).moralUncertainties && (node as any).moralUncertainties.length > 0) {
     const uncertainties = (node as any).moralUncertainties
     const uncertaintyText = `**Key Questions:**\n\n${uncertainties.map((q: string, idx: number) => `${idx + 1}. ${q}`).join('\n\n')}`
     
     messages.push({
-      id: `${node.id}-moral-uncertainty`,
-      type: 'moralUncertainty',
+      id: `${node.id}-key-questions`,
+      type: 'context',
       content: uncertaintyText,
-      delay: currentDelay
+      delay: currentDelay,
+      metadata: { uncertaintyIndex: 0 }
     })
     currentDelay += Math.max(800, uncertaintyText.length * 15)
   }
 
-  // 7. Longtermism considerations (if any)
-  // Note: This would need to be passed in or fetched separately
-  // For now, we'll skip it and handle it separately in the component
-
+  // Research lab beats are injected by AIChatInterface
   // 8. Choices message (will be handled separately in the component)
   messages.push({
     id: `${node.id}-choices`,

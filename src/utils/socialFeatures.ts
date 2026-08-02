@@ -13,7 +13,7 @@ export interface LeaderboardEntry {
   shareableUrl: string
 }
 
-const LEADERBOARD_KEY = 'welfareGovernanceLeaderboard'
+const LEADERBOARD_KEY = 'immediacyIncidentLeaderboard'
 const MAX_LEADERBOARD_ENTRIES = 50
 
 /**

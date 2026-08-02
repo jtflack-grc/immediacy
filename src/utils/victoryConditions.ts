@@ -1,7 +1,7 @@
 import { State } from '../engine/scenarioTypes'
 import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../engine/scoring'
 
-export type VictoryType = 'welfare' | 'debt' | 'regulatoryExposure' | 'balance' | null
+export type VictoryType = 'control' | 'debt' | 'regulatoryExposure' | 'balance' | null
 
 export interface VictoryCondition {
   type: VictoryType
@@ -14,8 +14,8 @@ export interface VictoryCondition {
 
 export const VICTORY_CONDITIONS: VictoryCondition[] = [
   {
-    type: 'welfare',
-    name: 'Control Victory',
+    type: 'control',
+    name: 'Control Outcome',
     description: 'Strong operational control and jurisdiction posture under fire',
     checkCondition: (state) => {
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
@@ -29,7 +29,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
   },
   {
     type: 'debt',
-    name: 'Debt Victory',
+    name: 'Debt Outcome',
     description: 'Minimize disclosure debt while keeping credible control',
     checkCondition: (state) => {
       const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
@@ -42,7 +42,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
   },
   {
     type: 'regulatoryExposure',
-    name: 'Clock Victory',
+    name: 'Clock Outcome',
     description: 'Own regulatory clocks with minimal narrative capture',
     checkCondition: (state) => {
       const regulatoryExposure = state.metrics.unmeasured.regulatoryExposure
@@ -56,7 +56,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
   },
   {
     type: 'balance',
-    name: 'Balance Victory',
+    name: 'Balance Outcome',
     description: 'Hold control, debt, clocks, and facts in healthy ranges',
     checkCondition: (state) => {
       const successIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
@@ -82,7 +82,7 @@ export const VICTORY_CONDITIONS: VictoryCondition[] = [
 export function checkVictoryConditions(state: State): VictoryType {
   // Check in order of specificity (most specific first)
   // Balance is checked last as it's the most comprehensive
-  const order = ['balance', 'regulatoryExposure', 'debt', 'welfare'] as VictoryType[]
+  const order = ['balance', 'regulatoryExposure', 'debt', 'control'] as VictoryType[]
   
   for (const victoryType of order) {
     const condition = VICTORY_CONDITIONS.find(c => c.type === victoryType)

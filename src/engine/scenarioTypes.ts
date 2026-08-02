@@ -28,7 +28,7 @@ export interface ArcDatum {
   startLng: number
   endLat: number
   endLng: number
-  type: 'supply_chain' | 'regulatory_flow' | 'research_collaboration' | 'market_influence' | 'welfare_network' | 'incident_link'
+  type: 'supply_chain' | 'regulatory_flow' | 'research_collaboration' | 'market_influence' | 'incident_link' | 'trust_sync'
   baseWeight: number
   label: string
   triggeredByNodeId?: string
@@ -49,7 +49,7 @@ export interface RingDatum {
   id: string
   lat: number
   lng: number
-  eventType: 'policy_shift' | 'welfare_incident' | 'regulatory_response' | 'market_change' | 'research_breakthrough' | 'public_pressure' | 'breach_notice' | 'leak_site' | 'customer_report'
+  eventType: 'policy_shift' | 'breach_notice' | 'regulatory_response' | 'market_change' | 'research_breakthrough' | 'public_pressure' | 'leak_site' | 'customer_report'
   ttl: number
   createdTurn: number
   triggeredByNodeId?: string

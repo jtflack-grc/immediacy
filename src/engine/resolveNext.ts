@@ -17,8 +17,26 @@ export function resolveNextNodeId(state: State, choice: Choice, _node: Node): st
   if (choice.nextNodeId === 'N06_REGULATOR_CLOCK' && state.flags.adversaryDisclosedFirst) {
     return 'N06B_ADVERSARY_FIRST'
   }
-  if (choice.nextNodeId === 'N10_INSURER_FORENSICS' && state.flags.lateInsurerNotice) {
+  // Fork A (N01 first signal, aggressive containment): hard containment at the very first
+  // signal means the isolate-or-observe dilemma already happened implicitly — skip straight
+  // to a short "already contained" beat instead of re-litigating containment.
+  if (choice.nextNodeId === 'N03_ISOLATE_OR_OBSERVE' && state.flags.earlyHardContain) {
+    return 'N03B_CONTAINED_THEN_RANSOM'
+  }
+  // Fork B (N02 scope triage): under-scoping or premature certainty forces the harder
+  // insurer/coverage path instead of the standard forensics conversation, mirroring what
+  // already happens on late insurer notice.
+  if (
+    choice.nextNodeId === 'N10_INSURER_FORENSICS' &&
+    (state.flags.lateInsurerNotice || state.flags.underScoped || state.flags.prematureCertainty)
+  ) {
     return 'N10C_COVERAGE_RISK'
+  }
+  // Fork B (N02 scope triage): a broad, transparent early scope call means the board already
+  // has the facts it needs — skip the soft-status comms-drafting detour and go straight to
+  // briefing employees.
+  if (choice.nextNodeId === 'N08_COMMS_DRAFT' && state.flags.factsFirstComms) {
+    return 'N09_EMPLOYEES'
   }
   if (choice.nextNodeId === 'N09_EMPLOYEES' && state.flags.staffLearnedFromPress) {
     return 'N09B_STAFF_FROM_PRESS'

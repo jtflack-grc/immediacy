@@ -44,6 +44,42 @@ describe('resolveNextNodeId', () => {
     expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N12B_RANSOM_PAY')
   })
 
+  it('routes to N03B_CONTAINED_THEN_RANSOM when earlyHardContain flag is set', () => {
+    const state = createMockState({ flags: { isComplete: false, showCredits: false, earlyHardContain: true } })
+    const choice = makeChoice('N03_ISOLATE_OR_OBSERVE')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N03B_CONTAINED_THEN_RANSOM')
+  })
+
+  it('does not branch to N03B when earlyHardContain flag is unset', () => {
+    const state = createMockState()
+    const choice = makeChoice('N03_ISOLATE_OR_OBSERVE')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N03_ISOLATE_OR_OBSERVE')
+  })
+
+  it('routes to N10C_COVERAGE_RISK when underScoped flag is set', () => {
+    const state = createMockState({ flags: { isComplete: false, showCredits: false, underScoped: true } })
+    const choice = makeChoice('N10_INSURER_FORENSICS')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N10C_COVERAGE_RISK')
+  })
+
+  it('routes to N10C_COVERAGE_RISK when prematureCertainty flag is set', () => {
+    const state = createMockState({ flags: { isComplete: false, showCredits: false, prematureCertainty: true } })
+    const choice = makeChoice('N10_INSURER_FORENSICS')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N10C_COVERAGE_RISK')
+  })
+
+  it('routes to N09_EMPLOYEES from N08_COMMS_DRAFT when factsFirstComms flag is set', () => {
+    const state = createMockState({ flags: { isComplete: false, showCredits: false, factsFirstComms: true } })
+    const choice = makeChoice('N08_COMMS_DRAFT')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N09_EMPLOYEES')
+  })
+
+  it('does not skip N08_COMMS_DRAFT when factsFirstComms flag is unset', () => {
+    const state = createMockState()
+    const choice = makeChoice('N08_COMMS_DRAFT')
+    expect(resolveNextNodeId(state, choice, dummyNode)).toBe('N08_COMMS_DRAFT')
+  })
+
   it('honors nextWhen rules before global overrides', () => {
     const state = createMockState({ flags: { isComplete: false, showCredits: false, customFlag: true } })
     const choice: Choice = {

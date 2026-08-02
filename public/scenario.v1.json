@@ -82,6 +82,9 @@
                       "ttl": 2
                     }
                   ]
+                },
+                "setFlags": {
+                  "earlyHardContain": true
                 }
               }
             },
@@ -103,6 +106,9 @@
                   "regionValues": {
                     "USA": 0.04
                   }
+                },
+                "setFlags": {
+                  "delayedEscalation": true
                 }
               }
             },
@@ -121,7 +127,10 @@
                     "regulatoryExposure": 0.06
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "delayedEscalation": true
+                }
               }
             },
             {
@@ -241,6 +250,10 @@
                     "IRL": 0.12,
                     "NLD": 0.08
                   }
+                },
+                "setFlags": {
+                  "boundedEarlyDisclosure": true,
+                  "factsFirstComms": true
                 }
               }
             },
@@ -259,7 +272,11 @@
                     "regulatoryExposure": 0.05
                   }
                 },
-                "map": {}
+                "map": {},
+                "setFlags": {
+                  "underScoped": true,
+                  "prematureCertainty": true
+                }
               }
             },
             {
@@ -492,6 +509,72 @@
                 },
                 "map": {}
               }
+            }
+          ]
+        },
+        {
+          "id": "N03B_CONTAINED_THEN_RANSOM",
+          "title": "Contained — Then the Note Arrives",
+          "prompt": "Aggressive containment at first signal already isolated the affected segments. While ops confirms clean status, a leak-site style note appears: \"ShinyFox\" claims your data and gives 48 hours to respond.",
+          "context": "Because you moved to hard containment the moment the first signal landed, the isolate-or-observe dilemma never happened — dwell time was cut short before the attacker could spread further. Teaching note: early aggressive containment forecloses some options (dwell-time intelligence) while foreclosing others (wider encryption).",
+          "vignette": "Teaching beat: containment speed trades TTP intelligence for blast-radius control. Fast isolation limits both the attacker and your own visibility.",
+          "choices": [
+            {
+              "label": "Acknowledge via counsel/IR channel; demand proof pack; no payment talk yet",
+              "nextNodeId": "N05_COUNSEL_ARRIVES",
+              "timeCost": 35,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "disclosurePosture": 0.18,
+                    "operationalControl": 0.06
+                  },
+                  "unmeasured": {
+                    "factsConfidence": 0.08,
+                    "disclosureDebt": -0.05
+                  }
+                },
+                "timeCost": 35
+              }
+            },
+            {
+              "label": "Ignore the note; focus only on technical recovery",
+              "nextNodeId": "N05_COUNSEL_ARRIVES",
+              "timeCost": 25,
+              "delta": {
+                "metrics": {
+                  "unmeasured": {
+                    "disclosureDebt": 0.08,
+                    "regulatoryExposure": 0.05
+                  }
+                },
+                "timeCost": 25
+              }
+            },
+            {
+              "label": "Open payment negotiation immediately to buy time",
+              "nextNodeId": "N05_COUNSEL_ARRIVES",
+              "timeCost": 40,
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "financialBurn": 0.1
+                  },
+                  "unmeasured": {
+                    "commitmentLock": 0.1,
+                    "disclosureDebt": 0.04
+                  }
+                },
+                "timeCost": 40
+              }
+            }
+          ],
+          "caseStudies": [
+            {
+              "title": "Teaching note — early containment tradeoffs",
+              "description": "Fast, aggressive containment shortens attacker dwell time but also shortens your own forensic visibility into what they touched.",
+              "teachingNote": "Teaching simplification: this node compresses the isolate-or-observe decision because it was effectively already made at first signal.",
+              "sourceType": "industry"
             }
           ]
         },
