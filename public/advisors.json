@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ADV_WELFARE_SCI",
+    "name": "Dr. Sarah Chen",
+    "title": "Welfare Scientist",
+    "specialization": ["Animal Welfare Science", "Five Domains Model", "Behavioral Indicators", "Physiological Welfare"],
+    "color": "#10b981",
+    "bio": "Leading researcher in animal welfare science with expertise in evidence-based welfare assessment. Focuses on measurable welfare outcomes and scientific validity.",
+    "researchDomains": ["Animal welfare science", "Behavioral indicators", "Physiological welfare", "Five Domains Model"],
+    "imageUrl": "https://randomuser.me/api/portraits/women/47.jpg"
+  },
+  {
+    "id": "ADV_POLICY_EXP",
+    "name": "Dr. James Mitchell",
+    "title": "Policy Expert",
+    "specialization": ["Governance Frameworks", "Regulatory Design", "International Standards", "Enforcement Capacity"],
+    "color": "#3b82f6",
+    "bio": "Expert in animal welfare policy and regulatory frameworks. Specializes in translating welfare science into effective governance structures.",
+    "researchDomains": ["Policy analysis", "Regulatory frameworks", "Animal Protection Index", "International standards"],
+    "imageUrl": "https://randomuser.me/api/portraits/men/33.jpg"
+  },
+  {
+    "id": "ADV_ECONOMIST",
+    "name": "Dr. Maria Rodriguez",
+    "title": "Agricultural Economist",
+    "specialization": ["Cost-Benefit Analysis", "Market Dynamics", "Production Economics", "Supply Chain Economics"],
+    "color": "#f59e0b",
+    "bio": "Agricultural economist specializing in the economics of animal production systems. Analyzes trade-offs between welfare improvements and economic viability.",
+    "researchDomains": ["Agricultural economics", "Production systems", "Market analysis", "Cost-benefit analysis"],
+    "imageUrl": "https://randomuser.me/api/portraits/women/25.jpg"
+  },
+  {
+    "id": "ADV_CONSERVATION",
+    "name": "Dr. David Kimani",
+    "title": "Conservationist",
+    "specialization": ["Wildlife Conservation", "Ecosystem Health", "Biodiversity", "Sustainable Use"],
+    "color": "#8b5cf6",
+    "bio": "Wildlife conservation expert focusing on the intersection of animal welfare and ecosystem health. Advocates for sustainable use frameworks.",
+    "researchDomains": ["Wildlife conservation", "Sustainable use", "Biodiversity", "Ecosystem health"],
+    "imageUrl": "https://randomuser.me/api/portraits/men/52.jpg"
+  },
+  {
+    "id": "ADV_INDUSTRY",
+    "name": "Patricia Walsh",
+    "title": "Industry Representative",
+    "specialization": ["Production Systems", "Industry Practices", "Supply Chains", "Industry Standards"],
+    "color": "#ef4444",
+    "bio": "Industry veteran with deep knowledge of production systems and supply chains. Focuses on practical implementation and gradual transitions.",
+    "researchDomains": ["Production systems", "Industry standards", "Supply chain management", "Practical implementation"],
+    "imageUrl": "https://randomuser.me/api/portraits/women/44.jpg"
+  },
+  {
+    "id": "ADV_ETHICS",
+    "name": "Dr. Amara Patel",
+    "title": "Ethics Coordinator",
+    "specialization": ["Animal Ethics", "Sentience Research", "Moral Frameworks", "Rights-Based Approaches"],
+    "color": "#ec4899",
+    "bio": "Ethics scholar specializing in animal sentience and moral frameworks. Advocates for rights-based approaches to animal welfare governance.",
+    "researchDomains": ["Animal ethics", "Sentience research", "Moral philosophy", "Rights-based approaches"],
+    "imageUrl": "https://randomuser.me/api/portraits/women/28.jpg"
+  }
+]

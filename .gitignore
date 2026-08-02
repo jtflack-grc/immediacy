@@ -1,14 +1,34 @@
+# Node
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
 dist/
 build/
-.env
-.env.local
-*.log
-.DS_Store
-api/cache/*
-!api/cache/.gitkeep
-.vite/
-coverage/
 *.tsbuildinfo
+
+# Vite
+vite.config.js
+vite.config.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / local tools
+.env
+.env.*
 .tools/
 
+# Logs
+*.log

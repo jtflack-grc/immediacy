@@ -1,68 +1,38 @@
-# INTERDEPENDENCY
+# IMMEDIACY — Every Second Counts
 
-**Map who you depend on. Price what breaks.**
+Short-horizon **disclosure war game**. Seat-of-the-pants decisions under time pressure — Legal, HR, Tech, Comms, Board — where silence is a choice.
 
-Open-source, FAIR-informed third-party risk (TPRM) mapper in the same product family as [INQUISITION](https://github.com/jtflack-grc/inquisition) and [IMPACT!](https://github.com/jtflack-grc/impact).
+Built on the [Inheritance](https://github.com/jtflack-grc/inheritance) decision shell (3-panel UI, globe, difficulty rails, opening help, 5s title card). Scenario content is being rewritten from animal/longtermism toward incident disclosure and FAIR-flavored pressure metrics.
 
-Educational freeware. Not affiliated with Safe Security. Not advice.
-
-**Live site:** https://jtflack-grc.github.io/interdependency/
-
-## How search works (no cloud keys in the app)
-
-SEC EDGAR cannot be queried safely from a browser (CORS + User-Agent policy). This project **does not** require Fly or a personal API key embedded in the public page.
-
-| Mode | How |
-|---|---|
-| **GitHub Pages** | Search Action-built static dossiers under `web/public/dossiers/` (+ ticker index). Refresh via workflow **Build EDGAR dossiers**. |
-| **Local live** | `npm run dev:api` + `npm run dev:web` — on-demand EDGAR for any US public company on your machine. |
-
-## Quick start (local live search)
+## Run locally
 
 ```bash
 npm install
-npm run build --workspace=@interdependency/shared
-npm run build --workspace=@interdependency/api
-npm run dev:api   # :8787
-npm run dev:web   # :5275  (proxies /api → API)
+npm run dev
 ```
 
-Open http://localhost:5275 and Analyze any ticker (e.g. `HAYW`, `AAPL`).
-
-Optional LLM extraction (API only, never baked into Pages): export `OPENAI_API_KEY`.
-
-## Refresh the public search pack
-
-GitHub → Actions → **Build EDGAR dossiers** → Run workflow with tickers  
-or locally:
+## Build
 
 ```bash
-node scripts/build-dossier.mjs HAYW,AAPL,MSFT,CLX
-```
-
-That writes `web/public/dossiers/*.json` and syncs `web/public/kb/company_tickers.json` for Pages. Commit/push (or let the Action do it).
-
-## Rails cases
-
-CrowdStrike, Change Healthcare, Clorox ship as static JSON and work offline on Pages.
-
-## Monorepo
-
-```
-packages/shared   Dossier schema
-data/             Source rails + KB
-api/              Local EDGAR analysis service
-web/              GitHub Pages UI
-scripts/          build-dossier.mjs
+npm run build
+npm run preview
 ```
 
 ## Deploy
 
-- **Web:** GitHub Pages (`.github/workflows/deploy-pages.yml`)
-- **Dossier pack:** `.github/workflows/build-dossiers.yml` (uses `GITHUB_TOKEN` only)
+GitHub Pages via `.github/workflows/deploy-pages.yml` on push to `main`.
 
-`fly.toml` / API Dockerfile remain in-repo only if you later choose a host yourself — they are **not** required.
+## What’s kept from Inheritance
 
-## License
+- Colors, typography, dark war-room look
+- Difficulty rails / scenario variations
+- Opening welcome + tutorial help
+- 5-second title intro (riffed: **IMMEDIACY** / *Every Second Counts*)
+- Engine, globe, metrics panel, Great People scaffolding
 
-MIT — see [LICENSE](LICENSE).
+## What’s next
+
+- Rewrite `public/scenario.v1.json` for disclosure phases
+- Retarget Great People → pressure archetypes (counsel, reporters, operators, extortion crews…)
+- FAIR-forward meters (disclosure debt, narrative integrity, clock)
+- OWASP / teaching cards on the globe

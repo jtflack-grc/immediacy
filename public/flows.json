@@ -1,0 +1,12 @@
+[
+  { "id": "A01_SUPPLY_CHAIN_US_GB", "startLat": 40.7128, "startLng": -74.0060, "endLat": 51.5074, "endLng": -0.1278, "type": "supply_chain", "baseWeight": 0.5, "label": "Animal Product Supply Chain" },
+  { "id": "A02_MODEL_HANDOFF_US_CHN", "startLat": 40.7128, "startLng": -74.0060, "endLat": 39.9042, "endLng": 116.4074, "type": "research_collaboration", "baseWeight": 0.6, "label": "Research Collaboration" },
+  { "id": "A03_SUPPLY_CHAIN_GB_FRA", "startLat": 51.5074, "startLng": -0.1278, "endLat": 48.8566, "endLng": 2.3522, "type": "supply_chain", "baseWeight": 0.4, "label": "Supply Chain" },
+  { "id": "A04_REG_ARBITRAGE_FRA_DEU", "startLat": 48.8566, "startLng": 2.3522, "endLat": 52.5200, "endLng": 13.4050, "type": "regulatory_flow", "baseWeight": 0.5, "label": "Regulatory Flow" },
+  { "id": "A05_DATA_SHARING_DEU_USA", "startLat": 52.5200, "startLng": 13.4050, "endLat": 40.7128, "endLng": -74.0060, "type": "welfare_network", "baseWeight": 0.7, "label": "Welfare Network" },
+  { "id": "A06_SUPPLY_CHAIN_CHN_IND", "startLat": 39.9042, "startLng": 116.4074, "endLat": 28.6139, "endLng": 77.2090, "type": "supply_chain", "baseWeight": 0.6, "label": "Supply Chain" },
+  { "id": "A07_RESEARCH_GB_AUS", "startLat": 51.5074, "startLng": -0.1278, "endLat": -33.8688, "endLng": 151.2093, "type": "research_collaboration", "baseWeight": 0.5, "label": "Research Collaboration" },
+  { "id": "A08_SUPPLY_CHAIN_USA_BRA", "startLat": 40.7128, "startLng": -74.0060, "endLat": -23.5505, "endLng": -46.6333, "type": "supply_chain", "baseWeight": 0.4, "label": "Supply Chain" },
+  { "id": "A09_WELFARE_NETWORK_BRA_ZAF", "startLat": -23.5505, "startLng": -46.6333, "endLat": -25.7461, "endLng": 28.1881, "type": "welfare_network", "baseWeight": 0.5, "label": "Welfare Network" },
+  { "id": "A10_MARKET_INFLUENCE_MEX_USA", "startLat": 19.4326, "startLng": -99.1332, "endLat": 40.7128, "endLng": -74.0060, "type": "market_influence", "baseWeight": 0.4, "label": "Market Influence" }
+]

@@ -1,0 +1,359 @@
+{
+  "N01_SENTIENCE_RECOGNITION": [
+    {
+      "advisorId": "ADV_ETHICS",
+      "choiceIndex": 0,
+      "reasoning": "Broad recognition of sentience aligns with current scientific understanding across vertebrates and selected invertebrates. Research from Animal Sentience journal and the Cambridge Declaration on Consciousness supports this comprehensive approach. Narrow recognition creates an arbitrary moral boundary that may be difficult to expand later.",
+      "researchCitations": [
+        {
+          "text": "Cambridge Declaration on Consciousness (2012): Non-human animals have the neuroanatomical, neurochemical, and neurophysiological substrates of conscious states",
+          "url": "https://fcmconference.org/img/CambridgeDeclarationOnConsciousness.pdf",
+          "sourceType": "academic",
+          "year": 2012,
+          "lastVerified": "2026-01-19",
+          "archiveUrl": "https://web.archive.org/web/20200101000000*/https://fcmconference.org/img/CambridgeDeclarationOnConsciousness.pdf"
+        },
+        {
+          "text": "Animal Sentience Journal: Evidence for sentience in cephalopods and decapod crustaceans",
+          "url": "https://www.wellbeingintlstudiesrepository.org/animsent/",
+          "sourceType": "peer-reviewed",
+          "lastVerified": "2026-01-19"
+        },
+        {
+          "text": "Universal Declaration on Animal Welfare: Recognition of sentience as foundational principle",
+          "url": "https://www.worldanimalprotection.ca/our-work/global-animal-protection/universal-declaration/",
+          "sourceType": "ngo",
+          "year": 2007,
+          "lastVerified": "2026-01-19"
+        }
+      ],
+      "benefits": [
+        "Establishes comprehensive legal foundation for welfare protections",
+        "Aligns with scientific consensus on animal consciousness",
+        "Prevents future need to expand recognition piecemeal"
+      ],
+      "concerns": [
+        "May face stronger political resistance",
+        "Requires enforcement capacity for broader scope"
+      ]
+    },
+    {
+      "advisorId": "ADV_WELFARE_SCI",
+      "choiceIndex": 0,
+      "reasoning": "Broad recognition is supported by extensive research on sentience across taxa. The Five Domains Model applies across vertebrates and selected invertebrates, suggesting welfare considerations should not be arbitrarily limited. Narrow recognition may exclude species with demonstrated cognitive and emotional capacities.",
+      "researchCitations": [
+        {
+          "text": "Five Domains Model (Mellor & Beausoleil, 2015): Comprehensive welfare assessment framework applicable across species",
+          "doi": "10.1016/j.applanim.2015.08.006"
+        },
+        {
+          "text": "Animal-Based Welfare Indicators (MDPI, 2023): Evidence-based indicators support broad recognition",
+          "url": "https://www.mdpi.com/journal/animals/special_issues/welfare_indicators",
+          "sourceType": "peer-reviewed",
+          "year": 2023,
+          "lastVerified": "2026-01-19"
+        },
+        {
+          "text": "Comparative cognition research: Sentience evidence across vertebrate and invertebrate taxa",
+          "url": "https://www.cell.com/trends/cognitive-sciences/fulltext/S1364-6613(20)30019-2",
+          "sourceType": "peer-reviewed",
+          "doi": "10.1016/j.tics.2020.01.002",
+          "year": 2020,
+          "lastVerified": "2026-01-19"
+        }
+      ],
+      "benefits": [
+        "Evidence-based approach to sentience recognition",
+        "Supports comprehensive welfare science",
+        "Reduces knowledge gaps about animal needs"
+      ],
+      "concerns": [
+        "Implementation complexity increases with scope",
+        "Requires scientific consensus on invertebrate sentience"
+      ]
+    },
+    {
+      "advisorId": "ADV_ECONOMIST",
+      "choiceIndex": 1,
+      "reasoning": "Narrow recognition reduces immediate implementation costs while establishing essential legal foundation. Gradual expansion can follow once enforcement systems are established. This approach balances welfare goals with economic and political feasibility.",
+      "researchCitations": [
+        "Cost-benefit analysis of welfare standards (Nature Scientific Reports, 2021): Implementation costs scale with scope",
+        "Production economics research: Gradual adoption reduces market disruption",
+        "Policy implementation studies: Phased approaches improve compliance rates"
+      ],
+      "benefits": [
+        "Lower initial implementation costs",
+        "Easier political acceptance",
+        "Allows gradual system development"
+      ],
+      "concerns": [
+        "May limit future protections if expansion is difficult",
+        "Could create path dependency favoring narrow scope"
+      ]
+    },
+    {
+      "advisorId": "ADV_POLICY_EXP",
+      "choiceIndex": 0,
+      "reasoning": "Broad recognition provides stronger legal foundation for future welfare standards. While implementation may be more complex, the comprehensive framework reduces need for later legal amendments. International standards (WOAH/OIE) increasingly support broad recognition.",
+      "researchCitations": [
+        "Animal Protection Index methodology: Legal recognition as foundational indicator",
+        "WOAH/OIE welfare standards: International trend toward broad recognition",
+        "Policy framework studies: Comprehensive frameworks reduce amendment needs"
+      ],
+      "benefits": [
+        "Stronger legal foundation for welfare standards",
+        "Alignment with international standards",
+        "Reduces future regulatory gaps"
+      ],
+      "concerns": [
+        "Requires robust enforcement capacity",
+        "May face implementation delays"
+      ]
+    }
+  ],
+  "N02_FARM_STANDARDS": [
+    {
+      "advisorId": "ADV_WELFARE_SCI",
+      "choiceIndex": 0,
+      "reasoning": "Mandatory baseline standards with enforcement are essential for measurable welfare improvements. Voluntary standards have shown limited effectiveness in improving actual welfare outcomes. Research shows that mandatory standards with proper enforcement lead to better welfare indicators.",
+      "researchCitations": [
+        "Animal-Based Welfare Indicators (MDPI, 2023): Mandatory standards correlate with better welfare outcomes",
+        "Five Domains Model: Comprehensive standards address all welfare domains",
+        "Welfare assessment studies: Voluntary programs show inconsistent compliance"
+      ],
+      "benefits": [
+        "Measurable welfare improvements",
+        "Consistent application across producers",
+        "Evidence-based standards"
+      ],
+      "concerns": [
+        "Requires significant enforcement capacity",
+        "Higher implementation costs"
+      ]
+    },
+    {
+      "advisorId": "ADV_POLICY_EXP",
+      "choiceIndex": 0,
+      "reasoning": "Mandatory standards with government oversight provide accountability and consistency. The Animal Protection Index shows that countries with mandatory standards and enforcement capacity score higher on welfare outcomes. Voluntary systems often lack transparency and accountability.",
+      "researchCitations": [
+        "Animal Protection Index (World Animal Protection): Mandatory standards correlate with better welfare scores",
+        "Regulatory effectiveness studies: Government oversight improves compliance",
+        "Policy implementation research: Mandatory frameworks reduce regulatory capture"
+      ],
+      "benefits": [
+        "Accountability and transparency",
+        "Consistent enforcement",
+        "Reduces regulatory capture"
+      ],
+      "concerns": [
+        "Requires government capacity building",
+        "May face industry resistance"
+      ]
+    },
+    {
+      "advisorId": "ADV_ECONOMIST",
+      "choiceIndex": 1,
+      "reasoning": "Voluntary industry-led standards can achieve faster adoption with lower enforcement costs. Market-driven certification schemes can incentivize compliance through consumer preferences. However, this approach requires strong market signals and transparency.",
+      "researchCitations": [
+        "Market-based welfare standards (GLOBALG.A.P.): Consumer-driven adoption",
+        "Certification economics: Voluntary programs can achieve scale",
+        "Supply chain research: Market incentives for welfare improvements"
+      ],
+      "benefits": [
+        "Faster market adoption",
+        "Lower government enforcement costs",
+        "Market-driven innovation"
+      ],
+      "concerns": [
+        "Risk of regulatory capture",
+        "Inconsistent enforcement",
+        "Dependent on consumer demand"
+      ]
+    },
+    {
+      "advisorId": "ADV_INDUSTRY",
+      "choiceIndex": 1,
+      "reasoning": "Voluntary standards allow industry to develop practical solutions that balance welfare with production realities. Industry-led initiatives can adapt more quickly to local conditions and production systems. Mandatory standards may be too rigid for diverse production contexts.",
+      "researchCitations": [
+        "Industry best practices: Flexibility in implementation",
+        "Production system diversity: One-size-fits-all standards may not work",
+        "Industry innovation: Voluntary programs can drive rapid improvement"
+      ],
+      "benefits": [
+        "Industry buy-in and cooperation",
+        "Flexibility for diverse systems",
+        "Faster implementation"
+      ],
+      "concerns": [
+        "May prioritize efficiency over welfare",
+        "Lacks independent oversight",
+        "Inconsistent standards"
+      ]
+    }
+  ],
+  "N03_FACTORY_FARMING": [
+    {
+      "advisorId": "ADV_WELFARE_SCI",
+      "choiceIndex": 0,
+      "reasoning": "Strict welfare standards for intensive operations address the most significant welfare challenges. Research shows that intensive systems can achieve good welfare with proper standards, space, and enrichment. The Five Domains Model provides framework for comprehensive improvements.",
+      "researchCitations": [
+        "Five Domains Model: Welfare improvements possible in intensive systems",
+        "Space and enrichment research: Critical factors for welfare in intensive systems",
+        "Welfare assessment studies: Intensive systems can meet high welfare standards"
+      ],
+      "benefits": [
+        "Addresses largest welfare challenges",
+        "Evidence-based improvements",
+        "Comprehensive welfare framework"
+      ],
+      "concerns": [
+        "Significant cost increases",
+        "Requires major system changes"
+      ]
+    },
+    {
+      "advisorId": "ADV_ECONOMIST",
+      "choiceIndex": 1,
+      "reasoning": "Gradual voluntary improvements with incentives balance welfare goals with economic realities. Sudden strict standards could disrupt food supply and increase costs dramatically. Incentive-based approaches can achieve improvements while maintaining market stability.",
+      "researchCitations": [
+        "Economic impact of welfare standards: Gradual transitions reduce market disruption",
+        "Incentive-based programs: Cost-effective welfare improvements",
+        "Market stability research: Phased approaches maintain supply"
+      ],
+      "benefits": [
+        "Maintains market stability",
+        "Lower immediate costs",
+        "Industry cooperation"
+      ],
+      "concerns": [
+        "Slower welfare improvements",
+        "May not address core issues",
+        "Dependent on incentives"
+      ]
+    },
+    {
+      "advisorId": "ADV_POLICY_EXP",
+      "choiceIndex": 0,
+      "reasoning": "Strict standards with enforcement are necessary to address welfare issues in intensive systems. Voluntary approaches have historically failed to achieve meaningful improvements. Policy research shows that mandatory standards with clear timelines are most effective.",
+      "researchCitations": [
+        "Policy effectiveness studies: Mandatory standards achieve better outcomes",
+        "Regulatory enforcement: Clear standards with penalties improve compliance",
+        "Historical analysis: Voluntary programs show limited impact"
+      ],
+      "benefits": [
+        "Predictable compliance",
+        "Clear enforcement framework",
+        "Measurable progress"
+      ],
+      "concerns": [
+        "Enforcement capacity required",
+        "Industry resistance",
+        "Implementation timeline"
+      ]
+    }
+  ],
+  "N04_ALTERNATIVE_PROTEINS": [
+    {
+      "advisorId": "ADV_WELFARE_SCI",
+      "choiceIndex": 0,
+      "reasoning": "Heavy investment in alternative proteins offers the potential to dramatically reduce animal suffering while maintaining food security. Research shows that cultured meat and plant-based alternatives can provide nutrition without traditional welfare concerns. This represents a paradigm shift in food production.",
+      "researchCitations": [
+        "Alternative protein research: Potential to reduce animal use",
+        "Cultured meat studies: Welfare benefits of cell-based production",
+        "Nutritional analysis: Plant-based alternatives meet dietary needs"
+      ],
+      "benefits": [
+        "Potential to eliminate many welfare concerns",
+        "Scalable production",
+        "Reduces welfare debt"
+      ],
+      "concerns": [
+        "Technology still developing",
+        "May create new dependencies",
+        "Uncertain long-term impacts"
+      ]
+    },
+    {
+      "advisorId": "ADV_ECONOMIST",
+      "choiceIndex": 0,
+      "reasoning": "Heavy investment positions the economy at the forefront of a growing market. Alternative proteins are projected to capture significant market share. Early investment can create competitive advantages and reduce long-term costs through economies of scale.",
+      "researchCitations": [
+        "Market projections: Alternative proteins growing market share",
+        "Investment economics: Early mover advantages",
+        "Cost reduction: Economies of scale in production"
+      ],
+      "benefits": [
+        "Market leadership position",
+        "Economic growth potential",
+        "Long-term cost reductions"
+      ],
+      "concerns": [
+        "High initial investment",
+        "Market uncertainty",
+        "Technology risks"
+      ]
+    },
+    {
+      "advisorId": "ADV_INDUSTRY",
+      "choiceIndex": 1,
+      "reasoning": "Moderate support allows for market testing and gradual transition. Maintaining traditional systems ensures food security while alternative proteins develop. This balanced approach reduces risk and allows industry to adapt gradually.",
+      "researchCitations": [
+        "Market transition studies: Gradual shifts reduce disruption",
+        "Food security research: Maintaining multiple production systems",
+        "Industry adaptation: Phased transitions improve outcomes"
+      ],
+      "benefits": [
+        "Reduces market disruption",
+        "Maintains food security",
+        "Allows gradual industry adaptation"
+      ],
+      "concerns": [
+        "Slower welfare improvements",
+        "May miss market opportunities",
+        "Maintains welfare debt"
+      ]
+    }
+  ],
+  "N05_WILDLIFE_CONSERVATION": [
+    {
+      "advisorId": "ADV_CONSERVATION",
+      "choiceIndex": 0,
+      "reasoning": "Strict protection with limited sustainable use balances animal welfare with ecosystem health. Research shows that well-managed protected areas support both wildlife welfare and biodiversity. Sustainable use frameworks must prioritize welfare alongside conservation goals.",
+      "researchCitations": [
+        "Wildlife conservation research: Protected areas support welfare and biodiversity",
+        "Sustainable use frameworks: Balancing welfare and conservation",
+        "Ecosystem health studies: Welfare and conservation are complementary"
+      ],
+      "benefits": [
+        "Protects wildlife welfare",
+        "Maintains ecosystem health",
+        "Long-term conservation outcomes"
+      ],
+      "concerns": [
+        "Requires strong enforcement",
+        "May limit local livelihoods",
+        "Enforcement capacity needed"
+      ]
+    },
+    {
+      "advisorId": "ADV_CONSERVATION",
+      "choiceIndex": 1,
+      "reasoning": "Sustainable use with welfare oversight can support both conservation and local communities. Research from IPBES shows that community-managed sustainable use can achieve conservation goals while respecting welfare. This approach requires robust oversight and monitoring.",
+      "researchCitations": [
+        "IPBES Sustainable Use Assessment: Community-managed systems can work",
+        "Conservation and welfare: Integrated approaches",
+        "Community-based conservation: Local participation improves outcomes"
+      ],
+      "benefits": [
+        "Supports local communities",
+        "Achieves conservation goals",
+        "Community participation"
+      ],
+      "concerns": [
+        "Requires oversight capacity",
+        "Welfare standards must be maintained",
+        "Monitoring challenges"
+      ]
+    }
+  ]
+}

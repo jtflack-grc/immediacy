@@ -1,24 +1,23 @@
 {
-  "name": "interdependency",
-  "private": true,
+  "name": "immediacy",
   "version": "0.1.0",
-  "description": "Open-source FAIR-informed third-party risk interdependency mapper",
-  "workspaces": [
-    "packages/*",
-    "api",
-    "web"
-  ],
+  "description": "IMMEDIACY — Every Second Counts. Short-horizon disclosure war game.",
+  "type": "module",
   "scripts": {
-    "dev": "npm run dev --workspace=web",
-    "dev:api": "npm run dev --workspace=@interdependency/api",
-    "dev:web": "npm run dev --workspace=@interdependency/web",
-    "dev:all": "npm run dev:api & npm run dev:web",
-    "build": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/api && npm run build --workspace=@interdependency/web",
-    "build:web": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/web",
-    "start:api": "npm run start --workspace=@interdependency/api",
-    "dossiers": "node scripts/build-dossier.mjs"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "engines": {
-    "node": ">=20"
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-globe.gl": "^2.31.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
   }
 }

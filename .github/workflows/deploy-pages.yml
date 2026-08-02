@@ -23,15 +23,11 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - run: npm install
-      - run: npm run build --workspace=@interdependency/shared
-      - name: Build web
-        env:
-          VITE_API_BASE: ${{ vars.VITE_API_BASE }}
-        run: npm run build --workspace=@interdependency/web
+      - run: npm ci
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/dist
+          path: dist
 
   deploy:
     needs: build

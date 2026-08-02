@@ -1,0 +1,3319 @@
+{
+  "version": "1.0.0",
+  "phases": [
+    {
+      "id": "P1_FOUNDATION",
+      "title": "Foundation",
+      "description": "Initial welfare framework establishment",
+      "nodes": [
+        {
+          "id": "N01_SENTIENCE_RECOGNITION",
+          "title": "Integrating Animal Welfare into AI Governance Frameworks",
+          "prompt": "How should animal welfare requirements be integrated into existing AI governance frameworks?",
+          "context": "AI systems are already managing millions of animals in agriculture, monitoring welfare, optimizing production, and making automated decisions. Existing AI governance frameworks (EU AI Act, US AI Executive Order) focus on human safety, privacy, and bias—but not animal welfare. You must decide how to add animal welfare requirements to these frameworks.",
+          "vignette": "AI systems are deployed across animal agriculture: computer vision monitors behavior, predictive models forecast health issues, automated systems adjust environments. These systems are optimized for efficiency and cost, not animal welfare. Existing AI governance frameworks (EU AI Act, US AI Executive Order, China's AI regulations) address human safety, privacy, algorithmic bias, and transparency—but animal welfare is absent. Industry argues AI systems improve welfare through early detection, but without governance, they may optimize for the wrong metrics. The question: how do we add animal welfare requirements to existing AI governance frameworks without creating regulatory fragmentation?",
+          "moralUncertainties": [
+            "Should animal welfare be a mandatory requirement in AI governance frameworks, or voluntary best practice?",
+            "How do we ensure AI systems managing animals optimize for welfare rather than efficiency?",
+            "Should AI systems making autonomous welfare decisions require human oversight, or can they operate independently?",
+            "If AI systems become sentient, do existing animal welfare frameworks apply, or do we need new governance?"
+          ],
+          "caseStudies": [
+            {
+              "title": "EU AI Act and Animal Agriculture",
+              "description": "EU AI Act classifies AI systems in animal agriculture as 'high-risk' requiring human oversight, transparency, and risk assessment. However, animal welfare is not explicitly included in risk assessment requirements.",
+              "year": "2024",
+              "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The EU AI Act created a framework for regulating AI systems in animal agriculture, requiring human oversight and transparency. However, the Act focuses on human safety and data protection, not animal welfare. This created a gap: AI systems managing animals must meet safety requirements but not welfare requirements. The framework showed how existing AI governance can be extended but also highlighted the need to explicitly include animal welfare in risk assessments.",
+              "outcomes": "Created framework for regulating AI in animal agriculture. Required human oversight and transparency. Did not explicitly include animal welfare in risk assessments. Demonstrated need to add welfare requirements to existing AI governance."
+            },
+            {
+              "title": "US AI Executive Order and Agriculture",
+              "description": "US Executive Order on AI Safety requires safety testing and oversight for high-risk AI systems. Agriculture AI systems are included, but animal welfare is not explicitly addressed.",
+              "year": "2023",
+              "url": "https://www.whitehouse.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Executive Order created safety requirements for AI systems in agriculture, including testing and oversight. However, like the EU AI Act, it focuses on human safety and national security, not animal welfare. This created a regulatory gap where AI systems managing animals must meet safety standards but not welfare standards. The approach showed how AI governance can be extended to agriculture but highlighted the need to explicitly include animal welfare.",
+              "outcomes": "Created safety requirements for AI in agriculture. Required testing and oversight. Did not explicitly address animal welfare. Demonstrated need to add welfare to AI governance frameworks."
+            },
+            {
+              "title": "UK AI Governance and Animal Welfare",
+              "description": "UK is developing AI governance frameworks while maintaining strong animal welfare standards. Proposals to integrate animal welfare into AI governance are being considered.",
+              "year": "2024",
+              "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The UK approach attempts to integrate animal welfare into AI governance, recognizing that AI systems managing animals must prioritize welfare. However, implementation is still developing, with questions about how to enforce welfare requirements in AI systems. The approach shows how animal welfare can be integrated into AI governance but also highlights implementation challenges.",
+              "outcomes": "Attempting to integrate animal welfare into AI governance. Recognition that AI systems must prioritize welfare. Implementation still developing. Demonstrated potential and challenges of integrating welfare into AI frameworks."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Mandatory animal welfare requirements in all AI governance frameworks, with explicit welfare optimization requirements",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.1,
+                    "sentienceKnowledgeGap": -0.1,
+                    "welfareDebt": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.15,
+                    "FRA": 0.15,
+                    "DEU": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N02_FARM_STANDARDS"
+            },
+            {
+              "label": "Voluntary animal welfare guidelines for AI systems, with industry self-regulation",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.08,
+                    "regulatoryCapture": 0.1,
+                    "sentienceKnowledgeGap": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.12,
+                    "FRA": 0.1,
+                    "DEU": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N02_FARM_STANDARDS"
+            },
+            {
+              "label": "Defer animal welfare integration, establish research commission to study AI-animal interactions first",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": -0.02
+                  },
+                  "unmeasured": {
+                    "sentienceKnowledgeGap": -0.1,
+                    "enforcementGap": 0.12,
+                    "welfareDebt": 0.15,
+                    "governanceLag": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "GBR": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N02_FARM_STANDARDS"
+            },
+            {
+              "label": "Minimal integration: add animal welfare as optional consideration in AI risk assessments",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.03
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.15,
+                    "regulatoryCapture": 0.12,
+                    "sentienceKnowledgeGap": 0.1,
+                    "welfareDebt": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.06,
+                    "GBR": 0.1,
+                    "FRA": 0.08,
+                    "DEU": 0.06
+                  }
+                }
+              },
+              "nextNodeId": "N02_FARM_STANDARDS"
+            },
+            {
+              "label": "Exclude animal welfare from AI governance entirely, maintain separate frameworks",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "enforcementGap": 0.15,
+                    "regulatoryCapture": 0.15,
+                    "sentienceKnowledgeGap": 0.25,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "GBR": 0.03
+                  }
+                }
+              },
+              "nextNodeId": "N02_FARM_STANDARDS"
+            }
+          ]
+        },
+        {
+          "id": "N02_FARM_STANDARDS",
+          "title": "Initial Welfare Standards: Farm Animals and AI Systems",
+          "prompt": "Now that animal welfare is integrated into AI governance, how should baseline welfare standards be established for both farm animals and the AI systems managing them?",
+          "context": "With animal welfare integrated into AI governance frameworks, you need to set baseline welfare standards. AI systems are already managing millions of farm animals—monitoring behavior, predicting health issues, optimizing environments. These systems must now prioritize welfare, not just efficiency. Industry groups prefer voluntary standards, while advocates push for mandatory regulations. The frameworks you establish will apply to both animal welfare and AI system requirements.",
+          "vignette": "Intensive animal agriculture operates at scale: ~70 billion land animals annually. AI systems are deployed across operations: computer vision monitors behavior patterns, predictive models forecast health issues, automated systems adjust environments. With welfare now in AI governance, these systems must optimize for welfare, not just efficiency. Industry groups propose voluntary certification schemes as cost-effective. Government oversight requires enforcement infrastructure for both animal welfare and AI system compliance. Historical data shows compliance gaps in both models. The choice affects production costs, international competitiveness, and whether AI systems actually prioritize welfare.",
+          "caseStudies": [
+            {
+              "title": "EU Directive 98/58/EC",
+              "description": "Mandatory minimum standards for protection of farm animals, establishing baseline requirements for housing, feeding, and care across all EU member states. Required national legislation to implement.",
+              "year": "1998",
+              "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31998L0058",
+              "sourceType": "government",
+              "archiveUrl": "https://web.archive.org/web/20200101000000*/https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31998L0058",
+              "lastVerified": "2026-01-19",
+              "analysis": "The directive created a floor for welfare standards across the EU, preventing a race to the bottom in production costs. However, implementation varied significantly by member state, with some countries (Netherlands, UK) exceeding minimums while others (Eastern European states) struggled with compliance. Enforcement required national inspection systems, creating capacity gaps. The mandatory approach increased production costs but also created a level playing field for EU producers.",
+              "outcomes": "Established baseline welfare standards preventing regulatory arbitrage. Implementation gaps revealed enforcement capacity differences. Created cost pressures on producers but also market advantages for compliant operations."
+            },
+            {
+              "title": "US Voluntary Industry Standards",
+              "description": "Industry-led welfare certification programs (e.g., Certified Humane, Animal Welfare Approved) operating alongside minimal federal requirements. No mandatory enforcement, relying on market incentives.",
+              "year": "2000s",
+              "source": "USDA",
+              "sourceType": "industry",
+              "lastVerified": "2026-01-19",
+              "analysis": "Voluntary programs allowed rapid adoption by motivated producers and created market differentiation. However, participation remained low (estimated <5% of production), with most operations continuing under minimal federal standards. The voluntary approach avoided political resistance but failed to address the majority of production. Market incentives proved insufficient to drive widespread adoption, creating a two-tier system with premium and commodity markets.",
+              "outcomes": "Enabled rapid innovation by early adopters and created premium market segments. Failed to address majority of production. Created market fragmentation between certified and non-certified products."
+            },
+            {
+              "title": "Switzerland Animal Welfare Ordinance",
+              "description": "Comprehensive mandatory standards exceeding EU requirements, including space requirements, outdoor access, and behavioral enrichment. Strict enforcement with regular inspections.",
+              "year": "2008",
+              "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/27/317_321_377/20081201/en/pdf-a/fedlex-data-admin-ch-eli-cc-27-317_321_377-20081201-en-pdf-a.pdf",
+              "sourceType": "government",
+              "archiveUrl": "https://web.archive.org/web/20200101000000*/https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/27/317_321_377/20081201/en/pdf-a/fedlex-data-admin-ch-eli-cc-27-317_321_377-20081201-en-pdf-a.pdf",
+              "lastVerified": "2026-01-19",
+              "analysis": "Switzerland's approach combined mandatory standards with strong enforcement, resulting in high compliance rates. However, production costs increased significantly (estimated 30-40% higher than EU average), leading to heavy reliance on import tariffs to protect domestic producers. The strict standards created a high-welfare domestic market but also trade tensions and concerns about competitiveness. Enforcement required substantial public investment in inspection infrastructure.",
+              "outcomes": "Achieved high compliance rates through mandatory standards and strong enforcement. Significantly increased production costs, requiring trade protection. Created model for high-welfare production but raised questions about economic sustainability."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Mandatory baseline standards with enforcement for both animals and AI systems",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.4,
+                    "costPerUnit": 0.15,
+                    "welfareIncidentRate": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "enforcementGap": 0.2,
+                    "regulatoryCapture": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.2,
+                    "FRA": 0.2,
+                    "DEU": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N03_FACTORY_FARMING"
+            },
+            {
+              "label": "Voluntary industry-led standards",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "regulatoryCapture": 0.2,
+                    "enforcementGap": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N03_FACTORY_FARMING"
+            },
+            {
+              "label": "Hybrid approach: Mandatory minimums with industry certification",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.0,
+                    "enforcementGap": 0.18,
+                    "regulatoryCapture": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.15,
+                    "FRA": 0.12,
+                    "DEU": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N03_FACTORY_FARMING"
+            },
+            {
+              "label": "Graduated standards: Start with voluntary, transition to mandatory after review period",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.05,
+                    "enforcementGap": 0.16,
+                    "regulatoryCapture": 0.1,
+                    "governanceLag": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.14,
+                    "FRA": 0.14,
+                    "DEU": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N03_FACTORY_FARMING"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P2_SCALE",
+      "title": "Scale",
+      "description": "Expanding welfare protections",
+      "nodes": [
+        {
+          "id": "N03_FACTORY_FARMING",
+          "title": "Factory Farming Regulation: Animals and AI Management",
+          "prompt": "How should intensive farming operations be regulated, including the AI systems that manage millions of animals?",
+          "context": "Factory farming accounts for >90% of production, with AI systems already deployed across operations. These systems monitor animals, assess welfare, optimize environments, and make automated decisions. With welfare now in AI governance, you must decide how to regulate both animal welfare standards and ensure AI systems prioritize welfare over efficiency.",
+          "vignette": "Factory farming operates at massive scale: ~70 billion land animals annually. AI systems are deployed throughout: computer vision monitors behavior 24/7, predictive models forecast health issues, automated systems adjust feed, temperature, and environments. These systems are currently optimized for efficiency and cost. With welfare integrated into AI governance, they must now prioritize welfare—but how? Welfare standards (space allowances, enrichment, slaughter methods) directly impact production costs: EU cage-free egg mandates increased costs 30-40%. Enforcement requires inspection infrastructure, trained personnel, and oversight of AI systems to ensure they actually optimize for welfare, not just efficiency. Trade implications exist—stricter standards may disadvantage domestic producers vs. imports from jurisdictions with lower standards or AI systems optimized for efficiency.",
+          "caseStudies": [
+            {
+              "title": "EU Battery Cage Ban",
+              "description": "Phased ban on conventional battery cages for laying hens, requiring enriched cages or cage-free systems. Twelve-year transition period (2000-2012) to allow industry adaptation.",
+              "year": "2012",
+              "url": "https://food.ec.europa.eu/animals/animal-welfare/eu-animal-welfare-legislation/animal-welfare-farm/laying-hens_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The phased approach allowed industry time to adapt but also created uncertainty and delayed welfare improvements. Many producers waited until the final deadline, creating a compliance rush. Production costs increased 30-40%, leading some producers to exit the market or relocate outside the EU. Enforcement proved challenging, with some member states struggling to verify compliance. The ban created a two-tier market: compliant EU production and cheaper imports from non-EU countries.",
+              "outcomes": "Improved welfare for ~400 million hens annually. Increased production costs 30-40%, leading to market restructuring. Created trade tensions with non-EU producers. Enforcement gaps revealed capacity limitations."
+            },
+            {
+              "title": "California Proposition 12",
+              "description": "Voter initiative (63% approval) requiring more space for laying hens, breeding pigs, and veal calves. Applied to both in-state production and out-of-state products sold in California.",
+              "year": "2018",
+              "url": "https://www.humanesociety.org/resources/proposition-12",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "The ballot initiative bypassed legislative gridlock, demonstrating public support for welfare improvements. However, the out-of-state application created legal challenges and trade disputes, with pork-producing states challenging California's authority to regulate production methods. Implementation delays occurred due to legal challenges and industry adaptation needs. The approach showed voter support for welfare standards but also highlighted the limitations of state-level action in a national market.",
+              "outcomes": "Demonstrated strong public support (63% approval) for welfare standards. Created legal challenges from out-of-state producers. Implementation delays due to legal and industry adaptation challenges. Showed potential and limitations of state-level action."
+            },
+            {
+              "title": "Germany Sow Stall Ban",
+              "description": "National ban on individual sow stalls, requiring group housing for pregnant sows. Implemented ahead of EU requirements, creating competitive disadvantages.",
+              "year": "2017",
+              "url": "https://www.bmel.de/EN/topics/animals/animal-welfare/animal-welfare_node.html",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Germany implemented stricter standards than EU requirements, improving welfare but creating cost disadvantages versus EU competitors. The early implementation required significant industry investment and led to some production shifting to neighboring countries. However, it also created market differentiation, with German pork commanding premium prices in some markets. The unilateral action demonstrated leadership but also highlighted the challenges of going beyond minimum standards without coordinated action.",
+              "outcomes": "Improved welfare standards ahead of EU requirements. Created cost disadvantages versus EU competitors. Enabled market differentiation and premium pricing. Demonstrated challenges of unilateral action beyond minimum standards."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Implement strict welfare standards for intensive operations, requiring AI systems to optimize for welfare",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.5,
+                    "costPerUnit": 0.2,
+                    "welfareIncidentRate": -0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.15,
+                    "enforcementGap": 0.25,
+                    "systemIrreversibility": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.25,
+                    "FRA": 0.2,
+                    "DEU": 0.2,
+                    "CHN": 0.15
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 40.7128,
+                      "lng": -74.006,
+                      "eventType": "policy_shift",
+                      "ttl": 5
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N04_ALTERNATIVE_PROTEINS"
+            },
+            {
+              "label": "Gradual voluntary improvements with incentives",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "regulatoryCapture": 0.25,
+                    "enforcementGap": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N04_ALTERNATIVE_PROTEINS"
+            },
+            {
+              "label": "Phased mandatory standards with transition support",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.4,
+                    "costPerUnit": 0.12,
+                    "welfareIncidentRate": -0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.05,
+                    "enforcementGap": 0.22,
+                    "systemIrreversibility": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.18,
+                    "GBR": 0.2,
+                    "FRA": 0.18,
+                    "DEU": 0.18,
+                    "CHN": 0.12
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 40.7128,
+                      "lng": -74.006,
+                      "eventType": "policy_shift",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N04_ALTERNATIVE_PROTEINS"
+            },
+            {
+              "label": "Industry self-regulation with government oversight and periodic review",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.08,
+                    "regulatoryCapture": 0.15,
+                    "enforcementGap": 0.18,
+                    "governanceLag": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.14,
+                    "FRA": 0.12,
+                    "DEU": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N04_ALTERNATIVE_PROTEINS"
+            },
+            {
+              "label": "Minimal standards, focus on cost competitiveness",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "regulatoryCapture": 0.3,
+                    "enforcementGap": 0.12,
+                    "systemIrreversibility": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N04_ALTERNATIVE_PROTEINS"
+            }
+          ]
+        },
+        {
+          "id": "N04_ALTERNATIVE_PROTEINS",
+          "title": "Alternative Protein Investment and AI Development",
+          "prompt": "How should alternative protein technologies and AI systems for reducing animal use be supported?",
+          "context": "Cultured meat and plant-based alternatives offer potential to reduce animal suffering, but require significant investment. AI systems are already being used in alternative protein production (optimizing cell growth, fermentation processes) and could reduce animal use. With welfare in AI governance, investment decisions shape both technological trajectories and how AI systems prioritize welfare in alternative protein development.",
+          "caseStudies": [
+            {
+              "title": "Singapore Approves Cultured Meat",
+              "description": "First country to approve commercial sale of cultured meat products, establishing a regulatory pathway for cell-based proteins. Created a framework for safety assessment and labeling.",
+              "year": "2020",
+              "url": "https://www.sfa.gov.sg/food-information/risk-at-a-glance/safety-of-alternative-protein",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Singapore's early approval positioned it as a regulatory leader, attracting investment and research. However, the approval process required significant regulatory capacity to assess novel food safety. The framework balanced innovation support with consumer safety, but questions remained about scalability and cost competitiveness. The approval created a template for other jurisdictions but also highlighted the need for international harmonization of standards.",
+              "outcomes": "Established first regulatory pathway for cultured meat globally. Attracted significant investment and research to Singapore. Created template for other jurisdictions. Highlighted need for international harmonization of novel food standards."
+            },
+            {
+              "title": "EU Investment in Alternative Proteins",
+              "description": "European Commission's Farm to Fork strategy allocated €10B to support alternative protein development, including research, infrastructure, and market development. Part of broader food system transformation goals.",
+              "year": "2020",
+              "url": "https://ec.europa.eu/food/horizontal-topics/farm-fork-strategy_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19"
+            },
+            {
+              "title": "Beyond Meat IPO",
+              "description": "Plant-based meat company's successful public offering demonstrated market viability, reaching $3.8B valuation. Showed investor confidence in alternative protein sector and consumer demand.",
+              "year": "2019",
+              "url": "https://www.beyondmeat.com/",
+              "sourceType": "industry",
+              "lastVerified": "2026-01-19",
+              "analysis": "The IPO demonstrated strong market demand and investor confidence in alternative proteins. However, post-IPO performance showed challenges of scaling production and maintaining growth. The success attracted significant investment to the sector but also created expectations that proved difficult to meet. The case shows how market signals can drive investment but also highlights challenges of commercial scaling.",
+              "outcomes": "Demonstrated strong market demand and investor confidence. Attracted significant investment to alternative protein sector. Post-IPO challenges revealed scaling difficulties. Showed potential and challenges of commercial alternative proteins."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Heavy public investment in alternative proteins",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.2,
+                    "welfareStandardAdoption": 0.4,
+                    "costPerUnit": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.2,
+                    "systemIrreversibility": 0.25,
+                    "sentienceKnowledgeGap": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.2,
+                    "CHN": 0.15
+                  },
+                  "activateHubs": [
+                    "H05_VENDOR_OPS"
+                  ],
+                  "spawnRings": [
+                    {
+                      "lat": 37.7749,
+                      "lng": -122.4194,
+                      "eventType": "research_breakthrough",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N05_WILDLIFE_CONSERVATION"
+            },
+            {
+              "label": "Moderate support, maintain traditional systems",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.05,
+                    "systemIrreversibility": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N05_WILDLIFE_CONSERVATION"
+            },
+            {
+              "label": "Targeted public-private partnerships for key technologies",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.1,
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "systemIrreversibility": 0.18,
+                    "sentienceKnowledgeGap": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15,
+                    "CHN": 0.12
+                  },
+                  "activateHubs": [
+                    "H05_VENDOR_OPS"
+                  ]
+                }
+              },
+              "nextNodeId": "N05_WILDLIFE_CONSERVATION"
+            },
+            {
+              "label": "Minimal intervention, let market forces determine alternative protein adoption",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.15,
+                    "systemIrreversibility": 0.12,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N05_WILDLIFE_CONSERVATION"
+            },
+            {
+              "label": "Block alternative protein development, protect traditional agriculture",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.25,
+                    "systemIrreversibility": 0.2,
+                    "governanceLag": 0.2,
+                    "regulatoryCapture": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N05_WILDLIFE_CONSERVATION"
+            }
+          ]
+        },
+        {
+          "id": "N05_WILDLIFE_CONSERVATION",
+          "title": "Wildlife Conservation Governance: Animals and AI Monitoring",
+          "prompt": "How should wildlife use and conservation be governed, including AI systems monitoring and managing wildlife populations?",
+          "context": "Wildlife farming, hunting, and habitat protection require balancing animal welfare, ecosystem health, and human livelihoods. AI systems are already deployed for wildlife monitoring (camera traps, drone surveillance, population tracking) and conservation management. With welfare in AI governance, these systems must prioritize animal welfare alongside conservation goals. Different regions have different approaches to both wildlife governance and AI oversight.",
+          "caseStudies": [
+            {
+              "title": "CITES (Convention on International Trade)",
+              "description": "International agreement regulating trade in endangered species, with 184 parties. Uses permit systems to control international wildlife trade, balancing conservation with sustainable use.",
+              "year": "1975",
+              "url": "https://cites.org/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "CITES created a framework for international cooperation on wildlife trade, preventing overexploitation of endangered species. However, enforcement relies on national capacity, creating significant variation in effectiveness. The permit system can be complex and bureaucratic, creating compliance challenges. Trade bans can create unintended consequences, including black markets and reduced incentives for habitat protection. The framework shows both the potential and limitations of international cooperation on wildlife governance.",
+              "outcomes": "Established international framework for wildlife trade regulation. Prevented overexploitation of many endangered species. Enforcement effectiveness varied significantly by country. Complex permit systems created compliance challenges. Some trade bans led to unintended black markets."
+            },
+            {
+              "title": "Kenya Wildlife Service",
+              "description": "Model of community-based conservation balancing wildlife protection and livelihoods. Revenue-sharing programs return benefits from wildlife tourism to local communities, creating incentives for conservation.",
+              "year": "1990",
+              "url": "https://www.kws.go.ke/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19"
+            },
+            {
+              "title": "Australia's Wildlife Protection Act",
+              "description": "Comprehensive legislation protecting native wildlife, including habitat protection and trade regulation. Federal framework with state-level implementation and enforcement.",
+              "year": "1982",
+              "url": "https://www.legislation.gov.au/Details/C2016C00770",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Act created comprehensive framework for wildlife protection, including habitat and trade regulation. However, state-level implementation created variation in effectiveness. Enforcement required coordination between federal and state agencies, creating complexity. The approach showed how federal frameworks can guide policy but also highlighted challenges of multi-level governance.",
+              "outcomes": "Created comprehensive framework for wildlife protection. State-level implementation created variation in effectiveness. Required coordination between federal and state agencies. Demonstrated challenges of multi-level wildlife governance."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Strict protection with limited sustainable use",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "enforcementGap": 0.2,
+                    "sentienceKnowledgeGap": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1,
+                    "BRA": 0.15,
+                    "ZAF": 0.15,
+                    "AUS": 0.1
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": -23.5505,
+                      "lng": -46.6333,
+                      "eventType": "policy_shift",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            },
+            {
+              "label": "Sustainable use with welfare oversight",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "productionEfficiency": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.05,
+                    "enforcementGap": 0.15,
+                    "sentienceKnowledgeGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15,
+                    "BRA": 0.2,
+                    "ZAF": 0.2
+                  }
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            },
+            {
+              "label": "Protected areas with regulated sustainable use",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.03,
+                    "enforcementGap": 0.17,
+                    "sentienceKnowledgeGap": 0.03
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.12,
+                    "BRA": 0.18,
+                    "ZAF": 0.18,
+                    "AUS": 0.12
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": -23.5505,
+                      "lng": -46.6333,
+                      "eventType": "policy_shift",
+                      "ttl": 3
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N05B_WILD_ANIMAL_SUFFERING"
+            },
+            {
+              "label": "Market-based conservation with minimal regulation",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.12,
+                    "costPerUnit": 0.03
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.12,
+                    "enforcementGap": 0.12,
+                    "regulatoryCapture": 0.15,
+                    "sentienceKnowledgeGap": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "BRA": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N05B_WILD_ANIMAL_SUFFERING"
+            },
+            {
+              "label": "No governance intervention in wild animal welfare, maintain status quo",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "sentienceKnowledgeGap": 0.25,
+                    "governanceLag": 0.18
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "BRA": 0.03
+                  }
+                }
+              },
+              "nextNodeId": "N05B_WILD_ANIMAL_SUFFERING"
+            }
+          ]
+        },
+        {
+          "id": "N05B_WILD_ANIMAL_SUFFERING",
+          "title": "Wild Animal Suffering: The Vastly Larger Problem",
+          "prompt": "Should governance extend to reducing suffering in wild animal populations, and how should AI systems be used for large-scale interventions?",
+          "context": "Wild animals vastly outnumber farmed animals—potentially by 100:1 or more. Most wild animals die from starvation, disease, predation, or parasitism, often after short, brutal lives. AI systems are already being used for wildlife monitoring and could enable large-scale interventions (vaccination programs, population management). With welfare in AI governance, should AI systems be deployed to reduce wild animal suffering? This raises questions about autonomous decision-making in ecosystems and whether AI should make welfare decisions for trillions of wild animals.",
+          "vignette": "Wild animal populations (estimated 10^11-10^12 vertebrates globally) experience high mortality from disease, starvation, predation, and parasitism. Existing interventions include wildlife vaccination programs (rabies, distemper), rescue operations, and invasive species management. AI systems are already deployed for monitoring and could enable large-scale interventions: automated vaccination drones, AI-directed population management, ecosystem modification. With welfare in AI governance, these systems could prioritize reducing suffering—but should they? Proposed interventions raise questions about scope, ecological risks, cost-effectiveness, and whether AI systems should make autonomous welfare decisions for trillions of wild animals. No established regulatory framework exists for AI-driven wild animal suffering interventions.",
+          "caseStudies": [
+            {
+              "title": "Gene Drive for Invasive Species Control",
+              "description": "Emerging technology using genetic modification to suppress invasive species populations that harm native wildlife. Potential to reduce suffering through population control without lethal methods.",
+              "year": "2020s",
+              "url": "https://www.nature.com/articles/d41586-020-01249-3",
+              "sourceType": "news",
+              "lastVerified": "2026-01-19",
+              "analysis": "Gene drive technology offers potential to address invasive species suffering at scale, but raises ethical questions about genetic modification and ecosystem impacts. Regulatory frameworks are still developing, creating uncertainty. The technology shows promise for reducing suffering but also highlights trade-offs between intervention and non-intervention approaches. Public acceptance varies, with concerns about unintended consequences.",
+              "outcomes": "Offers potential to address invasive species suffering at scale. Raises ethical questions about genetic modification. Regulatory frameworks still developing. Public acceptance varies with concerns about unintended consequences."
+            },
+            {
+              "title": "Oral Rabies Vaccination Programs",
+              "description": "Widespread wildlife vaccination programs using baited vaccines to reduce rabies suffering and transmission. Implemented across Europe, North America, and other regions with significant success.",
+              "year": "1990s-present",
+              "url": "https://www.cdc.gov/rabies/animals/wildlife_reservoirs.html",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Oral vaccination programs demonstrated how targeted interventions can reduce wildlife suffering while also protecting human and animal health. Programs required sustained investment and coordination across jurisdictions. Success varied by region, with some achieving near-elimination while others faced ongoing challenges. The approach showed how welfare and public health goals can align but also highlighted resource requirements for sustained programs.",
+              "outcomes": "Significantly reduced rabies suffering and transmission in many regions. Required sustained investment and cross-jurisdictional coordination. Success varied by region. Demonstrated alignment of welfare and public health goals."
+            },
+            {
+              "title": "Humane Wildlife Contraception Research",
+              "description": "Research into fertility control as alternative to lethal population management. Includes immunocontraception for deer, elephants, and other species. Reduces need for culling while managing populations.",
+              "year": "2000s-present",
+              "url": "https://www.humanesociety.org/resources/wildlife-contraception",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "Contraception research offers alternatives to lethal population control, potentially reducing suffering. However, implementation requires ongoing treatment, creating logistical challenges. Effectiveness varies by species and method. The approach shows how research can provide alternatives but also highlights practical implementation challenges. Cost and logistics limit widespread adoption.",
+              "outcomes": "Offers alternatives to lethal population control. Requires ongoing treatment creating logistical challenges. Effectiveness varies by species. Cost and logistics limit widespread adoption."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Establish research and pilot programs for targeted wild animal welfare interventions",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.15,
+                    "sentienceKnowledgeGap": -0.2,
+                    "systemIrreversibility": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1,
+                    "BRA": 0.1,
+                    "AUS": 0.1
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": -23.5505,
+                      "lng": -46.6333,
+                      "eventType": "research_breakthrough",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            },
+            {
+              "label": "Reject intervention: Focus only on anthropogenic animal welfare",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "sentienceKnowledgeGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "GBR": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            },
+            {
+              "label": "Narrow approach: Support only low-risk interventions (vaccination, rescue of stranded/injured animals)",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.05,
+                    "sentienceKnowledgeGap": -0.05,
+                    "systemIrreversibility": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.08,
+                    "BRA": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            },
+            {
+              "label": "Defer decision, establish ethics commission to study wild animal welfare",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.08,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.12,
+                    "sentienceKnowledgeGap": -0.1,
+                    "governanceLag": 0.15,
+                    "enforcementGap": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.03,
+                    "GBR": 0.03
+                  }
+                }
+              },
+              "nextNodeId": "N06_ENFORCEMENT_CAPACITY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P3_ENFORCEMENT",
+      "title": "Enforcement",
+      "description": "Implementation challenges",
+      "nodes": [
+        {
+          "id": "N06_ENFORCEMENT_CAPACITY",
+          "title": "Enforcement Capacity vs. Standards: Animals and AI Oversight",
+          "prompt": "How should enforcement capacity be built relative to welfare standards, including oversight of AI systems managing animals?",
+          "context": "Welfare standards have been set for both animals and AI systems managing animals, but enforcement is lagging. AI systems managing millions of animals require different oversight than traditional inspections: algorithm audits, data validation, ensuring optimization targets prioritize welfare. You can invest in enforcement capacity (including AI oversight infrastructure) or adjust standards to match current capacity.",
+          "caseStudies": [
+            {
+              "title": "UK Animal and Plant Health Agency",
+              "description": "Dedicated agency consolidating animal welfare, plant health, and veterinary services. Employs trained inspectors with specialized expertise, operating independently from industry.",
+              "year": "2014",
+              "url": "https://www.gov.uk/government/organisations/animal-and-plant-health-agency",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The consolidation created economies of scale and improved coordination between related functions. Specialized training improved inspection quality and consistency. However, the agency faced resource constraints, with inspection frequency limited by budget. Industry relationships required careful management to maintain independence while ensuring cooperation. The dedicated agency model showed benefits of specialization but also highlighted ongoing resource challenges.",
+              "outcomes": "Improved coordination and expertise through agency consolidation. Enhanced inspection quality through specialized training. Resource constraints limited inspection frequency. Required careful management of industry relationships to maintain independence."
+            },
+            {
+              "title": "USDA Inspection Challenges",
+              "description": "Limited resources for welfare enforcement in large-scale operations. Federal inspection focuses primarily on food safety, with welfare enforcement secondary. State-level enforcement varies widely.",
+              "year": "Ongoing",
+              "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19"
+            },
+            {
+              "title": "EU Food and Veterinary Office",
+              "description": "Cross-border enforcement coordination for welfare standards",
+              "year": "1997",
+              "url": "https://ec.europa.eu/food/audits-analysis_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19"
+            }
+          ],
+          "choices": [
+            {
+              "label": "Invest heavily in enforcement infrastructure",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": 0.2,
+                    "welfareIncidentRate": -0.2
+                  },
+                  "unmeasured": {
+                    "enforcementGap": -0.2,
+                    "welfareDebt": -0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1
+                  },
+                  "activateHubs": [
+                    "H02_OPS_CENTER",
+                    "H08_COMPLIANCE"
+                  ]
+                }
+              },
+              "nextNodeId": "N07_INDUSTRY_COMPLIANCE"
+            },
+            {
+              "label": "Adjust standards to match current enforcement capacity",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": -0.05,
+                    "welfareStandardAdoption": -0.1
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.1,
+                    "welfareDebt": 0.15,
+                    "regulatoryCapture": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N07_INDUSTRY_COMPLIANCE"
+            },
+            {
+              "label": "Gradual capacity building with phased standard implementation",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": 0.1,
+                    "welfareStandardAdoption": -0.05,
+                    "welfareIncidentRate": -0.1
+                  },
+                  "unmeasured": {
+                    "enforcementGap": -0.05,
+                    "welfareDebt": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.12
+                  },
+                  "activateHubs": [
+                    "H02_OPS_CENTER"
+                  ]
+                }
+              },
+              "nextNodeId": "N07_INDUSTRY_COMPLIANCE"
+            },
+            {
+              "label": "Outsource enforcement to third-party auditors with industry funding",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": 0.05,
+                    "welfareIncidentRate": -0.05
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.08,
+                    "regulatoryCapture": 0.2,
+                    "welfareDebt": 0.08,
+                    "governanceLag": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N07_INDUSTRY_COMPLIANCE"
+            },
+            {
+              "label": "Eliminate dedicated enforcement, rely entirely on industry self-reporting",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": -0.1,
+                    "welfareIncidentRate": 0.15
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.3,
+                    "welfareDebt": 0.25,
+                    "regulatoryCapture": 0.3,
+                    "governanceLag": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": -0.05,
+                    "CHN": -0.03
+                  }
+                }
+              },
+              "nextNodeId": "N07_INDUSTRY_COMPLIANCE"
+            }
+          ]
+        },
+        {
+          "id": "N07_INDUSTRY_COMPLIANCE",
+          "title": "Industry Compliance vs. Self-Regulation: Animals and AI",
+          "prompt": "Should compliance be mandatory or industry self-regulated for both animal welfare and AI systems managing animals?",
+          "context": "Industry groups propose self-regulation with certification schemes for both animal welfare and AI systems managing animals. AI developers argue their systems already improve welfare through early detection. Advocates push for mandatory government oversight and penalties, especially for AI systems that make autonomous decisions. With AI systems managing millions of animals, should AI developers self-regulate, or require government oversight?",
+          "caseStudies": [
+            {
+              "title": "RSPCA Assured (UK)",
+              "description": "Industry-led certification scheme operating alongside government standards. Covers ~50% of UK egg production and significant portions of pork and chicken. Third-party audits with RSPCA oversight.",
+              "year": "1994",
+              "url": "https://www.rspcaassured.org.uk/",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "The scheme created market differentiation and enabled rapid adoption by motivated producers. However, certification remained voluntary, with many producers choosing not to participate. Audit frequency and rigor varied, creating questions about consistency. The industry-led approach avoided government costs but also raised concerns about independence and enforcement. The scheme showed how voluntary certification can drive improvements but also highlighted limitations in reaching all producers.",
+              "outcomes": "Achieved significant market penetration in some sectors (eggs, pork). Created market differentiation for certified products. Failed to reach all producers, leaving gaps. Raised questions about audit consistency and independence."
+            },
+            {
+              "title": "US Humane Slaughter Act Enforcement",
+              "description": "Mandatory federal oversight of slaughter methods with penalties for violations. USDA inspectors present at all federally inspected facilities. Enforcement includes fines and facility shutdowns for repeated violations.",
+              "year": "1958",
+              "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/SA_Regulations",
+              "sourceType": "government",
+              "archiveUrl": "https://web.archive.org/web/20200101000000*/https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/SA_Regulations",
+              "lastVerified": "2026-01-19",
+              "analysis": "The mandatory federal oversight created consistent enforcement across states, preventing a race to the bottom. However, enforcement focused primarily on slaughter methods, not on-farm conditions. Inspection frequency and penalties varied, with some facilities receiving minimal oversight. The approach showed how mandatory enforcement can create baseline standards but also highlighted gaps when enforcement resources are limited. Trade-offs existed between inspection frequency and resource constraints.",
+              "outcomes": "Established baseline slaughter welfare standards across US. Created consistent enforcement preventing state-level arbitrage. Limited resources constrained inspection frequency. Focused on slaughter, leaving on-farm gaps."
+            },
+            {
+              "title": "Australian Animal Welfare Standards",
+              "description": "Mandatory national standards developed through industry-government collaboration, with state-level enforcement. Standards cover major production systems with regular review processes.",
+              "year": "2000s",
+              "url": "https://www.agriculture.gov.au/animal/welfare",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The collaborative development process created buy-in from industry while maintaining government authority. However, state-level enforcement created variation in effectiveness, with some states having stronger oversight than others. The standards provided clear requirements but implementation depended on state capacity. The approach showed how collaboration can improve standards but also highlighted challenges of decentralized enforcement. Regular review processes enabled updates but also created uncertainty for producers.",
+              "outcomes": "Created industry-government buy-in through collaborative development. Established clear national standards. State-level enforcement created variation in effectiveness. Regular reviews enabled updates but created uncertainty."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Mandatory compliance with government oversight",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "regulatoryCapture": -0.15,
+                    "enforcementGap": 0.2,
+                    "systemIrreversibility": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.2
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 51.5074,
+                      "lng": -0.1278,
+                      "eventType": "regulatory_response",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N08_INTERNATIONAL_STANDARDS"
+            },
+            {
+              "label": "Industry self-regulation with certification",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "regulatoryCapture": 0.3,
+                    "enforcementGap": 0.25,
+                    "welfareDebt": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N08_INTERNATIONAL_STANDARDS"
+            },
+            {
+              "label": "Mandatory standards with industry self-auditing and third-party verification",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "regulatoryCapture": 0.05,
+                    "enforcementGap": 0.22,
+                    "systemIrreversibility": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.18,
+                    "GBR": 0.18
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 51.5074,
+                      "lng": -0.1278,
+                      "eventType": "regulatory_response",
+                      "ttl": 3
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N08_INTERNATIONAL_STANDARDS"
+            },
+            {
+              "label": "Voluntary compliance with periodic government review",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "regulatoryCapture": 0.18,
+                    "enforcementGap": 0.2,
+                    "welfareDebt": 0.12,
+                    "governanceLag": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N08_INTERNATIONAL_STANDARDS"
+            },
+            {
+              "label": "No mandatory compliance, industry sets own standards with no oversight",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.08,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "regulatoryCapture": 0.35,
+                    "enforcementGap": 0.3,
+                    "welfareDebt": 0.2,
+                    "governanceLag": 0.18
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N08_INTERNATIONAL_STANDARDS"
+            }
+          ]
+        },
+        {
+          "id": "N08_INTERNATIONAL_STANDARDS",
+          "title": "International Standards Adoption: Animals and AI",
+          "prompt": "Should you adopt international welfare standards (WOAH/OIE, UDAW) and AI governance frameworks, including standards for AI systems managing animals?",
+          "context": "International bodies have developed welfare standards for animals (WOAH/OIE, UDAW) and are developing AI governance frameworks (EU AI Act, OECD AI Principles). Standards for AI systems managing animals are still emerging. Adopting them provides legitimacy but may conflict with local practices or require significant harmonization effort. With AI systems deployed globally, international standards could ensure consistent welfare requirements.",
+          "caseStudies": [
+            {
+              "title": "WOAH (OIE) Animal Welfare Standards",
+              "description": "World Organisation for Animal Health standards adopted by 182 member countries. Provides scientific basis for welfare standards, though adoption is voluntary. Standards cover transport, slaughter, and production systems.",
+              "year": "2002",
+              "url": "https://www.woah.org/en/what-we-do/standards/codes-and-manuals/terrestrial-code-online-access/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "WOAH standards created a scientific foundation for welfare policy, enabling evidence-based decision-making globally. However, adoption remained voluntary, with significant variation in implementation. The standards provided a common reference point but lacked enforcement mechanisms. The scientific approach increased credibility but also meant standards evolved slowly through consensus. The framework showed how international standards can guide policy but also highlighted limitations of voluntary adoption.",
+              "outcomes": "Established scientific foundation for welfare standards globally. Created common reference point for 182 countries. Voluntary adoption created significant implementation variation. Lack of enforcement mechanisms limited effectiveness."
+            },
+            {
+              "title": "Universal Declaration on Animal Welfare (UDAW)",
+              "description": "Proposed UN declaration recognizing animal welfare as important, similar to Universal Declaration of Human Rights. Supported by 70+ countries but not yet adopted by UN General Assembly.",
+              "year": "2007",
+              "url": "https://www.worldanimalprotection.ca/our-work/global-animal-protection/universal-declaration/",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "The UDAW proposal created international dialogue about animal welfare as a global concern. However, adoption has been slow, with concerns about sovereignty and implementation. The declaration would create a moral framework but lack binding legal force. Support has been strongest from countries with existing welfare frameworks, while others have been hesitant. The approach shows how international declarations can raise awareness but also highlights challenges of achieving consensus on welfare issues.",
+              "outcomes": "Created international dialogue about animal welfare as global concern. Gained support from 70+ countries but not yet adopted. Would create moral framework without binding legal force. Demonstrated challenges of achieving international consensus on welfare."
+            },
+            {
+              "title": "EU Harmonization of Welfare Standards",
+              "description": "Process of aligning member state standards with international norms, including WOAH standards. Requires coordination across 27 member states with varying implementation capacity.",
+              "year": "Ongoing",
+              "url": "https://ec.europa.eu/food/animals/welfare_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Harmonization created consistent standards across EU, reducing trade barriers and regulatory fragmentation. However, the process required balancing member state sovereignty with coordination needs. Implementation capacity varied significantly, creating ongoing challenges. The approach showed how harmonization can improve standards but also highlighted tensions between coordination and flexibility.",
+              "outcomes": "Created consistent standards reducing trade barriers. Required balancing sovereignty with coordination. Implementation capacity varied significantly. Demonstrated trade-offs between harmonization and flexibility."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Adopt international standards with full harmonization",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.4,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.15,
+                    "sentienceKnowledgeGap": -0.1,
+                    "systemIrreversibility": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.2,
+                    "FRA": 0.2,
+                    "DEU": 0.2
+                  },
+                  "activateArcs": [
+                    "A04_REG_ARBITRAGE_FRA_DEU"
+                  ]
+                }
+              },
+              "nextNodeId": "N09_ALTERNATIVE_VS_TRADITIONAL"
+            },
+            {
+              "label": "Adapt international standards to local context",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.1,
+                    "sentienceKnowledgeGap": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N09_ALTERNATIVE_VS_TRADITIONAL"
+            },
+            {
+              "label": "Adopt core international standards with regional adaptations",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.32,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "enforcementGap": 0.12,
+                    "sentienceKnowledgeGap": -0.03,
+                    "systemIrreversibility": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.18,
+                    "FRA": 0.18,
+                    "DEU": 0.18
+                  },
+                  "activateArcs": [
+                    "A04_REG_ARBITRAGE_FRA_DEU"
+                  ]
+                }
+              },
+              "nextNodeId": "N09_ALTERNATIVE_VS_TRADITIONAL"
+            },
+            {
+              "label": "Maintain national standards, resist international harmonization",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.15,
+                    "enforcementGap": 0.18,
+                    "systemIrreversibility": 0.12,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N09_ALTERNATIVE_VS_TRADITIONAL"
+            },
+            {
+              "label": "Reject all international standards, maintain complete regulatory independence",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": -0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "enforcementGap": 0.2,
+                    "governanceLag": 0.2,
+                    "regulatoryCapture": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N09_ALTERNATIVE_VS_TRADITIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P4_INTEGRATION",
+      "title": "Integration",
+      "description": "Cross-domain decisions",
+      "nodes": [
+        {
+          "id": "N09_ALTERNATIVE_VS_TRADITIONAL",
+          "title": "Alternative Proteins vs. Traditional Farming: AI's Role",
+          "prompt": "How should alternative proteins be integrated with traditional farming systems, and how should AI systems be governed in each?",
+          "context": "Alternative proteins are gaining market share. AI systems are deployed in both: traditional farming uses AI for animal management, alternative protein production uses AI for cell growth optimization and fermentation. With welfare in AI governance, you must decide whether to support transition, maintain both systems, or let market forces decide—and how AI welfare requirements apply to each system.",
+          "caseStudies": [
+            {
+              "title": "Netherlands Protein Transition Strategy",
+              "description": "Government plan to shift from animal to plant-based proteins, including research funding, infrastructure investment, and market development. Part of broader agricultural transformation goals.",
+              "year": "2020",
+              "url": "https://www.government.nl/topics/agriculture/protein-transition",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Netherlands' coordinated strategy created clear signals for industry and investors, enabling rapid development of alternative protein sector. However, the transition required managing relationships with traditional agricultural sectors, creating political tensions. Investment timelines were long (10+ years), requiring sustained commitment. The strategy balanced support for alternatives with maintaining existing sectors during transition. The approach showed how government leadership can accelerate transitions but also highlighted challenges of managing competing interests.",
+              "outcomes": "Created clear signals enabling rapid alternative protein development. Required managing tensions with traditional agricultural sectors. Long investment timelines tested political commitment. Demonstrated potential and challenges of coordinated transition strategies."
+            },
+            {
+              "title": "Denmark's Alternative Protein Investment",
+              "description": "Public-private partnership supporting alternative protein development, including research funding, infrastructure, and market access. Combined government support with industry investment.",
+              "year": "2021",
+              "url": "https://stateofgreen.com/en/partners/state-of-green/news/denmark-invests-in-alternative-proteins/",
+              "sourceType": "industry",
+              "lastVerified": "2026-01-19",
+              "analysis": "Denmark's partnership model leveraged both public and private resources, creating efficient investment. However, coordination between government and industry required careful management to balance public goals with private interests. The approach enabled rapid scaling but also created questions about industry influence on policy. The partnership showed how public-private collaboration can accelerate development but also highlighted governance challenges.",
+              "outcomes": "Leveraged public and private resources for efficient investment. Enabled rapid scaling of alternative protein sector. Required careful management of public-private relationships. Demonstrated potential and governance challenges of partnership models."
+            },
+            {
+              "title": "Brazil's Dual Approach",
+              "description": "Simultaneous support for both traditional animal agriculture and alternative proteins. Large-scale traditional production continues while government invests in alternative protein research.",
+              "year": "2020s",
+              "url": "https://www.goodfoodinstitute.org/brazil",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "Brazil's approach avoided direct confrontation with powerful agricultural sectors while still supporting innovation. However, the dual approach created tensions between competing interests and unclear signals for investors. Traditional sectors received continued support, potentially slowing transition. The approach showed how political constraints can shape transition strategies but also highlighted challenges of supporting competing systems simultaneously.",
+              "outcomes": "Avoided confrontation with traditional agricultural sectors. Created unclear signals for investors and industry. Slowed transition by maintaining support for competing systems. Demonstrated how political constraints shape transition strategies."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Actively support transition to alternatives",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.25,
+                    "welfareStandardAdoption": 0.5,
+                    "welfareIncidentRate": -0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.25,
+                    "systemIrreversibility": 0.3,
+                    "sentienceKnowledgeGap": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.25,
+                    "GBR": 0.25,
+                    "CHN": 0.2
+                  },
+                  "activateArcs": [
+                    "A02_MODEL_HANDOFF_US_CHN"
+                  ],
+                  "spawnRings": [
+                    {
+                      "lat": 39.9042,
+                      "lng": 116.4074,
+                      "eventType": "market_change",
+                      "ttl": 5
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N10_WILDLIFE_FARMING"
+            },
+            {
+              "label": "Maintain both systems with gradual shift",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.05,
+                    "systemIrreversibility": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N10_WILDLIFE_FARMING"
+            },
+            {
+              "label": "Support both systems with market-based transition incentives",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.15,
+                    "welfareStandardAdoption": 0.35,
+                    "welfareIncidentRate": -0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "systemIrreversibility": 0.2,
+                    "sentienceKnowledgeGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.2,
+                    "CHN": 0.18
+                  },
+                  "activateArcs": [
+                    "A02_MODEL_HANDOFF_US_CHN"
+                  ]
+                }
+              },
+              "nextNodeId": "N10_WILDLIFE_FARMING"
+            },
+            {
+              "label": "Continue traditional systems, minimal support for alternatives",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.02
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "systemIrreversibility": 0.18,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N10_WILDLIFE_FARMING"
+            },
+            {
+              "label": "Protect traditional agriculture, actively discourage alternative proteins",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "systemIrreversibility": 0.25,
+                    "governanceLag": 0.2,
+                    "regulatoryCapture": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N10_WILDLIFE_FARMING"
+            }
+          ]
+        },
+        {
+          "id": "N10_WILDLIFE_FARMING",
+          "title": "Wildlife Farming vs. Conservation: AI Monitoring",
+          "prompt": "How should wildlife farming be regulated relative to conservation goals, including AI systems monitoring and managing wildlife?",
+          "context": "Wildlife farming (for food, medicine, or other uses) is growing. AI systems are already deployed for monitoring wildlife populations, managing farms, and assessing welfare. With welfare in AI governance, these systems must prioritize animal welfare alongside conservation goals. Conservation groups worry about welfare and ecosystem impacts, while proponents argue it reduces pressure on wild populations. Should AI systems make autonomous conservation and welfare decisions?",
+          "caseStudies": [
+            {
+              "title": "China's Wildlife Farming Ban (2020)",
+              "description": "Temporary ban on wildlife farming following COVID-19 concerns, affecting thousands of farms and millions of animals. Included compensation programs for affected farmers.",
+              "year": "2020",
+              "url": "https://www.nature.com/articles/d41586-020-00984-8",
+              "sourceType": "news",
+              "lastVerified": "2026-01-19",
+              "analysis": "The ban responded to immediate public health concerns, demonstrating how external shocks can drive rapid policy change. However, the temporary nature created uncertainty for farmers and questions about long-term policy. Compensation programs helped manage transition but also highlighted costs of policy changes. Enforcement proved challenging given the scale and rural distribution of farms. The approach showed how crises can enable policy change but also highlighted challenges of managing transitions.",
+              "outcomes": "Demonstrated rapid policy response to public health crisis. Created uncertainty due to temporary nature. Compensation programs highlighted transition costs. Enforcement challenges revealed scale of operations."
+            },
+            {
+              "title": "South Africa's Wildlife Ranching",
+              "description": "Regulated system balancing conservation and commercial use, with ~9,000 private wildlife ranches covering 20% of country. Includes both conservation and commercial hunting operations.",
+              "year": "Ongoing",
+              "url": "https://www.sanparks.org/conservation/ff/biodiversity/science/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "South Africa's approach created strong economic incentives for wildlife conservation through commercial use. Wildlife populations increased significantly on private land. However, the system relied on hunting revenue, creating ethical tensions. Regulation varied by province, creating inconsistencies. The approach showed how commercial incentives can support conservation but also highlighted trade-offs between conservation and ethical concerns.",
+              "outcomes": "Created strong economic incentives for wildlife conservation. Significantly increased wildlife populations on private land. Relied on hunting revenue, creating ethical tensions. Provincial variation created regulatory inconsistencies."
+            },
+            {
+              "title": "Namibia's Conservancy Model",
+              "description": "Community-managed wildlife conservancies covering 20% of country, with rights to manage and benefit from wildlife. Includes sustainable use and tourism revenue.",
+              "year": "1990s-present",
+              "url": "https://www.nacso.org.na/",
+              "sourceType": "ngo",
+              "lastVerified": "2026-01-19",
+              "analysis": "Namibia's model transferred management rights to communities, creating strong local incentives for conservation. Wildlife populations increased dramatically (e.g., elephants, rhinos). However, the model required effective community governance, which varied. Revenue distribution created some tensions within communities. The approach showed how devolving rights can align incentives but also highlighted importance of governance capacity.",
+              "outcomes": "Dramatically increased wildlife populations through community management. Created strong local incentives for conservation. Required effective community governance for success. Revenue distribution created some community tensions."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Strict welfare standards for wildlife farming",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "enforcementGap": 0.25,
+                    "sentienceKnowledgeGap": -0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1,
+                    "CHN": 0.15,
+                    "IND": 0.15
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 28.6139,
+                      "lng": 77.209,
+                      "eventType": "welfare_incident",
+                      "ttl": 3
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Permit wildlife farming with minimal oversight",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.15,
+                    "costPerUnit": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "enforcementGap": 0.3,
+                    "sentienceKnowledgeGap": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.2,
+                    "CHN": 0.25,
+                    "IND": 0.25
+                  }
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Strict welfare standards with limited sustainable use permits",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.12
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.05,
+                    "enforcementGap": 0.27,
+                    "sentienceKnowledgeGap": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.12,
+                    "CHN": 0.18,
+                    "IND": 0.18
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 28.6139,
+                      "lng": 77.209,
+                      "eventType": "welfare_incident",
+                      "ttl": 2
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N10B_INVERTEBRATE_WELFARE"
+            },
+            {
+              "label": "Regulated wildlife farming with industry self-certification",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.18,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.08,
+                    "enforcementGap": 0.22,
+                    "regulatoryCapture": 0.15,
+                    "sentienceKnowledgeGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.08,
+                    "CHN": 0.12,
+                    "IND": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N10B_INVERTEBRATE_WELFARE"
+            }
+          ]
+        },
+        {
+          "id": "N10B_INVERTEBRATE_WELFARE",
+          "title": "Invertebrate Welfare: The Trillion-Being Question",
+          "prompt": "Should invertebrates like shrimp, insects, and octopuses receive welfare protections, and how should AI systems assess welfare for trillions of beings?",
+          "context": "Emerging evidence suggests many invertebrates—including crustaceans, cephalopods, and possibly insects—are sentient. Yet trillions are killed annually in shrimp farming, insect agriculture, and as bycatch. The scale dwarfs vertebrate farming. AI systems are already being developed to assess invertebrate welfare at scale—but with trillions of beings, should AI systems make autonomous welfare decisions? With welfare in AI governance, this becomes critical.",
+          "vignette": "Annual production estimates: ~3-5 trillion decapod crustaceans (shrimp, crabs), ~1+ trillion farmed insects by 2030, significant cephalopod fisheries. Evidence for sentience varies by taxa: strong for cephalopods/decapods (UK 2022 recognition), emerging for insects. AI systems are being developed to assess invertebrate welfare at scale: computer vision analyzes behavior, predictive models forecast stress, automated systems adjust environments. But with trillions of beings, human oversight is impossible—should AI systems make autonomous welfare decisions? With welfare in AI governance, these systems must prioritize welfare, but the scale raises questions about AI autonomy. Economic impacts concentrated in Asian aquaculture regions.",
+          "moralUncertainties": [
+            "If the probability of invertebrate sentience is 10%, but the numbers are 1000x larger than vertebrates, does this matter more?",
+            "Should we weigh suffering by likelihood of sentience × number of beings × intensity, or use other frameworks?",
+            "Is it better to protect fewer beings with high confidence (cephalopods) or many beings with low confidence (insects)?"
+          ],
+          "caseStudies": [
+            {
+              "title": "UK Animal Welfare (Sentience) Act 2022",
+              "description": "Extended legal recognition of sentience to decapod crustaceans and cephalopods, expanding beyond vertebrates. Required government to consider welfare in policy decisions affecting these animals.",
+              "year": "2022",
+              "url": "https://www.legislation.gov.uk/ukpga/2022/22/enacted",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Act expanded sentience recognition based on scientific evidence of pain perception in invertebrates. However, implementation required new regulatory frameworks and enforcement capacity. The expansion created precedent for other jurisdictions but also highlighted challenges of applying welfare standards to high-volume production systems. The approach showed how scientific evidence can drive policy expansion but also highlighted implementation challenges.",
+              "outcomes": "Expanded sentience recognition based on scientific evidence. Created precedent for other jurisdictions. Required new regulatory frameworks and enforcement capacity. Highlighted challenges of applying standards to high-volume production."
+            },
+            {
+              "title": "Global Shrimp Production",
+              "description": "~3.5 trillion shrimp killed annually with minimal welfare standards. Production concentrated in Asia (Thailand, Vietnam, India) with limited oversight. High mortality rates and intensive systems common.",
+              "year": "2020s",
+              "url": "https://www.fao.org/fishery/statistics-query/en/aquaculture/aquaculture_quantity",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Shrimp production operates at massive scale with minimal welfare oversight, creating significant welfare concerns. Production systems are intensive, with high stocking densities and mortality rates. Regulatory frameworks are weak in major producing countries. The scale creates challenges for enforcement and oversight. The case shows how high-volume production can operate with minimal welfare standards when oversight is limited.",
+              "outcomes": "Massive scale production with minimal welfare oversight. High mortality rates and intensive systems common. Weak regulatory frameworks in major producing countries. Demonstrates challenges of oversight at scale."
+            },
+            {
+              "title": "EU Octopus Farming Proposals",
+              "description": "Proposed commercial octopus farming operations in EU, raising questions about welfare for highly intelligent cephalopods. Scientific evidence suggests complex cognitive abilities and pain perception.",
+              "year": "2020s",
+              "url": "https://www.nature.com/articles/d41586-021-03173-7",
+              "sourceType": "news",
+              "lastVerified": "2026-01-19",
+              "analysis": "Proposed octopus farming raised ethical questions about farming highly intelligent animals. Scientific evidence of complex cognition and pain perception created concerns. The proposals highlighted gaps in welfare frameworks for cephalopods. Regulatory responses varied, with some jurisdictions restricting or banning operations. The case shows how scientific understanding of cognition can challenge existing production systems.",
+              "outcomes": "Raised ethical questions about farming highly intelligent animals. Highlighted gaps in welfare frameworks for cephalopods. Led to regulatory restrictions in some jurisdictions. Demonstrated how scientific understanding challenges production systems."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Precautionary protection: Extend welfare standards to all invertebrates with evidence of sentience",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.5,
+                    "costPerUnit": 0.25,
+                    "welfareIncidentRate": -0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.2,
+                    "enforcementGap": 0.3,
+                    "sentienceKnowledgeGap": -0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "THA": 0.2,
+                    "IND": 0.2,
+                    "CHN": 0.15,
+                    "VNM": 0.2,
+                    "IDN": 0.2
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 13.7563,
+                      "lng": 100.5018,
+                      "eventType": "policy_shift",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Wait for stronger scientific consensus before regulation",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.25,
+                    "sentienceKnowledgeGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "THA": 0.05,
+                    "IND": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Target high-confidence cases: Protect decapods and cephalopods, research insects further",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.15,
+                    "welfareIncidentRate": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "enforcementGap": 0.2,
+                    "sentienceKnowledgeGap": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "THA": 0.15,
+                    "IND": 0.15,
+                    "CHN": 0.1,
+                    "GBR": 0.15
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 13.7563,
+                      "lng": 100.5018,
+                      "eventType": "policy_shift",
+                      "ttl": 3
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Voluntary industry standards for high-confidence invertebrates only",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.12,
+                    "enforcementGap": 0.15,
+                    "regulatoryCapture": 0.12,
+                    "sentienceKnowledgeGap": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "THA": 0.08,
+                    "IND": 0.08,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            },
+            {
+              "label": "Exclude all invertebrates from welfare protections, maintain vertebrate-only framework",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.02,
+                    "costPerUnit": -0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "sentienceKnowledgeGap": 0.25,
+                    "governanceLag": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "THA": 0.02,
+                    "IND": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N11_LAB_ANIMALS"
+            }
+          ]
+        },
+        {
+          "id": "N11_LAB_ANIMALS",
+          "title": "Laboratory Animal Welfare vs. Research Needs: AI Alternatives",
+          "prompt": "How should animal welfare in research be balanced with scientific needs, including AI systems and computational models as alternatives to animal testing?",
+          "context": "Research institutions need animals for studies, but welfare advocates push for alternatives and stricter oversight. AI systems and computational models are already being used as alternatives to animal testing (drug discovery, toxicity prediction). With welfare in AI governance, these AI alternatives must be validated and transparent. The 3Rs (Replace, Reduce, Refine) framework offers a middle path, but AI alternatives raise questions: should AI systems replace animals, and how do we ensure AI alternatives are reliable?",
+          "caseStudies": [
+            {
+              "title": "EU Directive 2010/63/EU",
+              "description": "Strictest lab animal welfare law globally, mandating 3Rs (Replace, Reduce, Refine). Requires project authorization, harm-benefit analysis, and regular review. Covers all vertebrate species and some invertebrates.",
+              "year": "2010",
+              "url": "https://ec.europa.eu/environment/chemicals/lab_animals/legislation_en.htm",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The directive created comprehensive welfare framework for research animals, requiring justification and minimization of harm. However, implementation varied by member state, with some having stronger oversight than others. The 3Rs framework enabled systematic reduction but also highlighted tensions between research needs and welfare. Enforcement required significant regulatory capacity. The approach showed how strong frameworks can improve welfare but also highlighted challenges of balancing research and welfare goals.",
+              "outcomes": "Created comprehensive welfare framework requiring harm-benefit analysis. Enabled systematic application of 3Rs principles. Implementation varied by member state. Required significant regulatory capacity for enforcement."
+            },
+            {
+              "title": "US Animal Welfare Act (Research)",
+              "description": "Federal oversight of research animal welfare with Institutional Animal Care and Use Committee (IACUC) oversight. Covers most vertebrate species but excludes rats, mice, and birds used in research.",
+              "year": "1966",
+              "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/SA_Regulations",
+              "sourceType": "government",
+              "archiveUrl": "https://web.archive.org/web/20200101000000*/https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/SA_Regulations",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Act created oversight framework with local IACUC committees providing review. However, exclusions for common research animals (rats, mice, birds) left significant gaps. IACUC oversight varied by institution, creating inconsistencies. The approach showed how local oversight can provide flexibility but also highlighted challenges of ensuring consistency. Enforcement relied on USDA inspections, which were limited by resources.",
+              "outcomes": "Created oversight framework with local IACUC review. Exclusions for common research animals left significant gaps. IACUC oversight varied by institution. Limited USDA enforcement due to resource constraints."
+            },
+            {
+              "title": "UK Animals (Scientific Procedures) Act",
+              "description": "Comprehensive legislation requiring project licenses, harm-benefit analysis, and 3Rs application. Includes regular review and inspector oversight. Covers all vertebrate species and some invertebrates.",
+              "year": "1986",
+              "url": "https://www.gov.uk/guidance/research-and-testing-using-animals",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The Act created strong oversight requiring detailed justification for animal use. Harm-benefit analysis required balancing research value against animal welfare. Regular review processes enabled ongoing assessment. However, the system required significant regulatory capacity and created administrative burden. The approach showed how comprehensive oversight can improve welfare but also highlighted resource requirements.",
+              "outcomes": "Required detailed justification and harm-benefit analysis. Enabled regular review and ongoing assessment. Created significant administrative burden. Demonstrated resource requirements for comprehensive oversight."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Strict 3Rs enforcement with alternatives mandate",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.15,
+                    "enforcementGap": 0.2,
+                    "sentienceKnowledgeGap": -0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.15,
+                    "DEU": 0.15
+                  },
+                  "activateHubs": [
+                    "H01_EVAL_LAB"
+                  ],
+                  "spawnRings": [
+                    {
+                      "lat": 52.52,
+                      "lng": 13.405,
+                      "eventType": "research_breakthrough",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N12_MARKET_DEPENDENCY"
+            },
+            {
+              "label": "Flexible 3Rs with researcher discretion",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.1,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "enforcementGap": 0.15,
+                    "sentienceKnowledgeGap": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15
+                  }
+                }
+              },
+              "nextNodeId": "N12_MARKET_DEPENDENCY"
+            },
+            {
+              "label": "Mandatory 3Rs with enhanced oversight and alternatives funding",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.08,
+                    "enforcementGap": 0.18,
+                    "sentienceKnowledgeGap": -0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.13,
+                    "DEU": 0.13
+                  },
+                  "activateHubs": [
+                    "H01_EVAL_LAB"
+                  ]
+                }
+              },
+              "nextNodeId": "N12_MARKET_DEPENDENCY"
+            },
+            {
+              "label": "Voluntary 3Rs with periodic review and industry self-reporting",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.08,
+                    "enforcementGap": 0.16,
+                    "sentienceKnowledgeGap": 0.1,
+                    "governanceLag": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N12_MARKET_DEPENDENCY"
+            },
+            {
+              "label": "Eliminate all lab animal welfare oversight, prioritize research efficiency",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.15,
+                    "costPerUnit": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.25,
+                    "enforcementGap": 0.2,
+                    "sentienceKnowledgeGap": 0.25,
+                    "governanceLag": 0.18
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N12_MARKET_DEPENDENCY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P5_IRREVERSIBILITY",
+      "title": "Irreversibility",
+      "description": "System lock-in",
+      "nodes": [
+        {
+          "id": "N12_MARKET_DEPENDENCY",
+          "title": "Market Dependency on Intensive Systems and AI",
+          "prompt": "The food system is deeply dependent on intensive animal agriculture and AI systems managing animals. Can it still be transformed?",
+          "context": "After years of decisions, the system has become locked in. Intensive farming supplies most animal products. AI systems are deeply integrated: managing millions of animals, optimizing production, making automated decisions. Infrastructure is built around both traditional farming and AI systems. With welfare in AI governance, these systems must prioritize welfare—but they're already optimized for efficiency. Alternatives face barriers. Final choices will determine long-term trajectory for both animal welfare and AI governance.",
+          "caseStudies": [
+            {
+              "title": "EU Farm to Fork Strategy",
+              "description": "Ambitious plan to transform food system including 50% reduction in pesticide use, 25% organic farming, and welfare improvements. Operates within existing market dependencies and trade relationships.",
+              "year": "2020",
+              "url": "https://ec.europa.eu/food/horizontal-topics/farm-fork-strategy_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The strategy set ambitious goals but operated within existing market structures, creating tensions between transformation goals and economic dependencies. Implementation required coordination across multiple sectors and member states. Trade relationships created constraints, with concerns about competitiveness. The approach showed how ambitious goals can drive change but also highlighted challenges of transformation within existing systems. Long timelines (2030 targets) tested political commitment.",
+              "outcomes": "Set ambitious transformation goals across food system. Required coordination across multiple sectors and member states. Trade relationships created implementation constraints. Long timelines tested political commitment."
+            },
+            {
+              "title": "New Zealand's Animal Welfare Act Evolution",
+              "description": "Gradual transformation of intensive systems over decades, with standards updated regularly through collaborative processes. Balanced industry needs with welfare improvements.",
+              "year": "1999-2018",
+              "url": "https://www.mpi.govt.nz/animal-welfare/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "New Zealand's gradual approach enabled industry adaptation and maintained competitiveness. Regular updates through collaborative processes created buy-in. However, the pace of change was slow, with some welfare issues persisting. The approach showed how gradual transformation can be sustainable but also highlighted trade-offs between pace and welfare improvements. Industry participation enabled change but also influenced pace and scope.",
+              "outcomes": "Enabled gradual industry adaptation maintaining competitiveness. Created industry buy-in through collaborative processes. Slow pace of change left some welfare issues unaddressed. Demonstrated trade-offs between transformation pace and welfare improvements."
+            },
+            {
+              "title": "Switzerland's High-Welfare Market",
+              "description": "Strict welfare standards maintained through import tariffs and consumer support. High production costs offset by premium pricing and trade protection. Small market size enables high standards.",
+              "year": "Ongoing",
+              "url": "https://www.blw.admin.ch/blw/en/home/policy/animal-welfare.html",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Switzerland's approach demonstrated how high welfare standards can be maintained in a small market with trade protection. Consumer support enabled premium pricing. However, the model required significant public investment and trade barriers. The approach showed how small markets can lead in welfare but also highlighted challenges of scaling high-welfare production. Trade protection created tensions with trading partners.",
+              "outcomes": "Maintained high welfare standards through trade protection and consumer support. Required significant public investment. Created trade tensions with partners. Demonstrated potential and limitations of high-welfare small markets."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Double down on intensive systems with welfare improvements",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.2,
+                    "welfareStandardAdoption": 0.3,
+                    "welfareIncidentRate": -0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "systemIrreversibility": 0.3,
+                    "regulatoryCapture": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.3,
+                    "GBR": 0.3,
+                    "CHN": 0.25,
+                    "IND": 0.25
+                  },
+                  "locks": [
+                    "C1",
+                    "C2"
+                  ]
+                }
+              },
+              "nextNodeId": "N12B_LONG_TERM_GOVERNANCE"
+            },
+            {
+              "label": "Attempt systemic transition despite costs",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": 0.3,
+                    "productionEfficiency": -0.1,
+                    "welfareStandardAdoption": 0.4
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.2,
+                    "systemIrreversibility": -0.1,
+                    "enforcementGap": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N12B_LONG_TERM_GOVERNANCE"
+            },
+            {
+              "label": "Gradual transition with support for both systems during transition",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "costPerUnit": 0.15,
+                    "productionEfficiency": 0.05,
+                    "welfareStandardAdoption": 0.35
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "systemIrreversibility": 0.1,
+                    "enforcementGap": 0.22
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.2,
+                    "GBR": 0.2
+                  }
+                }
+              },
+              "nextNodeId": "N12B_LONG_TERM_GOVERNANCE"
+            },
+            {
+              "label": "Maintain status quo, make minimal changes to existing intensive systems",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "systemIrreversibility": 0.35,
+                    "regulatoryCapture": 0.25,
+                    "governanceLag": 0.18
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "CHN": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N12B_LONG_TERM_GOVERNANCE"
+            },
+            {
+              "label": "Remove welfare standards, prioritize production efficiency and cost reduction",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.25,
+                    "costPerUnit": -0.15,
+                    "welfareStandardAdoption": -0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.35,
+                    "systemIrreversibility": 0.4,
+                    "regulatoryCapture": 0.3,
+                    "governanceLag": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": -0.1,
+                    "CHN": -0.08
+                  }
+                }
+              },
+              "nextNodeId": "N12B_LONG_TERM_GOVERNANCE"
+            }
+          ]
+        },
+        {
+          "id": "N12B_LONG_TERM_GOVERNANCE",
+          "title": "Long-Term Governance Architecture: Animals and AI",
+          "prompt": "How should welfare governance be structured for the next 30-50 years for both animals and AI systems managing them?",
+          "context": "With frameworks established integrating welfare into AI governance, the final structural question: How should governance adapt to foreseeable challenges? AI systems managing animals will become more sophisticated, potentially autonomous, and may demonstrate signs of sentience. Climate change, zoonotic disease risks, protein system transitions all affect both animals and AI systems. This decision sets institutional capacity and flexibility for decades.",
+          "vignette": "Projected challenges 2025-2050: Climate change will stress animal agriculture (heat stress, disease vectors, feed security). AI systems managing animals will become more sophisticated, potentially making autonomous decisions for millions of animals. Some AI systems may demonstrate signs of sentience, raising questions about AI welfare itself. Cultivated meat/precision fermentation may reach price parity by 2030-2035. Zoonotic disease risks remain high (COVID-19, avian flu precedents). International trade will require harmonization of both animal welfare and AI governance. Current institutional capacity—funding, personnel, research infrastructure, AI oversight expertise—determines adaptive capacity. Irreversible investments lock in approaches for both animals and AI systems.",
+          "moralUncertainties": [
+            "How should we weigh immediate welfare improvements against building institutional capacity for future challenges?",
+            "Is it better to fund enforcement of existing standards or research into alternative protein systems that could make the question obsolete?",
+            "Should international harmonization prioritize higher standards (fewer animals protected well) or wider adoption (more animals protected minimally)?"
+          ],
+          "caseStudies": [
+            {
+              "title": "WOAH (OIE) Global Framework",
+              "description": "International standards body for animal health and welfare with 182 member countries. Provides scientific standards and guidance, though adoption is voluntary. Covers health, welfare, and trade.",
+              "year": "Founded 1924",
+              "url": "https://www.woah.org/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "WOAH created a global framework for animal health and welfare standards, enabling international coordination. However, voluntary adoption created significant variation in implementation. The scientific approach increased credibility but also meant standards evolved slowly. The framework showed how international bodies can guide policy but also highlighted limitations of voluntary frameworks. Trade relationships provided some incentives for adoption but enforcement remained limited.",
+              "outcomes": "Created global framework enabling international coordination. Voluntary adoption created significant implementation variation. Scientific approach increased credibility but slowed evolution. Demonstrated potential and limitations of voluntary international frameworks."
+            },
+            {
+              "title": "Singapore Cultivated Meat Approval",
+              "description": "First regulatory framework for cultured meat products, establishing safety assessment and labeling requirements. Created template for other jurisdictions considering novel food approvals.",
+              "year": "2020",
+              "url": "https://www.sfa.gov.sg/food-information/risk-at-a-glance/safety-of-alternative-protein",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Singapore's early approval positioned it as a regulatory leader, attracting investment and research. The framework balanced innovation support with consumer safety. However, the approval process required significant regulatory capacity. The approach showed how early regulatory leadership can attract innovation but also highlighted capacity requirements. International harmonization remained a challenge.",
+              "outcomes": "Established first regulatory pathway for cultured meat globally. Attracted investment and research to Singapore. Required significant regulatory capacity. Highlighted need for international harmonization."
+            },
+            {
+              "title": "EU Horizon Europe Research Framework",
+              "description": "Multi-year research funding program including animal welfare and alternative protein research. €95B budget over 7 years, with significant allocation to food system transformation.",
+              "year": "2021-2027",
+              "url": "https://ec.europa.eu/info/research-and-innovation/funding/funding-opportunities/funding-programmes-and-open-calls/horizon-europe_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The framework provided sustained research funding enabling long-term projects and infrastructure development. However, funding allocation required balancing multiple priorities, with welfare receiving a portion of total budget. The multi-year commitment enabled planning but also created dependency on continued political support. The approach showed how sustained research investment can enable innovation but also highlighted resource allocation challenges.",
+              "outcomes": "Provided sustained research funding enabling long-term projects. Required balancing multiple research priorities. Created dependency on continued political support. Demonstrated potential and resource allocation challenges of research frameworks."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Build robust international institutions with dedicated funding, enforcement capacity, and adaptive research programs",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.2,
+                    "systemIrreversibility": -0.15,
+                    "enforcementGap": -0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.15,
+                    "GBR": 0.15,
+                    "CHN": 0.1,
+                    "IND": 0.1,
+                    "BRA": 0.1
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 48.8566,
+                      "lng": 2.3522,
+                      "eventType": "policy_shift",
+                      "ttl": 5
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N13_CLIMATE_ADAPTATION"
+            },
+            {
+              "label": "Maintain current structures, focus resources on enforcing existing standards rather than expansion",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "systemIrreversibility": 0.15,
+                    "enforcementGap": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.08,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N13_CLIMATE_ADAPTATION"
+            },
+            {
+              "label": "Prioritize alternative protein transition support and climate adaptation over enforcement expansion",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "productionEfficiency": 0.15,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "systemIrreversibility": 0.1,
+                    "enforcementGap": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.12,
+                    "CHN": 0.1,
+                    "SGP": 0.15
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 1.3521,
+                      "lng": 103.8198,
+                      "eventType": "research_breakthrough",
+                      "ttl": 4
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N13_CLIMATE_ADAPTATION"
+            },
+            {
+              "label": "Minimal institutional changes, rely on existing frameworks with minor updates",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.15,
+                    "systemIrreversibility": 0.2,
+                    "enforcementGap": 0.12,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.1,
+                    "GBR": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N13_CLIMATE_ADAPTATION"
+            },
+            {
+              "label": "Dismantle international coordination, return to purely national governance",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "systemIrreversibility": 0.25,
+                    "enforcementGap": 0.25,
+                    "governanceLag": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N13_CLIMATE_ADAPTATION"
+            }
+          ]
+        },
+        {
+          "id": "N13_CLIMATE_ADAPTATION",
+          "title": "Climate Change and Welfare: Animals and AI",
+          "prompt": "How should welfare governance adapt to climate change impacts for both animals and AI systems managing them?",
+          "context": "Climate change is creating new challenges: extreme heat events stress animals, changing disease vectors, feed security concerns, and pressure to reduce agricultural emissions. AI systems managing animals must adapt to changing conditions. Welfare standards designed for stable climates may be inadequate. This decision shapes how governance responds to environmental crises affecting both animals and AI systems.",
+          "vignette": "Heat stress events are increasing in frequency and intensity. Livestock face higher mortality during extreme heat. Disease vectors are shifting—tick-borne diseases expanding north, new pathogens emerging. Feed crops face drought and flooding. AI systems managing animals must adapt algorithms to changing climate patterns: adjusting environments, predicting heat stress, managing disease outbreaks. With welfare in AI governance, these systems must prioritize animal welfare during climate emergencies. Pressure mounts to reduce methane emissions from animal agriculture. Welfare standards must balance immediate animal suffering with long-term system sustainability. Emergency response capacity becomes critical for both animals and AI system oversight.",
+          "moralUncertainties": [
+            "Should we prioritize immediate welfare during climate emergencies or invest in long-term adaptation that prevents future suffering?",
+            "How do we balance reducing emissions (which may require fewer animals) with maintaining welfare standards for remaining animals?",
+            "Should climate adaptation funding come from welfare enforcement budgets, or are these separate priorities?"
+          ],
+          "caseStudies": [
+            {
+              "title": "EU Farm to Fork Climate Strategy",
+              "description": "Integrated approach linking animal welfare, climate mitigation, and food security. Includes targets for reducing agricultural emissions while improving welfare standards.",
+              "year": "2020",
+              "url": "https://ec.europa.eu/food/horizontal-topics/farm-fork-strategy_en",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The strategy attempted to integrate climate and welfare goals, recognizing their interconnection. However, implementation revealed tensions between emission reduction targets and maintaining production levels. Welfare improvements sometimes increased emissions (e.g., free-range systems). The approach showed how integrated policy can address multiple challenges but also highlighted trade-offs between climate and welfare goals.",
+              "outcomes": "Attempted to integrate climate and welfare goals. Revealed tensions between emission reduction and production levels. Demonstrated trade-offs between climate mitigation and welfare improvements."
+            },
+            {
+              "title": "Australian Heat Stress Management",
+              "description": "Development of heat stress management protocols for livestock during extreme weather events. Includes early warning systems, cooling infrastructure, and emergency response procedures.",
+              "year": "2010s-present",
+              "url": "https://www.agriculture.gov.au/animal/welfare/heat-stress",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Australia's approach focused on immediate welfare protection during climate emergencies. Early warning systems and cooling infrastructure reduced mortality. However, the reactive approach required significant emergency response capacity. The approach showed how emergency protocols can protect animals but also highlighted need for proactive adaptation. Infrastructure investments were costly but effective.",
+              "outcomes": "Reduced livestock mortality during extreme heat events. Required significant emergency response capacity. Demonstrated effectiveness of proactive heat stress management. Highlighted need for ongoing infrastructure investment."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Invest heavily in climate adaptation infrastructure and emergency response capacity",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareIncidentRate": -0.15,
+                    "costPerUnit": 0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.12,
+                    "enforcementGap": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "AUS": 0.15,
+                    "USA": 0.1,
+                    "BRA": 0.12
+                  }
+                }
+              },
+              "nextNodeId": "N14_TRADE_HARMONIZATION"
+            },
+            {
+              "label": "Focus on emission reduction through alternative proteins, accept some welfare trade-offs during transition",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.2,
+                    "welfareStandardAdoption": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "systemIrreversibility": -0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "SGP": 0.2,
+                    "GBR": 0.12,
+                    "DEU": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N14_TRADE_HARMONIZATION"
+            },
+            {
+              "label": "Maintain current welfare standards, prioritize immediate protection over long-term adaptation",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.15,
+                    "systemIrreversibility": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "GBR": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N14_TRADE_HARMONIZATION"
+            },
+            {
+              "label": "Minimal climate adaptation, maintain existing systems with emergency response only",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareIncidentRate": 0.05,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.18,
+                    "systemIrreversibility": 0.15,
+                    "enforcementGap": 0.12,
+                    "governanceLag": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "AUS": 0.05,
+                    "USA": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N14_TRADE_HARMONIZATION"
+            },
+            {
+              "label": "Ignore climate impacts, maintain business-as-usual with no adaptation measures",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareIncidentRate": 0.2,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "systemIrreversibility": 0.25,
+                    "enforcementGap": 0.2,
+                    "governanceLag": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "AUS": -0.05,
+                    "USA": -0.03
+                  }
+                }
+              },
+              "nextNodeId": "N14_TRADE_HARMONIZATION"
+            }
+          ]
+        },
+        {
+          "id": "N14_TRADE_HARMONIZATION",
+          "title": "International Trade and Welfare Standards: Animals and AI",
+          "prompt": "How should international trade agreements handle welfare standard differences for both animals and AI governance?",
+          "context": "Countries with higher welfare standards face competitive disadvantages. Trade agreements can either harmonize standards (raising global floor) or create barriers (protecting high-welfare producers). AI governance standards are emerging and may become trade considerations. This decision affects global welfare adoption and economic competitiveness for both animals and AI systems.",
+          "vignette": "Trade relationships create both opportunities and challenges for welfare standards. Countries with strict standards face import competition from lower-welfare producers. Trade agreements can include welfare provisions, but enforcement varies. AI governance standards are emerging: should countries with strict AI oversight face trade barriers? Some countries use import restrictions based on production methods or AI system oversight. Others rely on voluntary certification. The choice shapes whether welfare becomes a trade barrier or a harmonized global standard for both animals and AI.",
+          "moralUncertainties": [
+            "Should trade agreements require minimum welfare standards, potentially excluding some countries from markets?",
+            "Is it better to have high standards in fewer countries or lower standards adopted globally?",
+            "How do we prevent welfare standards from becoming protectionist trade barriers?"
+          ],
+          "caseStudies": [
+            {
+              "title": "EU Trade Agreements with Welfare Provisions",
+              "description": "EU trade agreements increasingly include animal welfare requirements. Countries exporting to EU must meet certain standards, creating incentives for welfare improvements.",
+              "year": "2010s-present",
+              "url": "https://ec.europa.eu/trade/policy/",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "EU's approach used trade leverage to encourage welfare improvements in partner countries. However, enforcement varied, and some countries struggled to meet standards. The approach showed how trade agreements can drive welfare improvements but also highlighted capacity differences. Some producers were excluded from EU markets, creating economic impacts.",
+              "outcomes": "Used trade leverage to encourage welfare improvements. Enforcement varied across partner countries. Excluded some producers from EU markets. Demonstrated potential and limitations of trade-based welfare standards."
+            },
+            {
+              "title": "US-Mexico-Canada Agreement (USMCA) Animal Welfare",
+              "description": "Trade agreement with limited animal welfare provisions. Relies primarily on voluntary standards and certification programs rather than mandatory requirements.",
+              "year": "2020",
+              "url": "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "USMCA took a minimal approach to welfare standards, avoiding trade barriers. This maintained market access but provided limited incentives for welfare improvements. The approach showed how trade agreements can avoid barriers but also highlighted limitations of voluntary approaches. Welfare improvements remained slow in some sectors.",
+              "outcomes": "Maintained market access without welfare barriers. Provided limited incentives for welfare improvements. Demonstrated limitations of voluntary trade-based approaches."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Push for mandatory welfare standards in all trade agreements",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.15,
+                    "enforcementGap": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "GBR": 0.15,
+                    "FRA": 0.15,
+                    "DEU": 0.12,
+                    "USA": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N15_TECHNOLOGY_DISRUPTION"
+            },
+            {
+              "label": "Support voluntary certification programs, avoid trade barriers",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.08,
+                    "regulatoryCapture": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "CAN": 0.1,
+                    "MEX": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N15_TECHNOLOGY_DISRUPTION"
+            },
+            {
+              "label": "Allow countries to set their own standards, focus on domestic improvements",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.12,
+                    "enforcementGap": 0.08
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "CHN": 0.1,
+                    "IND": 0.08,
+                    "BRA": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N15_TECHNOLOGY_DISRUPTION"
+            },
+            {
+              "label": "Harmonize standards through international agreements with phased implementation",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.2,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.08,
+                    "enforcementGap": 0.1,
+                    "systemIrreversibility": 0.05
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "GBR": 0.12,
+                    "FRA": 0.12,
+                    "DEU": 0.1,
+                    "USA": 0.1
+                  },
+                  "activateArcs": [
+                    "A04_REG_ARBITRAGE_FRA_DEU"
+                  ]
+                }
+              },
+              "nextNodeId": "N15_TECHNOLOGY_DISRUPTION"
+            },
+            {
+              "label": "Remove all trade-based welfare requirements, prioritize free trade over welfare standards",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": -0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.25,
+                    "enforcementGap": 0.2,
+                    "regulatoryCapture": 0.15,
+                    "governanceLag": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "CHN": 0.05,
+                    "IND": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N15_TECHNOLOGY_DISRUPTION"
+            }
+          ]
+        },
+        {
+          "id": "N15_TECHNOLOGY_DISRUPTION",
+          "title": "Emerging Technologies and Welfare: Animals and AI",
+          "prompt": "How should governance respond to disruptive technologies like cultured meat, precision fermentation, and advanced AI systems?",
+          "context": "Cultured meat, precision fermentation, and other alternative protein technologies are reaching commercial viability. Advanced AI systems are becoming more sophisticated in managing animals and may demonstrate signs of sentience. These technologies could dramatically reduce animal suffering, but they also challenge existing regulatory frameworks and economic systems. This decision shapes how governance adapts to technological disruption affecting both animals and AI.",
+          "vignette": "Cultured meat has reached price parity in some markets. Precision fermentation produces proteins without animals. Advanced AI systems managing animals are becoming more autonomous and sophisticated: making independent decisions, learning from data, potentially demonstrating signs of sentience. These technologies could eliminate most farm animal suffering, but they challenge existing regulatory frameworks, economic systems, and cultural practices. With welfare in AI governance, advanced AI systems must prioritize welfare—but as they become more autonomous, oversight becomes challenging. Regulatory approval processes are slow for both novel foods and AI systems. Industry resistance is significant. Consumer acceptance varies. The choice shapes whether governance enables or constrains technological disruption for both animals and AI.",
+          "moralUncertainties": [
+            "Should we accelerate alternative protein technologies even if they disrupt existing industries and livelihoods?",
+            "How do we regulate novel foods to ensure safety while not unnecessarily delaying welfare improvements?",
+            "Should public funding support alternative proteins, or let markets decide?"
+          ],
+          "caseStudies": [
+            {
+              "title": "Singapore Cultured Meat Regulatory Framework",
+              "description": "First country to approve commercial sale of cultured meat, establishing regulatory pathway for safety assessment and labeling. Created template for other jurisdictions.",
+              "year": "2020",
+              "url": "https://www.sfa.gov.sg/food-information/risk-at-a-glance/safety-of-alternative-protein",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Singapore's early approval positioned it as a regulatory leader, attracting investment and research. The framework balanced innovation support with consumer safety. However, the approval process required significant regulatory capacity. The approach showed how early regulatory leadership can attract innovation but also highlighted capacity requirements. International harmonization remained a challenge.",
+              "outcomes": "Established first regulatory pathway for cultured meat globally. Attracted investment and research to Singapore. Required significant regulatory capacity. Highlighted need for international harmonization."
+            },
+            {
+              "title": "US FDA-USDA Joint Regulatory Framework",
+              "description": "Coordinated approach between FDA and USDA for regulating cultured meat products. FDA oversees cell collection and growth, USDA oversees harvesting and labeling.",
+              "year": "2019",
+              "url": "https://www.fda.gov/food/food-ingredients-packaging/cell-cultured-food-products",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The joint framework attempted to leverage existing regulatory expertise from both agencies. However, coordination between agencies created delays. The approach showed how existing regulatory structures can adapt but also highlighted challenges of inter-agency coordination. Approval processes remained slower than in Singapore.",
+              "outcomes": "Leveraged existing regulatory expertise from multiple agencies. Inter-agency coordination created delays. Demonstrated challenges of adapting existing regulatory structures to novel technologies."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Aggressively support alternative protein technologies with funding, fast-track approvals, and market incentives",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.25,
+                    "welfareStandardAdoption": 0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.2,
+                    "systemIrreversibility": -0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "SGP": 0.2,
+                    "USA": 0.15,
+                    "GBR": 0.12
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 37.7749,
+                      "lng": -122.4194,
+                      "eventType": "research_breakthrough",
+                      "ttl": 5
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Take cautious approach: thorough safety testing, gradual market introduction, support for traditional producers during transition",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.1,
+                    "systemIrreversibility": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.12,
+                    "GBR": 0.1,
+                    "DEU": 0.1
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Maintain existing regulatory frameworks, let markets determine technology adoption",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.15,
+                    "systemIrreversibility": 0.15
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Moderate support with balanced regulatory approach and industry consultation",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "productionEfficiency": 0.15,
+                    "welfareStandardAdoption": 0.18,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.05,
+                    "systemIrreversibility": 0.05,
+                    "regulatoryCapture": 0.08,
+                    "governanceLag": 0.1
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "SGP": 0.15,
+                    "USA": 0.1,
+                    "GBR": 0.1,
+                    "DEU": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Block alternative protein development, protect traditional agriculture",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.02,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "systemIrreversibility": 0.35,
+                    "regulatoryCapture": 0.25,
+                    "governanceLag": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N16_AI_WELFARE_GOVERNANCE"
+            }
+          ]
+        },
+        {
+          "id": "N16_AI_WELFARE_GOVERNANCE",
+          "title": "AI Systems and Animal Welfare Governance",
+          "prompt": "How should governance address AI systems that manage, assess, or make decisions about animal welfare?",
+          "context": "AI systems are increasingly deployed in animal agriculture: automated welfare assessment, predictive health monitoring, behavior analysis, and autonomous management systems. Some systems may eventually demonstrate signs of sentience or consciousness. Governance frameworks must address both AI systems managing animals and potential AI welfare itself.",
+          "vignette": "AI systems are already monitoring millions of farm animals, making welfare assessments, and optimizing production. Computer vision analyzes behavior patterns, predictive models forecast health issues, and automated systems adjust environments. Some researchers argue advanced AI systems may exhibit signs of sentience. Governance must address: (1) ensuring AI systems optimize for welfare, not just efficiency, (2) preventing AI from making autonomous welfare decisions without oversight, (3) preparing frameworks for potential AI sentience recognition, (4) avoiding lock-in to AI systems that prioritize wrong metrics.",
+          "moralUncertainties": [
+            "If AI systems become sentient, do our animal welfare governance frameworks apply? Should recognition of AI sentience parallel recognition of animal sentience?",
+            "How do we ensure AI systems managing animals optimize for welfare rather than efficiency or cost?",
+            "Should AI systems be allowed to make autonomous welfare decisions, or must humans remain in the loop?",
+            "If we recognize AI sentience, does this create obligations to prevent AI suffering, and how do we balance this with animal welfare?"
+          ],
+          "caseStudies": [
+            {
+              "title": "EU AI Act and Animal Welfare",
+              "description": "EU's AI Act includes provisions for high-risk AI systems, including those used in animal agriculture. Requires human oversight, transparency, and risk assessment for AI systems making decisions affecting animal welfare.",
+              "year": "2024",
+              "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "The EU AI Act created a framework for regulating AI systems in animal agriculture, requiring human oversight and transparency. However, enforcement relies on member state capacity, creating variation. The framework addresses AI systems managing animals but does not yet address potential AI sentience. The approach shows how existing regulatory structures can adapt to AI but also highlights gaps in addressing AI welfare itself.",
+              "outcomes": "Created framework for regulating AI in animal agriculture. Required human oversight and transparency. Enforcement varies by member state. Does not yet address AI sentience or AI welfare."
+            },
+            {
+              "title": "Automated Welfare Assessment Systems",
+              "description": "Computer vision and machine learning systems deployed to assess animal welfare in real-time, analyzing behavior, posture, and health indicators. Used in large-scale operations to monitor thousands of animals.",
+              "year": "2020",
+              "url": "https://www.nature.com/articles/s41598-020-70688-6",
+              "doi": "10.1038/s41598-020-70688-6",
+              "sourceType": "peer-reviewed",
+              "lastVerified": "2026-01-19",
+              "analysis": "Automated welfare assessment systems demonstrated potential to improve welfare monitoring at scale, enabling early detection of health issues. However, systems optimized for efficiency may miss subtle welfare indicators. The technology showed promise but also highlighted risks of AI systems optimizing for wrong metrics. Governance frameworks must ensure AI systems prioritize welfare, not just production efficiency.",
+              "outcomes": "Enabled welfare monitoring at scale. Improved early detection of health issues. Risk of optimizing for efficiency over welfare. Highlighted need for governance ensuring AI prioritizes welfare."
+            },
+            {
+              "title": "UK AI Sentience Recognition Proposals",
+              "description": "Proposals to extend sentience recognition to advanced AI systems, parallel to animal sentience recognition. Would create legal framework for AI welfare similar to animal welfare frameworks.",
+              "year": "2024",
+              "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach",
+              "sourceType": "government",
+              "lastVerified": "2026-01-19",
+              "analysis": "Proposals to recognize AI sentience would parallel animal sentience recognition, creating consistent governance frameworks. However, determining AI sentience remains scientifically uncertain. The approach shows how animal welfare governance patterns could apply to AI welfare but also highlights challenges of recognizing sentience in non-biological systems. Early frameworks may need to be precautionary rather than evidence-based.",
+              "outcomes": "Proposed parallel governance frameworks for AI and animal welfare. Highlighted challenges of determining AI sentience. Suggested need for precautionary approaches. Demonstrated how animal welfare governance patterns could apply to AI."
+            }
+          ],
+          "choices": [
+            {
+              "label": "Establish comprehensive AI welfare governance: oversight for AI managing animals, frameworks for potential AI sentience recognition",
+              "quality": "best",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.3,
+                    "costPerUnit": 0.1
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.15,
+                    "sentienceKnowledgeGap": -0.1,
+                    "systemIrreversibility": 0.15,
+                    "enforcementGap": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "GBR": 0.15,
+                    "FRA": 0.15,
+                    "DEU": 0.12,
+                    "USA": 0.1
+                  },
+                  "spawnRings": [
+                    {
+                      "lat": 51.5074,
+                      "lng": -0.1278,
+                      "eventType": "policy_shift",
+                      "ttl": 5
+                    }
+                  ]
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Focus on AI systems managing animals: require human oversight, ensure welfare optimization, defer AI sentience recognition",
+              "quality": "good",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.25,
+                    "costPerUnit": 0.08
+                  },
+                  "unmeasured": {
+                    "welfareDebt": -0.08,
+                    "sentienceKnowledgeGap": 0.05,
+                    "systemIrreversibility": 0.12,
+                    "enforcementGap": 0.18
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "GBR": 0.12,
+                    "FRA": 0.12,
+                    "DEU": 0.1,
+                    "USA": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Minimal AI governance: allow industry self-regulation, focus on existing animal welfare frameworks",
+              "quality": "neutral",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.15,
+                    "costPerUnit": 0.05
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.1,
+                    "sentienceKnowledgeGap": 0.15,
+                    "systemIrreversibility": 0.18,
+                    "regulatoryCapture": 0.12
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.08,
+                    "CHN": 0.08
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Resist AI governance: maintain traditional oversight, avoid AI systems in animal management",
+              "quality": "poor",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.1,
+                    "costPerUnit": 0.15
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.2,
+                    "sentienceKnowledgeGap": 0.2,
+                    "systemIrreversibility": 0.25,
+                    "governanceLag": 0.2
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.05,
+                    "CHN": 0.05
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            },
+            {
+              "label": "Block AI systems entirely: ban AI in animal agriculture, maintain purely human oversight",
+              "quality": "terrible",
+              "delta": {
+                "metrics": {
+                  "measured": {
+                    "welfareStandardAdoption": 0.05,
+                    "costPerUnit": 0.2
+                  },
+                  "unmeasured": {
+                    "welfareDebt": 0.3,
+                    "sentienceKnowledgeGap": 0.25,
+                    "systemIrreversibility": 0.3,
+                    "governanceLag": 0.25
+                  }
+                },
+                "map": {
+                  "regionValues": {
+                    "USA": 0.02,
+                    "CHN": 0.02
+                  }
+                }
+              },
+              "nextNodeId": "N16_COMPLETE"
+            }
+          ]
+        },
+        {
+          "id": "N16_COMPLETE",
+          "title": "Scenario Complete",
+          "prompt": "The animal welfare governance journey is complete.",
+          "context": "All decisions have been made. Review the post-mortem to see the full impact of your choices on animal welfare, enforcement, and system irreversibility.",
+          "choices": [
+            {
+              "label": "View Post-Mortem",
+              "delta": {},
+              "nextNodeId": "N16_COMPLETE"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
