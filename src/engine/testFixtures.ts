@@ -45,7 +45,7 @@ export function createMockState(overrides: Partial<State> = {}): State {
     },
     achievements: [],
     researchedTechs: [],
-    victoryType: null,
+    outcomeType: null,
     lossWarnings: [],
     lossConditionsMet: [],
     playerName: undefined,

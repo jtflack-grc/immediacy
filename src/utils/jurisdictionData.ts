@@ -1,6 +1,6 @@
 /**
  * Jurisdiction disclosure / cyber-pressure data for globe hovers.
- * Scores reflect baseline disclosure & breach-notice posture (not animal welfare).
+ * Scores reflect baseline disclosure & breach-notice posture (cyber disclosure posture).
  */
 
 export interface CountryJurisdictionData {
@@ -14,13 +14,10 @@ export interface CountryJurisdictionData {
   detailedContext?: string
 }
 
-/** @deprecated use CountryJurisdictionData */
-export type CountryWelfareData = CountryJurisdictionData
-
 /**
  * The jurisdictions actually "in play" for the default Northline incident scenario.
  * The globe / fallback map / post-mortem should only surface hover detail, status,
- * and pressure for these — everything else in `countryWelfareData` is background
+ * and pressure for these — everything else in `jurisdictionData` is background
  * reference data for jurisdictions that could matter in other scenarios.
  */
 export const IN_PLAY_ISO3: ReadonlySet<string> = new Set([
@@ -51,7 +48,7 @@ function entry(
 }
 
 /** Detailed data for tracked jurisdictions */
-export const countryWelfareData: Record<string, CountryJurisdictionData> = {
+export const jurisdictionData: Record<string, CountryJurisdictionData> = {
   USA: entry(
     'United States',
     'USA',
@@ -521,8 +518,8 @@ export function generateBasicFastFacts(iso3: string, _countryName: string): stri
 }
 
 export function getCountryData(iso3: string, countryName?: string): CountryJurisdictionData | null {
-  if (countryWelfareData[iso3]) {
-    return countryWelfareData[iso3]
+  if (jurisdictionData[iso3]) {
+    return jurisdictionData[iso3]
   }
 
   if (countryName) {

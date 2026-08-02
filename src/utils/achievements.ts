@@ -100,7 +100,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 'balanced_approach',
     name: 'Every Second Counts',
-    description: 'Balance victory — control, clocks, and debt all in good ranges',
+    description: 'Balanced outcome — control, clocks, and debt all in good ranges',
     checkCondition: (state) => {
       const successIndex = state.metrics.measured.operationalControl * 0.3 +
                           Math.min(1, state.metrics.measured.disclosurePosture / 3) * 0.3 +

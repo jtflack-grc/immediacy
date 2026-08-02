@@ -172,7 +172,7 @@ export function createInitialState(
     },
     achievements: [],
     researchedTechs: [],
-    victoryType: null,
+    outcomeType: null,
     lossWarnings: [],
     lossConditionsMet: [],
     playerName: undefined,  // Will be set during Turn U

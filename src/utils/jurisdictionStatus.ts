@@ -1,5 +1,5 @@
 import { State, IncidentDeadline } from '../engine/scenarioTypes'
-import { getCountryData, IN_PLAY_ISO3 } from './countryWelfareData'
+import { getCountryData, IN_PLAY_ISO3 } from './jurisdictionData'
 
 export type NotificationStatus = 'not_started' | 'assessing' | 'notice_due' | 'filed' | 'overdue'
 
@@ -151,7 +151,7 @@ export function calculateJurisdictionStatuses(state: State): JurisdictionStatus[
  * Average jurisdiction posture score across in-play countries — used as an input
  * to the overall run score, not surfaced directly as a grade in the UI.
  */
-export function calculateAverageCountryScore(state: State): number {
+export function calculateAverageJurisdictionPosture(state: State): number {
   const statuses = calculateJurisdictionStatuses(state)
   if (statuses.length === 0) return 0
 

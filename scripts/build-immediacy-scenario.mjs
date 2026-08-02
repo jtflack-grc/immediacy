@@ -205,7 +205,7 @@ const scenario = {
                 measured: { productionEfficiency: -0.15, welfareIncidentRate: 0.15, costPerUnit: 0.05 },
                 unmeasured: { welfareDebt: 0.15, regulatoryCapture: 0.1, systemIrreversibility: 0.08 },
               },
-              { spawnRings: [ring(37.77, -122.42, 'welfare_incident', 4)] }
+              { spawnRings: [ring(37.77, -122.42, 'breach_notice', 4)] }
             ),
             choice(
               'Escalate to board chat immediately with incomplete facts',
@@ -1234,7 +1234,7 @@ const scenario = {
               }
             ),
             choice(
-              'Declare victory; return to pre-incident change freeze habits',
+              'Declare all-clear; return to pre-incident change freeze habits',
               'terrible',
               'N16_COMPLETE',
               {

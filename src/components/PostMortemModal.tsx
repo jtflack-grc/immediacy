@@ -10,12 +10,11 @@ import { generateShareableURL } from '../utils/exportUtils'
 import IndexExplainerModal from './IndexExplainerModal'
 import {
   calculateJurisdictionStatuses,
-  calculateAverageCountryScore,
   notificationStatusColor,
   notificationStatusLabel,
   regulatoryPressureColor,
-} from '../utils/countryGradeScoring'
-import { checkVictoryConditions, getVictoryCondition } from '../utils/victoryConditions'
+} from '../utils/jurisdictionStatus'
+import { checkOutcomeConditions, getOutcomeCondition } from '../utils/outcomeConditions'
 import { getLossCondition } from '../utils/lossConditions'
 import AchievementBadge from './AchievementBadge'
 import { getAchievement } from '../utils/achievements'
@@ -71,9 +70,8 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
   const degradedAssumptions = getDegradedAssumptions(state)
   const totalScore = calculateScore(state)
   const jurisdictionStatuses = calculateJurisdictionStatuses(state)
-  const averageCountryScore = calculateAverageCountryScore(state)
-  const victoryType = state.victoryType || checkVictoryConditions(state)
-  const victory = victoryType ? getVictoryCondition(victoryType) : null
+  const outcomeType = state.outcomeType || checkOutcomeConditions(state)
+  const outcome = outcomeType ? getOutcomeCondition(outcomeType) : null
   const postmortem = generateCrisisPostmortem(state)
 
   const handleSubmitToLeaderboard = () => {
@@ -92,7 +90,6 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
   const disclosureDebtDecisions = state.auditTrail
     .filter(record =>
       record.unmeasuredImpact.toLowerCase().includes('disclosure debt') ||
-      record.unmeasuredImpact.toLowerCase().includes('welfare debt') ||
       record.unmeasuredImpact.includes('disclosureDebt')
     )
     .slice(0, 3)
@@ -159,7 +156,7 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         </div>
 
         {/* Crisis Postmortem — primary debrief, not a "correct answer" score. Kept ahead of the
-            score/leaderboard block intentionally: this is a training debrief, not a victory screen. */}
+            score/leaderboard block intentionally: this is a training debrief, not a scoreboard. */}
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
             Crisis Postmortem
@@ -379,29 +376,15 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
         {jurisdictionStatuses.length > 0 && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
-              Global Impact: Jurisdictions In Play
+              Jurisdictions In Play
             </h3>
-            <div style={{ 
-              padding: '16px', 
-              backgroundColor: '#111111', 
-              borderRadius: '8px',
-              marginBottom: '12px',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Average Jurisdiction Posture</div>
-              <div style={{ fontSize: '28px', fontWeight: 600, color: '#4ade80' }}>
-                {(averageCountryScore * 100).toFixed(1)}%
-              </div>
-              <div style={{ fontSize: '11px', color: '#666', marginTop: '4px' }}>
-                Based on disclosure / notice posture across jurisdictions in play for this incident
-              </div>
-            </div>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               maxHeight: '360px',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              marginBottom: '12px',
             }}>
               {jurisdictionStatuses.map(j => (
                 <div
@@ -468,28 +451,28 @@ export default function PostMortemModal({ state, onClose }: PostMortemModalProps
           </div>
         )}
 
-        {/* Victory/Loss Conditions */}
-        {(victory || (state.lossConditionsMet && state.lossConditionsMet.length > 0)) && (
+        {/* Outcome / Loss Conditions */}
+        {(outcome || (state.lossConditionsMet && state.lossConditionsMet.length > 0)) && (
           <div style={{ marginBottom: '32px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>
               Outcome Assessment
             </h3>
-            {victory && (
+            {outcome && (
               <div style={{
                 padding: '16px',
                 backgroundColor: '#111111',
                 borderRadius: '8px',
-                border: `2px solid ${victory.color}`,
+                border: `2px solid ${outcome.color}`,
                 marginBottom: '12px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <span style={{ fontSize: '20px' }}>✓</span>
-                  <span style={{ fontSize: '16px', fontWeight: 600, color: victory.color }}>
-                    {victory.name}
+                  <span style={{ fontSize: '16px', fontWeight: 600, color: outcome.color }}>
+                    {outcome.name}
                   </span>
                 </div>
                 <div style={{ fontSize: '13px', color: '#aaa', lineHeight: '1.5' }}>
-                  {victory.message}
+                  {outcome.message}
                 </div>
               </div>
             )}

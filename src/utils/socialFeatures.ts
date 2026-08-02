@@ -1,6 +1,6 @@
 import { State } from '../engine/scenarioTypes'
 import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../engine/scoring'
-import { calculateAverageCountryScore } from './countryGradeScoring'
+import { calculateAverageJurisdictionPosture } from './jurisdictionStatus'
 
 export interface LeaderboardEntry {
   id: string
@@ -18,16 +18,14 @@ const MAX_LEADERBOARD_ENTRIES = 50
 
 /**
  * Calculate total score for leaderboard
- * Higher measured success, lower debt, and better country grades = better score
+ * Higher measured success, lower debt, and stronger in-play jurisdiction posture = better score
  */
 export function calculateScore(state: State): number {
   const measuredIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
   const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
-  const countryScore = calculateAverageCountryScore(state)
-  
-  // Score = (measured success * 0.5) - (debt * 0.2) + (country grades * 0.3)
-  // This rewards high success, penalizes debt, and includes global impact
-  return (measuredIndex * 0.5) - (debtIndex * 0.2) + (countryScore * 0.3)
+  const jurisdictionPosture = calculateAverageJurisdictionPosture(state)
+
+  return (measuredIndex * 0.5) - (debtIndex * 0.2) + (jurisdictionPosture * 0.3)
 }
 
 /**

@@ -228,9 +228,5 @@ export const securityResearchCards: SecurityResearchCard[] = [
   },
 ]
 
-/** Alias so older call sites can swap with minimal churn */
-export type LongtermismAngle = SecurityResearchCard
-/** @deprecated use securityResearchCards */
-export const longtermismAngles = securityResearchCards
 export type ResearchAngle = SecurityResearchCard
 export const researchAngles = securityResearchCards

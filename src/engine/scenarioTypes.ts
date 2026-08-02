@@ -161,7 +161,7 @@ export interface State {
   }
   achievements?: string[]
   researchedTechs?: string[]
-  victoryType?: 'control' | 'debt' | 'enforcement' | 'balance' | null
+  outcomeType?: 'control' | 'debt' | 'enforcement' | 'balance' | null
   lossWarnings?: Array<{
     type: LossType
     severity: 'warning' | 'critical'

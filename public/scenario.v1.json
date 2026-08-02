@@ -154,7 +154,7 @@
                     {
                       "lat": 37.77,
                       "lng": -122.42,
-                      "eventType": "welfare_incident",
+                      "eventType": "breach_notice",
                       "ttl": 4
                     }
                   ]
@@ -2854,7 +2854,7 @@
               }
             },
             {
-              "label": "Declare victory; return to pre-incident change freeze habits",
+              "label": "Declare all-clear; return to pre-incident change freeze habits",
               "nextNodeId": "N16_COMPLETE",
               "delta": {
                 "metrics": {

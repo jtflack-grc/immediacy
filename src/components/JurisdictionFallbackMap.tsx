@@ -1,12 +1,12 @@
 import { State, MapMode } from '../engine/scenarioTypes'
-import { IN_PLAY_ISO3 } from '../utils/countryWelfareData'
+import { IN_PLAY_ISO3 } from '../utils/jurisdictionData'
 import {
   getJurisdictionStatus,
   JurisdictionStatus,
   notificationStatusColor,
   notificationStatusLabel,
   regulatoryPressureColor,
-} from '../utils/countryGradeScoring'
+} from '../utils/jurisdictionStatus'
 import { formatIncidentClock } from '../engine/incidentClock'
 
 interface JurisdictionFallbackMapProps {

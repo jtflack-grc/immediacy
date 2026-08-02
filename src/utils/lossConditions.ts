@@ -20,18 +20,18 @@ export const LOSS_CONDITIONS: LossCondition[] = [
     name: 'Containment Collapse',
     description: 'Operational control and jurisdiction posture have collapsed under exposure',
     checkCondition: (state) => {
-      const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
+      const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       const serviceDisruption = state.metrics.measured.serviceDisruption
-      const lowWelfareCountries = Object.values(state.map.regionValues).filter(v => v < 0.2).length
+      const lowPostureCountries = Object.values(state.map.regionValues).filter(v => v < 0.2).length
       
-      return avgWelfare < 0.2 && serviceDisruption > 0.6 && lowWelfareCountries >= 3
+      return avgPosture < 0.2 && serviceDisruption > 0.6 && lowPostureCountries >= 3
     },
     checkWarning: (state) => {
-      const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
+      const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       const serviceDisruption = state.metrics.measured.serviceDisruption
-      const lowWelfareCountries = Object.values(state.map.regionValues).filter(v => v < 0.3).length
+      const lowPostureCountries = Object.values(state.map.regionValues).filter(v => v < 0.3).length
       
-      return avgWelfare < 0.3 && serviceDisruption > 0.5 && lowWelfareCountries >= 2
+      return avgPosture < 0.3 && serviceDisruption > 0.5 && lowPostureCountries >= 2
     },
     message: 'Containment and jurisdiction posture have collapsed across multiple regions. Exposure severity is high and disclosure process is failing. Recovery will require significant intervention.',
     warningMessage: 'Jurisdiction posture is approaching critical levels. Multiple regions show declining posture and rising exposure severity.',
@@ -89,16 +89,16 @@ export const LOSS_CONDITIONS: LossCondition[] = [
       const commitmentLock = state.metrics.unmeasured.commitmentLock
       // Derive rollback feasibility directly from irreversibility (high irreversibility -> low feasibility)
       const rollbackFeasibility = 1 - commitmentLock
-      const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
+      const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
-      return commitmentLock > 0.85 && rollbackFeasibility < 0.15 && avgWelfare < 0.4
+      return commitmentLock > 0.85 && rollbackFeasibility < 0.15 && avgPosture < 0.4
     },
     checkWarning: (state) => {
       const commitmentLock = state.metrics.unmeasured.commitmentLock
       const rollbackFeasibility = 1 - commitmentLock
-      const avgWelfare = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
+      const avgPosture = Object.values(state.map.regionValues).reduce((a, b) => a + b, 0) / Object.values(state.map.regionValues).length
       
-      return commitmentLock > 0.7 && rollbackFeasibility < 0.25 && avgWelfare < 0.5
+      return commitmentLock > 0.7 && rollbackFeasibility < 0.25 && avgPosture < 0.5
     },
     message: 'Commitment lock is extreme. Payments, public denials, or attributions cannot be walked back. You must live with the consequences of earlier war-room choices.',
     warningMessage: 'Commitment lock is approaching critical levels. Rollback feasibility is declining — statements and deals are hardening.',

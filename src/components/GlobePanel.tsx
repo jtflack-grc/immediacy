@@ -3,14 +3,14 @@ import Globe from 'react-globe.gl'
 import { ArcDatum, HubDatum, RingDatum } from '../engine/scenarioTypes'
 import { getActiveArcs, getActiveHubs, getActiveRings } from '../engine/selectors'
 import { State } from '../engine/scenarioTypes'
-import { getCountryData, generateBasicFastFacts, IN_PLAY_ISO3 } from '../utils/countryWelfareData'
+import { getCountryData, generateBasicFastFacts, IN_PLAY_ISO3 } from '../utils/jurisdictionData'
 import {
   getJurisdictionStatus,
   JurisdictionStatus,
   notificationStatusColor,
   notificationStatusLabel,
   regulatoryPressureColor,
-} from '../utils/countryGradeScoring'
+} from '../utils/jurisdictionStatus'
 import StarfieldBackground from './StarfieldBackground'
 import GlobeParticleEffects from './GlobeParticleEffects'
 import RegionTrajectoryModal from './RegionTrajectoryModal'
