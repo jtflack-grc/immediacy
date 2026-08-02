@@ -1,7 +1,6 @@
 import { State, Scenario } from '../engine/scenarioTypes'
-import { getPhaseByNodeId } from '../engine/scenarioLoader'
 import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../engine/scoring'
-import { getRelevantAnglesForPhase } from '../utils/longtermismMatching'
+import { getRelevantSecurityCardsForPhase } from '../utils/securityResearchMatching'
 
 interface PhaseSummaryModalProps {
   phaseId: string | null
@@ -18,62 +17,65 @@ export default function PhaseSummaryModal({ phaseId, scenario, state, onClose }:
 
   const measuredIndex = calculateMeasuredSuccessIndex(state.metrics.measured)
   const debtIndex = calculateGovernanceDebtIndex(state.metrics.unmeasured)
+  const researchCards = getRelevantSecurityCardsForPhase(phaseId, state)
 
-  // Get decisions made in this phase
   const phaseNodes = phase.nodes.map(n => n.id)
-  const phaseDecisions = state.auditTrail.filter(record => 
+  const phaseDecisions = state.auditTrail.filter(record =>
     phaseNodes.includes(record.nodeId)
   )
 
-  // Generate learning insights based on phase and metrics
   const getLearningInsights = () => {
     const insights: string[] = []
-    
-    if (phaseId === 'P1_FOUNDATION') {
-      insights.push('Foundation decisions set the baseline for all future welfare protections.')
-      insights.push('Early recognition of animal sentience creates stronger legal frameworks.')
-      if (state.metrics.unmeasured.sentienceKnowledgeGap < 0.2) {
-        insights.push('Your focus on research has reduced knowledge gaps about animal sentience.')
+
+    if (phaseId.includes('DETECTION')) {
+      insights.push('Detection choices set whether the war room owns the clock — or the adversary does.')
+      insights.push('Under-scoping feels calm; it often becomes disclosure debt.')
+      if (state.metrics.unmeasured.sentienceKnowledgeGap < 0.25) {
+        insights.push('Facts gap is tightening — notice content can get more specific.')
       }
-      if (state.metrics.measured.welfareStandardAdoption > 0.6) {
-        insights.push('Strong early adoption of welfare standards creates momentum for future improvements.')
+      if (state.metrics.measured.welfareStandardAdoption > 0.8) {
+        insights.push('Disclosure posture is strengthening early — keep timed checkpoints.')
       }
-    } else if (phaseId === 'P2_IMPLEMENTATION') {
-      insights.push('Implementation phase tests whether policies translate into real-world outcomes.')
-      insights.push('Balancing enforcement with industry cooperation is critical during this phase.')
-      if (state.metrics.unmeasured.enforcementGap < 0.2) {
-        insights.push('Effective enforcement mechanisms are reducing the gap between policy and practice.')
+    } else if (phaseId.includes('CONTAINMENT')) {
+      insights.push('Containment trades uptime for blast-radius control. Misconfiguration debt shows up here.')
+      insights.push('Extortion notes force adversary-driven disclosure timelines.')
+      if (state.metrics.measured.productionEfficiency > 0.55) {
+        insights.push('Operational control is holding under pressure.')
       }
-      if (state.metrics.unmeasured.regulatoryCapture > 0.5) {
-        insights.push('High regulatory capture suggests industry influence may be compromising welfare goals.')
+      if (state.metrics.unmeasured.systemIrreversibility > 0.4) {
+        insights.push('Commitment lock is rising — payments and hard statements get expensive to unwind.')
       }
-    } else if (phaseId === 'P3_SCALING') {
-      insights.push('Scaling requires balancing efficiency with welfare standards across diverse contexts.')
-      insights.push('Global coordination becomes more important as systems expand.')
-      if (state.metrics.measured.productionEfficiency > 0.7 && state.metrics.measured.welfareIncidentRate < 0.2) {
-        insights.push('You\'ve achieved a strong balance between efficiency and welfare outcomes.')
+    } else if (phaseId.includes('DISCLOSURE')) {
+      insights.push('Regulator clocks, board slides, and the first public sentence are commitment locks.')
+      insights.push('FAIR ranges beat false precision when facts are incomplete.')
+      if (state.metrics.unmeasured.enforcementGap < 0.25) {
+        insights.push('Regulatory clock lag is under control — document the awareness rationale.')
       }
-      if (state.metrics.unmeasured.welfareDebt > 0.5) {
-        insights.push('Accumulated welfare debt suggests some decisions prioritized short-term gains over long-term welfare.')
+      if (state.metrics.unmeasured.regulatoryCapture > 0.45) {
+        insights.push('Narrative capture is high — messaging may be drifting from operational truth.')
       }
-    } else if (phaseId === 'P4_ADAPTATION') {
-      insights.push('Adaptation phase tests system resilience and ability to respond to new challenges.')
-      insights.push('Flexibility becomes critical as systems mature and face unexpected pressures.')
-      if (state.metrics.unmeasured.systemIrreversibility > 0.7) {
-        insights.push('Low system irreversibility means you\'ve maintained flexibility for future changes.')
-      } else {
-        insights.push('High system irreversibility suggests some paths may be difficult to reverse.')
+    } else if (phaseId.includes('STAKEHOLDER')) {
+      insights.push('Employees, insurers, press, and customers are parallel disclosure channels.')
+      insights.push('Fairness across similarly situated customers is part of the control.')
+      if (state.metrics.unmeasured.welfareDebt > 0.45) {
+        insights.push('Disclosure debt is compounding — silence and drip truth are catching up.')
       }
-    } else if (phaseId === 'P5_LEGACY') {
-      insights.push('Legacy phase determines the long-term impact of your governance decisions.')
-      insights.push('The choices made here will shape animal welfare for years to come.')
-      if (measuredIndex > 0.7 && debtIndex < 0.3) {
-        insights.push('Excellent balance: high measured success with low governance debt.')
+    } else if (phaseId.includes('AFTERMATH')) {
+      insights.push('Aftermath locks what becomes permanent posture vs theater.')
+      insights.push('Attribution and vendor blame narratives are easy commitment locks.')
+      if (measuredIndex > 0.65 && debtIndex < 0.35) {
+        insights.push('Strong balance: control holding with manageable disclosure debt.')
       }
-      if (debtIndex > 0.6) {
-        insights.push('High governance debt indicates hidden costs that may emerge over time.')
+      if (debtIndex > 0.55) {
+        insights.push('High disclosure debt — the story may not survive the next screenshot.')
       }
+    } else {
+      insights.push('Every second counted. Review research-lab frameworks for the next phase.')
     }
+
+    researchCards.slice(0, 2).forEach(card => {
+      insights.push(`${card.framework}: ${card.title} — ${card.keyQuestions[0]}`)
+    })
 
     return insights
   }
@@ -167,13 +169,13 @@ export default function PhaseSummaryModal({ phaseId, scenario, state, onClose }:
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div style={{ padding: '16px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Success Index</div>
+              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Control Index</div>
               <div style={{ fontSize: '28px', fontWeight: 600, color: '#4ade80' }}>
                 {(measuredIndex * 100).toFixed(0)}%
               </div>
             </div>
             <div style={{ padding: '16px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(251, 146, 60, 0.2)' }}>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Debt Index</div>
+              <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px' }}>Disclosure Debt</div>
               <div style={{ fontSize: '28px', fontWeight: 600, color: '#fb923c' }}>
                 {(debtIndex * 100).toFixed(0)}%
               </div>
