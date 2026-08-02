@@ -17,6 +17,7 @@ export function Layout({
   query,
   setQuery,
   rails,
+  liveReady,
   onSearch,
   onSelectRails,
   onUpdateAssumption,
@@ -28,6 +29,7 @@ export function Layout({
   query: string;
   setQuery: (q: string) => void;
   rails: RailsCase[];
+  liveReady: boolean | null;
   onSearch: () => void;
   onSelectRails: (id: string) => void;
   onUpdateAssumption: (
@@ -83,6 +85,31 @@ export function Layout({
         </form>
 
         <div className="flex items-center gap-2">
+          <span
+            className={`hidden items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider lg:inline-flex ${
+              liveReady === true
+                ? "text-emerald-300"
+                : liveReady === false
+                  ? "text-amber-300"
+                  : "text-slate-500"
+            }`}
+            title={
+              liveReady
+                ? "Live EDGAR search API is reachable"
+                : "Live API offline — bundled packs still work"
+            }
+          >
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${
+                liveReady === true
+                  ? "bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,.8)]"
+                  : liveReady === false
+                    ? "bg-amber-300"
+                    : "bg-slate-500"
+              }`}
+            />
+            {liveReady === true ? "Live" : liveReady === false ? "Offline" : "…"}
+          </span>
           <select
             className="hidden max-w-[10rem] border border-emerald-400/20 bg-black/40 px-2 py-1.5 font-mono text-[10px] text-slate-300 lg:block"
             defaultValue=""

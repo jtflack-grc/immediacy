@@ -1,7 +1,15 @@
 import type { Dossier } from "@interdependency/shared";
 import { analyzeClientSide } from "./clientAnalyze";
 
-const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || "";
+/**
+ * Live analysis API origin.
+ * Override at build time with VITE_API_BASE.
+ * Default points at the Fly app once deployed.
+ */
+const API_BASE = (
+  (import.meta.env.VITE_API_BASE as string | undefined) ||
+  "https://interdependency-api.fly.dev"
+).replace(/\/$/, "");
 
 const RAILS_CASES = [
   {
@@ -22,7 +30,9 @@ const RAILS_CASES = [
 ];
 
 async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`);
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: { Accept: "application/json" },
+  });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error((body as { error?: string }).error || res.statusText);
@@ -42,15 +52,35 @@ export async function fetchRailsDossier(id: string): Promise<Dossier> {
   return res.json() as Promise<Dossier>;
 }
 
-/** Pages-first: static client analyze, optional remote API if VITE_API_BASE is set. */
+export async function pingLiveApi(): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE}/health`, {
+      signal: AbortSignal.timeout(4000),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/** Live-first: hit the analysis API; fall back to static packs only if API is down. */
 export async function analyzeQuery(query: string): Promise<Dossier> {
-  if (API_BASE) {
+  const q = encodeURIComponent(query.trim());
+  try {
+    return await getJson<Dossier>(`/api/analyze?q=${q}`);
+  } catch (err) {
+    // If the ticker is in the static pack, still return a dossier so the page is usable.
     try {
-      const q = encodeURIComponent(query.trim());
-      return await getJson<Dossier>(`/api/analyze?q=${q}`);
+      return await analyzeClientSide(query);
     } catch {
-      // fall through to static pack
+      const msg = err instanceof Error ? err.message : "Live analyze failed";
+      throw new Error(
+        `${msg}. Live search needs the analysis API at ${API_BASE}.`
+      );
     }
   }
-  return analyzeClientSide(query);
+}
+
+export function getApiBase(): string {
+  return API_BASE;
 }

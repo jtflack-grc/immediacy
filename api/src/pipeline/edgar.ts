@@ -18,15 +18,20 @@ async function loadSeedTickers(): Promise<TickerRow[]> {
   return JSON.parse(raw) as TickerRow[];
 }
 
-async function secFetch(url: string): Promise<Response> {
+async function secFetch(url: string, attempt = 1): Promise<Response> {
   const res = await fetch(url, {
     headers: {
       "User-Agent": SEC_UA,
       "Accept-Encoding": "gzip, deflate",
       Accept: "application/json,text/html,text/plain,*/*",
-      Host: new URL(url).host,
     },
   });
+  if (res.status === 429 || res.status >= 500) {
+    if (attempt < 4) {
+      await new Promise((r) => setTimeout(r, attempt * 750));
+      return secFetch(url, attempt + 1);
+    }
+  }
   if (!res.ok) {
     throw new Error(`SEC fetch failed ${res.status} for ${url}`);
   }

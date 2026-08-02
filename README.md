@@ -36,34 +36,34 @@ web               Vite + React three-panel UI
 
 **https://jtflack-grc.github.io/interdependency/**
 
-Same model as INQUISITION / IMPACT!: a static GitHub Pages web app. Rails cases and bundled company packs (e.g. HAYW) analyze entirely in the browser.
+- **Rails cases** load as static JSON (like the family apps).
+- **Live search** calls the analysis API (`https://interdependency-api.fly.dev`) for EDGAR 10-K/8-K + OSINT + FAIR scenarios. SEC cannot be queried safely from the browser, so the API is required for full-universe search.
 
 ## Quick start
 
 ```bash
 npm install
 npm run build --workspace=@interdependency/shared
-npm run dev:web
+npm run dev:api   # :8787  — required for live search locally
+npm run dev:web   # :5275
 ```
 
-- Web: http://localhost:5275  
+Set `VITE_API_BASE=http://127.0.0.1:8787` when building/running the web app against a local API.
 
-Optional analysis API (full live EDGAR beyond the static pack):
-
-```bash
-npm run dev:api   # :8787
-# then build web with VITE_API_BASE=http://127.0.0.1:8787
-```
-
-Optional LLM extraction on the API: copy `.env.example` → export `OPENAI_API_KEY`.
+Optional LLM extraction on the API: export `OPENAI_API_KEY`.
 Set a descriptive `SEC_USER_AGENT` (SEC policy).
 
 ## Deploy
 
-- **Web (primary):** GitHub Pages via `.github/workflows/deploy-pages.yml` — no backend required.
-- **API (optional):** `fly.toml` + `api/Dockerfile`. Set Pages repo variable `VITE_API_BASE` only if you want live EDGAR for the full ticker universe.
+1. **Web:** GitHub Pages (`.github/workflows/deploy-pages.yml`).
+2. **Live API (Fly.io):**
+   ```powershell
+   .\.tools\flyctl\flyctl.exe auth login
+   .\scripts\deploy-api.ps1
+   ```
+   Or add repo secret `FLY_API_TOKEN` and run the **Deploy analysis API** workflow.
 
-Static assets live under `web/public/rails/`, `web/public/kb/`, and `web/public/dossiers/`.
+Default web build expects `https://interdependency-api.fly.dev`. Override with `VITE_API_BASE`.
 
 ## Method honesty
 

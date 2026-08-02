@@ -10,3 +10,5 @@ api/cache/*
 .vite/
 coverage/
 *.tsbuildinfo
+.tools/
+

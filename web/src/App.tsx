@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Dossier, FairAssumption } from "@interdependency/shared";
-import { analyzeQuery, fetchRailsDossier, fetchRailsList } from "./api";
+import {
+  analyzeQuery,
+  fetchRailsDossier,
+  fetchRailsList,
+  getApiBase,
+  pingLiveApi,
+} from "./api";
 import { Layout } from "./app/Layout";
 import { WelcomePopup } from "./app/WelcomePopup";
 
@@ -13,9 +19,11 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [liveReady, setLiveReady] = useState<boolean | null>(null);
 
   useEffect(() => {
     fetchRailsList().then(setRails).catch(() => undefined);
+    pingLiveApi().then(setLiveReady);
   }, []);
 
   const loadRails = useCallback(async (id: string) => {
@@ -73,6 +81,8 @@ export default function App() {
       {showWelcome && (
         <WelcomePopup
           rails={rails}
+          liveReady={liveReady}
+          apiBase={getApiBase()}
           onSelectRails={loadRails}
           onSearch={(q) => {
             setQuery(q);
@@ -88,6 +98,7 @@ export default function App() {
         query={query}
         setQuery={setQuery}
         rails={rails}
+        liveReady={liveReady}
         onSearch={() => void runSearch(query)}
         onSelectRails={loadRails}
         onUpdateAssumption={updateAssumption}

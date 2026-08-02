@@ -6,11 +6,15 @@ interface RailsCase {
 
 export function WelcomePopup({
   rails,
+  liveReady,
+  apiBase,
   onSelectRails,
   onSearch,
   onDismiss,
 }: {
   rails: RailsCase[];
+  liveReady: boolean | null;
+  apiBase: string;
   onSelectRails: (id: string) => void;
   onSearch: (q: string) => void;
   onDismiss: () => void;
@@ -59,9 +63,26 @@ export function WelcomePopup({
           </div>
 
           <div className="mt-6">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/70">
-              Or analyze a bundled public company
-            </p>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/70">
+                Live company search
+              </p>
+              <span
+                className={`font-mono text-[9px] uppercase tracking-wider ${
+                  liveReady === true
+                    ? "text-emerald-300"
+                    : liveReady === false
+                      ? "text-amber-300"
+                      : "text-slate-500"
+                }`}
+              >
+                {liveReady === true
+                  ? "API online"
+                  : liveReady === false
+                    ? "API offline"
+                    : "Checking API…"}
+              </span>
+            </div>
             <form
               className="flex flex-col gap-2 sm:flex-row"
               onSubmit={(e) => {
@@ -74,7 +95,7 @@ export function WelcomePopup({
               <input
                 name="q"
                 defaultValue="HAYW"
-                placeholder="Ticker or name (e.g. HAYW)"
+                placeholder="Any US public ticker or name"
                 className="min-h-12 flex-1 border border-emerald-400/25 bg-black/50 px-4 font-mono text-sm text-white outline-none focus:border-emerald-300"
               />
               <button
@@ -85,8 +106,11 @@ export function WelcomePopup({
               </button>
             </form>
             <p className="mt-2 text-[11px] text-slate-500">
-              Runs entirely in your browser on GitHub Pages — try HAYW. Rails
-              cases need no network beyond the page load.
+              Live search pulls EDGAR 10-K/8-K + OSINT via{" "}
+              <span className="font-mono text-slate-400">{apiBase}</span>
+              {liveReady === false
+                ? " — deploy the API to enable full-universe search."
+                : "."}
             </p>
           </div>
         </div>
