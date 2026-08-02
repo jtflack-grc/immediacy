@@ -41,25 +41,33 @@ async function ensureBuilt() {
 
 async function syncTickers() {
   await fs.mkdir(kbDir, { recursive: true });
+  const out = path.join(kbDir, "company_tickers.json");
   const url = "https://www.sec.gov/files/company_tickers.json";
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent": process.env.SEC_USER_AGENT,
-      Accept: "application/json",
-    },
-  });
-  if (!res.ok) {
-    console.warn(`Ticker sync skipped (SEC ${res.status}); keeping existing pack.`);
-    return;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": process.env.SEC_USER_AGENT,
+        Accept: "application/json",
+      },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      const rows = Object.values(json);
+      await fs.writeFile(out, JSON.stringify(rows), "utf8");
+      console.log(`Wrote company_tickers.json (${rows.length} issuers)`);
+      return;
+    }
+    console.warn(`Ticker sync SEC ${res.status}; falling back to seed.`);
+  } catch (err) {
+    console.warn(`Ticker sync failed; falling back to seed: ${err}`);
   }
-  const json = await res.json();
-  const rows = Object.values(json);
-  await fs.writeFile(
-    path.join(kbDir, "company_tickers.json"),
-    JSON.stringify(rows),
+  // Always publish an index for Pages search
+  const seed = await fs.readFile(
+    path.join(root, "data", "kb", "tickers-seed.json"),
     "utf8"
   );
-  console.log(`Wrote company_tickers.json (${rows.length} issuers)`);
+  await fs.writeFile(out, seed, "utf8");
+  console.log("Wrote company_tickers.json from seed pack");
 }
 
 async function main() {

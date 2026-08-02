@@ -28,5 +28,8 @@
   { "cik_str": 21344, "ticker": "KO", "title": "COCA COLA CO" },
   { "cik_str": 884122, "ticker": "TGT", "title": "TARGET CORP" },
   { "cik_str": 104169, "ticker": "WMT", "title": "Walmart Inc." },
-  { "cik_str": 354950, "ticker": "HD", "title": "HOME DEPOT, INC." }
+  { "cik_str": 354950, "ticker": "HD", "title": "HOME DEPOT, INC." },
+  { "cik_str": 1341439, "ticker": "ORCL", "title": "ORACLE CORP" },
+  { "cik_str": 1108524, "ticker": "CRM", "title": "Salesforce, Inc." },
+  { "cik_str": 1467373, "ticker": "ACN", "title": "Accenture plc" }
 ]
