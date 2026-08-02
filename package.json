@@ -1,0 +1,23 @@
+{
+  "name": "interdependency",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Open-source FAIR-informed third-party risk interdependency mapper",
+  "workspaces": [
+    "packages/*",
+    "api",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "dev:api": "npm run dev --workspace=@interdependency/api",
+    "dev:web": "npm run dev --workspace=@interdependency/web",
+    "dev:all": "npm run dev:api & npm run dev:web",
+    "build": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/api && npm run build --workspace=@interdependency/web",
+    "build:web": "npm run build --workspace=@interdependency/shared && npm run build --workspace=@interdependency/web",
+    "start:api": "npm run start --workspace=@interdependency/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

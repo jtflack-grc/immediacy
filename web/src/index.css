@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100vh;
+  background: #020806;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply antialiased font-sans font-normal;
+}
+
+::selection {
+  background: rgba(110, 231, 183, 0.28);
+  color: #fff;
+}
+
+.app-shell::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.28;
+  background:
+    linear-gradient(
+      102deg,
+      transparent 0 13%,
+      rgba(52, 211, 153, 0.12) 13.08% 13.14%,
+      transparent 13.22% 100%
+    ),
+    linear-gradient(
+      176deg,
+      transparent 0 29%,
+      rgba(16, 185, 129, 0.1) 29.08% 29.16%,
+      transparent 29.3% 100%
+    );
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
+}
+
+.signal-frame::before {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  width: 8rem;
+  height: 2px;
+  content: "";
+  background: #6ee7b7;
+  box-shadow: 0 0 18px rgba(110, 231, 183, 0.7);
+}
+
+.globe-field {
+  background-image:
+    radial-gradient(
+      circle at 18% 24%,
+      rgba(110, 231, 183, 0.55) 0 0.6px,
+      transparent 0.9px
+    ),
+    radial-gradient(
+      circle at 72% 66%,
+      rgba(148, 163, 184, 0.45) 0 0.6px,
+      transparent 0.9px
+    ),
+    radial-gradient(ellipse at 50% 50%, rgba(5, 46, 35, 0.28), transparent 68%);
+  background-size:
+    173px 137px,
+    211px 187px,
+    100% 100%;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(52, 211, 153, 0.26) transparent;
+}
