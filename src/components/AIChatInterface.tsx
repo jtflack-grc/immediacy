@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { Node, State } from '../engine/scenarioTypes'
 import ChatMessage from './ChatMessage'
 import { buildMessageSequence, ChatMessage as MessageType } from '../utils/messageBuilder'
-import { getRelevantAnglesForNode } from '../utils/longtermismMatching'
+import { getRelevantSecurityCardsForNode } from '../utils/securityResearchMatching'
 
 interface AIChatInterfaceProps {
   node: Node
@@ -34,9 +34,9 @@ export default function AIChatInterface({
     return buildMessageSequence(node, turn, state?.playerName)
   }, [node.id, turn, state?.playerName])
 
-  // Add longtermism considerations if any
-  const longtermismAngles = useMemo(() => {
-    return getRelevantAnglesForNode(node.id)
+  // Contextual security research beats (OWASP / MITRE / etc.)
+  const researchCards = useMemo(() => {
+    return getRelevantSecurityCardsForNode(node.id)
   }, [node.id])
 
   // Initialize: show first message immediately and reset scroll position
@@ -207,27 +207,27 @@ export default function AIChatInterface({
     }
   }, [displayedMessages.length]) // Only trigger when message count changes, not on every render
 
-  // Add longtermism messages if any
-  const allMessagesWithLongtermism = useMemo(() => {
+  // Inject research lab beats before choices
+  const allMessagesWithResearch = useMemo(() => {
     const messages = [...messageSequence]
     
-    if (longtermismAngles.length > 0) {
-      // Insert before choices message
+    if (researchCards.length > 0) {
       const choicesIndex = messages.findIndex(m => m.type === 'choices')
-      longtermismAngles.forEach((angle, idx) => {
-        const longtermismContent = `**${angle.title}**\n\n${angle.description}\n\n*Consider:* ${angle.keyQuestions[0]}`
-        messages.splice(choicesIndex + idx, 0, {
-          id: `${node.id}-longtermism-${idx}`,
+      const insertAt = choicesIndex >= 0 ? choicesIndex : messages.length
+      researchCards.slice(0, 2).forEach((card, idx) => {
+        const content = `**Research Lab · ${card.framework}**\n\n**${card.title}**\n\n${card.description}\n\n*Consider:* ${card.keyQuestions[0]}`
+        messages.splice(insertAt + idx, 0, {
+          id: `${node.id}-research-${idx}`,
           type: 'longtermism',
-          content: longtermismContent,
-          delay: choicesIndex > 0 ? messages[choicesIndex - 1].delay + 1000 : 0,
+          content,
+          delay: insertAt > 0 ? messages[Math.max(0, insertAt - 1)].delay + 1000 : 0,
           metadata: { longtermismIndex: idx }
         })
       })
     }
     
     return messages
-  }, [messageSequence, longtermismAngles, node.id])
+  }, [messageSequence, researchCards, node.id])
 
   return (
     <div
@@ -248,7 +248,7 @@ export default function AIChatInterface({
         }
       }}
     >
-      {allMessagesWithLongtermism.map((message, index) => {
+      {allMessagesWithResearch.map((message, index) => {
         if (!displayedMessages.includes(index)) {
           return null
         }
@@ -261,7 +261,7 @@ export default function AIChatInterface({
           .sort((a, b) => b - a)[0]
         
         const previousMessage = previousDisplayedIndex !== undefined 
-          ? allMessagesWithLongtermism[previousDisplayedIndex] 
+          ? allMessagesWithResearch[previousDisplayedIndex] 
           : null
         
         const delay = previousMessage && index > 0

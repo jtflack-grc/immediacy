@@ -4,7 +4,7 @@ import { calculateMeasuredSuccessIndex, calculateGovernanceDebtIndex } from '../
 import { getMetricExplanation } from '../utils/metricExplanations'
 import MetricHistoryViewer from './MetricHistoryViewer'
 import IndexExplainerModal from './IndexExplainerModal'
-import LongtermismPanel from './LongtermismPanel'
+import SecurityResearchPanel from './SecurityResearchPanel'
 import { getLossCondition } from '../utils/lossConditions'
 
 interface MetricsPanelProps {
@@ -554,8 +554,8 @@ export default function MetricsPanel({ state }: MetricsPanelProps) {
         </div>
       </div>
 
-      {/* Longtermism Research Panel */}
-      <LongtermismPanel />
+      {/* Security Research Lab */}
+      <SecurityResearchPanel />
 
       {/* Index Tooltip */}
       {hoveredIndex && indexTooltipPosition && (
