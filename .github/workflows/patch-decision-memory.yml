@@ -1,0 +1,139 @@
+name: Patch decision memory
+
+on:
+  push:
+    branches:
+      - feat/decision-consequence-ghosts
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, '[decision-memory-patched]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/decision-consequence-ghosts
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Add authoritative decision memory and globe ghosts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          types = Path('src/engine/scenarioTypes.ts')
+          text = types.read_text()
+          audit_anchor = '''export interface AuditRecord {\n  turn: number\n'''
+          audit_replacement = '''export interface DecisionMapImpact {\n  regionDeltas: Record<string, number>\n  activatedArcIds: string[]\n  activatedHubIds: string[]\n  spawnedRings: RingDatum[]\n}\n\nexport interface AuditRecord {\n  turn: number\n'''
+          if 'export interface DecisionMapImpact' not in text:
+              if audit_anchor not in text:
+                  raise SystemExit('AuditRecord anchor not found')
+              text = text.replace(audit_anchor, audit_replacement, 1)
+          timestamp_anchor = '''  timestamp: number\n  incidentTime?: number\n'''
+          timestamp_replacement = '''  timestamp: number\n  incidentTime?: number\n  delta?: Delta\n  mapImpact?: DecisionMapImpact\n'''
+          if 'mapImpact?: DecisionMapImpact' not in text:
+              if timestamp_anchor not in text:
+                  raise SystemExit('AuditRecord timestamp anchor not found')
+              text = text.replace(timestamp_anchor, timestamp_replacement, 1)
+          types.write_text(text)
+
+          reducer = Path('src/engine/reducer.ts')
+          text = reducer.read_text()
+          delta_anchor = '''      // Create audit record with metric snapshot\n      const auditRecord: AuditRecord = {\n'''
+          delta_replacement = '''      // Capture the actual geographic consequence after propagation, not just the requested delta.\n      const regionDeltas: Record<string, number> = {}\n      const regionKeys = new Set([\n        ...Object.keys(stateAfterDecay.map.regionValues),\n        ...Object.keys(stateAfterDelta.map.regionValues),\n      ])\n      regionKeys.forEach((iso3) => {\n        const before = stateAfterDecay.map.regionValues[iso3] ?? 0\n        const after = stateAfterDelta.map.regionValues[iso3] ?? 0\n        const change = after - before\n        if (Math.abs(change) > 0.0001) regionDeltas[iso3] = change\n      })\n\n      const priorArcIds = new Set(stateAfterDecay.map.activeArcs.map((arc) => arc.id))\n      const priorHubIds = new Set(stateAfterDecay.map.activeHubs.map((hub) => hub.id))\n      const priorRingIds = new Set(stateAfterDecay.map.activeRings.map((ring) => ring.id))\n      const mapImpact = {\n        regionDeltas,\n        activatedArcIds: stateAfterDelta.map.activeArcs\n          .filter((arc) => !priorArcIds.has(arc.id))\n          .map((arc) => arc.id),\n        activatedHubIds: stateAfterDelta.map.activeHubs\n          .filter((hub) => !priorHubIds.has(hub.id))\n          .map((hub) => hub.id),\n        spawnedRings: stateAfterDelta.map.activeRings\n          .filter((ring) => !priorRingIds.has(ring.id))\n          .map((ring) => ({ ...ring })),\n      }\n\n      // Create audit record with metric snapshot and reproducible decision inputs.\n      const auditRecord: AuditRecord = {\n'''
+          if 'const regionDeltas: Record<string, number>' not in text:
+              if delta_anchor not in text:
+                  raise SystemExit('reducer audit anchor not found')
+              text = text.replace(delta_anchor, delta_replacement, 1)
+          record_anchor = '''        timestamp: Date.now(),\n        metricsSnapshot: JSON.parse(JSON.stringify(stateAfterDelta.metrics)), // Deep copy for history\n'''
+          record_replacement = '''        timestamp: Date.now(),\n        delta: JSON.parse(JSON.stringify(delta)),\n        mapImpact,\n        metricsSnapshot: JSON.parse(JSON.stringify(stateAfterDelta.metrics)), // Deep copy for history\n'''
+          if 'mapImpact,' not in text.split('const auditRecord: AuditRecord = {',1)[1]:
+              if record_anchor not in text:
+                  raise SystemExit('reducer record anchor not found')
+              text = text.replace(record_anchor, record_replacement, 1)
+          reducer.write_text(text)
+
+          globe = Path('src/components/GlobePanel.tsx')
+          text = globe.read_text()
+
+          helper_anchor = '''function stableOffset(id: string): number {\n  return [...id].reduce((total, character) => total + character.charCodeAt(0), 0) % 1000\n}\n\nfunction legendRows(mode: MapMode) {'''
+          helper_replacement = '''function stableOffset(id: string): number {\n  return [...id].reduce((total, character) => total + character.charCodeAt(0), 0) % 1000\n}\n\nfunction getPolygonCenter(Cesium: any, entity: any): { lat: number; lng: number } | null {\n  const hierarchyProperty = entity?.polygon?.hierarchy\n  if (!hierarchyProperty) return null\n  const hierarchy = hierarchyProperty.getValue\n    ? hierarchyProperty.getValue(Cesium.JulianDate.now())\n    : hierarchyProperty\n  const positions = hierarchy?.positions\n  if (!Array.isArray(positions) || positions.length < 3) return null\n  const sphere = Cesium.BoundingSphere.fromPoints(positions)\n  const cartographic = Cesium.Cartographic.fromCartesian(sphere.center)\n  if (!cartographic) return null\n  return {\n    lat: Cesium.Math.toDegrees(cartographic.latitude),\n    lng: Cesium.Math.toDegrees(cartographic.longitude),\n  }\n}\n\nfunction legendRows(mode: MapMode) {'''
+          if 'function getPolygonCenter' not in text:
+              if helper_anchor not in text:
+                  raise SystemExit('globe helper anchor not found')
+              text = text.replace(helper_anchor, helper_replacement, 1)
+
+          state_anchor = '''  const [clickedRegion, setClickedRegion] = useState<string | null>(null)\n'''
+          state_replacement = '''  const [clickedRegion, setClickedRegion] = useState<string | null>(null)\n  const [showDecisionMemory, setShowDecisionMemory] = useState(true)\n'''
+          if 'showDecisionMemory' not in text:
+              if state_anchor not in text:
+                  raise SystemExit('globe state anchor not found')
+              text = text.replace(state_anchor, state_replacement, 1)
+
+          rings_anchor = '''  const activeRings = useMemo(() => (state ? getActiveRings(state) : []), [state])\n\n  const showRegionAt ='''
+          rings_replacement = '''  const activeRings = useMemo(() => (state ? getActiveRings(state) : []), [state])\n\n  const decisionGhosts = useMemo(() => {\n    if (!state) return []\n    return [...state.auditTrail]\n      .slice(-4)\n      .reverse()\n      .map((record, ageIndex) => {\n        const legacyMap = record.delta?.map\n        const regionDeltas = record.mapImpact?.regionDeltas ?? legacyMap?.regionValues ?? {}\n        const activatedArcIds = record.mapImpact?.activatedArcIds ?? legacyMap?.activateArcs ?? []\n        const activatedHubIds = record.mapImpact?.activatedHubIds ?? legacyMap?.activateHubs ?? []\n        const spawnedRings = record.mapImpact?.spawnedRings ?? []\n        return { record, ageIndex, regionDeltas, activatedArcIds, activatedHubIds, spawnedRings }\n      })\n      .filter((ghost) =>\n        Object.keys(ghost.regionDeltas).length > 0 ||\n        ghost.activatedArcIds.length > 0 ||\n        ghost.activatedHubIds.length > 0 ||\n        ghost.spawnedRings.length > 0\n      )\n  }, [state])\n\n  const showRegionAt ='''
+          if 'const decisionGhosts = useMemo' not in text:
+              if rings_anchor not in text:
+                  raise SystemExit('decision ghosts memo anchor not found')
+              text = text.replace(rings_anchor, rings_replacement, 1)
+
+          trajectory_old = '''        const hasTrajectory = currentState.auditTrail.some(\n          (record) => record.delta?.map?.regionValues?.[iso3] !== undefined\n        )'''
+          trajectory_new = '''        const hasTrajectory = currentState.auditTrail.some(\n          (record) =>\n            record.mapImpact?.regionDeltas?.[iso3] !== undefined ||\n            record.delta?.map?.regionValues?.[iso3] !== undefined\n        )'''
+          if trajectory_old in text:
+              text = text.replace(trajectory_old, trajectory_new, 1)
+
+          country_anchor = '''    const countrySource = countrySourceRef.current\n    if (countrySource) {\n      for (const entity of countrySource.entities.values) {'''
+          country_replacement = '''    const countryCenters = new Map<string, { lat: number; lng: number; name: string }>()\n    const countrySource = countrySourceRef.current\n    if (countrySource) {\n      for (const entity of countrySource.entities.values) {'''
+          if 'const countryCenters = new Map' not in text:
+              if country_anchor not in text:
+                  raise SystemExit('country source anchor not found')
+              text = text.replace(country_anchor, country_replacement, 1)
+
+          metadata_anchor = '''        entity.__immediacyIso3 = iso3\n        entity.__immediacyName = name\n\n        if (entity.polygon) {'''
+          metadata_replacement = '''        entity.__immediacyIso3 = iso3\n        entity.__immediacyName = name\n        if (iso3 && entity.polygon) {\n          const center = getPolygonCenter(Cesium, entity)\n          if (center) countryCenters.set(iso3, { ...center, name })\n        }\n\n        if (entity.polygon) {'''
+          if 'countryCenters.set(iso3' not in text:
+              if metadata_anchor not in text:
+                  raise SystemExit('country metadata anchor not found')
+              text = text.replace(metadata_anchor, metadata_replacement, 1)
+
+          ghosts_anchor = '''    for (const arc of activeArcs) {\n'''
+          ghosts_block = '''    if (showDecisionMemory) {\n      const memoryAlphas = [0.38, 0.25, 0.16, 0.09]\n      const memoryColor = Cesium.Color.fromCssColorString('#d7e5ee')\n\n      for (const ghost of decisionGhosts) {\n        const alpha = memoryAlphas[ghost.ageIndex] ?? 0.06\n\n        for (const [iso3, adjustment] of Object.entries(ghost.regionDeltas)) {\n          const center = countryCenters.get(iso3)\n          if (!center) continue\n          const magnitude = Math.min(1, Math.abs(adjustment) / 0.2)\n          const radius = 85_000 + magnitude * 235_000\n          const regionGhost = viewer.entities.add({\n            position: Cesium.Cartesian3.fromDegrees(center.lng, center.lat),\n            point: {\n              pixelSize: 4 + magnitude * 3,\n              color: memoryColor.withAlpha(alpha * 0.9),\n              outlineColor: Cesium.Color.BLACK.withAlpha(0.65),\n              outlineWidth: 1,\n              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,\n              disableDepthTestDistance: Number.POSITIVE_INFINITY,\n            },\n            ellipse: {\n              semiMajorAxis: radius,\n              semiMinorAxis: radius,\n              material: memoryColor.withAlpha(alpha * 0.025),\n              outline: true,\n              outlineColor: memoryColor.withAlpha(alpha),\n              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,\n            },\n          })\n          regionGhost.__immediacyIso3 = iso3\n          regionGhost.__immediacyName = center.name\n        }\n\n        for (const arcId of ghost.activatedArcIds) {\n          const arc = allArcs.find((candidate) => candidate.id === arcId)\n          if (!arc) continue\n          const ghostArc = viewer.entities.add({\n            polyline: {\n              positions: buildArcPositions(Cesium, { ...arc, baseWeight: Math.max(0.3, arc.baseWeight * 0.82) }),\n              width: Math.max(1.4, 3.2 - ghost.ageIndex * 0.45),\n              material: new Cesium.PolylineDashMaterialProperty({\n                color: memoryColor.withAlpha(alpha * 0.95),\n                dashLength: 18,\n              }),\n              arcType: Cesium.ArcType.NONE,\n            },\n          })\n          ghostArc.__immediacyArc = arc\n        }\n\n        for (const hubId of ghost.activatedHubIds) {\n          const hub = allHubs.find((candidate) => candidate.id === hubId)\n          if (!hub) continue\n          const hubGhost = viewer.entities.add({\n            position: Cesium.Cartesian3.fromDegrees(hub.lng, hub.lat, 800),\n            point: {\n              pixelSize: Math.max(5, 9 - ghost.ageIndex),\n              color: memoryColor.withAlpha(alpha * 0.85),\n              outlineColor: memoryColor.withAlpha(alpha),\n              outlineWidth: 1,\n              heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,\n              disableDepthTestDistance: Number.POSITIVE_INFINITY,\n            },\n          })\n          hubGhost.__immediacyIso3 = hub.iso3\n          hubGhost.__immediacyName = hub.name\n        }\n\n        for (const ring of ghost.spawnedRings) {\n          const ringRadius = 105_000 + ghost.ageIndex * 32_000\n          const ringGhost = viewer.entities.add({\n            position: Cesium.Cartesian3.fromDegrees(ring.lng, ring.lat),\n            ellipse: {\n              semiMajorAxis: ringRadius,\n              semiMinorAxis: ringRadius,\n              material: memoryColor.withAlpha(alpha * 0.018),\n              outline: true,\n              outlineColor: memoryColor.withAlpha(alpha * 0.9),\n              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,\n            },\n          })\n          ringGhost.__immediacyRing = ring\n        }\n      }\n    }\n\n    for (const arc of activeArcs) {\n'''
+          if 'const memoryAlphas = [0.38, 0.25, 0.16, 0.09]' not in text:
+              if ghosts_anchor not in text:
+                  raise SystemExit('active arc anchor not found')
+              text = text.replace(ghosts_anchor, ghosts_block, 1)
+
+          deps_old = '''  }, [ready, state, regionValues, mapMode, activeArcs, activeHubs, activeRings])'''
+          deps_new = '''  }, [\n    ready,\n    state,\n    regionValues,\n    mapMode,\n    activeArcs,\n    activeHubs,\n    activeRings,\n    allArcs,\n    allHubs,\n    decisionGhosts,\n    showDecisionMemory,\n  ])'''
+          if deps_old not in text:
+              raise SystemExit('globe effect deps anchor not found')
+          text = text.replace(deps_old, deps_new, 1)
+
+          legend_anchor = '''        <div style={{ display: 'grid', gap: '5px' }}>\n          {rows.map(([label, color, range]) => (\n            <div key={label} style={{ display: 'grid', gridTemplateColumns: '10px 1fr auto', alignItems: 'center', gap: '7px', fontSize: '10px', color: '#aeb7c0' }}>\n              <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: color }} />\n              <span>{label}</span>\n              <span style={{ fontFamily: '\"IBM Plex Mono\", monospace', color: '#7f8993' }}>{range}</span>\n            </div>\n          ))}\n        </div>\n      </div>'''
+          legend_replacement = '''        <div style={{ display: 'grid', gap: '5px' }}>\n          {rows.map(([label, color, range]) => (\n            <div key={label} style={{ display: 'grid', gridTemplateColumns: '10px 1fr auto', alignItems: 'center', gap: '7px', fontSize: '10px', color: '#aeb7c0' }}>\n              <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: color }} />\n              <span>{label}</span>\n              <span style={{ fontFamily: '\"IBM Plex Mono\", monospace', color: '#7f8993' }}>{range}</span>\n            </div>\n          ))}\n        </div>\n        {decisionGhosts.length > 0 && (\n          <button\n            type="button"\n            onClick={() => setShowDecisionMemory((current) => !current)}\n            style={{\n              width: '100%',\n              marginTop: '9px',\n              paddingTop: '8px',\n              border: 0,\n              borderTop: '1px solid #303841',\n              background: 'transparent',\n              color: showDecisionMemory ? '#d7e5ee' : '#7f8993',\n              cursor: 'pointer',\n              fontFamily: '\"IBM Plex Mono\", monospace',\n              fontSize: '9px',\n              textAlign: 'left',\n              textTransform: 'uppercase',\n              letterSpacing: '0.08em',\n            }}\n            title="Toggle fading traces from the last four decisions"\n          >\n            Decision memory · {decisionGhosts.length} {showDecisionMemory ? 'on' : 'off'}\n          </button>\n        )}\n      </div>'''
+          if 'Decision memory · {decisionGhosts.length}' not in text:
+              if legend_anchor not in text:
+                  raise SystemExit('legend anchor not found')
+              text = text.replace(legend_anchor, legend_replacement, 1)
+
+          badge_old = '''        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {trackedJurisdictions} tracked · {activeArcs.length} flows · {activeRings.length} events'''
+          badge_new = '''        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {trackedJurisdictions} tracked · {activeArcs.length} flows · {activeRings.length} events · {decisionGhosts.length} memories'''
+          if badge_old in text:
+              text = text.replace(badge_old, badge_new, 1)
+
+          globe.write_text(text)
+          PY
+      - run: npm install
+      - run: npm test -- --run
+      - run: npm run build
+      - name: Commit decision memory
+        run: |
+          git config user.name "jtflack-grc"
+          git config user.email "202126308+jtflack-grc@users.noreply.github.com"
+          git add src/engine/scenarioTypes.ts src/engine/reducer.ts src/components/GlobePanel.tsx
+          git commit -m "Add decision consequence memory to globe [decision-memory-patched]"
+          git push origin HEAD:feat/decision-consequence-ghosts
