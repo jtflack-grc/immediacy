@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" style="background-color: #000000;">
+<html lang="en" style="background-color: #07090b">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,7 @@
       name="description"
       content="IMMEDIACY is a short-horizon cyber disclosure war game about making consequential decisions while facts remain incomplete and the clocks keep running."
     />
+    <meta name="theme-color" content="#07090b" />
     <link rel="canonical" href="https://jtflack-grc.github.io/immediacy/" />
 
     <meta property="og:type" content="website" />
@@ -35,21 +36,25 @@
     />
     <meta name="twitter:image" content="https://jtflack-grc.github.io/immediacy/social-card.png?v=20260803" />
 
-    <link rel="icon" type="image/svg+xml" href="/immediacy/vite.svg" />
     <title>IMMEDIACY — Every Second Counts</title>
-    <style>
-      html, body {
-        background-color: #000000 !important;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        letter-spacing: -0.01em;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      window.CESIUM_BASE_URL = "https://cesium.com/downloads/cesiumjs/releases/1.145/Build/Cesium/";
+    </script>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.145/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.145/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
   </head>
-  <body style="background-color: #000000;">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

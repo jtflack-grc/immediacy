@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { State } from '../engine/scenarioTypes'
 import { exportAsJSON, exportAsCSV, generateShareableURL, downloadFile } from '../utils/exportUtils'
 import { generatePolicyBrief, formatPolicyBriefAsMarkdown, formatPolicyBriefAsText } from '../utils/policyBrief'
 import { exportDebtReportAsPDF } from '../utils/debtReport'
-import { t, getLanguage, setLanguage, Language } from '../utils/i18n'
+import { getLanguage, setLanguage, Language } from '../utils/i18n'
 
 interface HeaderBarProps {
   state: State
@@ -13,497 +13,261 @@ interface HeaderBarProps {
   onShowScenarioConditions?: () => void
 }
 
-export default function HeaderBar({ state, onToggleDebug, onShowHelp, onShowCredits, onShowScenarioConditions }: HeaderBarProps) {
+const buttonStyle: React.CSSProperties = {
+  padding: '7px 11px',
+  fontSize: '12px',
+  fontWeight: 500,
+  backgroundColor: '#0d1115',
+  color: '#dfe5ea',
+  border: '1px solid #303841',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  whiteSpace: 'nowrap',
+}
+
+const menuStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: 'calc(100% + 6px)',
+  right: 0,
+  minWidth: '190px',
+  padding: '5px',
+  backgroundColor: '#0d1115',
+  border: '1px solid #303841',
+  borderRadius: '6px',
+  zIndex: 1000,
+}
+
+const menuButtonStyle: React.CSSProperties = {
+  display: 'block',
+  width: '100%',
+  padding: '9px 10px',
+  fontSize: '12px',
+  fontWeight: 400,
+  backgroundColor: 'transparent',
+  color: '#dfe5ea',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  textAlign: 'left',
+}
+
+export default function HeaderBar({
+  state,
+  onToggleDebug,
+  onShowHelp,
+  onShowCredits,
+  onShowScenarioConditions,
+}: HeaderBarProps) {
   const [currentLang, setCurrentLang] = useState<Language>(getLanguage())
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [showExportMenu, setShowExportMenu] = useState(false)
-  
+
   useEffect(() => {
     setLanguage(currentLang)
   }, [currentLang])
-  
-  const languages: { code: Language; name: string; flag: string }[] = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-    { code: 'zh', name: '中文', flag: '🇨🇳' },
-    { code: 'pt', name: 'Português', flag: '🇧🇷' },
-    { code: 'ja', name: '日本語', flag: '🇯🇵' }
+
+  const languages: { code: Language; name: string }[] = [
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'zh', name: '中文' },
+    { code: 'pt', name: 'Português' },
+    { code: 'ja', name: '日本語' },
   ]
+
   const handleExportJSON = () => {
-    const json = exportAsJSON(state)
-    downloadFile(json, `immediacy-${Date.now()}.json`, 'application/json')
+    downloadFile(exportAsJSON(state), `immediacy-${Date.now()}.json`, 'application/json')
+    setShowExportMenu(false)
   }
-  
+
   const handleExportCSV = () => {
-    const csv = exportAsCSV(state)
-    downloadFile(csv, `immediacy-${Date.now()}.csv`, 'text/csv')
+    downloadFile(exportAsCSV(state), `immediacy-${Date.now()}.csv`, 'text/csv')
+    setShowExportMenu(false)
   }
-  
+
   const handleShare = () => {
     const url = generateShareableURL(state)
-    navigator.clipboard.writeText(url).then(() => {
-      alert('Shareable URL copied to clipboard!')
-    }).catch(() => {
-      prompt('Copy this URL to share:', url)
-    })
+    navigator.clipboard
+      .writeText(url)
+      .then(() => alert('Shareable URL copied to clipboard.'))
+      .catch(() => prompt('Copy this URL to share:', url))
+    setShowExportMenu(false)
   }
 
   const handleExportPolicyBrief = () => {
-    try {
-      const brief = generatePolicyBrief(state)
-      const markdown = formatPolicyBriefAsMarkdown(brief)
-      downloadFile(markdown, `policy-brief-turn-${state.turn}-${Date.now()}.md`, 'text/markdown')
-    } catch (error) {
-      console.error('Error exporting policy brief:', error)
-      alert('Error generating policy brief. Please try again.')
-    }
+    const brief = generatePolicyBrief(state)
+    downloadFile(
+      formatPolicyBriefAsMarkdown(brief),
+      `policy-brief-turn-${state.turn}-${Date.now()}.md`,
+      'text/markdown'
+    )
+    setShowExportMenu(false)
   }
 
   const handleExportPolicyBriefText = () => {
-    try {
-      const brief = generatePolicyBrief(state)
-      const text = formatPolicyBriefAsText(brief)
-      downloadFile(text, `policy-brief-turn-${state.turn}-${Date.now()}.txt`, 'text/plain')
-    } catch (error) {
-      console.error('Error exporting policy brief:', error)
-      alert('Error generating policy brief. Please try again.')
-    }
+    const brief = generatePolicyBrief(state)
+    downloadFile(
+      formatPolicyBriefAsText(brief),
+      `policy-brief-turn-${state.turn}-${Date.now()}.txt`,
+      'text/plain'
+    )
+    setShowExportMenu(false)
   }
 
   const handleExportDebtReport = () => {
-    try {
-      exportDebtReportAsPDF(state)
-    } catch (error) {
-      console.error('Error exporting debt report:', error)
-      alert('Error generating debt report. Please try again.')
-    }
+    exportDebtReportAsPDF(state)
+    setShowExportMenu(false)
   }
+
   return (
-    <div style={{
-      height: '60px',
-      backgroundColor: '#000000',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 24px',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100
-    }}>
-      {/* Left spacer */}
-      <div style={{ flex: 1 }}></div>
-      
-      {/* Centered Title */}
-      <h1 
-        title="Every Second Counts"
-        style={{ 
-          position: 'absolute',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontSize: '44px', 
-          fontWeight: 700, 
-          color: '#fff',
-          margin: 0,
-          cursor: 'default',
-          letterSpacing: '0.15em',
-          lineHeight: 1,
-          textTransform: 'uppercase',
-          fontFamily: '"Times New Roman", Times, serif',
-          textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)',
-          whiteSpace: 'nowrap'
-        }}
-      >
-        {t('app.title')}
-      </h1>
-      
-      {/* Right side buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', position: 'relative', flex: 1, justifyContent: 'flex-end' }}>
-        {/* Language Selector - Premium */}
+    <header
+      style={{
+        minHeight: '58px',
+        backgroundColor: '#07090b',
+        borderBottom: '1px solid #20262d',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '18px',
+        padding: '9px 18px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+      }}
+    >
+      <div style={{ minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: '20px',
+              lineHeight: 1,
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              color: '#f2f5f7',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            IMMEDIACY
+          </h1>
+          <span
+            style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '10px',
+              color: '#8b949e',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            SHORT-HORIZON DISCLOSURE WAR ROOM
+          </span>
+        </div>
+        <div style={{ marginTop: '3px', fontSize: '11px', color: '#8b949e' }}>
+          Every second counts · Turn {state.turn} · T+{state.incidentTime}m
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+        {onShowScenarioConditions && (
+          <button type="button" onClick={onShowScenarioConditions} style={buttonStyle}>
+            Scenario
+          </button>
+        )}
+
         <div style={{ position: 'relative' }}>
           <button
-            onClick={() => setShowLangMenu(!showLangMenu)}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(96, 165, 250, 0.1)'
-              e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.4)'
+            type="button"
+            onClick={() => {
+              setShowLangMenu((value) => !value)
+              setShowExportMenu(false)
             }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(15, 15, 15, 0.6)'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)'
-            }}
-            style={{
-              padding: '8px 14px',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: 'rgba(15, 15, 15, 0.6)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              minWidth: '60px',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-            }}
-            title="Change language"
+            style={buttonStyle}
+            aria-expanded={showLangMenu}
           >
-            <span style={{ fontSize: '14px' }}>{languages.find(l => l.code === currentLang)?.flag || '🌐'}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.5px' }}>{languages.find(l => l.code === currentLang)?.code.toUpperCase() || 'EN'}</span>
+            {currentLang.toUpperCase()}
           </button>
           {showLangMenu && (
-            <div style={{
-              position: 'absolute',
-              top: '100%',
-              right: 0,
-              marginTop: '6px',
-              background: 'linear-gradient(135deg, rgba(15, 15, 15, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '10px',
-              padding: '6px',
-              minWidth: '160px',
-              zIndex: 1000,
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-            }}>
-              {languages.map(lang => (
+            <div style={menuStyle}>
+              {languages.map((lang) => (
                 <button
+                  type="button"
                   key={lang.code}
                   onClick={() => {
                     setCurrentLang(lang.code)
                     setShowLangMenu(false)
                   }}
                   style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    fontSize: '13px',
-                    fontWeight: currentLang === lang.code ? 600 : 400,
-                    background: currentLang === lang.code 
-                      ? 'linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%)'
-                      : 'transparent',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (currentLang !== lang.code) {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (currentLang !== lang.code) {
-                      e.currentTarget.style.backgroundColor = 'transparent'
-                    }
+                    ...menuButtonStyle,
+                    color: currentLang === lang.code ? '#f2f5f7' : '#aeb7c0',
+                    backgroundColor: currentLang === lang.code ? '#151b21' : 'transparent',
                   }}
                 >
-                  <span>{lang.flag}</span>
-                  <span>{lang.name}</span>
+                  {lang.name} · {lang.code.toUpperCase()}
                 </button>
               ))}
             </div>
           )}
         </div>
-        
-        {onShowHelp && (
+
+        <div style={{ position: 'relative' }}>
           <button
-            onClick={onShowHelp}
-            style={{
-              padding: '6px 10px',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: 'transparent',
-              color: '#60a5fa',
-              border: '1px solid rgba(96, 165, 250, 0.2)',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
+            type="button"
+            onClick={() => {
+              setShowExportMenu((value) => !value)
+              setShowLangMenu(false)
             }}
-            title="Help — welcome & tutorial"
-          >
-            📖
-          </button>
-        )}
-        {onShowScenarioConditions && (
-          <button
-            onClick={onShowScenarioConditions}
-            style={{
-              padding: '8px 14px',
-              fontSize: '13px',
-              fontWeight: 600,
-              backgroundColor: 'rgba(15, 15, 15, 0.6)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            title="Scenario conditions — restart with different starting conditions"
-          >
-            Scenario
-          </button>
-        )}
-        {/* Export Menu */}
-        <div 
-          style={{ position: 'relative', display: 'inline-block' }}
-          onMouseEnter={() => setShowExportMenu(true)}
-          onMouseLeave={() => setShowExportMenu(false)}
-        >
-          <button
-            onClick={() => setShowExportMenu(!showExportMenu)}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(139, 92, 246, 0.15)'
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
-              e.currentTarget.style.transform = 'translateY(-1px)'
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.2)'
-            }}
-            onMouseLeave={(e) => {
-              if (!showExportMenu) {
-                e.currentTarget.style.backgroundColor = 'rgba(15, 15, 15, 0.6)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)'
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-              }
-            }}
-            style={{
-              padding: '8px 16px',
-              fontSize: '13px',
-              fontWeight: 600,
-              backgroundColor: showExportMenu ? 'rgba(139, 92, 246, 0.15)' : 'rgba(15, 15, 15, 0.6)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              border: showExportMenu ? '1px solid rgba(139, 92, 246, 0.5)' : '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: showExportMenu 
-                ? '0 4px 12px rgba(139, 92, 246, 0.2)' 
-                : '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-              letterSpacing: '0.3px'
-            }}
-            title="Export options"
+            style={buttonStyle}
+            aria-expanded={showExportMenu}
           >
             Export
           </button>
           {showExportMenu && (
-            <div style={{
-              position: 'absolute',
-              top: '100%',
-              right: 0,
-              marginTop: '4px',
-              backgroundColor: '#111111',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
-              padding: '4px',
-              zIndex: 1000,
-              minWidth: '180px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
-            }}>
-            <button
-              onClick={handleExportJSON}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Export JSON
-            </button>
-            <button
-              onClick={handleExportCSV}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Export CSV
-            </button>
-            <button
-              onClick={handleShare}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Share URL
-            </button>
-            <div style={{
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)',
-              margin: '6px 0'
-            }} />
-            <button
-              onClick={handleExportPolicyBrief}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Policy Brief (Markdown)
-            </button>
-            <button
-              onClick={handleExportPolicyBriefText}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Policy Brief (Text)
-            </button>
-            <button
-              onClick={handleExportDebtReport}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '13px',
-                fontWeight: 400,
-                backgroundColor: 'transparent',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              Debt Report (PDF)
-            </button>
+            <div style={{ ...menuStyle, minWidth: '220px' }}>
+              <button type="button" onClick={handleExportJSON} style={menuButtonStyle}>
+                Run state · JSON
+              </button>
+              <button type="button" onClick={handleExportCSV} style={menuButtonStyle}>
+                Decision trail · CSV
+              </button>
+              <button type="button" onClick={handleShare} style={menuButtonStyle}>
+                Copy shareable URL
+              </button>
+              <div style={{ height: '1px', margin: '5px 4px', backgroundColor: '#20262d' }} />
+              <button type="button" onClick={handleExportPolicyBrief} style={menuButtonStyle}>
+                Policy brief · Markdown
+              </button>
+              <button type="button" onClick={handleExportPolicyBriefText} style={menuButtonStyle}>
+                Policy brief · Text
+              </button>
+              <button type="button" onClick={handleExportDebtReport} style={menuButtonStyle}>
+                Disclosure debt report · PDF
+              </button>
+              <div style={{ height: '1px', margin: '5px 4px', backgroundColor: '#20262d' }} />
+              <button
+                type="button"
+                onClick={() => {
+                  onToggleDebug()
+                  setShowExportMenu(false)
+                }}
+                style={menuButtonStyle}
+              >
+                {state.flags.showDebug ? 'Hide diagnostics' : 'Show diagnostics'}
+              </button>
             </div>
           )}
         </div>
-        
-        {/* Credits Button */}
+
+        {onShowHelp && (
+          <button type="button" onClick={onShowHelp} style={buttonStyle}>
+            Help
+          </button>
+        )}
         {onShowCredits && (
-          <button
-            onClick={onShowCredits}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(236, 72, 153, 0.15)'
-              e.currentTarget.style.borderColor = 'rgba(236, 72, 153, 0.5)'
-              e.currentTarget.style.transform = 'translateY(-1px)'
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(236, 72, 153, 0.2)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(15, 15, 15, 0.6)'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
-            }}
-            style={{
-              padding: '8px 16px',
-              fontSize: '13px',
-              fontWeight: 600,
-              backgroundColor: 'rgba(15, 15, 15, 0.6)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-              letterSpacing: '0.3px'
-            }}
-            title="Credits"
-          >
-            Credits
+          <button type="button" onClick={onShowCredits} style={buttonStyle}>
+            Method
           </button>
         )}
       </div>
-    </div>
+    </header>
   )
 }
