@@ -119,6 +119,23 @@ function stableOffset(id: string): number {
   return [...id].reduce((total, character) => total + character.charCodeAt(0), 0) % 1000
 }
 
+function getPolygonCenter(Cesium: any, entity: any): { lat: number; lng: number } | null {
+  const hierarchyProperty = entity?.polygon?.hierarchy
+  if (!hierarchyProperty) return null
+  const hierarchy = hierarchyProperty.getValue
+    ? hierarchyProperty.getValue(Cesium.JulianDate.now())
+    : hierarchyProperty
+  const positions = hierarchy?.positions
+  if (!Array.isArray(positions) || positions.length < 3) return null
+  const sphere = Cesium.BoundingSphere.fromPoints(positions)
+  const cartographic = Cesium.Cartographic.fromCartesian(sphere.center)
+  if (!cartographic) return null
+  return {
+    lat: Cesium.Math.toDegrees(cartographic.latitude),
+    lng: Cesium.Math.toDegrees(cartographic.longitude),
+  }
+}
+
 function legendRows(mode: MapMode) {
   if (mode === 'disclosurePosture') {
     return [
@@ -158,6 +175,7 @@ export default function GlobePanel({
   const [hoveredRing, setHoveredRing] = useState<RingDatum | null>(null)
   const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null)
   const [clickedRegion, setClickedRegion] = useState<string | null>(null)
+  const [showDecisionMemory, setShowDecisionMemory] = useState(true)
 
   useEffect(() => {
     stateRef.current = state
@@ -190,6 +208,27 @@ export default function GlobePanel({
   }, [state, allHubs])
 
   const activeRings = useMemo(() => (state ? getActiveRings(state) : []), [state])
+
+  const decisionGhosts = useMemo(() => {
+    if (!state) return []
+    return [...state.auditTrail]
+      .slice(-4)
+      .reverse()
+      .map((record, ageIndex) => {
+        const legacyMap = record.delta?.map
+        const regionDeltas = record.mapImpact?.regionDeltas ?? legacyMap?.regionValues ?? {}
+        const activatedArcIds = record.mapImpact?.activatedArcIds ?? legacyMap?.activateArcs ?? []
+        const activatedHubIds = record.mapImpact?.activatedHubIds ?? legacyMap?.activateHubs ?? []
+        const spawnedRings = record.mapImpact?.spawnedRings ?? []
+        return { record, ageIndex, regionDeltas, activatedArcIds, activatedHubIds, spawnedRings }
+      })
+      .filter((ghost) =>
+        Object.keys(ghost.regionDeltas).length > 0 ||
+        ghost.activatedArcIds.length > 0 ||
+        ghost.activatedHubIds.length > 0 ||
+        ghost.spawnedRings.length > 0
+      )
+  }, [state])
 
   const showRegionAt = (iso3: string, name: string, x: number, y: number) => {
     const currentState = stateRef.current
@@ -347,7 +386,9 @@ export default function GlobePanel({
         if (!currentState || !IN_PLAY_ISO3.has(iso3) || !Object.prototype.hasOwnProperty.call(values, iso3)) return
 
         const hasTrajectory = currentState.auditTrail.some(
-          (record) => record.delta?.map?.regionValues?.[iso3] !== undefined
+          (record) =>
+            record.mapImpact?.regionDeltas?.[iso3] !== undefined ||
+            record.delta?.map?.regionValues?.[iso3] !== undefined
         )
         if (hasTrajectory) {
           setClickedRegion(iso3)
@@ -400,6 +441,7 @@ export default function GlobePanel({
 
     viewer.entities.removeAll()
 
+    const countryCenters = new Map<string, { lat: number; lng: number; name: string }>()
     const countrySource = countrySourceRef.current
     if (countrySource) {
       for (const entity of countrySource.entities.values) {
@@ -409,6 +451,10 @@ export default function GlobePanel({
         const value = inPlay ? regionValues[iso3] ?? 0 : 0
         entity.__immediacyIso3 = iso3
         entity.__immediacyName = name
+        if (iso3 && entity.polygon) {
+          const center = getPolygonCenter(Cesium, entity)
+          if (center) countryCenters.set(iso3, { ...center, name })
+        }
 
         if (entity.polygon) {
           if (inPlay) {
@@ -434,6 +480,94 @@ export default function GlobePanel({
             entity.polygon.outline = false
             entity.polygon.outlineColor = Cesium.Color.TRANSPARENT
           }
+        }
+      }
+    }
+
+    if (showDecisionMemory) {
+      const memoryAlphas = [0.38, 0.25, 0.16, 0.09]
+      const memoryColor = Cesium.Color.fromCssColorString('#d7e5ee')
+
+      for (const ghost of decisionGhosts) {
+        const alpha = memoryAlphas[ghost.ageIndex] ?? 0.06
+
+        for (const [iso3, adjustment] of Object.entries(ghost.regionDeltas)) {
+          const center = countryCenters.get(iso3)
+          if (!center) continue
+          const magnitude = Math.min(1, Math.abs(adjustment) / 0.2)
+          const radius = 85_000 + magnitude * 235_000
+          const regionGhost = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(center.lng, center.lat),
+            point: {
+              pixelSize: 4 + magnitude * 3,
+              color: memoryColor.withAlpha(alpha * 0.9),
+              outlineColor: Cesium.Color.BLACK.withAlpha(0.65),
+              outlineWidth: 1,
+              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+              disableDepthTestDistance: Number.POSITIVE_INFINITY,
+            },
+            ellipse: {
+              semiMajorAxis: radius,
+              semiMinorAxis: radius,
+              material: memoryColor.withAlpha(alpha * 0.025),
+              outline: true,
+              outlineColor: memoryColor.withAlpha(alpha),
+              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+            },
+          })
+          regionGhost.__immediacyIso3 = iso3
+          regionGhost.__immediacyName = center.name
+        }
+
+        for (const arcId of ghost.activatedArcIds) {
+          const arc = allArcs.find((candidate) => candidate.id === arcId)
+          if (!arc) continue
+          const ghostArc = viewer.entities.add({
+            polyline: {
+              positions: buildArcPositions(Cesium, { ...arc, baseWeight: Math.max(0.3, arc.baseWeight * 0.82) }),
+              width: Math.max(1.4, 3.2 - ghost.ageIndex * 0.45),
+              material: new Cesium.PolylineDashMaterialProperty({
+                color: memoryColor.withAlpha(alpha * 0.95),
+                dashLength: 18,
+              }),
+              arcType: Cesium.ArcType.NONE,
+            },
+          })
+          ghostArc.__immediacyArc = arc
+        }
+
+        for (const hubId of ghost.activatedHubIds) {
+          const hub = allHubs.find((candidate) => candidate.id === hubId)
+          if (!hub) continue
+          const hubGhost = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(hub.lng, hub.lat, 800),
+            point: {
+              pixelSize: Math.max(5, 9 - ghost.ageIndex),
+              color: memoryColor.withAlpha(alpha * 0.85),
+              outlineColor: memoryColor.withAlpha(alpha),
+              outlineWidth: 1,
+              heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+              disableDepthTestDistance: Number.POSITIVE_INFINITY,
+            },
+          })
+          hubGhost.__immediacyIso3 = hub.iso3
+          hubGhost.__immediacyName = hub.name
+        }
+
+        for (const ring of ghost.spawnedRings) {
+          const ringRadius = 105_000 + ghost.ageIndex * 32_000
+          const ringGhost = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(ring.lng, ring.lat),
+            ellipse: {
+              semiMajorAxis: ringRadius,
+              semiMinorAxis: ringRadius,
+              material: memoryColor.withAlpha(alpha * 0.018),
+              outline: true,
+              outlineColor: memoryColor.withAlpha(alpha * 0.9),
+              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+            },
+          })
+          ringGhost.__immediacyRing = ring
         }
       }
     }
@@ -604,7 +738,19 @@ export default function GlobePanel({
       })
     }
     seenRingIdsRef.current = new Set(activeRings.map((ring) => ring.id))
-  }, [ready, state, regionValues, mapMode, activeArcs, activeHubs, activeRings])
+  }, [
+    ready,
+    state,
+    regionValues,
+    mapMode,
+    activeArcs,
+    activeHubs,
+    activeRings,
+    allArcs,
+    allHubs,
+    decisionGhosts,
+    showDecisionMemory,
+  ])
 
   const title =
     mapMode === 'disclosurePosture'
@@ -634,13 +780,37 @@ export default function GlobePanel({
             </div>
           ))}
         </div>
+        {decisionGhosts.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowDecisionMemory((current) => !current)}
+            style={{
+              width: '100%',
+              marginTop: '9px',
+              paddingTop: '8px',
+              border: 0,
+              borderTop: '1px solid #303841',
+              background: 'transparent',
+              color: showDecisionMemory ? '#d7e5ee' : '#7f8993',
+              cursor: 'pointer',
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '9px',
+              textAlign: 'left',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            }}
+            title="Toggle fading traces from the last four decisions"
+          >
+            Decision memory · {decisionGhosts.length} {showDecisionMemory ? 'on' : 'off'}
+          </button>
+        )}
       </div>
 
       <div
         className="immediacy-map-badge"
         style={{ position: 'absolute', top: '14px', right: '14px', zIndex: 20, padding: '5px 7px', borderRadius: '4px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', color: '#aeb7c0', textTransform: 'uppercase', letterSpacing: '0.08em' }}
       >
-        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {trackedJurisdictions} tracked · {activeArcs.length} flows · {activeRings.length} events
+        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {trackedJurisdictions} tracked · {activeArcs.length} flows · {activeRings.length} events · {decisionGhosts.length} memories
       </div>
 
       {terrainState === 'error' && (
