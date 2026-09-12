@@ -104,7 +104,7 @@ function buildArcPositions(Cesium: any, arc: ArcDatum): any[] {
   const end = Cesium.Cartographic.fromDegrees(arc.endLng, arc.endLat)
   const geodesic = new Cesium.EllipsoidGeodesic(start, end)
   const positions: any[] = []
-  const peak = 180_000 + Math.min(650_000, arc.baseWeight * 280_000)
+  const peak = 360_000 + Math.min(950_000, arc.baseWeight * 900_000)
 
   for (let index = 0; index <= 64; index += 1) {
     const fraction = index / 64
@@ -441,35 +441,80 @@ export default function GlobePanel({
     for (const arc of activeArcs) {
       const positions = buildArcPositions(Cesium, arc)
       const color = Cesium.Color.fromCssColorString(FLOW_COLORS[arc.type] || '#8b949e')
-      const lineEntity = viewer.entities.add({
+      const strength = Math.max(0.35, Math.min(1, arc.baseWeight))
+      const backboneWidth = 5 + strength * 5
+
+      // The relationship itself must read before the animation does. A broad glow
+      // establishes the network arc, then a crisp core keeps it legible over terrain.
+      const glowEntity = viewer.entities.add({
         polyline: {
           positions,
-          width: Math.max(2.2, Math.min(5, arc.baseWeight * 1.7)),
+          width: backboneWidth + 6,
           material: new Cesium.PolylineGlowMaterialProperty({
-            glowPower: 0.16,
-            color: color.withAlpha(0.88),
+            glowPower: 0.28,
+            taperPower: 0.7,
+            color: color.withAlpha(0.72),
           }),
           arcType: Cesium.ArcType.NONE,
         },
       })
-      lineEntity.__immediacyArc = arc
+      glowEntity.__immediacyArc = arc
 
-      const offset = stableOffset(arc.id)
-      const flowEntity = viewer.entities.add({
-        position: new Cesium.CallbackProperty(() => {
-          const cycle = ((Date.now() + offset * 4) % 2400) / 2400
-          const index = Math.min(positions.length - 1, Math.floor(cycle * positions.length))
-          return positions[index]
-        }, false),
-        point: {
-          pixelSize: 6,
-          color,
-          outlineColor: Cesium.Color.WHITE.withAlpha(0.9),
-          outlineWidth: 1,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      const coreEntity = viewer.entities.add({
+        polyline: {
+          positions,
+          width: Math.max(3.4, backboneWidth * 0.52),
+          material: color.withAlpha(0.94),
+          arcType: Cesium.ArcType.NONE,
         },
       })
-      flowEntity.__immediacyArc = arc
+      coreEntity.__immediacyArc = arc
+
+      // Recreate the old animated-dash sense of direction with several arrow
+      // segments moving along the same geodesic. The arrows are secondary to the
+      // permanent arc, so the network remains readable even when motion is missed.
+      const offset = stableOffset(arc.id)
+      const arrowCount = 4
+      for (let arrowIndex = 0; arrowIndex < arrowCount; arrowIndex += 1) {
+        const phaseOffset = arrowIndex / arrowCount
+        const arrowEntity = viewer.entities.add({
+          polyline: {
+            positions: new Cesium.CallbackProperty(() => {
+              const cycle = ((Date.now() + offset * 5) % 3200) / 3200
+              const headFraction = (cycle + phaseOffset) % 1
+              const headIndex = Math.max(
+                7,
+                Math.min(positions.length - 1, Math.floor(headFraction * (positions.length - 1)))
+              )
+              const tailIndex = Math.max(0, headIndex - 7)
+              return positions.slice(tailIndex, headIndex + 1)
+            }, false),
+            width: Math.max(5, backboneWidth * 0.72),
+            material: new Cesium.PolylineArrowMaterialProperty(color.withAlpha(0.98)),
+            arcType: Cesium.ArcType.NONE,
+          },
+        })
+        arrowEntity.__immediacyArc = arc
+      }
+
+      // Anchor both ends so the eye can resolve which jurisdictions the arc joins.
+      for (const endpoint of [
+        [arc.startLng, arc.startLat],
+        [arc.endLng, arc.endLat],
+      ]) {
+        const endpointEntity = viewer.entities.add({
+          position: Cesium.Cartesian3.fromDegrees(endpoint[0], endpoint[1]),
+          point: {
+            pixelSize: 7,
+            color,
+            outlineColor: Cesium.Color.WHITE.withAlpha(0.9),
+            outlineWidth: 1.5,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          },
+        })
+        endpointEntity.__immediacyArc = arc
+      }
     }
 
     for (const hub of activeHubs) {
