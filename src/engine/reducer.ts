@@ -36,7 +36,36 @@ export function reducer(state: State, action: Action): State {
       // Apply delta
       const stateAfterDelta = applyDelta(stateAfterDecay, delta)
       
-      // Create audit record with metric snapshot
+      // Capture the actual geographic consequence after propagation, not just the requested delta.
+      const regionDeltas: Record<string, number> = {}
+      const regionKeys = new Set([
+        ...Object.keys(stateAfterDecay.map.regionValues),
+        ...Object.keys(stateAfterDelta.map.regionValues),
+      ])
+      regionKeys.forEach((iso3) => {
+        const before = stateAfterDecay.map.regionValues[iso3] ?? 0
+        const after = stateAfterDelta.map.regionValues[iso3] ?? 0
+        const change = after - before
+        if (Math.abs(change) > 0.0001) regionDeltas[iso3] = change
+      })
+
+      const priorArcIds = new Set(stateAfterDecay.map.activeArcs.map((arc) => arc.id))
+      const priorHubIds = new Set(stateAfterDecay.map.activeHubs.map((hub) => hub.id))
+      const priorRingIds = new Set(stateAfterDecay.map.activeRings.map((ring) => ring.id))
+      const mapImpact = {
+        regionDeltas,
+        activatedArcIds: stateAfterDelta.map.activeArcs
+          .filter((arc) => !priorArcIds.has(arc.id))
+          .map((arc) => arc.id),
+        activatedHubIds: stateAfterDelta.map.activeHubs
+          .filter((hub) => !priorHubIds.has(hub.id))
+          .map((hub) => hub.id),
+        spawnedRings: stateAfterDelta.map.activeRings
+          .filter((ring) => !priorRingIds.has(ring.id))
+          .map((ring) => ({ ...ring })),
+      }
+
+      // Create audit record with metric snapshot and reproducible decision inputs.
       const auditRecord: AuditRecord = {
         turn: stateAfterDelta.turn + 1,
         phaseId,
@@ -48,6 +77,8 @@ export function reducer(state: State, action: Action): State {
         assumptions,
         unmeasuredImpact,
         timestamp: Date.now(),
+        delta: JSON.parse(JSON.stringify(delta)),
+        mapImpact,
         metricsSnapshot: JSON.parse(JSON.stringify(stateAfterDelta.metrics)), // Deep copy for history
         immediateConsequence: unmeasuredImpact,
         alternativesConsidered,

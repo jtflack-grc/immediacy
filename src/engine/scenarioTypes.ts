@@ -122,6 +122,13 @@ export interface IncidentDispatch {
 
 export type TimeMode = 'learning' | 'exercise' | 'accessibility' | 'simulated'
 
+export interface DecisionMapImpact {
+  regionDeltas: Record<string, number>
+  activatedArcIds: string[]
+  activatedHubIds: string[]
+  spawnedRings: RingDatum[]
+}
+
 export interface AuditRecord {
   turn: number
   phaseId: string
@@ -134,6 +141,8 @@ export interface AuditRecord {
   unmeasuredImpact: string
   timestamp: number
   incidentTime?: number
+  delta?: Delta
+  mapImpact?: DecisionMapImpact
   alternativesConsidered?: string[]
   immediateConsequence?: string
   laterConsequence?: string
