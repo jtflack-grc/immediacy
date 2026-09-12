@@ -56,14 +56,15 @@ Cesium terrain/imagery is the base geography. Simulation layers remain the autho
 
 # Map styling
 
-Real terrain can carry the visual drama. Overlay layers should therefore be restrained:
+Real terrain carries the geographic realism, but the simulation must visibly react when state changes. Restraint must not erase game feedback.
 
-- Country fills are translucent and muted so terrain remains visible.
+- Country fills are translucent, continuously graded to the underlying value, and briefly intensify when a decision changes that jurisdiction.
 - Good / warning / adverse states use desaturated green, amber, and red.
-- Flow arcs use narrow geodesic lines with type-based semantic color.
-- Hubs use small steel-blue points with compact labels.
-- Event rings use thin outlined ellipses rather than glowing particle effects.
-- Avoid decorative starfields, excessive atmospheric glow, pulsing country polygons, or continuously animated chrome.
+- Active flow arcs use narrow geodesic lines with type-based semantic color plus a moving flow marker so an activated relationship reads as activity rather than decoration.
+- Active hubs use compact steel-blue points and labels with a restrained pulse while the hub is active.
+- Event rings propagate from the event location and include a visible center marker. A newly spawned event may briefly pull the camera toward it so consequential activity cannot occur unseen on the far side of the globe.
+- Motion is semantic: it is allowed when it communicates an active flow, hub, event, or recent state transition. Do not add ambient motion simply to make the map look alive.
+- Avoid decorative starfields, excessive atmospheric glow, pulsing inactive countries, or continuously animated chrome.
 
 # Density
 
@@ -90,4 +91,4 @@ IMMEDIACY is intentionally dense. Density is acceptable when it preserves decisi
 - Glass blur and neon border effects.
 - Pulsing status dots that do not communicate actual activity.
 - Decorative 3D effects that compete with the map data.
-- Removing flows, hubs, rings, jurisdiction state, or trajectory behavior merely to simplify the interface.
+- Removing or visually suppressing flows, hubs, rings, jurisdiction state, or trajectory behavior merely to simplify the interface.
