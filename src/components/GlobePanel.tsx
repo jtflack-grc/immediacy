@@ -41,33 +41,40 @@ const ARCGIS_IMAGERY_URL =
 
 const FLOW_COLORS: Record<ArcDatum['type'], string> = {
   supply_chain: '#8bb2cb',
-  regulatory_flow: '#c89a55',
-  research_collaboration: '#9d8ac2',
-  market_influence: '#d96f6f',
-  incident_link: '#73a987',
-  trust_sync: '#7ea4bf',
+  regulatory_flow: '#e1ad61',
+  research_collaboration: '#aa94d0',
+  market_influence: '#e07c7c',
+  incident_link: '#7fbc95',
+  trust_sync: '#8ab5d1',
 }
 
 const RING_COLORS: Record<RingDatum['eventType'], string> = {
-  policy_shift: '#7ea4bf',
-  breach_notice: '#d96f6f',
-  regulatory_response: '#c89a55',
-  market_change: '#9d8ac2',
-  research_breakthrough: '#73a987',
-  public_pressure: '#b77b9d',
-  leak_site: '#c95f5f',
-  customer_report: '#78aeb8',
+  policy_shift: '#8ab5d1',
+  breach_notice: '#ed7777',
+  regulatory_response: '#e6ad59',
+  market_change: '#ae93d5',
+  research_breakthrough: '#7fbc95',
+  public_pressure: '#c983ab',
+  leak_site: '#ef6666',
+  customer_report: '#82c1cb',
+}
+
+const LOW_POSTURE = [143, 72, 72]
+const MID_STATE = [190, 145, 73]
+const HIGH_POSTURE = [78, 147, 105]
+
+function mixRgb(start: number[], end: number[], amount: number): string {
+  const t = Math.max(0, Math.min(1, amount))
+  const channels = start.map((value, index) => Math.round(value + (end[index] - value) * t))
+  return `rgb(${channels[0]}, ${channels[1]}, ${channels[2]})`
 }
 
 function valueColor(mode: MapMode, value: number): string {
-  if (mode === 'disclosurePosture') {
-    if (value < 0.33) return '#8f4f4f'
-    if (value < 0.66) return '#a18452'
-    return '#5f8b72'
-  }
-  if (value < 0.33) return '#5f8b72'
-  if (value < 0.66) return '#a18452'
-  return '#8f4f4f'
+  const normalized = Math.max(0, Math.min(1, value))
+  const low = mode === 'disclosurePosture' ? LOW_POSTURE : HIGH_POSTURE
+  const high = mode === 'disclosurePosture' ? HIGH_POSTURE : LOW_POSTURE
+  if (normalized <= 0.5) return mixRgb(low, MID_STATE, normalized * 2)
+  return mixRgb(MID_STATE, high, (normalized - 0.5) * 2)
 }
 
 function getProperty(entity: any, names: string[]): string {
@@ -99,8 +106,8 @@ function buildArcPositions(Cesium: any, arc: ArcDatum): any[] {
   const positions: any[] = []
   const peak = 180_000 + Math.min(650_000, arc.baseWeight * 280_000)
 
-  for (let index = 0; index <= 40; index += 1) {
-    const fraction = index / 40
+  for (let index = 0; index <= 64; index += 1) {
+    const fraction = index / 64
     const point = geodesic.interpolateUsingFraction(fraction)
     const height = Math.sin(Math.PI * fraction) * peak
     positions.push(Cesium.Cartesian3.fromRadians(point.longitude, point.latitude, height))
@@ -108,18 +115,22 @@ function buildArcPositions(Cesium: any, arc: ArcDatum): any[] {
   return positions
 }
 
+function stableOffset(id: string): number {
+  return [...id].reduce((total, character) => total + character.charCodeAt(0), 0) % 1000
+}
+
 function legendRows(mode: MapMode) {
   if (mode === 'disclosurePosture') {
     return [
-      ['Low', '#8f4f4f', '0–33%'],
-      ['Medium', '#a18452', '34–66%'],
-      ['High', '#5f8b72', '67–100%'],
+      ['Low', '#8f4848', '0–33%'],
+      ['Medium', '#be9149', '34–66%'],
+      ['High', '#4e9369', '67–100%'],
     ]
   }
   return [
-    ['Low', '#5f8b72', '0–33%'],
-    ['Medium', '#a18452', '34–66%'],
-    ['High', '#8f4f4f', '67–100%'],
+    ['Low', '#4e9369', '0–33%'],
+    ['Medium', '#be9149', '34–66%'],
+    ['High', '#8f4848', '67–100%'],
   ]
 }
 
@@ -134,6 +145,9 @@ export default function GlobePanel({
   const handlerRef = useRef<any>(null)
   const stateRef = useRef<State | undefined>(state)
   const regionValuesRef = useRef(regionValues)
+  const previousRegionValuesRef = useRef<Record<string, number>>({})
+  const regionChangeTimesRef = useRef<Record<string, number>>({})
+  const seenRingIdsRef = useRef<Set<string>>(new Set())
 
   const [allArcs, setAllArcs] = useState<ArcDatum[]>([])
   const [allHubs, setAllHubs] = useState<HubDatum[]>([])
@@ -257,9 +271,9 @@ export default function GlobePanel({
         const imageryProvider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(ARCGIS_IMAGERY_URL)
         if (!disposed && viewer && !viewer.isDestroyed()) {
           const layer = viewer.imageryLayers.addImageryProvider(imageryProvider)
-          layer.brightness = 0.72
-          layer.contrast = 1.1
-          layer.saturation = 0.62
+          layer.brightness = 0.68
+          layer.contrast = 1.08
+          layer.saturation = 0.54
         }
       } catch (error) {
         console.warn('ArcGIS World Imagery could not be loaded.', error)
@@ -347,7 +361,7 @@ export default function GlobePanel({
       handlerRef.current = handler
 
       viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(0, 20, 10_500_000),
+        destination: Cesium.Cartesian3.fromDegrees(-12, 22, 10_900_000),
         orientation: {
           heading: Cesium.Math.toRadians(0),
           pitch: Cesium.Math.toRadians(-90),
@@ -375,6 +389,15 @@ export default function GlobePanel({
     const viewer = viewerRef.current
     if (!Cesium || !viewer || viewer.isDestroyed()) return
 
+    const now = Date.now()
+    for (const [iso3, value] of Object.entries(regionValues)) {
+      const previous = previousRegionValuesRef.current[iso3]
+      if (previous !== undefined && Math.abs(previous - value) > 0.0001) {
+        regionChangeTimesRef.current[iso3] = now
+      }
+    }
+    previousRegionValuesRef.current = { ...regionValues }
+
     viewer.entities.removeAll()
 
     const countrySource = countrySourceRef.current
@@ -386,54 +409,98 @@ export default function GlobePanel({
         const value = inPlay ? regionValues[iso3] ?? 0 : 0
         entity.__immediacyIso3 = iso3
         entity.__immediacyName = name
+
         if (entity.polygon) {
-          entity.polygon.material = inPlay
-            ? Cesium.Color.fromCssColorString(valueColor(mapMode, value)).withAlpha(0.42)
-            : Cesium.Color.fromCssColorString('#52606d').withAlpha(0.06)
-          entity.polygon.outline = inPlay
-          entity.polygon.outlineColor = inPlay
-            ? Cesium.Color.fromCssColorString('#b6c1ca').withAlpha(0.65)
-            : Cesium.Color.TRANSPARENT
+          if (inPlay) {
+            const baseColor = Cesium.Color.fromCssColorString(valueColor(mapMode, value))
+            const changeTime = regionChangeTimesRef.current[iso3] || 0
+            const animatedColor = new Cesium.CallbackProperty(() => {
+              const elapsed = Date.now() - changeTime
+              if (changeTime && elapsed < 2600) {
+                const pulse = (Math.sin(elapsed / 120) + 1) / 2
+                return baseColor.withAlpha(0.52 + pulse * 0.24)
+              }
+              return baseColor.withAlpha(0.56)
+            }, false)
+            entity.polygon.material = new Cesium.ColorMaterialProperty(animatedColor)
+            entity.polygon.outline = true
+            entity.polygon.outlineColor = new Cesium.CallbackProperty(() => {
+              const elapsed = Date.now() - changeTime
+              const active = changeTime && elapsed < 2600
+              return Cesium.Color.fromCssColorString(active ? '#f3f7fa' : '#c9d4dc').withAlpha(active ? 0.92 : 0.68)
+            }, false)
+          } else {
+            entity.polygon.material = Cesium.Color.fromCssColorString('#52606d').withAlpha(0.025)
+            entity.polygon.outline = false
+            entity.polygon.outlineColor = Cesium.Color.TRANSPARENT
+          }
         }
       }
     }
 
     for (const arc of activeArcs) {
-      const entity = viewer.entities.add({
+      const positions = buildArcPositions(Cesium, arc)
+      const color = Cesium.Color.fromCssColorString(FLOW_COLORS[arc.type] || '#8b949e')
+      const lineEntity = viewer.entities.add({
         polyline: {
-          positions: buildArcPositions(Cesium, arc),
-          width: Math.max(1.5, Math.min(4, arc.baseWeight * 1.3)),
-          material: Cesium.Color.fromCssColorString(FLOW_COLORS[arc.type] || '#8b949e').withAlpha(0.82),
+          positions,
+          width: Math.max(2.2, Math.min(5, arc.baseWeight * 1.7)),
+          material: new Cesium.PolylineGlowMaterialProperty({
+            glowPower: 0.16,
+            color: color.withAlpha(0.88),
+          }),
           arcType: Cesium.ArcType.NONE,
         },
       })
-      entity.__immediacyArc = arc
+      lineEntity.__immediacyArc = arc
+
+      const offset = stableOffset(arc.id)
+      const flowEntity = viewer.entities.add({
+        position: new Cesium.CallbackProperty(() => {
+          const cycle = ((Date.now() + offset * 4) % 2400) / 2400
+          const index = Math.min(positions.length - 1, Math.floor(cycle * positions.length))
+          return positions[index]
+        }, false),
+        point: {
+          pixelSize: 6,
+          color,
+          outlineColor: Cesium.Color.WHITE.withAlpha(0.9),
+          outlineWidth: 1,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+      })
+      flowEntity.__immediacyArc = arc
     }
 
     for (const hub of activeHubs) {
+      const baseSize = 8 + Math.round((hub._size || 0.5) * 5)
+      const offset = stableOffset(hub.id)
       const entity = viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(hub.lng, hub.lat, 1200),
         point: {
-          pixelSize: 7 + Math.round((hub._size || 0.5) * 4),
-          color: Cesium.Color.fromCssColorString('#7ea4bf'),
-          outlineColor: Cesium.Color.fromCssColorString('#e3edf3'),
-          outlineWidth: 1,
+          pixelSize: new Cesium.CallbackProperty(() => {
+            const pulse = (Math.sin((Date.now() + offset * 5) / 280) + 1) / 2
+            return baseSize + pulse * 3
+          }, false),
+          color: Cesium.Color.fromCssColorString('#8bbad6'),
+          outlineColor: Cesium.Color.fromCssColorString('#edf7ff'),
+          outlineWidth: 1.5,
           heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
         label: {
           text: hub.name,
-          font: '500 11px IBM Plex Sans, sans-serif',
-          fillColor: Cesium.Color.fromCssColorString('#dfe5ea'),
+          font: '600 11px IBM Plex Sans, sans-serif',
+          fillColor: Cesium.Color.fromCssColorString('#eef4f8'),
           outlineColor: Cesium.Color.BLACK,
           outlineWidth: 3,
           style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          pixelOffset: new Cesium.Cartesian2(0, -16),
+          pixelOffset: new Cesium.Cartesian2(0, -18),
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           showBackground: true,
-          backgroundColor: Cesium.Color.fromCssColorString('#080b0e').withAlpha(0.76),
+          backgroundColor: Cesium.Color.fromCssColorString('#07090b').withAlpha(0.84),
           backgroundPadding: new Cesium.Cartesian2(5, 3),
         },
       })
@@ -441,23 +508,57 @@ export default function GlobePanel({
     }
 
     for (const ring of activeRings) {
-      const age = Math.max(0, state.turn - ring.createdTurn)
-      const progress = Math.min(1, age / Math.max(1, ring.ttl))
-      const radius = 90_000 + (1 - progress) * 190_000
       const color = Cesium.Color.fromCssColorString(RING_COLORS[ring.eventType] || '#8b949e')
+      const offset = stableOffset(ring.id)
+      const radiusProperty = new Cesium.CallbackProperty(() => {
+        const phase = ((Date.now() + offset * 3) % 1800) / 1800
+        return 70_000 + phase * 300_000
+      }, false)
+      const outlineColor = new Cesium.CallbackProperty(() => {
+        const phase = ((Date.now() + offset * 3) % 1800) / 1800
+        return color.withAlpha(Math.max(0.08, 0.98 - phase * 0.92))
+      }, false)
+      const fillColor = new Cesium.CallbackProperty(() => {
+        const phase = ((Date.now() + offset * 3) % 1800) / 1800
+        return color.withAlpha(Math.max(0.025, 0.14 - phase * 0.1))
+      }, false)
+
       const entity = viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(ring.lng, ring.lat),
+        point: {
+          pixelSize: new Cesium.CallbackProperty(() => 7 + ((Math.sin(Date.now() / 180) + 1) / 2) * 4, false),
+          color,
+          outlineColor: Cesium.Color.WHITE.withAlpha(0.92),
+          outlineWidth: 1,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
         ellipse: {
-          semiMajorAxis: radius,
-          semiMinorAxis: radius,
-          material: color.withAlpha(0.05),
+          semiMajorAxis: radiusProperty,
+          semiMinorAxis: radiusProperty,
+          material: new Cesium.ColorMaterialProperty(fillColor),
           outline: true,
-          outlineColor: color.withAlpha(0.9),
+          outlineColor,
           heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
         },
       })
       entity.__immediacyRing = ring
     }
+
+    const unseenRings = activeRings.filter((ring) => !seenRingIdsRef.current.has(ring.id))
+    if (unseenRings.length > 0) {
+      const newest = unseenRings[unseenRings.length - 1]
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(newest.lng, newest.lat, 6_800_000),
+        orientation: {
+          heading: Cesium.Math.toRadians(0),
+          pitch: Cesium.Math.toRadians(-90),
+          roll: 0,
+        },
+        duration: 0.85,
+      })
+    }
+    seenRingIdsRef.current = new Set(activeRings.map((ring) => ring.id))
   }, [ready, state, regionValues, mapMode, activeArcs, activeHubs, activeRings])
 
   const title =
@@ -468,6 +569,7 @@ export default function GlobePanel({
         : 'Regulatory pressure'
 
   const rows = legendRows(mapMode)
+  const trackedJurisdictions = Object.keys(regionValues).filter((iso3) => IN_PLAY_ISO3.has(iso3)).length
 
   return (
     <div className="immediacy-globe" style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', background: '#000' }}>
@@ -493,7 +595,7 @@ export default function GlobePanel({
         className="immediacy-map-badge"
         style={{ position: 'absolute', top: '14px', right: '14px', zIndex: 20, padding: '5px 7px', borderRadius: '4px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', color: '#aeb7c0', textTransform: 'uppercase', letterSpacing: '0.08em' }}
       >
-        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {activeArcs.length} flows · {activeRings.length} events
+        {terrainState === 'streaming' ? 'terrain streamed' : terrainState} · {trackedJurisdictions} tracked · {activeArcs.length} flows · {activeRings.length} events
       </div>
 
       {terrainState === 'error' && (
