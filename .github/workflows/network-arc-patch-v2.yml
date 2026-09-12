@@ -1,0 +1,27 @@
+name: Apply network arc patch
+
+on:
+  push:
+    branches:
+      - fix/restore-network-arcs
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/restore-network-arcs
+      - run: python scripts/patch_network_arcs.py
+      - name: Commit generated change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- src/components/GlobePanel.tsx; then
+            git add src/components/GlobePanel.tsx
+            git commit -m "Restore directional network arcs"
+            git push origin HEAD:fix/restore-network-arcs
+          fi
