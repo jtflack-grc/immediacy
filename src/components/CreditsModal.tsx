@@ -7,147 +7,82 @@ export default function CreditsModal({ onClose }: CreditsModalProps) {
     <div
       style={{
         position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.95)',
+        inset: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.82)',
         zIndex: 10000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px'
+        display: 'grid',
+        placeItems: 'center',
+        padding: '20px',
       }}
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Method and credits"
         style={{
-          backgroundColor: '#000000',
-          border: '2px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '12px',
-          padding: '32px',
-          maxWidth: '700px',
-          maxHeight: '80vh',
+          width: 'min(720px, 100%)',
+          maxHeight: '82vh',
           overflowY: 'auto',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8)'
+          backgroundColor: '#0d1115',
+          border: '1px solid #303841',
+          borderRadius: '7px',
+          padding: '24px',
+          color: '#c9d1d9',
         }}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '24px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: 600, color: '#fff', margin: 0 }}>
-            Credits & Acknowledgments
-          </h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', alignItems: 'flex-start', paddingBottom: '16px', borderBottom: '1px solid #20262d' }}>
+          <div>
+            <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 600, color: '#f2f5f7' }}>Method & credits</h2>
+            <p style={{ margin: '5px 0 0', fontSize: '12px', color: '#8b949e' }}>
+              IMMEDIACY · short-horizon disclosure war game
+            </p>
+          </div>
           <button
+            type="button"
             onClick={onClose}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#fff',
-              fontSize: '28px',
-              cursor: 'pointer',
-              padding: '0',
-              width: '32px',
-              height: '32px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+            aria-label="Close"
+            style={{ background: 'transparent', border: 0, color: '#aeb7c0', fontSize: '22px', cursor: 'pointer', padding: '0 4px' }}
           >
             ×
           </button>
         </div>
 
-        <div style={{ fontSize: '14px', color: '#ccc', lineHeight: '1.8' }}>
-          <div style={{ marginBottom: '32px' }}>
-            <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              IMMEDIACY — Every Second Counts
-            </h3>
-            <p style={{ marginBottom: '8px' }}>
-              A short-horizon disclosure war game: seat-of-the-pants decisions under time pressure, where silence is a choice.
-            </p>
-            <div style={{ marginTop: '16px', padding: '16px', backgroundColor: '#111111', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <p style={{ marginBottom: '8px', fontSize: '13px', color: '#fff', fontWeight: 500 }}>
-                Created and Developed By:
-              </p>
-              <p style={{ marginBottom: '4px', fontSize: '14px', color: '#60a5fa', fontWeight: 500 }}>
-                John Flack
-              </p>
-              <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-                Application Builder & Author
-              </p>
-            </div>
-            <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
-              Version 0.1.0
-            </p>
-          </div>
+        <div style={{ paddingTop: '16px', fontSize: '13px', lineHeight: 1.65 }}>
+          <p style={{ margin: 0 }}>
+            IMMEDIACY is an educational incident-disclosure simulator built to make incomplete facts, regulatory clocks, operational pressure, and disclosure debt visible at the same time. It is not legal advice, an incident-response playbook, or a prediction engine.
+          </p>
 
-          <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Technologies & Libraries
-            </h3>
-            <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li><strong>React</strong> — UI framework</li>
-              <li><strong>react-globe.gl</strong> — 3D globe visualization</li>
-              <li><strong>Three.js</strong> — 3D graphics rendering</li>
-              <li><strong>Vite</strong> — Build tool and dev server</li>
-              <li><strong>TypeScript</strong> — Type-safe JavaScript</li>
+          <section style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #20262d' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: '13px', fontWeight: 600, color: '#f2f5f7' }}>Built by</h3>
+            <div style={{ color: '#dfe5ea' }}>John Flack · Application builder & author</div>
+            <div style={{ marginTop: '3px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: '#8b949e' }}>Version 0.1.0</div>
+          </section>
+
+          <section style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #20262d' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: '13px', fontWeight: 600, color: '#f2f5f7' }}>Rendering & application stack</h3>
+            <ul style={{ margin: 0, paddingLeft: '18px', color: '#aeb7c0' }}>
+              <li>React + TypeScript + Vite</li>
+              <li>CesiumJS for the interactive 3D Earth and geospatial overlays</li>
+              <li>ArcGIS World Imagery and World Elevation services for terrain context</li>
+              <li>Local GeoJSON and scenario data for jurisdiction, flow, hub, and event layers</li>
             </ul>
-          </div>
+          </section>
 
-          <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Teaching Sources
-            </h3>
-            <p style={{ marginBottom: '12px' }}>
-              Scenario framing and case studies draw on:
+          <section style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #20262d' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: '13px', fontWeight: 600, color: '#f2f5f7' }}>Teaching basis</h3>
+            <p style={{ margin: 0, color: '#aeb7c0' }}>
+              Scenario framing draws on public incident disclosures, CISA and regulator guidance, SEC and breach-notice concepts, OWASP material, and FAIR-style quantitative risk thinking. Jurisdiction cards are teaching aids and should be verified against current primary law and counsel in real work.
             </p>
-            <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc', marginBottom: '12px' }}>
-              <li>FAIR / quantitative risk framing for short-horizon impact</li>
-              <li>Public incident disclosure case studies and near-misses</li>
-              <li>OWASP Top 10 as war-room curriculum</li>
-              <li>CISA, SEC, GDPR/DPA, and related disclosure norms</li>
-            </ul>
-          </div>
+          </section>
 
-          <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Geographic Data
-            </h3>
-            <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li>World GeoJSON for country boundaries</li>
-              <li>Jurisdiction hover cards for breach-notice / disclosure pressure</li>
-            </ul>
-          </div>
-
-          <div style={{ marginBottom: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Educational Purpose
-            </h3>
-            <p style={{ marginBottom: '8px' }}>
-              This simulator is designed for educational purposes to help users understand:
+          <section style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #20262d' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: '13px', fontWeight: 600, color: '#f2f5f7' }}>Map semantics</h3>
+            <p style={{ margin: 0, color: '#aeb7c0' }}>
+              The globe is part of the simulation state. Country color reflects the selected posture/debt/enforcement view; arcs represent active cross-border or organizational flows; hubs represent operational nodes; rings mark time-bounded events. Clicking a jurisdiction with history opens its trajectory rather than a decorative map popup.
             </p>
-            <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'disc' }}>
-              <li>Trade-offs in short-horizon incident disclosure</li>
-              <li>How silence, spin, and speed change regulatory and customer outcomes</li>
-              <li>FAIR-style thinking under incomplete facts</li>
-              <li>Why jurisdiction clocks and adversary leak sites rewrite your narrative</li>
-            </ul>
-            <p style={{ marginTop: '12px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-              This tool is educational. Real incidents involve facts, counsel, and regulators not fully captured here.
-            </p>
-          </div>
-
-          <div style={{ paddingTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '12px' }}>
-              Acknowledgments
-            </h3>
-            <p style={{ marginBottom: '8px' }}>
-              Part of the i on GRC lab family. Teaching beats draw on public incident disclosures, regulator guidance, OWASP, and FAIR-style risk framing.
-            </p>
-            <p style={{ fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
-              For questions, feedback, or to report issues, please refer to the validation disclaimer in the application.
-            </p>
-          </div>
+          </section>
         </div>
       </div>
     </div>
